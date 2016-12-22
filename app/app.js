@@ -15,6 +15,7 @@ import {
   StyleSheet,
 } from 'react-native';
 
+import { AppDrawer } from './components/shared/app-drawer/app-drawer'
 import RidesIndex from './containers/rides/rides-index/rides-index'
 
 const RouterWithRedux = connect()(Router);
@@ -41,7 +42,9 @@ class App extends Component {
     return (
       <Provider store={store}>
         <RouterWithRedux>
-          <Scene key="rides-index" component={RidesIndex} open={false} />
+          <Scene key="drawer" component={AppDrawer} open={false}>
+            <Scene key="ridesIndex" component={RidesIndex} />
+          </Scene>
         </RouterWithRedux>
       </Provider>
     );

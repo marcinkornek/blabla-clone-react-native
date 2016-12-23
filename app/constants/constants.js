@@ -1,4 +1,4 @@
-var APIRoot = 'http://localhost:3000/api/'
+var APIRoot = 'https://blabla-clone-api.herokuapp.com/api/'
 
 module.exports = {
   APIRoot: APIRoot,

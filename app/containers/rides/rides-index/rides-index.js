@@ -1,4 +1,6 @@
-import React, { Component } from 'react';
+// utils
+import React, { Component, PropTypes } from 'react';
+import { connect } from 'react-redux';
 import {
   AppRegistry,
   StyleSheet,
@@ -6,14 +8,45 @@ import {
   View
 } from 'react-native';
 
-export default class RidesIndes extends Component {
+// actions
+import { fetchRides } from '../../../actions/rides';
+
+export class RidesIndex extends Component {
+  componentDidMount() {
+    this.props.fetchRides()
+  }
+
+  renderRidesList() {
+    const { rides } = this.props
+
+    return (
+      rides.map((ride, i) =>
+        <Text key={i}>{ride.start_city}</Text>
+      )
+    )
+  }
+
   render() {
     return (
       <View>
         <Text>
-          Welcome to React Native!
+          {this.renderRidesList()}
         </Text>
       </View>
     );
   }
 }
+
+const mapStateToProps = (state) => {
+  return {
+    rides: state.rides.items,
+    isStarted: state.rides.isStarted,
+    isFetching: state.rides.isFetching,
+  }
+};
+
+const mapDispatchToProps = {
+  fetchRides,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(RidesIndex)

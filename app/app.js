@@ -21,13 +21,15 @@ import RidesIndex from './containers/rides/rides-index/rides-index'
 const RouterWithRedux = connect()(Router);
 import Reducers from './reducers/index';
 
+console.log('APIRoot', APIRoot);
+
 const client = axios.create({
-   baseURL: APIRoot,
-   headers: {
-     'Accept': 'application/vnd.blabla-clone-v1+json',
-     'Content-Type': 'application/json'
-   },
-   responseType: 'json'
+  baseURL: APIRoot,
+  headers: {
+    'Accept': 'application/vnd.blabla-clone-v1+json',
+    'Content-Type': 'application/json'
+  },
+  responseType: 'json'
 })
 
 const store = compose(

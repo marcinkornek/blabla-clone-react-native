@@ -1,15 +1,13 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import {
-  AppRegistry,
-  StyleSheet,
-  Text,
-  View
-} from 'react-native';
+import { View } from 'react-native';
 
 // actions
 import { fetchRides } from '../../../actions/rides';
+
+// components
+import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
 export class RidesIndex extends Component {
   componentDidMount() {
@@ -21,7 +19,10 @@ export class RidesIndex extends Component {
 
     return (
       rides.map((ride, i) =>
-        <Text key={i}>{ride.start_city}</Text>
+        <RidesIndexItem
+          ride={ride}
+          key={`ride${i}`}
+        />
       )
     )
   }
@@ -29,9 +30,7 @@ export class RidesIndex extends Component {
   render() {
     return (
       <View>
-        <Text>
-          {this.renderRidesList()}
-        </Text>
+        {this.renderRidesList()}
       </View>
     );
   }

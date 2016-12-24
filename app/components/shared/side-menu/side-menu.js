@@ -10,7 +10,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 
 export class SideMenu extends Component {
-  goToDashboard() {
+  goToRidesIndex() {
     this.context.drawer.close();
     Actions.ridesIndex();
   }
@@ -18,8 +18,8 @@ export class SideMenu extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <TouchableHighlight onPress={() => this.goToDashboard()}>
-          <Text style={styles.controlText}>Dashboard</Text>
+        <TouchableHighlight onPress={() => this.goToRidesIndex()}>
+          <Text style={styles.controlText}>Rides</Text>
         </TouchableHighlight>
       </ScrollView>
     )

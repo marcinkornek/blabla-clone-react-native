@@ -48,6 +48,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#0000ff'
   }
 });
+
 const mapStateToProps = (state) => {
   return {
     rides: state.rides.items,

@@ -26,7 +26,6 @@ export class AppDrawer extends Component {
         tweenHandler={(ratio) => ({
           main: { opacity:(2-ratio)/2 }
         })}
-
       >
         <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />
       </Drawer>

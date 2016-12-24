@@ -45,8 +45,12 @@ class App extends Component {
     return (
       <Provider store={store}>
         <RouterWithRedux>
-          <Scene key="ridesIndex" component={RidesIndex} />
-          <Scene key="rideShow" component={RideShow} />
+          <Scene key="drawer" component={AppDrawer} open={false}>
+            <Scene key="main" >
+              <Scene key="ridesIndex" component={RidesIndex} title="All rides" />
+              <Scene key="rideShow" component={RideShow} />
+            </Scene>
+          </Scene>
         </RouterWithRedux>
       </Provider>
     );

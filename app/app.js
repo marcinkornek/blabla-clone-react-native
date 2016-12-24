@@ -17,6 +17,7 @@ import {
 
 import { AppDrawer } from './components/shared/app-drawer/app-drawer'
 import RidesIndex from './containers/rides/rides-index/rides-index'
+import RideShow from './containers/rides/ride-show/ride-show'
 
 const RouterWithRedux = connect()(Router);
 import Reducers from './reducers/index';
@@ -44,9 +45,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <RouterWithRedux>
-          <Scene key="drawer" component={AppDrawer} open={false}>
-            <Scene key="ridesIndex" component={RidesIndex} />
-          </Scene>
+          <Scene key="ridesIndex" component={RidesIndex} />
+          <Scene key="rideShow" component={RideShow} />
         </RouterWithRedux>
       </Provider>
     );

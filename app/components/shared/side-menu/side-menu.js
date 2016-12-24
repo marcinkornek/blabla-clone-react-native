@@ -1,3 +1,4 @@
+// utils
 import React, { Component, PropTypes } from 'react';
 import {
   ScrollView,
@@ -6,7 +7,6 @@ import {
   TouchableHighlight,
   View
 } from 'react-native'
-
 import { Actions } from 'react-native-router-flux';
 
 export class SideMenu extends Component {
@@ -18,7 +18,9 @@ export class SideMenu extends Component {
   render() {
     return (
       <ScrollView style={styles.container}>
-        <Text style={styles.controlText}>Dashboard</Text>
+        <TouchableHighlight onPress={() => this.goToDashboard()}>
+          <Text style={styles.controlText}>Dashboard</Text>
+        </TouchableHighlight>
       </ScrollView>
     )
   }

@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 
 // actions
 import { fetchRides } from '../../../actions/rides';
@@ -10,6 +10,12 @@ import { fetchRides } from '../../../actions/rides';
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
 export class RidesIndex extends Component {
+  static propTypes = {
+    rides: PropTypes.array.isRequired,
+    isStarted: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+  }
+
   componentDidMount() {
     this.props.fetchRides()
   }
@@ -29,13 +35,19 @@ export class RidesIndex extends Component {
 
   render() {
     return (
-      <View>
+      <View style={styles.view}>
         {this.renderRidesList()}
       </View>
     );
   }
 }
 
+const styles = StyleSheet.create({
+  view: {
+    paddingTop: 100,
+    backgroundColor: '#0000ff'
+  }
+});
 const mapStateToProps = (state) => {
   return {
     rides: state.rides.items,

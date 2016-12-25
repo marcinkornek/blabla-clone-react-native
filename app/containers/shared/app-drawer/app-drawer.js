@@ -6,14 +6,14 @@ import { Actions, DefaultRenderer } from 'react-native-router-flux';
 
 export class AppDrawer extends Component {
   static propTypes = {
-    session: PropTypes.object,
+    currentUser: PropTypes.object,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
   }
 
   render() {
-    const { session, isStarted, isFetching, isAuthenticated } = this.props;
+    const { currentUser, isStarted, isFetching, isAuthenticated } = this.props;
     const state = this.props.navigationState;
     const children = state.children;
 
@@ -27,7 +27,7 @@ export class AppDrawer extends Component {
         type="overlay"
         content={
           <SideMenu
-            session={session}
+            currentUser={currentUser}
             isStarted={isStarted}
             isFetching={isFetching}
             isAuthenticated={isAuthenticated}
@@ -51,9 +51,9 @@ export class AppDrawer extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    session: state.session.item,
-    isStarted: state.session.isStarted,
-    isFetching: state.session.isFetching,
+    currentUser: state.currentUser.item,
+    isStarted: state.currentUser.isStarted,
+    isFetching: state.currentUser.isFetching,
     isAuthenticated: state.session.isAuthenticated,
   }
 }

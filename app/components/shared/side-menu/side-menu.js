@@ -16,11 +16,14 @@ export class SideMenu extends Component {
   }
 
   renderUserInfo() {
-    const { session } = this.props;
+    const { currentUser } = this.props;
 
-    if (session) {
+    if (currentUser) {
       return(
-        <Text style={styles.controlText}>{session.email}</Text>
+        <Text style={styles.controlText}>
+          {currentUser.email}
+          {currentUser.first_name}
+        </Text>
       )
     }
   }

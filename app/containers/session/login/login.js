@@ -4,9 +4,12 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+// constants
+import { APIEndpoints } from '../../../constants/constants';
+
 // actions
 import { logInEmailBackend } from '../../../actions/session';
-import { APIEndpoints } from '../../../constants/constants';
+import { fetchCurrentUser } from '../../../actions/current-user';
 
 // components
 import { LoginEmail } from '../../../components/session/login-email/login-email';
@@ -19,9 +22,12 @@ class Login extends Component {
   };
 
   handleEmailLogin(data) {
-    this.props.logInEmailBackend(data)
+    const { logInEmailBackend, fetchCurrentUser } = this.props;
+
+    logInEmailBackend(data)
       .then((response) => {
         if (!response.error) {
+          fetchCurrentUser()
           Actions.ridesIndex({type: 'reset'})
         }
       })
@@ -68,6 +74,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   logInEmailBackend,
+  fetchCurrentUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

@@ -5,7 +5,8 @@ import {
   StyleSheet,
   Text,
   TouchableHighlight,
-  View
+  View,
+  Image,
 } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 
@@ -20,10 +21,12 @@ export class SideMenu extends Component {
 
     if (currentUser) {
       return(
-        <Text style={styles.controlText}>
-          {currentUser.email}
-          {currentUser.first_name}
-        </Text>
+        <View style={styles.userInfo}>
+          <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
+          <Text style={styles.controlText}>
+            {currentUser.first_name}
+          </Text>
+        </View>
       )
     }
   }
@@ -60,5 +63,15 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'black',
     padding: 10,
-  }
+  },
+  userInfo: {
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+  },
+  avatar: {
+    width: 50,
+    height: 50,
+    marginRight: 10,
+  },
 })

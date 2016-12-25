@@ -4,5 +4,6 @@ module.exports = {
   APIRoot: APIRoot,
   APIEndpoints: {
     RIDES: APIRoot + 'rides',
+    LOGIN_EMAIL: APIRoot + 'sessions/login',
   },
 };

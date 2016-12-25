@@ -15,9 +15,20 @@ export class SideMenu extends Component {
     Actions.ridesIndex();
   }
 
+  renderUserInfo() {
+    const { session } = this.props;
+
+    if (session) {
+      return(
+        <Text style={styles.controlText}>{session.email}</Text>
+      )
+    }
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
+        {this.renderUserInfo()}
         <TouchableHighlight onPress={() => this.goToRidesIndex()}>
           <Text style={styles.controlText}>Rides</Text>
         </TouchableHighlight>

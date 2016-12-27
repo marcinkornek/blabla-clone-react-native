@@ -1,5 +1,5 @@
 {
   presets: [
-    { plugins: [ 'transform-class-properties'] }, 'react-native-stage-0', 'es2015', 'react-native'
+    { plugins: [ 'transform-class-properties'] }, 'react-native-stage-0', 'react-native'
   ]
 }

@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { Button } from 'react-native-elements';
 
 // constants
 import { APIEndpoints } from '../../../constants/constants';
@@ -51,6 +52,11 @@ class Login extends Component {
         {this.showErrors()}
         <LoginEmail
           handleSubmit={this.handleEmailLogin.bind(this)}
+        />
+        <Button
+          raised
+          title='Register'
+          onPress={Actions.register}
         />
       </View>
     )

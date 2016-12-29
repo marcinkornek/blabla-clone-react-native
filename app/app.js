@@ -20,8 +20,8 @@ class App extends Component {
         <RouterWithRedux>
           <Scene key="drawer" component={AppDrawer} open={false}>
             <Scene key="main" >
-              <Scene key="register" component={Register} title="Register" />
               <Scene key="login" component={Login} title="Login" />
+              <Scene key="register" component={Register} title="Register" />
               <Scene key="ridesIndex" component={RidesIndex} title="All rides" />
               <Scene key="rideShow" component={RideShow} />
             </Scene>

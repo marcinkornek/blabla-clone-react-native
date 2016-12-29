@@ -65,8 +65,7 @@ class Login extends Component {
 
 const styles = StyleSheet.create({
   view: {
-    paddingTop: 100,
-    backgroundColor: '#ffff00'
+    paddingTop: 80,
   }
 });
 

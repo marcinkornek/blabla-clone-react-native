@@ -42,8 +42,7 @@ export class RideShow extends Component {
 
 const styles = StyleSheet.create({
   view: {
-    paddingTop: 100,
-    backgroundColor: '#00ff00'
+    paddingTop: 80,
   }
 });
 

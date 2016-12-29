@@ -44,8 +44,7 @@ export class RidesIndex extends Component {
 
 const styles = StyleSheet.create({
   view: {
-    paddingTop: 100,
-    backgroundColor: '#0000ff'
+    paddingTop: 80,
   }
 });
 

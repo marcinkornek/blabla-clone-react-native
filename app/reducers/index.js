@@ -1,5 +1,8 @@
+// utils
 import { combineReducers } from 'redux';
+import { reducer as formReducer } from 'redux-form'
 
+// reducers
 import { currentUser } from './current-user';
 import { rides } from './rides';
 import { ride } from './ride';
@@ -10,4 +13,5 @@ export default combineReducers({
   rides,
   ride,
   session,
+  form: formReducer
 });

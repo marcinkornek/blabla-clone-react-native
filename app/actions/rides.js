@@ -28,7 +28,6 @@ export function fetchRides(page = 1, per = 10, { start_city, destination_city, s
 }
 
 export function fetchRide(rideId) {
-  console.log(`${APIEndpoints.RIDES}/${rideId}`);
   return {
     types: [
       RIDE_FETCH_REQUEST,

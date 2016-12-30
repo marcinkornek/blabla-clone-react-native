@@ -6,6 +6,7 @@ import {
   View,
 } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import moment from 'moment';
 
 export class RidesIndexItem extends Component {
   static propTypes = {
@@ -21,7 +22,10 @@ export class RidesIndexItem extends Component {
 
     return(
       <TouchableHighlight onPress={() => this.goToRide(ride.id)}>
-        <Text>{ride.start_city} - {ride.destination_city}</Text>
+        <View>
+          <Text>{ride.start_city} - {ride.destination_city} - {ride.price} {ride.currency}</Text>
+          <Text>{moment(ride.starts_date).format('DD.MM.YY - H:mm')}</Text>
+        </View>
       </TouchableHighlight>
     )
   }

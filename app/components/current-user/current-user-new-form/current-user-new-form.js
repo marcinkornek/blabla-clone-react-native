@@ -9,6 +9,7 @@ import moment from 'moment';
 import { TextField } from '../../inputs/text-field/text-field';
 import { SelectField } from '../../inputs/select-field/select-field';
 import { DatepickerField } from '../../inputs/datepicker-field/datepicker-field';
+import { ImageField } from '../../inputs/image-field/image-field';
 
 let initialValues = {
   initialValues: {
@@ -68,6 +69,12 @@ class CurrentUserNewForm extends Component {
           maxLength={10}
           keyboardType="numeric"
           component={TextField}
+        />
+        <Field
+          type="file"
+          name="avatar"
+          onChange={this.onChange}
+          component={ImageField}
         />
         <Field
           name="password"

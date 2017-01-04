@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
+import _ from 'lodash';
 
 // actions
 import { createCurrentUser } from '../../../actions/current-user';
@@ -16,7 +17,7 @@ export class CurrentUserNew extends Component {
 
     Object.keys(data).forEach(( key ) => {
       if (key == 'avatar') {
-        if (_.isObject(data[key])) { body.append(key, data[key][0]) }
+        if (_.isObject(data[key])) { body.append(key, data[key]) }
       } else {
         if (data[key]) { body.append(key, data[key]) }
       }

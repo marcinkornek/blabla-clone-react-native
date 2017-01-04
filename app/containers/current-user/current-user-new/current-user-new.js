@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
 
 // actions
@@ -22,7 +23,13 @@ export class CurrentUserNew extends Component {
         if (data[key]) { body.append(key, data[key]) }
       }
     })
+
     createCurrentUser(body)
+      .then((response) => {
+        if (!response.error) {
+          Actions.login({type: 'reset'})
+        }
+      })
   }
 
   render() {

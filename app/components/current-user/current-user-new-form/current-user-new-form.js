@@ -1,9 +1,13 @@
 // utils
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { View, ScrollView, Text, TextInput, Picker } from 'react-native';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
+
+// form validators
+import { UserNewValidator } from '../user-new-validator/user-new-validator'
 
 // inputs
 import { TextField } from '../../inputs/text-field/text-field';
@@ -73,7 +77,6 @@ class CurrentUserNewForm extends Component {
         <Field
           type="file"
           name="avatar"
-          onChange={this.onChange}
           component={ImageField}
         />
         <Field
@@ -102,5 +105,5 @@ class CurrentUserNewForm extends Component {
 export default reduxForm({
   ...initialValues,
   form: 'CurrentUserNewForm',
-  destroyOnUnmount: false,
+  validate: UserNewValidator,
 })(CurrentUserNewForm);

@@ -6,5 +6,6 @@ module.exports = {
     RIDES: APIRoot + 'rides',
     LOGIN_EMAIL: APIRoot + 'sessions/login',
     USERS: APIRoot + 'users',
+    LOGIN_FB: APIRoot + 'sessions/oath_login',
   },
 };

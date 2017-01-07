@@ -9,11 +9,12 @@ import { Button } from 'react-native-elements';
 import { APIEndpoints } from '../../../constants/constants';
 
 // actions
-import { logInEmailBackend } from '../../../actions/session';
+import { logInEmailBackend, logInFacebookBackend } from '../../../actions/session';
 import { fetchCurrentUser } from '../../../actions/current-user';
 
 // components
 import { LoginEmail } from '../../../components/session/login-email/login-email';
+import { LoginFacebook } from '../../../components/session/login-facebook/login-facebook';
 
 class Login extends Component {
   static propTypes = {
@@ -34,6 +35,18 @@ class Login extends Component {
       })
   };
 
+  handleFacebookLogin(data) {
+    const { logInFacebookBackend, fetchCurrentUser } = this.props
+
+    logInFacebookBackend(data)
+      .then((response) => {
+        if (!response.error) {
+          fetchCurrentUser()
+          Actions.ridesIndex({type: 'reset'})
+        }
+      })
+  }
+
   showErrors() {
     const { errors } = this.props
 
@@ -52,6 +65,9 @@ class Login extends Component {
         {this.showErrors()}
         <LoginEmail
           handleSubmit={this.handleEmailLogin.bind(this)}
+        />
+        <LoginFacebook
+          handleSubmit={this.handleFacebookLogin.bind(this)}
         />
         <Button
           raised
@@ -79,6 +95,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   logInEmailBackend,
+  logInFacebookBackend,
   fetchCurrentUser,
 }
 

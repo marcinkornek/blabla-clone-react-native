@@ -41,7 +41,8 @@ export function logInFacebookBackend(data) {
           provider: data.provider,
           email: data.profile.email,
           first_name: data.profile.first_name,
-          last_name: data.profile.last_name
+          last_name: data.profile.last_name,
+          avatar: data.profile.picture.data.url
         }
       }
     }

@@ -2,6 +2,7 @@ import {
   CURRENT_USER_FETCH_REQUEST,
   CURRENT_USER_FETCH_SUCCESS,
   CURRENT_USER_FETCH_FAILURE,
+  LOGOUT_SUCCESS
 } from '../constants/action-types'
 
 export const initialState = {
@@ -37,6 +38,11 @@ export function currentUser(state = initialState, action) {
   case CURRENT_USER_FETCH_FAILURE:
     console.log('CURRENT_USER_FETCH_FAILURE');
     console.log(action);
+  case LOGOUT_SUCCESS:
+    console.log('LOGOUT_SUCCESS');
+    return {
+      ...initialState
+    };
   default:
     return state;
   }

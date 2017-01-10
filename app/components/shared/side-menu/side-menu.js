@@ -9,11 +9,37 @@ import {
   Image,
 } from 'react-native'
 import { Actions } from 'react-native-router-flux';
+import { FBLoginManager } from 'react-native-facebook-login';
 
 export class SideMenu extends Component {
+  static propTypes = {
+    currentUser: PropTypes.object,
+    isStarted: PropTypes.bool.isRequired,
+    isFetching: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
+    onLogout: PropTypes.func.isRequired
+  }
+
   goToRidesIndex() {
     this.context.drawer.close();
-    Actions.ridesIndex();
+    Actions.ridesIndex({type: 'reset'});
+  }
+
+  logout() {
+    this.context.drawer.close();
+    FBLoginManager.logout((data) => {
+      this.props.onLogout()
+    })
+  }
+
+  goToLogin() {
+    this.context.drawer.close();
+    Actions.login({type: 'reset'});
+  }
+
+  goToRegister() {
+    this.context.drawer.close();
+    Actions.register({type: 'reset'});
   }
 
   renderUserInfo() {
@@ -31,6 +57,29 @@ export class SideMenu extends Component {
     }
   }
 
+  renderSessionLinks() {
+    const { isAuthenticated } = this.props;
+
+    if (isAuthenticated) {
+      return (
+        <TouchableHighlight onPress={() => this.logout()}>
+          <Text style={styles.controlText}>Logout</Text>
+        </TouchableHighlight>
+      )
+    } else {
+      return (
+        <View>
+          <TouchableHighlight onPress={() => this.goToLogin()}>
+            <Text style={styles.controlText}>Login</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => this.goToRegister()}>
+            <Text style={styles.controlText}>Register</Text>
+          </TouchableHighlight>
+        </View>
+      )
+    }
+  }
+
   render() {
     return (
       <ScrollView style={styles.container}>
@@ -38,6 +87,7 @@ export class SideMenu extends Component {
         <TouchableHighlight onPress={() => this.goToRidesIndex()}>
           <Text style={styles.controlText}>Rides</Text>
         </TouchableHighlight>
+        {this.renderSessionLinks()}
       </ScrollView>
     )
   }

@@ -1,8 +1,14 @@
+// utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import Drawer from 'react-native-drawer';
 import { SideMenu } from '../../../components/shared/side-menu/side-menu';
 import { Actions, DefaultRenderer } from 'react-native-router-flux';
+import { AsyncStorage } from 'react-native';
+
+// actions
+import { logInFromStorage, logoutCurrentUser } from '../../../actions/session';
+import { fetchCurrentUser } from '../../../actions/current-user';
 
 export class AppDrawer extends Component {
   static propTypes = {
@@ -10,6 +16,31 @@ export class AppDrawer extends Component {
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+  }
+
+  componentDidMount() {
+    const { logInFromStorage, fetchCurrentUser } = this.props;
+
+    AsyncStorage.getItem('session', (err, result) => {
+      if (result) {
+        data = JSON.parse(result)
+        logInFromStorage(data)
+          .then((response) => {
+            if (!response.error) {
+              fetchCurrentUser()
+              Actions.ridesIndex({type: 'reset'})
+            }
+          })
+      }
+    });
+  }
+
+  onLogout(currentUser) {
+    const { logoutCurrentUser } = this.props
+
+    logoutCurrentUser(currentUser)
+      .then(AsyncStorage.clear())
+      .then(Actions.login({type: 'reset'}))
   }
 
   render() {
@@ -31,6 +62,7 @@ export class AppDrawer extends Component {
             isStarted={isStarted}
             isFetching={isFetching}
             isAuthenticated={isAuthenticated}
+            onLogout={this.onLogout.bind(this)}
           />
         }
         tapToClose={true}
@@ -58,6 +90,10 @@ const mapStateToProps = (state) => {
   }
 }
 
-const mapDispatchToProps = {}
+const mapDispatchToProps = {
+  logInFromStorage,
+  fetchCurrentUser,
+  logoutCurrentUser
+}
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppDrawer)

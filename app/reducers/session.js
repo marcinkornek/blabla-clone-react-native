@@ -2,6 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGOUT_SUCCESS,
 } from '../constants/action-types'
 
 export const initialState = {
@@ -38,6 +39,11 @@ export function session(state = initialState, action) {
     return {
       ...initialState,
       errors: [errors],
+    };
+  case LOGOUT_SUCCESS:
+    console.log('LOGOUT_SUCCESS');
+    return {
+      ...initialState
     };
   default:
     return state;

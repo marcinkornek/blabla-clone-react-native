@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 
@@ -30,6 +30,8 @@ class Login extends Component {
       .then((response) => {
         if (!response.error) {
           fetchCurrentUser()
+          AsyncStorage.setItem('session',
+            JSON.stringify({ 'email': data.email, 'access_token': data.access_token }))
           Actions.ridesIndex({type: 'reset'})
         }
       })
@@ -41,7 +43,10 @@ class Login extends Component {
     logInFacebookBackend(data)
       .then((response) => {
         if (!response.error) {
+          let data = response.payload.data
           fetchCurrentUser()
+          AsyncStorage.setItem('session',
+            JSON.stringify({ 'email': data.email, 'access_token': data.access_token }))
           Actions.ridesIndex({type: 'reset'})
         }
       })

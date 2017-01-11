@@ -9,9 +9,6 @@ import {
 import { APIEndpoints } from '../constants/constants'
 
 export function logInFromStorage(data) {
-  console.log('============');
-  console.log(data);
-  console.log('============');
   return {
     types: [
       LOGIN_REQUEST,

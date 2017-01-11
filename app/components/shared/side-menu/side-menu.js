@@ -25,6 +25,11 @@ export class SideMenu extends Component {
     Actions.ridesIndex({type: 'reset'});
   }
 
+  goToRideNew() {
+    this.context.drawer.close();
+    Actions.rideNew();
+  }
+
   logout() {
     this.context.drawer.close();
     FBLoginManager.logout((data) => {
@@ -68,6 +73,9 @@ export class SideMenu extends Component {
     if (isAuthenticated) {
       return (
         <View>
+          <TouchableHighlight onPress={() => this.goToRideNew()}>
+            <Text style={styles.controlText}>Add ride</Text>
+          </TouchableHighlight>
           <TouchableHighlight onPress={() => this.goToCurrentUserEdit()}>
             <Text style={styles.controlText}>Your account</Text>
           </TouchableHighlight>

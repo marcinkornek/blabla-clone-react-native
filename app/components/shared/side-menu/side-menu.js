@@ -32,6 +32,11 @@ export class SideMenu extends Component {
     })
   }
 
+  goToCurrentUserEdit() {
+    this.context.drawer.close();
+    Actions.currentUserEdit({type: 'reset'});
+  }
+
   goToLogin() {
     this.context.drawer.close();
     Actions.login({type: 'reset'});
@@ -62,9 +67,14 @@ export class SideMenu extends Component {
 
     if (isAuthenticated) {
       return (
-        <TouchableHighlight onPress={() => this.logout()}>
-          <Text style={styles.controlText}>Logout</Text>
-        </TouchableHighlight>
+        <View>
+          <TouchableHighlight onPress={() => this.goToCurrentUserEdit()}>
+            <Text style={styles.controlText}>Your account</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => this.logout()}>
+            <Text style={styles.controlText}>Logout</Text>
+          </TouchableHighlight>
+        </View>
       )
     } else {
       return (

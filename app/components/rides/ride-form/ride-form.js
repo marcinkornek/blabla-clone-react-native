@@ -31,23 +31,24 @@ class RideForm extends Component {
         <Field
           name="start_city"
           label="Start city"
-          autoFocus={true}
-          component={TextField}
+          component={GeosuggestField}
         />
         <Field
           name="destination_city"
           label="Destination city"
-          component={TextField}
+          component={GeosuggestField}
         />
         <Field
           name="start_date"
-          label="Start date"
+          label="Start date and time"
           minDate={minumumStartDate}
+          style={{width: 240}}
           component={DatetimepickerField}
         />
         <Field
           name="places"
           label="Places"
+          keyboardType="numeric"
           component={TextField}
         />
         <Button

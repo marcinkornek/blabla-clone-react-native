@@ -4,6 +4,7 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
+import com.arttitude360.reactnative.rngoogleplaces.RNGooglePlacesPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.imagepicker.ImagePickerPackage;
 import com.facebook.react.ReactInstanceManager;
@@ -28,6 +29,7 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
         new MainReactPackage(),
+        new RNGooglePlacesPackage(),
         new VectorIconsPackage(),
         new ImagePickerPackage(),
         new FacebookLoginPackage() // <------ add the package

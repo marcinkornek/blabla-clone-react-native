@@ -13,6 +13,7 @@ import { RideValidator } from '../ride-validator/ride-validator'
 import { TextField } from '../../inputs/text-field/text-field';
 import { SelectField } from '../../inputs/select-field/select-field';
 import { DatetimepickerField } from '../../inputs/datetimepicker-field/datetimepicker-field';
+import { GeosuggestField } from '../../inputs/geosuggest-field/geosuggest-field';
 
 class RideForm extends Component {
   static propTypes = {

@@ -3236,6 +3236,10 @@ react-native-facebook-login@^1.4.0:
   dependencies:
     itypeof "^1.1.2"
 
+react-native-google-places@^0.8.8:
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/react-native-google-places/-/react-native-google-places-0.8.8.tgz#e43e27bb34aea69c9e7ec0e185415220e619d9f6"
+
 react-native-image-picker@^0.24.1:
   version "0.24.1"
   resolved "https://registry.yarnpkg.com/react-native-image-picker/-/react-native-image-picker-0.24.1.tgz#0a73fc66ec9e0d28bf3a75df996ad29f695d016c"

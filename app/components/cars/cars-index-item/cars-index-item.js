@@ -21,11 +21,13 @@ export class CarsIndexItem extends Component {
     const { car } = this.props;
 
     return (
-      <View>
-        <Image source={{uri: car.car_photo}} style={styles.photo} />
-        <Text>{car.full_name}</Text>
-        <Text>{car.places_full}</Text>
-      </View>
+      <TouchableHighlight onPress={() => Actions.carShow({carId: car.id})}>
+        <View>
+          <Image source={{uri: car.car_photo}} style={styles.photo} />
+          <Text>{car.full_name}</Text>
+          <Text>{car.places_full}</Text>
+        </View>
+      </TouchableHighlight>
     )
   }
 }

@@ -8,6 +8,7 @@ import { store } from './store/store';
 import AppDrawer from './containers/shared/app-drawer/app-drawer'
 import Register from './containers/current-user/current-user-new/current-user-new'
 import CarsIndex from './containers/cars/cars-index/cars-index'
+import CarShow from './containers/cars/car-show/car-show'
 import CurrentUserEdit from './containers/current-user/current-user-edit/current-user-edit'
 import Login from './containers/session/login/login'
 import RidesIndex from './containers/rides/rides-index/rides-index'
@@ -31,6 +32,7 @@ class App extends Component {
               <Scene key="rideShow" component={RideShow} />
               <Scene key="rideNew" component={requireAuth(RideNew)} />
               <Scene key="carsIndex" component={requireAuth(CarsIndex)} />
+              <Scene key="carShow" component={requireAuth(CarShow)} />
             </Scene>
           </Scene>
         </RouterWithRedux>

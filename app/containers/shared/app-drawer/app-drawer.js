@@ -28,7 +28,7 @@ export class AppDrawer extends Component {
           .then((response) => {
             if (!response.error) {
               fetchCurrentUser()
-              Actions.ridesIndex({type: 'reset'})
+              Actions.carsIndex({type: 'reset'})
             }
           })
       }

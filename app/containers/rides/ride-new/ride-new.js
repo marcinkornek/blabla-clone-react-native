@@ -19,7 +19,9 @@ const styles = StyleSheet.create({
 
 export class RideNew extends Component {
   static propTypes = {
-    rideOptions: PropTypes.object
+    isFetching: PropTypes.bool.isRequired,
+    isStarted: PropTypes.bool.isRequired,
+    rideOptions: PropTypes.object.isRequired,
   }
 
   componentWillMount() {

@@ -5,6 +5,7 @@ import { reduxForm, Field } from 'redux-form'
 import { View, ScrollView, Text, TextInput, Picker } from 'react-native';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
+import _ from 'lodash';
 
 // form validators
 import { RideValidator } from '../ride-validator/ride-validator'
@@ -26,6 +27,21 @@ class RideForm extends Component {
     const { handleSubmit, rideOptions } = this.props
     const minumumStartDate = moment().format('DD.MM.YYYY')
 
+    let currencies = rideOptions.currencies.map((currency, i) =>
+      <Picker.Item
+        key={'currency' + i}
+        value={currency}
+        label={currency}
+      />
+    )
+    let cars = rideOptions.cars.map((car, i) =>
+      <Picker.Item
+        key={'car' + car.id}
+        value={car.id}
+        label={car.name}
+      />
+    )
+
     return (
       <ScrollView>
         <Field
@@ -46,11 +62,35 @@ class RideForm extends Component {
           component={DatetimepickerField}
         />
         <Field
+          name="car_id"
+          label="Car"
+          component={SelectField}
+        >
+          <Picker.Item
+            key={'car-placeholder'}
+            value={null}
+            label="Choose car"
+          />
+          {_.map(cars, (n) => n)}
+        </Field>
+        <Field
           name="places"
           label="Places"
           keyboardType="numeric"
           component={TextField}
         />
+        <Field
+          name="currency"
+          label="Currency"
+          component={SelectField}
+        >
+          <Picker.Item
+            key={'currency-placeholder'}
+            value={null}
+            label="Choose currency"
+          />
+          {_.map(currencies, (n) => n)}
+        </Field>
         <Button
           raised
           title='Submit'

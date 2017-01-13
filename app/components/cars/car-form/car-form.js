@@ -14,14 +14,6 @@ import { TextField } from '../../inputs/text-field/text-field';
 import { SelectField } from '../../inputs/select-field/select-field';
 import { ImageField } from '../../inputs/image-field/image-field';
 
-let initialValues = {
-  initialValues: {
-    color: "black",
-    comfort: "basic",
-    category: "sedan",
-  }
-};
-
 export class CarForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
@@ -79,12 +71,16 @@ export class CarForm extends Component {
           maxLength={4}
           component={TextField}
         />
-
         <Field
           name='color'
           label='Color'
           component={SelectField}
         >
+          <Picker.Item
+            key={'color-placeholder'}
+            value={null}
+            label="choose color"
+          />
           {_.map(colors, (n) => n)}
         </Field>
         <Field
@@ -92,6 +88,11 @@ export class CarForm extends Component {
           label='Comfort'
           component={SelectField}
         >
+          <Picker.Item
+            key={'comfort-placeholder'}
+            value={null}
+            label="choose comfort level"
+          />
           {_.map(comforts, (n) => n)}
         </Field>
         <Field
@@ -99,6 +100,11 @@ export class CarForm extends Component {
           label='Category'
           component={SelectField}
         >
+          <Picker.Item
+            key={'category-placeholder'}
+            value={null}
+            label="choose category"
+          />
           {_.map(categories, (n) => n)}
         </Field>
         <Field
@@ -118,7 +124,6 @@ export class CarForm extends Component {
 }
 
 CarForm = reduxForm({
-  ...initialValues,
   form: 'CarForm',
   validate: CarValidator
 })(CarForm)

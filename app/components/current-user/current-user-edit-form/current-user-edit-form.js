@@ -15,12 +15,6 @@ import { SelectField } from '../../inputs/select-field/select-field';
 import { DatepickerField } from '../../inputs/datepicker-field/datepicker-field';
 import { ImageField } from '../../inputs/image-field/image-field';
 
-let initialValues = {
-  initialValues: {
-    gender: "male"
-  }
-};
-
 const styles = StyleSheet.create({
   avatar: {
     width: 50,
@@ -71,6 +65,11 @@ class CurrentUserEditForm extends Component {
           label="Gender"
           component={SelectField}
         >
+          <Picker.Item
+            key={'gender-placeholder'}
+            value={null}
+            label="choose gender"
+          />
           <Picker.Item
             key={'male'}
             value={'male'}

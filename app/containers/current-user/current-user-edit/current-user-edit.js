@@ -20,7 +20,7 @@ export class CurrentUserEdit extends Component {
     Object.keys(data).forEach(( key ) => {
       if (key == 'avatar') {
         if (_.isObject(data[key])) { body.append(key, data[key]) }
-      } else if (key == 'date_of_birth' && data[key].getMonth === 'function') {
+      } else if (key == 'date_of_birth' && _.isObject(data[key]) && data[key].getMonth === 'function') {
         body.append(key, moment(data[key]).format('DD-MM-YYYY'))
       } else {
         if (data[key]) { body.append(key, data[key]) }

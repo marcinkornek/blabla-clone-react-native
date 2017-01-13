@@ -76,11 +76,6 @@ export class CarForm extends Component {
           label='Color'
           component={SelectField}
         >
-          <Picker.Item
-            key={'color-placeholder'}
-            value={null}
-            label="choose color"
-          />
           {_.map(colors, (n) => n)}
         </Field>
         <Field
@@ -88,11 +83,6 @@ export class CarForm extends Component {
           label='Comfort'
           component={SelectField}
         >
-          <Picker.Item
-            key={'comfort-placeholder'}
-            value={null}
-            label="choose comfort level"
-          />
           {_.map(comforts, (n) => n)}
         </Field>
         <Field
@@ -100,11 +90,6 @@ export class CarForm extends Component {
           label='Category'
           component={SelectField}
         >
-          <Picker.Item
-            key={'category-placeholder'}
-            value={null}
-            label="choose category"
-          />
           {_.map(categories, (n) => n)}
         </Field>
         <Field

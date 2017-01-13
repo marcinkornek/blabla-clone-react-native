@@ -66,11 +66,6 @@ class RideForm extends Component {
           label="Car"
           component={SelectField}
         >
-          <Picker.Item
-            key={'car-placeholder'}
-            value={null}
-            label="Choose car"
-          />
           {_.map(cars, (n) => n)}
         </Field>
         <Field
@@ -84,11 +79,6 @@ class RideForm extends Component {
           label="Currency"
           component={SelectField}
         >
-          <Picker.Item
-            key={'currency-placeholder'}
-            value={null}
-            label="Choose currency"
-          />
           {_.map(currencies, (n) => n)}
         </Field>
         <Button

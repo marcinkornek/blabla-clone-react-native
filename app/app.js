@@ -10,6 +10,7 @@ import Register from './containers/current-user/current-user-new/current-user-ne
 import CarsIndex from './containers/cars/cars-index/cars-index'
 import CarShow from './containers/cars/car-show/car-show'
 import CarNew from './containers/cars/car-new/car-new'
+import CurrentUserShow from './containers/current-user/current-user-show/current-user-show'
 import CurrentUserEdit from './containers/current-user/current-user-edit/current-user-edit'
 import Login from './containers/session/login/login'
 import RidesIndex from './containers/rides/rides-index/rides-index'
@@ -29,7 +30,8 @@ class App extends Component {
               <Scene key="ridesIndex" component={RidesIndex} title="All rides" />
               <Scene key="login" component={Login} title="Login" />
               <Scene key="register" component={Register} title="Register" />
-              <Scene key="currentUserEdit" component={requireAuth(CurrentUserEdit)} title="Edit user" />
+              <Scene key="myAccount" component={requireAuth(CurrentUserShow)} title="My Account" />
+              <Scene key="myAccountEdit" component={requireAuth(CurrentUserEdit)} title="Edit Account" />
               <Scene key="rideShow" component={RideShow} title="Ride" />
               <Scene key="rideNew" component={requireAuth(RideNew)} title="Add Ride" />
               <Scene key="carsIndex" component={requireAuth(CarsIndex)} title="Your cars" />

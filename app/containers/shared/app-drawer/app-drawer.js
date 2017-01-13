@@ -34,6 +34,20 @@ export class AppDrawer extends Component {
     });
   }
 
+  renderSideMenu() {
+    const { currentUser, isStarted, isFetching, isAuthenticated } = this.props;
+
+    return (
+      <SideMenu
+        currentUser={currentUser}
+        isStarted={isStarted}
+        isFetching={isFetching}
+        isAuthenticated={isAuthenticated}
+        onLogout={this.onLogout.bind(this)}
+      />
+    )
+  }
+
   onLogout(currentUser) {
     const { logoutCurrentUser } = this.props
 
@@ -43,7 +57,6 @@ export class AppDrawer extends Component {
   }
 
   render() {
-    const { currentUser, isStarted, isFetching, isAuthenticated } = this.props;
     const state = this.props.navigationState;
     const children = state.children;
 
@@ -55,15 +68,7 @@ export class AppDrawer extends Component {
     return (
       <Drawer
         type="overlay"
-        content={
-          <SideMenu
-            currentUser={currentUser}
-            isStarted={isStarted}
-            isFetching={isFetching}
-            isAuthenticated={isAuthenticated}
-            onLogout={this.onLogout.bind(this)}
-          />
-        }
+        content={this.renderSideMenu()}
         tapToClose={true}
         openDrawerOffset={0.3} // 30% gap on the right side of drawer
         panCloseMask={0.4}

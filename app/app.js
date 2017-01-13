@@ -26,10 +26,10 @@ class App extends Component {
         <RouterWithRedux>
           <Scene key="drawer" component={AppDrawer} open={false}>
             <Scene key="main" >
+              <Scene key="ridesIndex" component={RidesIndex} title="All rides" />
               <Scene key="login" component={Login} title="Login" />
               <Scene key="register" component={Register} title="Register" />
               <Scene key="currentUserEdit" component={requireAuth(CurrentUserEdit)} title="Edit user" />
-              <Scene key="ridesIndex" component={RidesIndex} title="All rides" />
               <Scene key="rideShow" component={RideShow} />
               <Scene key="rideNew" component={requireAuth(RideNew)} />
               <Scene key="carsIndex" component={requireAuth(CarsIndex)} />

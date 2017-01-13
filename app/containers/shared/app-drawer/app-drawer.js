@@ -28,7 +28,6 @@ export class AppDrawer extends Component {
           .then((response) => {
             if (!response.error) {
               fetchCurrentUser()
-              Actions.carNew({type: 'reset'})
             }
           })
       }

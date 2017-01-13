@@ -23,27 +23,45 @@ export class CarForm extends Component {
 
   render() {
     const { handleSubmit, carOptions } = this.props
-    let colors = carOptions.colors.map((color, i) =>
+    const colors = carOptions.colors.map((color) =>
       <Picker.Item
-        key={'color' + i}
+        key={color}
         value={color}
         label={color}
       />
     )
-    let comforts = carOptions.comforts.map((comfort, i) =>
+    const colorPlaceholder =
       <Picker.Item
-        key={'comfort' + i}
+        key="color-placeholder"
+        value={null}
+        label="Choose color"
+      />
+    const comforts = carOptions.comforts.map((comfort) =>
+      <Picker.Item
+        key={comfort}
         value={comfort}
         label={comfort}
       />
     )
-    let categories = carOptions.categories.map((category, i) =>
+    const comfortPlaceholder =
       <Picker.Item
-        key={'category' + i}
+        key="comfort-placeholder"
+        value={null}
+        label="Choose comfort"
+      />
+    const categories = carOptions.categories.map((category) =>
+      <Picker.Item
+        key={category}
         value={category}
         label={category}
       />
     )
+    const categoryPlaceholder =
+      <Picker.Item
+        key="category-placeholder"
+        value={null}
+        label="Choose category"
+      />
 
     return (
       <ScrollView>
@@ -76,21 +94,21 @@ export class CarForm extends Component {
           label='Color'
           component={SelectField}
         >
-          {_.map(colors, (n) => n)}
+          {[colorPlaceholder, ...colors]}
         </Field>
         <Field
           name='comfort'
           label='Comfort'
           component={SelectField}
         >
-          {_.map(comforts, (n) => n)}
+          {[comfortPlaceholder, ...comforts]}
         </Field>
         <Field
           name='category'
           label='Category'
           component={SelectField}
         >
-          {_.map(categories, (n) => n)}
+          {[categoryPlaceholder, ...categories]}
         </Field>
         <Field
           type="file"

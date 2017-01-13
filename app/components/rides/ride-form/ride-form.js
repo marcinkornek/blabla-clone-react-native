@@ -34,6 +34,12 @@ class RideForm extends Component {
         label={currency}
       />
     )
+    const currencyPlaceholder =
+      <Picker.Item
+        key={'currency-placeholder'}
+        value={null}
+        label="Choose currency"
+      />
     let cars = rideOptions.cars.map((car, i) =>
       <Picker.Item
         key={'car' + car.id}
@@ -41,6 +47,12 @@ class RideForm extends Component {
         label={car.name}
       />
     )
+    const carPlaceholder =
+      <Picker.Item
+        key={'car-placeholder'}
+        value={null}
+        label="Choose car"
+      />
 
     return (
       <ScrollView>
@@ -66,7 +78,7 @@ class RideForm extends Component {
           label="Car"
           component={SelectField}
         >
-          {_.map(cars, (n) => n)}
+          {[carPlaceholder, ...cars]}
         </Field>
         <Field
           name="places"
@@ -75,11 +87,17 @@ class RideForm extends Component {
           component={TextField}
         />
         <Field
+          name="price"
+          label="Price"
+          keyboardType="numeric"
+          component={TextField}
+        />
+        <Field
           name="currency"
           label="Currency"
           component={SelectField}
         >
-          {_.map(currencies, (n) => n)}
+          {[currencyPlaceholder, ...currencies]}
         </Field>
         <Button
           raised

@@ -45,9 +45,9 @@ export class RideNew extends Component {
 
     Object.keys(data).forEach((key) => {
       if (key == 'destination_city' || key == 'start_city') {
-        body.append(key, data[key].label)
-        body.append(key + '_lat', data[key].location.lat)
-        body.append(key + '_lng', data[key].location.lng)
+        body.append(key, data[key].address)
+        body.append(key + '_lat', data[key].latitude)
+        body.append(key + '_lng', data[key].longitude)
       } else {
         if (data[key]) { body.append(key, data[key]) }
       }

@@ -2,11 +2,14 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
+import { Actions } from 'react-native-router-flux';
+import { Button } from 'react-native-elements';
 
 // actions
 import { fetchRides } from '../../../actions/rides';
 
 // components
+import { AsyncContent } from '../../../components/shared/async-content/async-content'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
 export class RidesIndex extends Component {
@@ -34,9 +37,21 @@ export class RidesIndex extends Component {
   }
 
   render() {
+    const { isFetching, isStarted } = this.props;
+
     return (
       <View style={styles.view}>
-        {this.renderRidesList()}
+        <Button
+          raised
+          title='Add ride'
+          backgroundColor='#ff4c4c'
+          onPress={() => Actions.rideNew()}
+        />
+        <AsyncContent
+          isFetching={isFetching || !isStarted}
+        >
+          {this.renderRidesList()}
+        </AsyncContent>
       </View>
     );
   }

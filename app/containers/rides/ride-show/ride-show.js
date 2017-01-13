@@ -7,6 +7,9 @@ import moment from 'moment';
 // actions
 import { fetchRide } from '../../../actions/rides';
 
+// components
+import { AsyncContent } from '../../../components/shared/async-content/async-content'
+
 export class RideShow extends Component {
   componentDidMount() {
     const { rideId, fetchRide } = this.props
@@ -28,19 +31,19 @@ export class RideShow extends Component {
           <Text>Driver: {ride.driver.full_name}</Text>
         </View>
       )
-    } else {
-      return (
-        <Text>
-          Ride doesn't exist
-        </Text>
-      )
     }
   }
 
   render() {
+    const { isFetching, isStarted } = this.props;
+
     return (
       <View style={styles.view}>
-        {this.renderRide()}
+        <AsyncContent
+          isFetching={isFetching || !isStarted}
+        >
+          {this.renderRide()}
+        </AsyncContent>
       </View>
     );
   }

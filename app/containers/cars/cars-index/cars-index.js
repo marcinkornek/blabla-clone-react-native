@@ -3,6 +3,7 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { TouchableHighlight, Text, View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { Button } from 'react-native-elements';
 
 // actions
 import { fetchCars } from '../../../actions/cars'
@@ -58,6 +59,12 @@ class CarsIndex extends Component {
 
     return (
       <View style={styles.view}>
+        <Button
+          raised
+          title='Add car'
+          backgroundColor='#ff4c4c'
+          onPress={() => Actions.carNew()}
+        />
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >

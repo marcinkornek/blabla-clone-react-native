@@ -30,11 +30,11 @@ class App extends Component {
               <Scene key="login" component={Login} title="Login" />
               <Scene key="register" component={Register} title="Register" />
               <Scene key="currentUserEdit" component={requireAuth(CurrentUserEdit)} title="Edit user" />
-              <Scene key="rideShow" component={RideShow} />
-              <Scene key="rideNew" component={requireAuth(RideNew)} />
-              <Scene key="carsIndex" component={requireAuth(CarsIndex)} />
-              <Scene key="carShow" component={requireAuth(CarShow)} />
-              <Scene key="carNew" component={requireAuth(CarNew)} />
+              <Scene key="rideShow" component={RideShow} title="Ride" />
+              <Scene key="rideNew" component={requireAuth(RideNew)} title="Add Ride" />
+              <Scene key="carsIndex" component={requireAuth(CarsIndex)} title="Your cars" />
+              <Scene key="carShow" component={requireAuth(CarShow)} title="Car" />
+              <Scene key="carNew" component={requireAuth(CarNew)} title="Add car" />
             </Scene>
           </Scene>
         </RouterWithRedux>

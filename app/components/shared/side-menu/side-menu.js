@@ -20,6 +20,11 @@ export class SideMenu extends Component {
     onLogout: PropTypes.func.isRequired
   }
 
+  goToCarsIndes() {
+    this.context.drawer.close();
+    Actions.carsIndex();
+  }
+
   goToRidesIndex() {
     this.context.drawer.close();
     Actions.ridesIndex({type: 'reset'});
@@ -78,6 +83,9 @@ export class SideMenu extends Component {
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.goToCurrentUserEdit()}>
             <Text style={styles.controlText}>Your account</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => this.goToCarsIndes()}>
+            <Text style={styles.controlText}>Your cars</Text>
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.logout()}>
             <Text style={styles.controlText}>Logout</Text>

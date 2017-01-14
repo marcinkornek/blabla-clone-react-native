@@ -46,7 +46,6 @@ class CurrentUserEditForm extends Component {
         <Field
           name="first_name"
           label="First name"
-          autoFocus={true}
           component={TextField}
         />
         <Field

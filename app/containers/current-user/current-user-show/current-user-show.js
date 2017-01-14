@@ -31,12 +31,6 @@ export class UserShow extends Component {
     currentUser: {}
   }
 
-  componentDidMount() {
-    const { fetchCurrentUser } = this.props
-
-    fetchCurrentUser()
-  }
-
   renderUserInfo() {
     const { currentUser } = this.props
 

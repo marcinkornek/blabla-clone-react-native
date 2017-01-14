@@ -1,6 +1,6 @@
 // utils
 import React, { Component } from 'react';
-import { Router, Scene } from 'react-native-router-flux';
+import { Router, Scene, Actions } from 'react-native-router-flux';
 import { Provider, connect } from 'react-redux';
 import { store } from './store/store';
 
@@ -30,7 +30,7 @@ class App extends Component {
               <Scene key="ridesIndex" component={RidesIndex} title="All rides" />
               <Scene key="login" component={Login} title="Login" />
               <Scene key="register" component={Register} title="Register" />
-              <Scene key="myAccount" component={requireAuth(CurrentUserShow)} title="My Account" />
+              <Scene key="myAccount" component={requireAuth(CurrentUserShow)} title="My Account" rightTitle="Edit" onRight={()=>Actions.myAccountEdit()} />
               <Scene key="myAccountEdit" component={requireAuth(CurrentUserEdit)} title="Edit Account" />
               <Scene key="rideShow" component={RideShow} title="Ride" />
               <Scene key="rideNew" component={requireAuth(RideNew)} title="Add Ride" />

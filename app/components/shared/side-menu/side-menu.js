@@ -44,7 +44,7 @@ export class SideMenu extends Component {
 
   goToCurrentUserEdit() {
     this.context.drawer.close();
-    Actions.myAccount({type: 'reset'});
+    Actions.myAccount();
   }
 
   goToLogin() {

@@ -43,7 +43,7 @@ class CarShow extends Component {
     return(
       <View>
         <Image source={{uri: car.car_photo}} style={styles.photo} />
-        <Text>{car.full_name}</Text>
+        <Text>{car.full_name} {car.production_year}</Text>
         <Text>{car.places_full}</Text>
         <Text>{car.color}</Text>
         <Text>{car.category}</Text>

@@ -1,10 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
-import {
-  TouchableHighlight,
-  Text,
-  View,
-} from 'react-native';
+import { TouchableHighlight } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 
@@ -21,12 +18,12 @@ export class RidesIndexItem extends Component {
     const { ride } = this.props;
 
     return(
-      <TouchableHighlight onPress={() => this.goToRide(ride.id)}>
-        <View>
-          <Text>{ride.start_city} - {ride.destination_city} - {ride.price} {ride.currency}</Text>
-          <Text>{moment(ride.starts_date).format('DD.MM.YY - H:mm')}</Text>
-        </View>
-      </TouchableHighlight>
+      <ListItem
+        onPress={() => this.goToRide(ride.id)}
+        key={ride.id}
+        title={`${ride.start_city} - ${ride.destination_city}`}
+        subtitle={`${moment(ride.starts_date).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
+      />
     )
   }
 };

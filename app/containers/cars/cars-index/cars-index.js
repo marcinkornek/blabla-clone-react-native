@@ -1,9 +1,9 @@
 // utils
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { TouchableHighlight, Text, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Button } from 'react-native-elements';
+import { Button, List } from 'react-native-elements';
 
 // actions
 import { fetchCars } from '../../../actions/cars'
@@ -68,7 +68,9 @@ class CarsIndex extends Component {
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
-          {this.renderCarsList()}
+          <List containerStyle={{marginBottom: 20}}>
+            {this.renderCarsList()}
+          </List>
         </AsyncContent>
       </View>
     )

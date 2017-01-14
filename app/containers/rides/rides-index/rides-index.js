@@ -1,9 +1,9 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Button } from 'react-native-elements';
+import { Button, List } from 'react-native-elements';
 
 // actions
 import { fetchRides } from '../../../actions/rides';
@@ -40,7 +40,7 @@ export class RidesIndex extends Component {
     const { isFetching, isStarted } = this.props;
 
     return (
-      <View style={styles.view}>
+      <ScrollView style={styles.view}>
         <Button
           raised
           title='Add ride'
@@ -50,9 +50,11 @@ export class RidesIndex extends Component {
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
-          {this.renderRidesList()}
+          <List containerStyle={{marginBottom: 20}}>
+            {this.renderRidesList()}
+          </List>
         </AsyncContent>
-      </View>
+      </ScrollView>
     );
   }
 }

@@ -1,6 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { TouchableHighlight, Text, View, StyleSheet, Image } from 'react-native';
+import { ListItem } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 
 const styles = StyleSheet.create({
@@ -46,13 +47,13 @@ export class CarsIndexItem extends Component {
     const { car } = this.props;
 
     return (
-      <TouchableHighlight onPress={this.onPress.bind(this)}>
-        <View>
-          <Image source={{uri: car.car_photo}} style={styles.photo} />
-          <Text>{car.full_name} {car.production_year}</Text>
-          <Text>{car.places_full}</Text>
-        </View>
-      </TouchableHighlight>
+      <ListItem
+        onPress={this.onPress.bind(this)}
+        key={car.id}
+        title={`${car.full_name} ${car.production_year}`}
+        subtitle={car.places_full}
+        avatar={{uri: car.car_photo}}
+      />
     )
   }
 }

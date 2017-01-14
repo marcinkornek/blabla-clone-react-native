@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { View, ScrollView, Text, TextInput, StyleSheet, Image } from 'react-native';
+import moment from 'moment';
 
 // actions
 import { fetchCurrentUser } from '../../../actions/current-user';
@@ -38,8 +39,10 @@ export class UserShow extends Component {
       <View>
         <Image source={{uri: currentUser.avatar}} style={styles.photo} />
         <Text>{currentUser.full_name}</Text>
-        <Text></Text>
         <Text>{currentUser.email}</Text>
+        <Text>{currentUser.gender}</Text>
+        <Text>{moment(currentUser.date_of_birth).format('DD.MM.YYYY')}</Text>
+        <Text>{currentUser.tel_num}</Text>
       </View>
     )
   }

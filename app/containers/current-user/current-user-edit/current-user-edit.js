@@ -30,7 +30,7 @@ export class CurrentUserEdit extends Component {
     updateCurrentUser(body)
       .then((response) => {
         if (!response.error) {
-          console.log('updated successfully');
+          Actions.myAccount({type: 'reset'});
         }
       })
   }

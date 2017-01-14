@@ -10,6 +10,7 @@ import Register from './containers/current-user/current-user-new/current-user-ne
 import CarsIndex from './containers/cars/cars-index/cars-index'
 import CarShow from './containers/cars/car-show/car-show'
 import CarNew from './containers/cars/car-new/car-new'
+import CarEdit from './containers/cars/car-edit/car-edit'
 import CurrentUserShow from './containers/current-user/current-user-show/current-user-show'
 import CurrentUserEdit from './containers/current-user/current-user-edit/current-user-edit'
 import Login from './containers/session/login/login'
@@ -37,6 +38,7 @@ class App extends Component {
               <Scene key="carsIndex" component={requireAuth(CarsIndex)} title="Your cars" />
               <Scene key="carShow" component={requireAuth(CarShow)} title="Car" />
               <Scene key="carNew" component={requireAuth(CarNew)} title="Add car" />
+              <Scene key="carEdit" component={requireAuth(CarEdit)} title="Edit car" />
             </Scene>
           </Scene>
         </RouterWithRedux>

@@ -26,7 +26,10 @@ export function car(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      item: item
+      item: {
+        ...item,
+        places: item.places.toString()
+      }
     };
   default:
     return state;

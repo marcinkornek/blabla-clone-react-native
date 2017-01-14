@@ -12,6 +12,9 @@ import {
   CAR_CREATE_REQUEST,
   CAR_CREATE_SUCCESS,
   CAR_CREATE_FAILURE,
+  CAR_UPDATE_REQUEST,
+  CAR_UPDATE_SUCCESS,
+  CAR_UPDATE_FAILURE,
 } from '../constants/action-types'
 import { APIEndpoints } from '../constants/constants'
 
@@ -113,5 +116,30 @@ export function createCar(body) {
 export function initializeCar() {
   return {
     type: CAR_INITIALIZE
+  }
+}
+
+export function updateCar(body, carId) {
+  return (dispatch, getState) => {
+    const { session } = getState()
+    return dispatch({
+      types: [
+        CAR_UPDATE_REQUEST,
+        CAR_UPDATE_SUCCESS,
+        CAR_UPDATE_FAILURE
+      ],
+      payload: {
+        request: {
+          method: 'put',
+          url: `${APIEndpoints.CARS}/${carId}`,
+          headers: {
+            'X-User-Email': session.item.email,
+            'X-User-Token': session.item.access_token
+          },
+          data: body,
+          simple: false
+        }
+      }
+    })
   }
 }

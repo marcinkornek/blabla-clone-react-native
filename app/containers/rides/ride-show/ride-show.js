@@ -17,7 +17,7 @@ export class RideShow extends Component {
     ride: PropTypes.object.isRequired,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    currentUser: PropTypes.object,
+    currentUserId: PropTypes.number,
   }
 
   static defaultProps = {
@@ -46,9 +46,9 @@ export class RideShow extends Component {
   }
 
   renderRightTitle() {
-    const { ride, currentUser } = this.props;
+    const { ride, currentUserId } = this.props;
 
-    if (ride.driver.id === currentUser.id) {
+    if (ride.driver.id === currentUserId) {
       return "Edit"
     } else {
       return undefined
@@ -56,9 +56,9 @@ export class RideShow extends Component {
   }
 
   renderRightAction() {
-    const { ride, currentUser } = this.props;
+    const { ride, currentUserId } = this.props;
 
-    if (ride.driver.id === currentUser.id) {
+    if (ride.driver.id === currentUserId) {
       return () => Actions.rideEdit({rideId: ride.id})
     } else {
       return undefined
@@ -70,7 +70,6 @@ export class RideShow extends Component {
 
     return (
       <View>
-        {this.renderActions()}
         <Text>{ride.start_city} - {ride.destination_city}</Text>
         <Text>Date: {moment(ride.starts_date).format('DD.MM.YY')}</Text>
         <Text>Time: {moment(ride.starts_date).format('H:mm')}</Text>
@@ -81,19 +80,31 @@ export class RideShow extends Component {
     )
   }
 
-  renderActions() {
-    const { ride, currentUser } = this.props;
+  componentDidUpdate(oldProps) {
+    const { ride } = this.props;
 
-    if (ride.driver.id == currentUser.id) {
-      return (
-        <Button
-          raised
-          title='Edit car'
-          backgroundColor='#ff4c4c'
-          onPress={() => Actions.rideEdit({rideId: ride.id})}
-        />
-      )
+    if (ride !== oldProps.ride) {
+      Actions.refresh({
+        rideId: ride.id,
+        title: `${ride.start_city} - ${ride.destination_city}`,
+        rightTitle: this.renderRightTitle(),
+        onRight: this.renderRightAction()
+      })
     }
+  }
+
+  renderRightTitle() {
+    const { ride, currentUserId } = this.props;
+
+    if (ride.driver.id === currentUserId) {
+      return "Edit"
+    }
+  }
+
+  renderRightAction() {
+    const { ride, currentUserId } = this.props;
+
+    if (ride.driver.id === currentUserId) return () => Actions.rideEdit({rideId: ride.id})
   }
 
   render() {
@@ -122,7 +133,7 @@ const mapStateToProps = (state) => {
     ride: state.ride.item,
     isStarted: state.ride.isStarted,
     isFetching: state.ride.isFetching,
-    currentUser: state.session.item,
+    currentUserId: state.session.item.id,
   }
 };
 

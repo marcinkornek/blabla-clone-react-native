@@ -39,7 +39,6 @@ class CarShow extends Component {
   }
 
   componentDidUpdate(oldProps) {
-    console.log('DIDUPDAT');
     const { car } = this.props;
 
     if (car !== oldProps.car) {

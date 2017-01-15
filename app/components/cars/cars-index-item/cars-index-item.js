@@ -18,37 +18,12 @@ export class CarsIndexItem extends Component {
     currentUserId: PropTypes.number,
   }
 
-  onPress() {
-    const { car } = this.props;
-
-    return (
-      Actions.carShow({
-        carId: car.id,
-        title: `${car.full_name} ${car.production_year}`,
-        rightTitle: this.renderRightTitle(),
-        onRight: () => this.renderRightAction()
-      })
-    )
-  }
-
-  renderRightTitle() {
-    const { car, currentUserId } = this.props;
-
-    if (car.owner_id === currentUserId) return "Edit"
-  }
-
-  renderRightAction() {
-    const { car, currentUserId } = this.props;
-
-    if (car.owner_id === currentUserId) return Actions.carEdit({carId: car.id})
-  }
-
   render() {
     const { car } = this.props;
 
     return (
       <ListItem
-        onPress={this.onPress.bind(this)}
+        onPress={() => Actions.carShow({carId: car.id})}
         key={car.id}
         title={`${car.full_name} ${car.production_year}`}
         subtitle={car.places_full}

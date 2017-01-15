@@ -5,7 +5,7 @@ import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
 // actions
-import { fetchRide, fetchRideOptions, updateRide } from '../../../actions/rides'
+import { fetchRideOptions, updateRide } from '../../../actions/rides'
 
 // components
 import RideForm from '../../../components/rides/ride-form/ride-form'
@@ -19,18 +19,15 @@ const styles = StyleSheet.create({
 
 export class RideEdit extends Component {
   static propTypes = {
-    isFetchingRide: PropTypes.bool.isRequired,
-    isStartedRide: PropTypes.bool.isRequired,
     ride: PropTypes.object.isRequired,
     isFetching: PropTypes.bool.isRequired,
     isStarted: PropTypes.bool.isRequired,
     rideOptions: PropTypes.object.isRequired,
   }
 
-  componentWillMount() {
-    const { fetchRide, fetchRideOptions, rideId } = this.props;
+  componentDidMount() {
+    const { fetchRideOptions } = this.props;
 
-    fetchRide(rideId)
     fetchRideOptions()
   }
 
@@ -67,12 +64,12 @@ export class RideEdit extends Component {
   }
 
   render() {
-    const { isFetching, isStarted, isFetchingRide, isStartedRide } = this.props
+    const { isFetching, isStarted } = this.props
 
     return (
       <ScrollView style={styles.view}>
         <AsyncContent
-          isFetching={isFetching || !isStarted || isFetchingRide || !isStartedRide}
+          isFetching={isFetching || !isStarted}
         >
           {this.renderRideForm()}
         </AsyncContent>
@@ -83,8 +80,6 @@ export class RideEdit extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    isFetchingRide: state.ride.isFetching,
-    isStartedRide: state.ride.isStarted,
     ride: state.ride.item,
     isFetching: state.rideOptions.isFetching,
     isStarted: state.rideOptions.isStarted,
@@ -93,7 +88,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  fetchRide,
   fetchRideOptions,
   updateRide,
 }

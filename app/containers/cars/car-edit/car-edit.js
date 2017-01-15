@@ -6,7 +6,7 @@ import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
 
 // actions
-import { fetchCar, fetchCarsOptions, updateCar } from '../../../actions/cars'
+import { fetchCarsOptions, updateCar } from '../../../actions/cars'
 
 // components
 import CarForm from '../../../components/cars/car-form/car-form'
@@ -20,8 +20,6 @@ const styles = StyleSheet.create({
 
 export class CarEdit extends Component {
   static propTypes = {
-    isFetchingCar: PropTypes.bool.isRequired,
-    isStartedCar: PropTypes.bool.isRequired,
     car: PropTypes.object.isRequired,
     isFetching: PropTypes.bool.isRequired,
     isStarted: PropTypes.bool.isRequired,
@@ -29,10 +27,22 @@ export class CarEdit extends Component {
   }
 
   componentDidMount() {
-    const { fetchCar, fetchCarsOptions, carId } = this.props
+    const { fetchCarsOptions, carId } = this.props
 
-    fetchCar(carId)
     fetchCarsOptions()
+  }
+
+  componentDidUpdate(oldProps) {
+    const { car } = this.props;
+
+    if (car !== oldProps.car) {
+      Actions.refresh({
+        carId: car.id,
+        title: `${car.full_name} ${car.production_year}`,
+        rightTitle: undefined,
+        onRight: undefined
+      })
+    }
   }
 
   handleSubmit(data) {
@@ -66,12 +76,12 @@ export class CarEdit extends Component {
   }
 
   render() {
-    const { isFetching, isStarted, isFetchingCar, isStartedCar } = this.props
+    const { isFetching, isStarted } = this.props
 
     return (
       <ScrollView style={styles.view}>
         <AsyncContent
-          isFetching={isFetching || !isStarted || isFetchingCar || !isStartedCar}
+          isFetching={isFetching || !isStarted}
         >
           {this.renderCarForm()}
         </AsyncContent>
@@ -83,8 +93,6 @@ export class CarEdit extends Component {
 const mapStateToProps = (state) => {
   return {
     car: state.car.item,
-    isFetchingCar: state.car.isFetching,
-    isStartedCar: state.car.isStarted,
     isFetching: state.carOptions.isFetching,
     isStarted: state.carOptions.isStarted,
     carOptions: state.carOptions
@@ -92,7 +100,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  fetchCar,
   fetchCarsOptions,
   updateCar,
 }

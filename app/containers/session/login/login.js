@@ -29,6 +29,7 @@ class Login extends Component {
     logInEmailBackend(data)
       .then((response) => {
         if (!response.error) {
+          let data = response.payload.data
           fetchCurrentUser()
           AsyncStorage.setItem('session',
             JSON.stringify({ 'email': data.email, 'access_token': data.access_token }))

@@ -14,19 +14,22 @@ export function ride(state = initialState, action) {
   let item
   switch (action.type) {
   case RIDE_FETCH_REQUEST:
+    console.log('RIDE_FETCH_REQUEST');
     return {
       ...state,
       isStarted: true,
       isFetching: true
     };
   case RIDE_FETCH_SUCCESS:
+    console.log('RIDE_FETCH_SUCCESS');
     item = action.payload.data
     return {
       ...state,
       isFetching: false,
       item: {
         ...item,
-        start_date: new Date(item.start_date)
+        start_date: new Date(item.start_date),
+        places: item.places.toString()
       }
     };
   default:

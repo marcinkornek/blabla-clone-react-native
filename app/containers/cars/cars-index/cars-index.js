@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { View, StyleSheet } from 'react-native';
+import { View, ScrollView, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 
@@ -58,7 +58,7 @@ class CarsIndex extends Component {
     const { isFetching, isStarted } = this.props;
 
     return (
-      <View style={styles.view}>
+      <ScrollView style={styles.view}>
         <Button
           raised
           title='Add car'
@@ -72,7 +72,7 @@ class CarsIndex extends Component {
             {this.renderCarsList()}
           </List>
         </AsyncContent>
-      </View>
+      </ScrollView>
     )
   }
 }

@@ -18,6 +18,7 @@ import RidesIndex from './containers/rides/rides-index/rides-index'
 import RideShow from './containers/rides/ride-show/ride-show'
 import RideNew from './containers/rides/ride-new/ride-new'
 import RideEdit from './containers/rides/ride-edit/ride-edit'
+import UsersIndex from './containers/users/users-index/users-index'
 import requireAuth from './containers/shared/require-auth/require-auth'
 
 const RouterWithRedux = connect()(Router);
@@ -41,6 +42,7 @@ class App extends Component {
               <Scene key="carShow" component={requireAuth(CarShow)} title="Car" />
               <Scene key="carNew" component={requireAuth(CarNew)} title="Add car" />
               <Scene key="carEdit" component={requireAuth(CarEdit)} title="Edit car" />
+              <Scene key="usersIndex" component={requireAuth(UsersIndex)} title="Users" />
             </Scene>
           </Scene>
         </RouterWithRedux>

@@ -35,6 +35,11 @@ export class SideMenu extends Component {
     Actions.rideNew();
   }
 
+  goToUsersIndex() {
+    this.context.drawer.close();
+    Actions.usersIndex();
+  }
+
   logout() {
     this.context.drawer.close();
     FBLoginManager.logout((data) => {
@@ -80,6 +85,9 @@ export class SideMenu extends Component {
         <View>
           <TouchableHighlight onPress={() => this.goToRideNew()}>
             <Text style={styles.controlText}>Add ride</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={() => this.goToUsersIndex()}>
+            <Text style={styles.controlText}>Users</Text>
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.goToCurrentUserEdit()}>
             <Text style={styles.controlText}>My account</Text>

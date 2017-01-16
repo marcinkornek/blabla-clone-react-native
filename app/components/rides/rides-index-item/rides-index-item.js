@@ -14,6 +14,16 @@ export class RidesIndexItem extends Component {
     Actions.rideShow({rideId: rideId});
   }
 
+  renderAvatar() {
+    const { ride } = this.props;
+
+    if (this.props.withCarPhoto) {
+      return ride.car.car_photo
+    } else {
+      return ride.driver.avatar
+    }
+  }
+
   render() {
     const { ride } = this.props;
 
@@ -23,6 +33,7 @@ export class RidesIndexItem extends Component {
         key={ride.id}
         title={`${ride.start_city} - ${ride.destination_city}`}
         subtitle={`${moment(ride.starts_date).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
+        avatar={{uri: this.renderAvatar()}}
       />
     )
   }

@@ -3,6 +3,8 @@ import React, { Component, PropTypes } from 'react'
 import { View, ScrollView, Image, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux'
 import { Actions } from 'react-native-router-flux';
+import moment from 'moment';
+import _ from 'lodash';
 
 // actions
 import { fetchUser } from '../../../actions/users';
@@ -10,14 +12,16 @@ import { fetchUser } from '../../../actions/users';
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 import { RenderUserAge } from '../../../components/shared/render-user-age/render-user-age'
+import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
+import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-index-item'
 
 const styles = StyleSheet.create({
   view: {
     paddingTop: 80,
   },
   avatar: {
-    width: 50,
-    height: 50,
+    width: 100,
+    height: 100,
     marginRight: 10,
   },
 });
@@ -31,7 +35,10 @@ export class UserShow extends Component {
   }
 
   static defaultProps = {
-    user: {}
+    user: {
+      rides_as_driver: { items: [] },
+      cars: { items: [] },
+    }
   }
 
   componentDidMount() {
@@ -60,7 +67,63 @@ export class UserShow extends Component {
         <Text>{user.full_name}</Text>
         <RenderUserAge user={user} />
         <Text>{user.email}</Text>
+        <Text>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
+        <Text>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
       </View>
+    )
+  }
+
+  renderRidesAsDriver() {
+    const { user } = this.props
+
+    if (!_.isEmpty(user.rides_as_driver.items)) {
+      return (
+        <View>
+          <Text>Rides as driver</Text>
+          {this.renderRidesAsDriverList()}
+        </View>
+      )
+    }
+  }
+
+  renderRidesAsDriverList() {
+    const { user } = this.props
+
+    return (
+      user.rides_as_driver.items.map((ride, i) =>
+        <RidesIndexItem
+          key={`ride-${i}`}
+          ride={ride}
+          withCarPhoto={true}
+        />
+      )
+    )
+  }
+
+  renderUserCars() {
+    const { user } = this.props
+
+    if (!_.isEmpty(user.cars.items)) {
+      return (
+        <View>
+          <Text>Cars</Text>
+          {this.renderUserCarsList()}
+        </View>
+      )
+    }
+  }
+
+  renderUserCarsList() {
+    const { user, currentUserId } = this.props
+
+    return (
+      user.cars.items.map((car, i) =>
+        <CarsIndexItem
+          key={`car-${i}`}
+          car={car}
+          currentUserId={currentUserId}
+        />
+      )
     )
   }
 
@@ -73,6 +136,8 @@ export class UserShow extends Component {
           isFetching={isFetching || !isStarted}
         >
           {this.renderUserInfo()}
+          {this.renderRidesAsDriver()}
+          {this.renderUserCars()}
         </AsyncContent>
       </ScrollView>
     )

@@ -9,6 +9,7 @@ export class UsersIndexItem extends Component {
 
     return (
       <ListItem
+        onPress={() => Actions.userShow({userId: user.id})}
         key={user.id}
         title={user.full_name}
         avatar={{uri: user.avatar}}

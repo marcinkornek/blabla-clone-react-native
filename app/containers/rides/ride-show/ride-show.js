@@ -23,6 +23,8 @@ export class RideShow extends Component {
   static defaultProps = {
     currentUser: {},
     ride: {
+      start_city: {},
+      destination_city: {},
       car: {},
       driver: {}
     }
@@ -70,7 +72,7 @@ export class RideShow extends Component {
 
     return (
       <View>
-        <Text>{ride.start_city} - {ride.destination_city}</Text>
+        <Text>{ride.start_city.address} - {ride.destination_city.address}</Text>
         <Text>Date: {moment(ride.starts_date).format('DD.MM.YY')}</Text>
         <Text>Time: {moment(ride.starts_date).format('H:mm')}</Text>
         <Text>Price: {ride.price} {ride.currency}</Text>
@@ -86,7 +88,7 @@ export class RideShow extends Component {
     if (ride !== oldProps.ride) {
       Actions.refresh({
         rideId: ride.id,
-        title: `${ride.start_city} - ${ride.destination_city}`,
+        title: `${ride.start_city.address} - ${ride.destination_city.address}`,
         rightTitle: this.renderRightTitle(),
         onRight: this.renderRightAction()
       })

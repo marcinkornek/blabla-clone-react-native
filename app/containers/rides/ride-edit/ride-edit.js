@@ -59,7 +59,7 @@ export class RideEdit extends Component {
     updateRide(body)
       .then((response) => {
         let rideId = response.payload.data.id
-        Actions.rideShow({rideId: rideId});
+        Actions.pop();
       })
   }
 

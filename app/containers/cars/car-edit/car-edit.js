@@ -59,7 +59,7 @@ export class CarEdit extends Component {
     updateCar(body, data.id)
       .then((response) => {
         let carId = response.payload.data.id
-        Actions.carShow({carId: carId});
+        Actions.pop()
       })
   }
 

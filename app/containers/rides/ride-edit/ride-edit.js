@@ -3,6 +3,8 @@ import React, { Component, PropTypes }  from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import _ from 'lodash';
+import moment from 'moment';
 
 // actions
 import { fetchRideOptions, updateRide } from '../../../actions/rides'
@@ -44,22 +46,29 @@ export class RideEdit extends Component {
   }
 
   handleSubmit(data) {
-    const { updateRide } = this.props
+    const { updateRide, ride } = this.props
     var body = new FormData()
+
+    data =_.pick(data, [
+      'id', 'start_city', 'destination_city', 'places', 'start_date', 'price', 'currency', 'car_id'
+    ])
 
     Object.keys(data).forEach((key) => {
       if (key == 'destination_city' || key == 'start_city') {
         body.append(key, data[key].address)
         body.append(key + '_lat', data[key].latitude)
         body.append(key + '_lng', data[key].longitude)
+      } else if (key == 'start_date') {
+        body.append(key, moment(data[key]).format('DD-MM-YYYY h:mm'))
       } else {
         if (data[key]) { body.append(key, data[key]) }
       }
     })
-    updateRide(body)
+
+    updateRide(body, data.id)
       .then((response) => {
         let rideId = response.payload.data.id
-        Actions.pop();
+        Actions.pop({refresh: {...ride}});
       })
   }
 

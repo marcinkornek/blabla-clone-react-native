@@ -1,6 +1,8 @@
 import {
   RIDE_FETCH_REQUEST,
   RIDE_FETCH_SUCCESS,
+  RIDE_UPDATE_REQUEST,
+  RIDE_UPDATE_SUCCESS,
 } from '../constants/action-types'
 
 export const initialState = {
@@ -26,6 +28,34 @@ export function ride(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
+      item: {
+        ...item,
+        start_date: new Date(item.start_date),
+        places: item.places.toString(),
+        start_city: {
+          address: item.start_city,
+          lattitude: item.start_city_lat,
+          longitude: item.start_city_lng,
+        },
+        destination_city: {
+          address: item.destination_city,
+          lattitude: item.destination_city_lat,
+          longitude: item.destination_city_lng,
+        }
+      }
+    };
+  case RIDE_UPDATE_REQUEST:
+    console.log('RIDE_UPDATE_REQUEST');
+    return {
+      ...state,
+      isSaving: true
+    };
+  case RIDE_UPDATE_SUCCESS:
+    console.log('RIDE_UPDATE_SUCCESS');
+    item = action.payload.data
+    return {
+      ...state,
+      isSaving: false,
       item: {
         ...item,
         start_date: new Date(item.start_date),

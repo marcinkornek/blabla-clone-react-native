@@ -37,7 +37,7 @@ class App extends Component {
               <Scene key="rideShow" component={RideShow} title="Ride" />
               <Scene key="rideNew" component={requireAuth(RideNew)} title="Add Ride" />
               <Scene key="rideEdit" component={requireAuth(RideEdit)} title="Edit Ride" />
-              <Scene key="carsIndex" component={requireAuth(CarsIndex)} title="Your cars" />
+              <Scene key="carsIndex" component={requireAuth(CarsIndex)} title="My cars" />
               <Scene key="carShow" component={requireAuth(CarShow)} title="Car" />
               <Scene key="carNew" component={requireAuth(CarNew)} title="Add car" />
               <Scene key="carEdit" component={requireAuth(CarEdit)} title="Edit car" />

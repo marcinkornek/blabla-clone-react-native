@@ -82,10 +82,10 @@ export class SideMenu extends Component {
             <Text style={styles.controlText}>Add ride</Text>
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.goToCurrentUserEdit()}>
-            <Text style={styles.controlText}>Your account</Text>
+            <Text style={styles.controlText}>My account</Text>
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.goToCarsIndes()}>
-            <Text style={styles.controlText}>Your cars</Text>
+            <Text style={styles.controlText}>My cars</Text>
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.logout()}>
             <Text style={styles.controlText}>Logout</Text>

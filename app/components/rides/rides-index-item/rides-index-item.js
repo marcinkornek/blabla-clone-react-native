@@ -32,8 +32,7 @@ export class RidesIndexItem extends Component {
         onPress={() => this.goToRide(ride.id)}
         key={ride.id}
         title={`${ride.start_city} - ${ride.destination_city}`}
-        subtitle={`${moment(ride.starts_date).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
-        avatar={{uri: this.renderAvatar()}}
+        subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
       />
     )
   }

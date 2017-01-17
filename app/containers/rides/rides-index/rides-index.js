@@ -12,6 +12,12 @@ import { fetchRides } from '../../../actions/rides';
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
+const styles = StyleSheet.create({
+  view: {
+    marginTop: 80,
+  }
+});
+
 export class RidesIndex extends Component {
   static propTypes = {
     rides: PropTypes.array.isRequired,
@@ -58,12 +64,6 @@ export class RidesIndex extends Component {
     );
   }
 }
-
-const styles = StyleSheet.create({
-  view: {
-    paddingTop: 80,
-  }
-});
 
 const mapStateToProps = (state) => {
   return {

@@ -126,7 +126,7 @@ export class RideShow extends Component {
 
 const styles = StyleSheet.create({
   view: {
-    paddingTop: 80,
+    marginTop: 80,
   }
 });
 

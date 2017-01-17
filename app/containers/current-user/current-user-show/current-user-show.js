@@ -12,7 +12,7 @@ import { AsyncContent } from '../../../components/shared/async-content/async-con
 
 const styles = StyleSheet.create({
   view: {
-    paddingTop: 80,
+    marginTop: 80,
   },
   photo: {
     width: 50,

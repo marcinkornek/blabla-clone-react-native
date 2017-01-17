@@ -43,7 +43,7 @@ export class CurrentUserNew extends Component {
 
 const styles = StyleSheet.create({
   view: {
-    paddingTop: 80,
+    marginTop: 80,
   }
 });
 

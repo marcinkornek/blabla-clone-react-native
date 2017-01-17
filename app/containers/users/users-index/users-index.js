@@ -15,7 +15,7 @@ import { AsyncContent } from '../../../components/shared/async-content/async-con
 const per = 10
 const styles = StyleSheet.create({
   view: {
-    paddingTop: 30,
+    marginTop: 30,
   }
 });
 

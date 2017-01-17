@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, View, StyleSheet, ListView } from 'react-native';
+import { ScrollView, View, StyleSheet, ListView, RefreshControl } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
@@ -35,6 +35,7 @@ export class RidesIndex extends Component {
     this.state = {
       data: [],
       dataSource: ds.cloneWithRows([]),
+      refreshing: false
     };
   }
 
@@ -48,8 +49,10 @@ export class RidesIndex extends Component {
     if (rides !== prevProps.rides) {
       let newData = this.state.data.concat(rides)
 
-      this.setState({ data: newData });
-      this.setState({ dataSource: this.state.dataSource.cloneWithRows(newData)})
+      this.setState({
+        data: newData,
+        dataSource: this.state.dataSource.cloneWithRows(newData)
+      })
     }
   }
 
@@ -63,6 +66,13 @@ export class RidesIndex extends Component {
         onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
         enableEmptySections={true}
         emptyView={this.renderEmptyView}
+        refreshControl={
+          <RefreshControl
+            refreshing={this.state.refreshing}
+            onRefresh={this.onRefresh.bind(this)}
+          />
+        }
+
       />
     )
   }
@@ -89,6 +99,10 @@ export class RidesIndex extends Component {
 
   canLoadMore() {
     parseInt(page, 10) < parseInt(this.props.pagination.total_pages, 10)
+  }
+
+  onRefresh() {
+    this.props.fetchRides(1, per)
   }
 
   render() {

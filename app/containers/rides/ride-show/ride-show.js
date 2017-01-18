@@ -11,6 +11,13 @@ import { fetchRide } from '../../../actions/rides';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
+import { RenderUserProfile } from '../../../components/shared/render-user-profile/render-user-profile'
+
+const styles = StyleSheet.create({
+  view: {
+    marginTop: 80,
+  }
+});
 
 export class RideShow extends Component {
   static propTypes = {
@@ -82,6 +89,12 @@ export class RideShow extends Component {
     )
   }
 
+  renderDriver() {
+    return(
+      <RenderUserProfile user={this.props.ride.driver} />
+    )
+  }
+
   componentDidUpdate(oldProps) {
     const { ride } = this.props;
 
@@ -118,17 +131,12 @@ export class RideShow extends Component {
           isFetching={isFetching || !isStarted}
         >
           {this.renderRide()}
+          {this.renderDriver()}
         </AsyncContent>
       </View>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  view: {
-    marginTop: 80,
-  }
-});
 
 const mapStateToProps = (state) => {
   return {

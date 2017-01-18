@@ -1,6 +1,7 @@
 // utils
 import React, { PropTypes } from 'react'
-import { View, Image, Text, StyleSheet } from 'react-native';
+import { View, Image, Text, TouchableHighlight, StyleSheet } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 
 // components
@@ -22,6 +23,9 @@ export const RenderUserProfile = ({user}) => (
     <Text>{user.email}</Text>
     <Text>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
     <Text>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
+    <TouchableHighlight onPress={() => Actions.userShow({userId: user.id})}>
+      <Text>view profile</Text>
+    </TouchableHighlight>
   </View>
 )
 

@@ -12,6 +12,7 @@ import { fetchRide } from '../../../actions/rides';
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 import { RenderUserProfile } from '../../../components/shared/render-user-profile/render-user-profile'
+import { RenderCarInfo } from '../../../components/shared/render-car-info/render-car-info'
 
 const styles = StyleSheet.create({
   view: {
@@ -95,6 +96,13 @@ export class RideShow extends Component {
     )
   }
 
+  renderCar() {
+    return(
+      <RenderCarInfo car={this.props.ride.car} />
+    )
+  }
+
+
   componentDidUpdate(oldProps) {
     const { ride } = this.props;
 
@@ -132,6 +140,7 @@ export class RideShow extends Component {
         >
           {this.renderRide()}
           {this.renderDriver()}
+          {this.renderCar()}
         </AsyncContent>
       </View>
     );

@@ -5,11 +5,13 @@ import { ScrollView, View, StyleSheet, ListView, RefreshControl } from 'react-na
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
+import _ from 'lodash';
 
 // actions
 import { fetchRides } from '../../../actions/rides';
 
 // components
+import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
 const per = 15
@@ -57,24 +59,31 @@ export class RidesIndex extends Component {
   }
 
   renderRidesList() {
-    return (
-      <ListView
-        renderScrollComponent={props => <InfiniteScrollView {...props} />}
-        dataSource={this.state.dataSource}
-        renderRow={this.renderRide}
-        canLoadMore={true}
-        onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
-        enableEmptySections={true}
-        emptyView={this.renderEmptyView}
-        refreshControl={
-          <RefreshControl
-            refreshing={this.state.refreshing}
-            onRefresh={this.onRefresh.bind(this)}
-          />
-        }
+    const { rides, isFetching, isStarted } = this.props;
 
-      />
-    )
+    if (_.isEmpty(this.state.data)) {
+      return (
+        <RenderActivityIndicator />
+      )
+    } else {
+      return (
+        <ListView
+          renderScrollComponent={props => <InfiniteScrollView {...props} />}
+          dataSource={this.state.dataSource}
+          renderRow={this.renderRide}
+          canLoadMore={true}
+          onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
+          enableEmptySections={true}
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onRefresh.bind(this)}
+            />
+          }
+
+        />
+      )
+    }
   }
 
   renderRide(ride) {
@@ -83,12 +92,6 @@ export class RidesIndex extends Component {
         ride={ride}
         key={`ride${ride.id}`}
       />
-    )
-  }
-
-  renderEmptyView() {
-    return (
-      <Text>No rides</Text>
     )
   }
 
@@ -106,8 +109,6 @@ export class RidesIndex extends Component {
   }
 
   render() {
-    const { rides, isFetching, isStarted } = this.props;
-
     return (
       <View style={styles.view}>
         <Button

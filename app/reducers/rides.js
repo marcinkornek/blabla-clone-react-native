@@ -15,12 +15,14 @@ export function rides(state = initialState, action) {
   let items, pagination, filters
   switch (action.type) {
   case RIDES_FETCH_REQUEST:
+    console.log('RIDES_FETCH_REQUEST');
     return {
       ...state,
       isStarted: true,
       isFetching: true,
     };
   case RIDES_FETCH_SUCCESS:
+    console.log('RIDES_FETCH_SUCCESS');
     items = action.payload.data.items
     pagination = action.payload.data.meta
     filters = action.payload.data.filters

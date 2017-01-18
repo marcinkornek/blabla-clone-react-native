@@ -24,9 +24,11 @@ const styles = StyleSheet.create({
 
 export class RidesIndex extends Component {
   static propTypes = {
+    pagination: PropTypes.object.isRequired,
     rides: PropTypes.array.isRequired,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
+    isAuthenticated: PropTypes.bool.isRequired,
   }
 
   constructor(props, context) {
@@ -95,6 +97,21 @@ export class RidesIndex extends Component {
     )
   }
 
+  renderAddRideButton() {
+    const { isAuthenticated } = this.props;
+
+    if (isAuthenticated) {
+      return (
+        <Button
+          raised
+          title='Add ride'
+          backgroundColor='#ff4c4c'
+          onPress={() => Actions.rideNew()}
+        />
+      )
+    }
+  }
+
   loadMoreContentAsync = async () => {
     page = page + 1
     this.props.fetchRides(page, per)
@@ -111,12 +128,7 @@ export class RidesIndex extends Component {
   render() {
     return (
       <View style={styles.view}>
-        <Button
-          raised
-          title='Add ride'
-          backgroundColor='#ff4c4c'
-          onPress={() => Actions.rideNew()}
-        />
+        {this.renderAddRideButton()}
         {this.renderRidesList()}
       </View>
     );
@@ -129,6 +141,7 @@ const mapStateToProps = (state) => {
     rides: state.rides.items,
     isStarted: state.rides.isStarted,
     isFetching: state.rides.isFetching,
+    isAuthenticated: state.session.isAuthenticated,
   }
 };
 

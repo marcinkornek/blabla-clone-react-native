@@ -33,6 +33,7 @@ export class RidesIndexItem extends Component {
         key={ride.id}
         title={`${ride.start_city} - ${ride.destination_city}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
+        avatar={{uri: this.renderAvatar()}}
       />
     )
   }

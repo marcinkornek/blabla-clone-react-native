@@ -30,10 +30,6 @@ export function fetchCars(userId, page = 1, per = 10) {
       payload: {
         request: {
           url: `${APIEndpoints.USERS}/${userId}/cars`,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          },
           params: {
             page,
             per,
@@ -56,10 +52,6 @@ export function fetchCar(carId) {
       payload: {
         request: {
           url: `${APIEndpoints.CARS}/${carId}`,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          }
         }
       }
     })
@@ -78,10 +70,6 @@ export function fetchCarsOptions() {
       payload: {
         request: {
           url: `${APIEndpoints.CARS}/options`,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          }
         }
       }
     })
@@ -101,10 +89,6 @@ export function createCar(body) {
         request: {
           method: 'post',
           url: APIEndpoints.CARS,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          },
           data: body,
           simple: false
         }
@@ -132,10 +116,6 @@ export function updateCar(body, carId) {
         request: {
           method: 'put',
           url: `${APIEndpoints.CARS}/${carId}`,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          },
           data: body,
           simple: false
         }

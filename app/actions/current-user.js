@@ -23,10 +23,6 @@ export function fetchCurrentUser() {
       payload: {
         request: {
           url: `${APIEndpoints.USERS}/${session.item.id}/profile`,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          }
         }
       }
     })
@@ -67,11 +63,6 @@ export function updateCurrentUser(body) {
         request: {
           method: 'put',
           url: `${APIEndpoints.USERS}/${session.item.id}`,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          },
           data: body,
           simple: false
         }

@@ -18,10 +18,6 @@ export function createRideRequest(ride_id, places) {
         request: {
           method: 'post',
           url: APIEndpoints.RIDE_REQUESTS,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          },
           data: {
             ride_id,
             places

@@ -20,10 +20,6 @@ export function fetchUsers(page = 1, per = 10) {
       payload: {
         request: {
           url: APIEndpoints.USERS,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          },
           params: {
             page,
             per,
@@ -46,10 +42,6 @@ export function fetchUser(userId) {
       payload: {
         request: {
           url: `${APIEndpoints.USERS}/${userId}`,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          }
         }
       }
     })

@@ -48,10 +48,6 @@ export function fetchRide(rideId) {
       payload: {
         request: {
           url: `${APIEndpoints.RIDES}/${rideId}`,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          }
         }
       }
     })
@@ -71,10 +67,6 @@ export function createRide(body) {
         request: {
           method: 'post',
           url: APIEndpoints.RIDES,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          },
           data: body
         }
       }
@@ -94,10 +86,6 @@ export function fetchRideOptions() {
       payload: {
         request: {
           url: `${APIEndpoints.RIDES}/options`,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          }
         }
       }
     })
@@ -117,10 +105,6 @@ export function updateRide(body, rideId) {
         request: {
           method: 'put',
           url: `${APIEndpoints.RIDES}/${rideId}`,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          },
           data: body
         }
       }

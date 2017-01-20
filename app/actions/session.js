@@ -84,10 +84,6 @@ export function logoutCurrentUser() {
         request: {
           method: 'delete',
           url: APIEndpoints.SESSIONS,
-          headers: {
-            'X-User-Email': session.item.email,
-            'X-User-Token': session.item.access_token
-          }
         }
       }
     })

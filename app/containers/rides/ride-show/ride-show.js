@@ -31,7 +31,7 @@ export class RideShow extends Component {
   }
 
   static defaultProps = {
-    currentUser: {},
+    currentUserId: {},
     ride: {
       start_city: {},
       destination_city: {},

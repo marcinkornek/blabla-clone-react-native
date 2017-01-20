@@ -8,11 +8,13 @@ import moment from 'moment';
 
 // actions
 import { fetchRide } from '../../../actions/rides';
+import { createRideRequest } from '../../../actions/ride-requests';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 import { RenderUserProfile } from '../../../components/shared/render-user-profile/render-user-profile'
 import { RenderCarInfo } from '../../../components/shared/render-car-info/render-car-info'
+import { RenderRideOffer } from '../../../components/rides/render-ride-offer/render-ride-offer'
 
 const styles = StyleSheet.create({
   view: {
@@ -50,7 +52,9 @@ export class RideShow extends Component {
     if (ride !== oldProps.ride) {
       Actions.refresh({
         rideId: ride.id,
-        title: `${ride.start_city} - ${ride.destination_city}`,
+        title: `${ride.start_city.address} - ${ride.destination_city.address}`,
+        rightTitle: this.renderRightTitle(),
+        onRight: this.renderRightAction()
       })
     }
   }
@@ -102,18 +106,20 @@ export class RideShow extends Component {
     )
   }
 
+  renderOffer() {
+    return(
+      <RenderRideOffer
+        ride={this.props.ride}
+        currentUserId={this.props.currentUserId}
+        handleSubmit={this.createRideRequest.bind(this)}
+      />
+    )
+  }
 
-  componentDidUpdate(oldProps) {
-    const { ride } = this.props;
+  createRideRequest(data) {
+    const { createRideRequest, ride } = this.props
 
-    if (ride !== oldProps.ride) {
-      Actions.refresh({
-        rideId: ride.id,
-        title: `${ride.start_city.address} - ${ride.destination_city.address}`,
-        rightTitle: this.renderRightTitle(),
-        onRight: this.renderRightAction()
-      })
-    }
+    createRideRequest(ride.id, data.places)
   }
 
   renderRightTitle() {
@@ -141,6 +147,7 @@ export class RideShow extends Component {
           {this.renderRide()}
           {this.renderDriver()}
           {this.renderCar()}
+          {this.renderOffer()}
         </AsyncContent>
       </View>
     );
@@ -158,6 +165,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchRide,
+  createRideRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RideShow)

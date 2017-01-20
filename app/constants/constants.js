@@ -7,6 +7,7 @@ module.exports = {
     LOGIN_EMAIL: APIRoot + 'sessions/login',
     LOGIN_FB: APIRoot + 'sessions/oath_login',
     RIDES: APIRoot + 'rides',
+    RIDE_REQUESTS: APIRoot + 'ride_requests',
     SESSIONS: APIRoot + 'sessions',
     USERS: APIRoot + 'users',
   },

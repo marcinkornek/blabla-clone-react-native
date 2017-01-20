@@ -10,7 +10,7 @@ export const initialState = {
   isFetching: false,
   errors: [],
   isAuthenticated: false,
-  item: undefined,
+  item: {},
 }
 
 export function session(state = initialState, action) {

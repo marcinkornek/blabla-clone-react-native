@@ -3,6 +3,7 @@ import {
   RIDE_FETCH_SUCCESS,
   RIDE_UPDATE_REQUEST,
   RIDE_UPDATE_SUCCESS,
+  RIDE_REQUEST_CREATE_SUCCESS,
 } from '../constants/action-types'
 
 export const initialState = {
@@ -70,6 +71,16 @@ export function ride(state = initialState, action) {
           lattitude: item.destination_city_lat,
           longitude: item.destination_city_lng,
         }
+      }
+    };
+   case RIDE_REQUEST_CREATE_SUCCESS:
+    console.log('RIDE_REQUEST_CREATE_SUCCESS');
+    item = action.payload.data
+    return {
+      ...state,
+      item: {
+        ...item,
+        start_date: new Date(item.start_date)
       }
     };
   default:

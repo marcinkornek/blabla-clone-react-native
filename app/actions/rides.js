@@ -37,17 +37,24 @@ export function fetchRides(page = 1, per = 10, { start_city, destination_city, s
 }
 
 export function fetchRide(rideId) {
-  return {
-    types: [
-      RIDE_FETCH_REQUEST,
-      RIDE_FETCH_SUCCESS,
-      RIDE_FETCH_FAILURE
-    ],
-    payload: {
-      request: {
-        url: `${APIEndpoints.RIDES}/${rideId}`,
+  return (dispatch, getState) => {
+    const { session } = getState()
+    return dispatch({
+      types: [
+        RIDE_FETCH_REQUEST,
+        RIDE_FETCH_SUCCESS,
+        RIDE_FETCH_FAILURE
+      ],
+      payload: {
+        request: {
+          url: `${APIEndpoints.RIDES}/${rideId}`,
+          headers: {
+            'X-User-Email': session.item.email,
+            'X-User-Token': session.item.access_token
+          }
+        }
       }
-    }
+    })
   }
 }
 

@@ -80,7 +80,18 @@ export function ride(state = initialState, action) {
       ...state,
       item: {
         ...item,
-        start_date: new Date(item.start_date)
+        start_date: new Date(item.start_date),
+        places: item.places.toString(),
+        start_city: {
+          address: item.start_city,
+          lattitude: item.start_city_lat,
+          longitude: item.start_city_lng,
+        },
+        destination_city: {
+          address: item.destination_city,
+          lattitude: item.destination_city_lat,
+          longitude: item.destination_city_lng,
+        }
       }
     };
   default:

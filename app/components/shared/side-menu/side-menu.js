@@ -10,6 +10,7 @@ import {
 } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import { FBLoginManager } from 'react-native-facebook-login';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 export class SideMenu extends Component {
   static propTypes = {
@@ -37,14 +38,54 @@ export class SideMenu extends Component {
 
     if (currentUser) {
       return(
-        <View style={styles.userInfo}>
-          <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
-          <Text style={styles.controlText}>
-            {currentUser.first_name}
-          </Text>
+        <View style={styles.userInfoContainer}>
+          <TouchableHighlight
+            underlayColor='#23A2E3'
+            onPress={() => this.goToAndClose('myAccount', {})}
+          >
+            <View style={styles.userInfo}>
+              <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
+              <Text style={styles.userInfoText}>{currentUser.first_name}</Text>
+            </View>
+          </TouchableHighlight>
+          <Icon.Button
+            name="power-off"
+            backgroundColor="#23A2E3"
+            style={styles.logoutButton}
+            onPress={this.logout.bind(this)}
+          />
+        </View>
+      )
+    } else {
+      return(
+        <View style={styles.userInfoEmpty}>
+          <TouchableHighlight
+            underlayColor='#23A2E3'
+            onPress={() => this.goToAndClose('login', {type: 'reset'})}
+          >
+            <Text style={styles.sessionText}>Login</Text>
+          </TouchableHighlight>
+          <Text style={styles.sessionText}> / </Text>
+          <TouchableHighlight
+            underlayColor='#23A2E3'
+            onPress={() => this.goToAndClose('register', {type: 'reset'})}
+          >
+            <Text style={styles.sessionText}>Register</Text>
+          </TouchableHighlight>
         </View>
       )
     }
+  }
+
+  renderSharedLinks() {
+    return (
+      <TouchableHighlight
+        underlayColor='white'
+        onPress={() => this.goToAndClose('ridesIndex', {type: 'reset'})}
+      >
+        <Text style={styles.menuLink}>Rides</Text>
+      </TouchableHighlight>
+    )
   }
 
   renderSessionLinks() {
@@ -53,31 +94,29 @@ export class SideMenu extends Component {
     if (isAuthenticated) {
       return (
         <View>
-          <TouchableHighlight onPress={() => this.goToAndClose('rideNew', {})}>
-            <Text style={styles.controlText}>Add ride</Text>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('rideNew', {})}
+          >
+            <Text style={styles.menuLink}>Add ride</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.goToAndClose('usersIndex')}>
-            <Text style={styles.controlText}>Users</Text>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('usersIndex')}
+          >
+            <Text style={styles.menuLink}>Users</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.goToAndClose('myAccount', {})}>
-            <Text style={styles.controlText}>My account</Text>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('myAccount', {})}
+          >
+            <Text style={styles.menuLink}>My account</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.goToAndClose('carsIndex', {})}>
-            <Text style={styles.controlText}>My cars</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.logout()}>
-            <Text style={styles.controlText}>Logout</Text>
-          </TouchableHighlight>
-        </View>
-      )
-    } else {
-      return (
-        <View>
-          <TouchableHighlight onPress={() => this.goToAndClose('login', {type: 'reset'})}>
-            <Text style={styles.controlText}>Login</Text>
-          </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.goToAndClose('register', {type: 'reset'})}>
-            <Text style={styles.controlText}>Register</Text>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('carsIndex', {})}
+          >
+            <Text style={styles.menuLink}>My cars</Text>
           </TouchableHighlight>
         </View>
       )
@@ -88,9 +127,7 @@ export class SideMenu extends Component {
     return (
       <ScrollView style={styles.container}>
         {this.renderUserInfo()}
-        <TouchableHighlight onPress={() => this.goToAndClose('ridesIndex', {type: 'reset'})}>
-          <Text style={styles.controlText}>Rides</Text>
-        </TouchableHighlight>
+        {this.renderSharedLinks()}
         {this.renderSessionLinks()}
       </ScrollView>
     )
@@ -102,15 +139,11 @@ SideMenu.contextTypes = {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    padding: 40,
-    backgroundColor: 'black',
-  },
-  controlText: {
-    color: 'white',
-    fontSize: 13,
-    marginTop: 25,
+  avatar: {
+    width: 80,
+    height: 80,
+    marginRight: 10,
+    borderRadius: 100,
   },
   button: {
     backgroundColor: 'white',
@@ -118,14 +151,55 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     padding: 10,
   },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  logoutButton: {
+    backgroundColor: '#23A2E3',
+    borderRadius: 0,
+    paddingTop: 15,
+    padding: 10,
+  },
+  menuLink: {
+    fontSize: 17,
+    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderColor: '#D3D3D3',
+    borderBottomWidth: 1,
+  },
+  sessionText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  userInfoContainer: {
+    backgroundColor: '#23A2E3',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  userInfoText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    margin: 10,
+    marginTop: 25,
+  },
   userInfo: {
+    backgroundColor: '#23A2E3',
+    height: 100,
+    padding: 10,
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     flexDirection: 'row',
   },
-  avatar: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
+  userInfoEmpty: {
+    backgroundColor: '#23A2E3',
+    height: 80,
+    padding: 10,
+    flexWrap: 'wrap',
+    alignItems: 'flex-end',
+    flexDirection: 'row',
   },
 })

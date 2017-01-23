@@ -71,7 +71,6 @@ export class AppDrawer extends Component {
         content={this.renderSideMenu()}
         tapToClose={true}
         openDrawerOffset={0.3} // 30% gap on the right side of drawer
-        panCloseMask={0.4}
         styles={drawerStyles}
         panOpenMask={0.3}
         tweenEasing="easeInOutQuad"

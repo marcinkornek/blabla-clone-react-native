@@ -1,13 +1,14 @@
 import React from 'react';
 import { View, Text, Picker } from 'react-native';
 
-export const SelectField = field => (
+export const SelectField = ({ input, children, meta: { touched, error }, ...custom }) => (
   <View>
     <Picker
-      selectedValue={field.input.value}
-      onValueChange={value => field.input.onChange(value)}
-      children={field.children}
+      selectedValue={input.value}
+      onValueChange={value => input.onChange(value)}
+      children={children}
+      {...custom}
     />
-    <Text>{field.meta.touched && field.meta.error}</Text>
+    <Text>{touched && error}</Text>
   </View>
 );

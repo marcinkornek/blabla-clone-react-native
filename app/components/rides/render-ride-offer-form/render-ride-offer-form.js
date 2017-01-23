@@ -9,6 +9,17 @@ import { Button } from 'react-native-elements';
 // components
 import { SelectField } from '../../inputs/select-field/select-field';
 
+const styles = StyleSheet.create({
+  picker: {
+    width: 200,
+    marginLeft: -7,
+  },
+  button: {
+    width: 200,
+    marginLeft: 0,
+  }
+});
+
 export class RenderRideOfferForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired
@@ -33,7 +44,7 @@ export class RenderRideOfferForm extends Component {
       <Picker.Item
         key="places-placeholder"
         value={null}
-        label="places number"
+        label="Click to choose places"
       />
 
     if (currentUserId && ride.free_places_count > 0 && this.isNotAuthor()) {
@@ -41,16 +52,18 @@ export class RenderRideOfferForm extends Component {
         <View>
           <Field
             name='places'
-            label='Click to book seats'
             component={SelectField}
+            style={styles.picker}
           >
             {[placesPlaceholder, ...places]}
           </Field>
           <Button
             raised
-            title='Submit'
-            backgroundColor='#ff4c4c'
+            title='Book seats'
+            backgroundColor='#23a2e3'
             onPress={handleSubmit}
+            fontSize={16}
+            buttonStyle={styles.button}
           />
         </View>
       )

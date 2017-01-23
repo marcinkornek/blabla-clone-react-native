@@ -7,6 +7,16 @@ import moment from 'moment';
 // components
 import RenderRideOfferForm from '../render-ride-offer-form/render-ride-offer-form'
 
+const styles = StyleSheet.create({
+  view: {
+    marginTop: 10,
+  },
+  title: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+});
+
 export class RenderRideOffer extends Component {
   static propTypes = {
     ride: PropTypes.object.isRequired,
@@ -17,14 +27,12 @@ export class RenderRideOffer extends Component {
   renderRideFormOrStatus() {
     const { ride, currentUserId, handleSubmit } = this.props;
 
-    console.log(ride.id);
-    console.log(ride.requested);
-
     if (ride.requested) {
       return (
         <View>
-          <Text>{ride.user_ride_request.places}</Text>
-          <Text>{pluralize('place', ride.user_ride_request.places)}</Text>
+          <Text>
+            {`${ride.user_ride_request.places} ${pluralize('place', ride.user_ride_request.places)}`}
+          </Text>
           <Text>Requested: {moment(new Date(ride.user_ride_request.created_at)).from(new Date())}</Text>
           {this.renderRideStatusTime()}
         </View>
@@ -59,7 +67,8 @@ export class RenderRideOffer extends Component {
     const { ride } = this.props;
 
     return (
-      <View>
+      <View style={styles.view}>
+        <Text style={styles.title}>Offer</Text>
         <Text>{ride.price} {ride.currency} for person</Text>
         <Text>{ride.free_places_count} / {ride.places} {pluralize('seat', ride.free_places_count)} free</Text>
         {this.renderRideFormOrStatus()}

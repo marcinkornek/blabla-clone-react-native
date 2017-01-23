@@ -18,7 +18,18 @@ import { RenderRideOffer } from '../../../components/rides/render-ride-offer/ren
 
 const styles = StyleSheet.create({
   view: {
-    marginTop: 80,
+    marginTop: 60,
+    marginLeft: 10,
+    marginRight: 10
+  },
+  rideDetails: {
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+  },
+  rideDestination: {
+    fontSize: 18,
+    fontWeight: 'bold'
   }
 });
 
@@ -83,13 +94,11 @@ export class RideShow extends Component {
     const { ride } = this.props
 
     return (
-      <View>
-        <Text>{ride.start_city.address} - {ride.destination_city.address}</Text>
-        <Text>Date: {moment(ride.starts_date).format('DD.MM.YY')}</Text>
-        <Text>Time: {moment(ride.starts_date).format('H:mm')}</Text>
-        <Text>Price: {ride.price} {ride.currency}</Text>
-        <Text>Car: {ride.car.full_name}</Text>
-        <Text>Driver: {ride.driver.full_name}</Text>
+      <View style={styles.rideDetails}>
+        <Text style={styles.rideDestination}>
+          {ride.start_city.address} - {ride.destination_city.address}
+        </Text>
+        <Text>{moment(ride.starts_date).format('DD.MM.YY H:MM')}</Text>
       </View>
     )
   }

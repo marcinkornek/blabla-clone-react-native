@@ -33,7 +33,7 @@ export class RenderRideOffer extends Component {
           <Text>
             {`${ride.user_ride_request.places} ${pluralize('place', ride.user_ride_request.places)}`}
           </Text>
-          <Text>Requested: {moment(new Date(ride.user_ride_request.created_at)).from(new Date())}</Text>
+          <Text>Requested: {moment(new Date(ride.user_ride_request.created_at)).fromNow()}</Text>
           {this.renderRideStatusTime()}
         </View>
       )
@@ -56,7 +56,7 @@ export class RenderRideOffer extends Component {
         <View>
           <Text>
             {ride.user_ride_request.status}:
-            {moment(new Date(ride.user_ride_request.created_at)).from(new Date())}
+            {moment(new Date(ride.user_ride_request.created_at)).fromNow()}
           </Text>
         </View>
       )

@@ -29,11 +29,12 @@ export class RenderRideOffer extends Component {
 
     if (ride.requested) {
       return (
-        <View>
+        <View style={styles.view}>
+          <Text style={styles.title}>Booking</Text>
           <Text>
             {`${ride.user_ride_request.places} ${pluralize('place', ride.user_ride_request.places)}`}
           </Text>
-          <Text>Requested: {moment(new Date(ride.user_ride_request.created_at)).fromNow()}</Text>
+          <Text>requested: {moment(new Date(ride.user_ride_request.created_at)).fromNow()}</Text>
           {this.renderRideStatusTime()}
         </View>
       )
@@ -56,7 +57,7 @@ export class RenderRideOffer extends Component {
         <View>
           <Text>
             {ride.user_ride_request.status}:
-            {moment(new Date(ride.user_ride_request.created_at)).fromNow()}
+            {moment(new Date(ride.user_ride_request.updated_at)).fromNow()}
           </Text>
         </View>
       )

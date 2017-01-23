@@ -19,7 +19,7 @@ export class RidesIndexItem extends Component {
 
     if (this.props.withCarPhoto) {
       return ride.car.car_photo
-    } else {
+    } else if (ride.driver) {
       return ride.driver.avatar
     }
   }

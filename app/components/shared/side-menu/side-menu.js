@@ -20,24 +20,9 @@ export class SideMenu extends Component {
     onLogout: PropTypes.func.isRequired
   }
 
-  goToCarsIndes() {
+  goToAndClose(actionName, options = {}) {
     this.context.drawer.close();
-    Actions.carsIndex();
-  }
-
-  goToRidesIndex() {
-    this.context.drawer.close();
-    Actions.ridesIndex({type: 'reset'});
-  }
-
-  goToRideNew() {
-    this.context.drawer.close();
-    Actions.rideNew();
-  }
-
-  goToUsersIndex() {
-    this.context.drawer.close();
-    Actions.usersIndex();
+    Actions[actionName](options)
   }
 
   logout() {
@@ -45,21 +30,6 @@ export class SideMenu extends Component {
     FBLoginManager.logout((data) => {
       this.props.onLogout()
     })
-  }
-
-  goToCurrentUserEdit() {
-    this.context.drawer.close();
-    Actions.myAccount();
-  }
-
-  goToLogin() {
-    this.context.drawer.close();
-    Actions.login({type: 'reset'});
-  }
-
-  goToRegister() {
-    this.context.drawer.close();
-    Actions.register({type: 'reset'});
   }
 
   renderUserInfo() {
@@ -83,16 +53,16 @@ export class SideMenu extends Component {
     if (isAuthenticated) {
       return (
         <View>
-          <TouchableHighlight onPress={() => this.goToRideNew()}>
+          <TouchableHighlight onPress={() => this.goToAndClose('rideNew', {})}>
             <Text style={styles.controlText}>Add ride</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.goToUsersIndex()}>
+          <TouchableHighlight onPress={() => this.goToAndClose('usersIndex')}>
             <Text style={styles.controlText}>Users</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.goToCurrentUserEdit()}>
+          <TouchableHighlight onPress={() => this.goToAndClose('myAccount', {})}>
             <Text style={styles.controlText}>My account</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.goToCarsIndes()}>
+          <TouchableHighlight onPress={() => this.goToAndClose('carsIndex', {})}>
             <Text style={styles.controlText}>My cars</Text>
           </TouchableHighlight>
           <TouchableHighlight onPress={() => this.logout()}>
@@ -103,10 +73,10 @@ export class SideMenu extends Component {
     } else {
       return (
         <View>
-          <TouchableHighlight onPress={() => this.goToLogin()}>
+          <TouchableHighlight onPress={() => this.goToAndClose('login', {type: 'reset'})}>
             <Text style={styles.controlText}>Login</Text>
           </TouchableHighlight>
-          <TouchableHighlight onPress={() => this.goToRegister()}>
+          <TouchableHighlight onPress={() => this.goToAndClose('register', {type: 'reset'})}>
             <Text style={styles.controlText}>Register</Text>
           </TouchableHighlight>
         </View>
@@ -118,7 +88,7 @@ export class SideMenu extends Component {
     return (
       <ScrollView style={styles.container}>
         {this.renderUserInfo()}
-        <TouchableHighlight onPress={() => this.goToRidesIndex()}>
+        <TouchableHighlight onPress={() => this.goToAndClose('ridesIndex', {type: 'reset'})}>
           <Text style={styles.controlText}>Rides</Text>
         </TouchableHighlight>
         {this.renderSessionLinks()}

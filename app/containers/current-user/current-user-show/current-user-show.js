@@ -12,17 +12,17 @@ import { fetchCurrentUser } from '../../../actions/current-user';
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 
 const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'column',
-    flexWrap: 'wrap',
-    alignItems: 'center',
-  },
-  photo: {
+  avatar: {
     width: 110,
     height: 110,
     margin: 10,
     marginRight: 10,
     borderRadius: 80,
+  },
+  container: {
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    alignItems: 'center',
   },
   userName: {
     fontSize: 20,
@@ -49,7 +49,7 @@ export class UserShow extends Component {
 
     return (
       <View style={styles.container}>
-        <Image source={{uri: currentUser.avatar}} style={styles.photo} />
+        <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
         <Text style={styles.userName}>{currentUser.first_name} {currentUser.last_name}</Text>
         <Text>{currentUser.email}</Text>
         <Text>{currentUser.gender}</Text>

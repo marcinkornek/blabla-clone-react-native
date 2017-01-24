@@ -16,13 +16,32 @@ import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides
 import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-index-item'
 
 const styles = StyleSheet.create({
+  avatar: {
+    width: 110,
+    height: 110,
+    margin: 10,
+    marginRight: 10,
+    borderRadius: 80,
+  },
+  container: {
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+  },
+  title: {
+    marginTop: 10,
+    paddingBottom: 10,
+    fontSize: 16,
+    fontWeight: 'bold',
+    borderBottomWidth: 1,
+    borderBottomColor: '#ededed',
+  },
+  userName: {
+    fontSize: 20,
+    fontWeight: 'bold'
+  },
   view: {
     marginTop: 60,
-  },
-  avatar: {
-    width: 100,
-    height: 100,
-    marginRight: 10,
   },
 });
 
@@ -62,11 +81,10 @@ export class UserShow extends Component {
     const { user } = this.props
 
     return(
-      <View>
+      <View style={styles.container}>
         <Image source={{uri: user.avatar}} style={styles.avatar} />
-        <Text>{user.full_name}</Text>
+        <Text style={styles.userName}>{user.full_name}</Text>
         <RenderUserAge user={user} />
-        <Text>{user.email}</Text>
         <Text>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
         <Text>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
       </View>
@@ -79,7 +97,7 @@ export class UserShow extends Component {
     if (!_.isEmpty(user.rides_as_driver.items)) {
       return (
         <View>
-          <Text>Rides as driver</Text>
+          <Text style={styles.title}>Rides as driver</Text>
           {this.renderRidesAsDriverList()}
         </View>
       )
@@ -106,7 +124,7 @@ export class UserShow extends Component {
     if (!_.isEmpty(user.cars.items)) {
       return (
         <View>
-          <Text>Cars</Text>
+          <Text style={styles.title}>Cars</Text>
           {this.renderUserCarsList()}
         </View>
       )

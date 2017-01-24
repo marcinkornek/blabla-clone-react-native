@@ -21,12 +21,16 @@ const styles = StyleSheet.create({
     height: 110,
     margin: 10,
     marginRight: 10,
-    borderRadius: 80,
+    borderRadius: 110,
+    borderWidth: 2,
+    borderColor: 'white',
   },
-  container: {
+  userInfoContainer: {
+    backgroundColor: '#23A2E3',
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
+    padding: 10,
   },
   title: {
     marginTop: 10,
@@ -38,10 +42,15 @@ const styles = StyleSheet.create({
   },
   userName: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  userInfo: {
+    fontSize: 16,
+    color: 'white',
   },
   view: {
-    marginTop: 60,
+    marginTop: 50,
   },
 });
 
@@ -81,12 +90,12 @@ export class UserShow extends Component {
     const { user } = this.props
 
     return(
-      <View style={styles.container}>
+      <View style={styles.userInfoContainer}>
         <Image source={{uri: user.avatar}} style={styles.avatar} />
         <Text style={styles.userName}>{user.full_name}</Text>
-        <RenderUserAge user={user} />
-        <Text>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
-        <Text>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
+        <RenderUserAge user={user} style={styles.userInfo} />
+        <Text style={styles.userInfo}>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
+        <Text style={styles.userInfo}>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
       </View>
     )
   }

@@ -51,7 +51,7 @@ export class CurrentUserEdit extends Component {
 
 const styles = StyleSheet.create({
   view: {
-    marginTop: 80,
+    marginTop: 60,
   }
 });
 

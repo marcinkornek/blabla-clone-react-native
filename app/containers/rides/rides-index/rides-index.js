@@ -18,7 +18,7 @@ const per = 15
 let page = 1
 const styles = StyleSheet.create({
   view: {
-    marginTop: 80,
+    marginTop: 60,
   }
 });
 

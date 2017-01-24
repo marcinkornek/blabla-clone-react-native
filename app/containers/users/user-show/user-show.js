@@ -17,7 +17,7 @@ import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-ind
 
 const styles = StyleSheet.create({
   view: {
-    marginTop: 80,
+    marginTop: 60,
   },
   avatar: {
     width: 100,

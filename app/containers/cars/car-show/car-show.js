@@ -11,13 +11,24 @@ import { fetchCar } from '../../../actions/cars';
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 
 const styles = StyleSheet.create({
-  view: {
-    marginTop: 60,
+  carName: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginBottom: 5,
+  },
+  container: {
+    padding: 10,
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    flexDirection: 'column',
   },
   photo: {
-    width: 50,
-    height: 50,
-    marginRight: 10,
+    width: 100,
+    height: 100,
+    margin: 10,
+  },
+  view: {
+    marginTop: 50,
   },
 });
 
@@ -46,7 +57,7 @@ class CarShow extends Component {
         carId: car.id,
         title: `${car.full_name} ${car.production_year}`,
         rightTitle: this.renderRightTitle(),
-        onRight: () => this.renderRightAction()
+        onRight: this.renderRightAction()
       })
     }
   }
@@ -54,24 +65,33 @@ class CarShow extends Component {
   renderRightTitle() {
     const { car, currentUserId } = this.props;
 
-    if (car.owner_id === currentUserId) return "Edit"
+    if (car.owner_id === currentUserId) {
+      return "Edit"
+    } else {
+      return undefined
+    }
   }
 
   renderRightAction() {
     const { car, currentUserId } = this.props;
 
-    if (car.owner_id === currentUserId) return Actions.carEdit({carId: car.id})
+    if (car.owner_id === currentUserId) {
+      return () => Actions.carEdit({carId: car.id})
+    } else {
+      return undefined
+    }
   }
 
   renderCar() {
     const { car } = this.props
 
     return(
-      <View>
+      <View style={styles.container}>
         <Image source={{uri: car.car_photo}} style={styles.photo} />
-        <Text>{car.full_name} {car.production_year}</Text>
+        <Text style={styles.carName}>{car.full_name} {car.production_year}</Text>
         <Text>{car.places_full}</Text>
         <Text>{car.color}</Text>
+        <Text>{car.comfort}</Text>
         <Text>{car.category}</Text>
       </View>
     )

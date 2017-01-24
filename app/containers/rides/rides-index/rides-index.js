@@ -105,7 +105,7 @@ export class RidesIndex extends Component {
         <Button
           raised
           title='Add ride'
-          backgroundColor='#ff4c4c'
+          backgroundColor='#23a2e3'
           onPress={() => Actions.rideNew()}
         />
       )

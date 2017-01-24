@@ -62,7 +62,7 @@ class CarsIndex extends Component {
         <Button
           raised
           title='Add car'
-          backgroundColor='#ff4c4c'
+          backgroundColor='#23a2e3'
           onPress={() => Actions.carNew()}
         />
         <AsyncContent

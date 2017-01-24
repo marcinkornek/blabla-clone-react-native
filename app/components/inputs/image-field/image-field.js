@@ -49,7 +49,7 @@ export class ImageField extends Component {
       <Button
         raised
         title='Add photo'
-        backgroundColor='#ff4c4c'
+        backgroundColor='#23a2e3'
         onPress={this.onChange.bind(this)}
       />
     )

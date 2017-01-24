@@ -102,7 +102,7 @@ class RideForm extends Component {
         <Button
           raised
           title='Submit'
-          backgroundColor='#ff4c4c'
+          backgroundColor='#23a2e3'
           onPress={handleSubmit}
         />
       </ScrollView>

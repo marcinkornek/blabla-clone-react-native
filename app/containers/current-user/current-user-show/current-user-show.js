@@ -16,20 +16,34 @@ const styles = StyleSheet.create({
     width: 110,
     height: 110,
     margin: 10,
-    marginRight: 10,
-    borderRadius: 80,
+    borderRadius: 110,
+    borderWidth: 2,
+    borderColor: 'white',
+  },
+  userInfoContainer: {
+    backgroundColor: '#23A2E3',
+    flexDirection: 'column',
+    flexWrap: 'wrap',
+    alignItems: 'center',
+    padding: 10,
   },
   container: {
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
+    padding: 10,
   },
   userName: {
     fontSize: 20,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  userInfo: {
+    fontSize: 16,
+    color: 'white',
   },
   view: {
-    marginTop: 60,
+    marginTop: 50,
   },
 });
 
@@ -48,13 +62,13 @@ export class UserShow extends Component {
     const { currentUser } = this.props
 
     return (
-      <View style={styles.container}>
+      <View style={styles.userInfoContainer}>
         <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
         <Text style={styles.userName}>{currentUser.first_name} {currentUser.last_name}</Text>
-        <Text>{currentUser.email}</Text>
-        <Text>{currentUser.gender}</Text>
-        <Text>{moment(currentUser.date_of_birth).format('DD.MM.YYYY')}</Text>
-        <Text>{currentUser.tel_num}</Text>
+        <Text style={styles.userInfo}>{currentUser.email}</Text>
+        <Text style={styles.userInfo}>{currentUser.gender}</Text>
+        <Text style={styles.userInfo}>{moment(currentUser.date_of_birth).format('DD.MM.YYYY')}</Text>
+        <Text style={styles.userInfo}>{currentUser.tel_num}</Text>
       </View>
     )
   }

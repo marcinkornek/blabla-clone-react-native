@@ -37,6 +37,7 @@
 		B4417E5E32A74BE886B40089 /* libRNGooglePlaces.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 6D1F586C59F84C53A340673E /* libRNGooglePlaces.a */; };
 		B9D8A521C4CF4741B8132775 /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 537AAD232DB04149B9205BDE /* libRCTFBLogin.a */; };
 		3AC6955D45E14E1F8370D89B /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E152A67AB07B453B92E36B5D /* MaterialCommunityIcons.ttf */; };
+		3B256BF9310347D09AB6F4E6 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B3B97381F541B4BDC4ABB6 /* libAirMaps.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -174,6 +175,8 @@
 		C3CFBF7B3EA347D780C895FE /* RCTFBLogin.xcodeproj */ = {isa = PBXFileReference; name = "RCTFBLogin.xcodeproj"; path = "../node_modules/react-native-facebook-login/RCTFBLogin.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		537AAD232DB04149B9205BDE /* libRCTFBLogin.a */ = {isa = PBXFileReference; name = "libRCTFBLogin.a"; path = "libRCTFBLogin.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		E152A67AB07B453B92E36B5D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; name = "MaterialCommunityIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		C53117CBA02F495C918D5FF0 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; name = "AirMaps.xcodeproj"; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		52B3B97381F541B4BDC4ABB6 /* libAirMaps.a */ = {isa = PBXFileReference; name = "libAirMaps.a"; path = "libAirMaps.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -204,6 +207,7 @@
 				7E762129EC7040ED8A72E64B /* libRNVectorIcons.a in Frameworks */,
 				B4417E5E32A74BE886B40089 /* libRNGooglePlaces.a in Frameworks */,
 				B9D8A521C4CF4741B8132775 /* libRCTFBLogin.a in Frameworks */,
+				3B256BF9310347D09AB6F4E6 /* libAirMaps.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +344,7 @@
 				43C2E5D5716747EDABCD736C /* RNVectorIcons.xcodeproj */,
 				6C98F5E8EFE14DBDA805FA93 /* RNGooglePlaces.xcodeproj */,
 				C3CFBF7B3EA347D780C895FE /* RCTFBLogin.xcodeproj */,
+				C53117CBA02F495C918D5FF0 /* AirMaps.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -704,6 +709,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -720,6 +726,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlablaClone.app/BlablaClone";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -805,6 +812,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-google-places/ios",
 					"$(SRCROOT)/../node_modules/react-native-facebook-login/RCTFBLogin/**",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -849,6 +857,7 @@
 					"$(SRCROOT)/../node_modules/react-native-vector-icons/RNVectorIconsManager",
 					"$(SRCROOT)/../node_modules/react-native-google-places/ios",
 					"$(SRCROOT)/../node_modules/react-native-facebook-login/RCTFBLogin/**",
+					"$(SRCROOT)/../node_modules/react-native-maps/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

@@ -72,7 +72,7 @@ export class AppDrawer extends Component {
         tapToClose={true}
         openDrawerOffset={0.3} // 30% gap on the right side of drawer
         styles={drawerStyles}
-        panOpenMask={0.3}
+        panOpenMask={0.1}
         tweenEasing="easeInOutQuad"
         tweenHandler={(ratio) => ({
           main: { opacity:(2-ratio)/2 }

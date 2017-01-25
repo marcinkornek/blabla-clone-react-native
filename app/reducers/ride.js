@@ -35,12 +35,12 @@ export function ride(state = initialState, action) {
         places: item.places.toString(),
         start_city: {
           address: item.start_city,
-          lattitude: item.start_city_lat,
+          latitude: item.start_city_lat,
           longitude: item.start_city_lng,
         },
         destination_city: {
           address: item.destination_city,
-          lattitude: item.destination_city_lat,
+          latitude: item.destination_city_lat,
           longitude: item.destination_city_lng,
         }
       }
@@ -63,12 +63,12 @@ export function ride(state = initialState, action) {
         places: item.places.toString(),
         start_city: {
           address: item.start_city,
-          lattitude: item.start_city_lat,
+          latitude: item.start_city_lat,
           longitude: item.start_city_lng,
         },
         destination_city: {
           address: item.destination_city,
-          lattitude: item.destination_city_lat,
+          latitude: item.destination_city_lat,
           longitude: item.destination_city_lng,
         }
       }
@@ -84,12 +84,12 @@ export function ride(state = initialState, action) {
         places: item.places.toString(),
         start_city: {
           address: item.start_city,
-          lattitude: item.start_city_lat,
+          latitude: item.start_city_lat,
           longitude: item.start_city_lng,
         },
         destination_city: {
           address: item.destination_city,
-          lattitude: item.destination_city_lat,
+          latitude: item.destination_city_lat,
           longitude: item.destination_city_lng,
         }
       }

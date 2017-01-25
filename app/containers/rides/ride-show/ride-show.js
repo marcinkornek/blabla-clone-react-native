@@ -1,10 +1,11 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, Dimensions } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
+import MapView from 'react-native-maps';
 
 // actions
 import { fetchRide } from '../../../actions/rides';
@@ -20,7 +21,6 @@ const styles = StyleSheet.create({
   view: {
     marginTop: 60,
     marginLeft: 10,
-    marginRight: 10
   },
   rideDetails: {
     flexWrap: 'wrap',
@@ -30,8 +30,20 @@ const styles = StyleSheet.create({
   rideDestination: {
     fontSize: 18,
     fontWeight: 'bold'
-  }
+  },
+  container: {
+    height: 200,
+    marginRight: 10,
+    alignSelf: 'stretch',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+  },
+  map: {
+    ...StyleSheet.absoluteFillObject,
+  },
 });
+const markerIDs = ['startCity', 'destinationCity'];
+const { width, height } = Dimensions.get('window')
 
 export class RideShow extends Component {
   static propTypes = {
@@ -51,6 +63,10 @@ export class RideShow extends Component {
     }
   }
 
+  state = {
+    markers: []
+  }
+
   componentDidMount() {
     const { rideId, fetchRide } = this.props
 
@@ -61,13 +77,32 @@ export class RideShow extends Component {
     const { ride } = this.props;
 
     if (ride !== oldProps.ride) {
+      const coordinates = [
+        this.createMarker(ride.start_city.latitude, ride.start_city.longitude),
+        this.createMarker(ride.destination_city.latitude, ride.destination_city.longitude)
+      ]
+
       Actions.refresh({
         rideId: ride.id,
         title: `${ride.start_city.address} - ${ride.destination_city.address}`,
         rightTitle: this.renderRightTitle(),
         onRight: this.renderRightAction()
       })
+
+      this.setState({markers: coordinates})
+      setTimeout(() => {
+        this.fitToCoordinates(coordinates);
+      }, 1000);
     }
+  }
+
+  fitToCoordinates(coordinates) {
+    return (
+      this.map.fitToCoordinates(coordinates, {
+        edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
+        animated: false,
+      })
+    )
   }
 
   renderRightTitle() {
@@ -99,8 +134,36 @@ export class RideShow extends Component {
           {ride.start_city.address} - {ride.destination_city.address}
         </Text>
         <Text>{moment(ride.starts_date).format('DD.MM.YY H:MM')}</Text>
+        {this.renderMap()}
       </View>
     )
+  }
+
+  renderMap() {
+    const { ride } = this.props
+
+    return (
+      <View style={styles.container}>
+        <MapView
+          ref={ref => { this.map = ref; }}
+          style={styles.map}
+        >
+          {this.state.markers.map((marker, i) => (
+            <MapView.Marker
+              key={i}
+              coordinate={marker}
+            />
+          ))}
+        </MapView>
+      </View>
+    )
+  }
+
+  createMarker(latitude, longitude) {
+    return {
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude)
+    };
   }
 
   renderDriver() {
@@ -149,7 +212,7 @@ export class RideShow extends Component {
     const { isFetching, isStarted } = this.props;
 
     return (
-      <View style={styles.view}>
+      <ScrollView style={styles.view}>
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
@@ -158,7 +221,7 @@ export class RideShow extends Component {
           {this.renderCar()}
           {this.renderOffer()}
         </AsyncContent>
-      </View>
+      </ScrollView>
     );
   }
 }

@@ -10,6 +10,7 @@ import RenderRideOfferForm from '../render-ride-offer-form/render-ride-offer-for
 const styles = StyleSheet.create({
   view: {
     marginTop: 10,
+    marginBottom: 10,
   },
   title: {
     fontSize: 16,

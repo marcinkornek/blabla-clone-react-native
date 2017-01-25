@@ -89,10 +89,12 @@ export class RideShow extends Component {
         onRight: this.renderRightAction()
       })
 
-      this.setState({markers: coordinates})
-      setTimeout(() => {
-        this.fitToCoordinates(coordinates);
-      }, 1000);
+      if (this.coordinatesAreValid()) {
+        this.setState({markers: coordinates})
+        setTimeout(() => {
+          this.fitToCoordinates(coordinates);
+        }, 1000);
+      }
     }
   }
 
@@ -142,20 +144,31 @@ export class RideShow extends Component {
   renderMap() {
     const { ride } = this.props
 
+    if (this.coordinatesAreValid()) {
+      return (
+        <View style={styles.container}>
+          <MapView
+            ref={ref => { this.map = ref; }}
+            style={styles.map}
+          >
+            {this.state.markers.map((marker, i) => (
+              <MapView.Marker
+                key={i}
+                coordinate={marker}
+              />
+            ))}
+          </MapView>
+        </View>
+      )
+    }
+  }
+
+  coordinatesAreValid() {
+    const { ride } = this.props
+
     return (
-      <View style={styles.container}>
-        <MapView
-          ref={ref => { this.map = ref; }}
-          style={styles.map}
-        >
-          {this.state.markers.map((marker, i) => (
-            <MapView.Marker
-              key={i}
-              coordinate={marker}
-            />
-          ))}
-        </MapView>
-      </View>
+      !isNaN(ride.start_city.latitude) && !isNaN(ride.start_city.longitude) &&
+        !isNaN(ride.destination_city.latitude) && !isNaN(ride.destination_city.longitude)
     )
   }
 

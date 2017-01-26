@@ -114,6 +114,12 @@ export class SideMenu extends Component {
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor='white'
+            onPress={() => this.goToAndClose('myRidesAsPassenger', {})}
+          >
+            <Text style={styles.menuLink}>My rides as passenger</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
             onPress={() => this.goToAndClose('carsIndex', {})}
           >
             <Text style={styles.menuLink}>My cars</Text>

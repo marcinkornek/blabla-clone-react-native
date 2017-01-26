@@ -15,7 +15,6 @@ const styles = StyleSheet.create({
 export class CarsIndexItem extends Component {
   static propTypes = {
     car: PropTypes.object.isRequired,
-    currentUserId: PropTypes.number,
   }
 
   render() {

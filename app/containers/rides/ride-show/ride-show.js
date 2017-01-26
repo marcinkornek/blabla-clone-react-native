@@ -93,7 +93,7 @@ export class RideShow extends Component {
         this.setState({markers: coordinates})
         setTimeout(() => {
           this.fitToCoordinates(coordinates);
-        }, 1000);
+        }, 500);
       }
     }
   }
@@ -150,6 +150,12 @@ export class RideShow extends Component {
           <MapView
             ref={ref => { this.map = ref; }}
             style={styles.map}
+            initialRegion={{
+              latitude: parseFloat(ride.start_city.latitude),
+              longitude: parseFloat(ride.start_city.longitude),
+              latitudeDelta: 0.0922,
+              longitudeDelta: 0.0421,
+            }}
           >
             {this.state.markers.map((marker, i) => (
               <MapView.Marker

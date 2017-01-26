@@ -38,7 +38,10 @@ export const RenderCarInfo = ({car}) => (
         <Text>{car.production_year}</Text>
       </View>
     </View>
-    <TouchableHighlight onPress={() => Actions.carShow({carId: car.id})}>
+    <TouchableHighlight
+      underlayColor='white'
+      onPress={() => Actions.carShow({carId: car.id})}
+    >
       <Text>view car</Text>
     </TouchableHighlight>
   </View>

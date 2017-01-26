@@ -46,7 +46,10 @@ export const RenderUserProfile = ({user}) => (
         <Text>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
       </View>
     </View>
-    <TouchableHighlight onPress={() => Actions.userShow({userId: user.id})}>
+    <TouchableHighlight
+      underlayColor='white'
+      onPress={() => Actions.userShow({userId: user.id})}
+    >
       <Text>view profile</Text>
     </TouchableHighlight>
   </View>

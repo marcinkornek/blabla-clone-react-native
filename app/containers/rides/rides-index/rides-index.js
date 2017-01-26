@@ -6,6 +6,8 @@ import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import _ from 'lodash';
+import ActionButton from 'react-native-action-button';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 // actions
 import { fetchRides } from '../../../actions/rides';
@@ -113,17 +115,16 @@ export class RidesIndex extends Component {
     )
   }
 
-  renderAddRideButton() {
+  renderAddFloatingRideButton() {
     const { isAuthenticated } = this.props;
 
     if (isAuthenticated) {
       return (
-        <Button
-          raised
-          title='Add ride'
-          backgroundColor='#23a2e3'
-          onPress={() => Actions.rideNew()}
-        />
+        <ActionButton buttonColor="#23a2e3">
+          <ActionButton.Item buttonColor='#9b59b6' title="Add ride" onPress={() => Actions.rideNew()}>
+            <Icon name="md-create" style={styles.actionButtonIcon} />
+          </ActionButton.Item>
+        </ActionButton>
       )
     }
   }
@@ -144,8 +145,8 @@ export class RidesIndex extends Component {
   render() {
     return (
       <View style={styles.view}>
-        {this.renderAddRideButton()}
         {this.renderRidesList()}
+        {this.renderAddFloatingRideButton()}
       </View>
     );
   }

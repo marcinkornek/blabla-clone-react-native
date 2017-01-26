@@ -55,6 +55,25 @@ export function fetchRidesAsPassenger(page = 1, per = 10, { passengerId } = {}) 
   }
 }
 
+export function fetchRidesAsDriver(page = 1, per = 10, { driverId } = {}) {
+  return {
+    types: [
+      RIDES_FETCH_REQUEST,
+      RIDES_FETCH_SUCCESS,
+      RIDES_FETCH_FAILURE
+    ],
+    payload: {
+      request: {
+        url: `${APIEndpoints.USERS}/${driverId}/rides_as_driver`,
+        params: {
+          page,
+          per,
+        }
+      }
+    }
+  }
+}
+
 export function fetchRide(rideId) {
   return (dispatch, getState) => {
     const { session } = getState()

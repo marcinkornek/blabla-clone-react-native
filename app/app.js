@@ -16,6 +16,7 @@ import CurrentUserEdit from './containers/current-user/current-user-edit/current
 import Login from './containers/session/login/login'
 import RidesIndex from './containers/rides/rides-index/rides-index'
 import RidesIndexAsPassenger from './containers/rides/rides-index-as-passenger/rides-index-as-passenger'
+import RidesIndexAsDriver from './containers/rides/rides-index-as-driver/rides-index-as-driver'
 import RideShow from './containers/rides/ride-show/ride-show'
 import RideNew from './containers/rides/ride-new/ride-new'
 import RideEdit from './containers/rides/ride-edit/ride-edit'
@@ -38,6 +39,7 @@ class App extends Component {
               <Scene key="myAccount" component={requireAuth(CurrentUserShow)} title="My Account" rightTitle="Edit" onRight={()=>Actions.myAccountEdit()} />
               <Scene key="myAccountEdit" component={requireAuth(CurrentUserEdit)} title="Edit Account" />
               <Scene key="myRidesAsPassenger" component={requireAuth(RidesIndexAsPassenger)} title="My rides as passenger" />
+              <Scene key="myRidesAsDriver" component={requireAuth(RidesIndexAsDriver)} title="My rides as driver" />
               <Scene key="rideShow" component={RideShow} title="Ride" />
               <Scene key="rideNew" component={requireAuth(RideNew)} title="Add Ride" />
               <Scene key="rideEdit" component={requireAuth(RideEdit)} title="Edit Ride" />

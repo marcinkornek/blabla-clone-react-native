@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, View, StyleSheet, ListView, RefreshControl } from 'react-native';
+import { ScrollView, View, StyleSheet, ListView, RefreshControl, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
@@ -17,9 +17,19 @@ import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides
 const per = 15
 let page = 1
 const styles = StyleSheet.create({
+  emptyList: {
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  emptyListContainer: {
+    marginTop: 10,
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
   view: {
     marginTop: 60,
-  }
+  },
 });
 
 export class RidesIndexAsPassenger extends Component {
@@ -66,9 +76,15 @@ export class RidesIndexAsPassenger extends Component {
   renderRidesList() {
     const { rides, isFetching, isStarted } = this.props;
 
-    if (_.isEmpty(this.state.data)) {
+    if (_.isEmpty(this.state.data) && isFetching) {
       return (
         <RenderActivityIndicator />
+      )
+    } else if (_.isEmpty(this.state.data)) {
+      return(
+        <View style={styles.emptyListContainer}>
+          <Text style={styles.emptyList}>No rides</Text>
+        </View>
       )
     } else {
       return (

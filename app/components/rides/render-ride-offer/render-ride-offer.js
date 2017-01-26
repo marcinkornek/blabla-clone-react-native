@@ -21,12 +21,12 @@ const styles = StyleSheet.create({
 export class RenderRideOffer extends Component {
   static propTypes = {
     ride: PropTypes.object.isRequired,
-    currentUserId: PropTypes.number,
+    currentUser: PropTypes.object,
     handleSubmit: PropTypes.func,
   }
 
   renderRideFormOrStatus() {
-    const { ride, currentUserId, handleSubmit } = this.props;
+    const { ride, currentUser, handleSubmit } = this.props;
 
     if (ride.requested) {
       return (
@@ -43,7 +43,7 @@ export class RenderRideOffer extends Component {
       return (
         <RenderRideOfferForm
           ride={ride}
-          currentUserId={currentUserId}
+          currentUser={currentUser}
           onSubmit={handleSubmit}
         />
       )

@@ -50,11 +50,11 @@ export class RideShow extends Component {
     ride: PropTypes.object.isRequired,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    currentUserId: PropTypes.number,
+    currentUser: PropTypes.object,
   }
 
   static defaultProps = {
-    currentUserId: {},
+    currentUser: {},
     ride: {
       start_city: {},
       destination_city: {},
@@ -108,9 +108,9 @@ export class RideShow extends Component {
   }
 
   renderRightTitle() {
-    const { ride, currentUserId } = this.props;
+    const { ride, currentUser } = this.props;
 
-    if (ride.driver.id === currentUserId) {
+    if (ride.driver.id === currentUser.id) {
       return "Edit"
     } else {
       return undefined
@@ -118,9 +118,9 @@ export class RideShow extends Component {
   }
 
   renderRightAction() {
-    const { ride, currentUserId } = this.props;
+    const { ride, currentUser } = this.props;
 
-    if (ride.driver.id === currentUserId) {
+    if (ride.driver.id === currentUser.id) {
       return () => Actions.rideEdit({rideId: ride.id})
     } else {
       return undefined
@@ -201,7 +201,7 @@ export class RideShow extends Component {
     return(
       <RenderRideOffer
         ride={this.props.ride}
-        currentUserId={this.props.currentUserId}
+        currentUser={this.props.currentUser}
         handleSubmit={this.createRideRequest.bind(this)}
       />
     )
@@ -214,17 +214,17 @@ export class RideShow extends Component {
   }
 
   renderRightTitle() {
-    const { ride, currentUserId } = this.props;
+    const { ride, currentUser } = this.props;
 
-    if (ride.driver.id === currentUserId) {
+    if (ride.driver.id === currentUser.id) {
       return "Edit"
     }
   }
 
   renderRightAction() {
-    const { ride, currentUserId } = this.props;
+    const { ride, currentUser } = this.props;
 
-    if (ride.driver.id === currentUserId) return () => Actions.rideEdit({rideId: ride.id})
+    if (ride.driver.id === currentUser.id) return () => Actions.rideEdit({rideId: ride.id})
   }
 
   render() {
@@ -250,7 +250,7 @@ const mapStateToProps = (state) => {
     ride: state.ride.item,
     isStarted: state.ride.isStarted,
     isFetching: state.ride.isFetching,
-    currentUserId: state.session.item.id,
+    currentUser: state.session.item,
   }
 };
 

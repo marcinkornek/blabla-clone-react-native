@@ -59,7 +59,7 @@ export class UserShow extends Component {
     user: PropTypes.object.isRequired,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    currentUserId: PropTypes.number.isRequired,
+    currentUser: PropTypes.object.isRequired,
   }
 
   static defaultProps = {
@@ -141,14 +141,14 @@ export class UserShow extends Component {
   }
 
   renderUserCarsList() {
-    const { user, currentUserId } = this.props
+    const { user, currentUser } = this.props
 
     return (
       user.cars.items.map((car, i) =>
         <CarsIndexItem
           key={`car-${i}`}
           car={car}
-          currentUserId={currentUserId}
+          currentUser={currentUser}
         />
       )
     )
@@ -176,7 +176,7 @@ const mapStateToProps = (state) => {
     user: state.user.item,
     isStarted: state.user.isStarted,
     isFetching: state.user.isFetching,
-    currentUserId: state.session.item.id,
+    currentUser: state.session.item,
   }
 }
 

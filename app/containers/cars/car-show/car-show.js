@@ -37,7 +37,7 @@ class CarShow extends Component {
     car: PropTypes.object.isRequired,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    currentUserId: PropTypes.number,
+    currentUser: PropTypes.object,
   }
 
   static defaultProps = {
@@ -63,9 +63,9 @@ class CarShow extends Component {
   }
 
   renderRightTitle() {
-    const { car, currentUserId } = this.props;
+    const { car, currentUser } = this.props;
 
-    if (car.owner_id === currentUserId) {
+    if (car.owner_id === currentUser.id) {
       return "Edit"
     } else {
       return undefined
@@ -73,9 +73,9 @@ class CarShow extends Component {
   }
 
   renderRightAction() {
-    const { car, currentUserId } = this.props;
+    const { car, currentUser } = this.props;
 
-    if (car.owner_id === currentUserId) {
+    if (car.owner_id === currentUser.id) {
       return () => Actions.carEdit({carId: car.id})
     } else {
       return undefined
@@ -117,7 +117,7 @@ const mapStateToProps = (state) => {
     car: state.car.item,
     isStarted: state.car.isStarted,
     isFetching: state.car.isFetching,
-    currentUserId: state.session.item.id,
+    currentUser: state.session.item,
   }
 }
 

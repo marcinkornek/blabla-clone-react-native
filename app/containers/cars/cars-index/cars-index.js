@@ -27,7 +27,7 @@ class CarsIndex extends Component {
     cars: PropTypes.array.isRequired,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    currentUserId: PropTypes.number,
+    currentUser: PropTypes.object,
   }
 
   constructor(props, context) {
@@ -43,9 +43,9 @@ class CarsIndex extends Component {
   }
 
   componentDidMount() {
-    const { fetchCars, currentUserId } = this.props
+    const { fetchCars, currentUser } = this.props
 
-    if (currentUserId) fetchCars(currentUserId, 1, per)
+    if (currentUser.id) fetchCars(currentUser.id, 1, per)
   }
 
   componentDidUpdate(prevProps) {
@@ -121,10 +121,10 @@ class CarsIndex extends Component {
   }
 
   loadMoreContentAsync = async () => {
-    const { fetchCars, currentUserId } = this.props
+    const { fetchCars, currentUser } = this.props
 
     page = page + 1
-    if (currentUserId) fetchCars(currentUserId, page, per)
+    if (currentUser.id) fetchCars(currentUser.id, page, per)
   }
 
   canLoadMore() {
@@ -132,9 +132,9 @@ class CarsIndex extends Component {
   }
 
   onRefresh() {
-    const { fetchCars, currentUserId } = this.props
+    const { fetchCars, currentUser } = this.props
 
-    if (currentUserId) fetchCars(currentUserId, 1, per)
+    if (currentUser.id) fetchCars(currentUser.id, 1, per)
   }
 
   render() {
@@ -155,7 +155,7 @@ const mapStateToProps = (state) => {
     cars: state.cars.items,
     isStarted: state.cars.isStarted,
     isFetching: state.cars.isFetching,
-    currentUserId: state.session.item.id,
+    currentUser: state.session.item,
   }
 }
 

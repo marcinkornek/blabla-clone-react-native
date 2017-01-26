@@ -22,17 +22,18 @@ const styles = StyleSheet.create({
 
 export class RenderRideOfferForm extends Component {
   static propTypes = {
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    currentUser: PropTypes.object.isRequired,
   }
 
   isNotAuthor() {
-    const { currentUserId, ride } = this.props
+    const { currentUser, ride } = this.props
 
-    if (currentUserId != ride.driver.id) return true
+    if (currentUser.id != ride.driver.id) return true
   }
 
   renderRideOfferForm() {
-    const { handleSubmit, currentUserId, ride } = this.props;
+    const { handleSubmit, currentUser, ride } = this.props;
     const places = new Array(ride.free_places_count).fill(undefined).map((place, i) =>
       <Picker.Item
         key={i}
@@ -47,7 +48,7 @@ export class RenderRideOfferForm extends Component {
         label="Click to choose places"
       />
 
-    if (currentUserId && ride.free_places_count > 0 && this.isNotAuthor()) {
+    if (currentUser.id && ride.free_places_count > 0 && this.isNotAuthor()) {
       return(
         <View>
           <Field
@@ -67,7 +68,7 @@ export class RenderRideOfferForm extends Component {
           />
         </View>
       )
-    } else if (currentUserId && ride.free_places_count == 0 && this.isNotAuthor()) {
+    } else if (currentUser.id && ride.free_places_count == 0 && this.isNotAuthor()) {
       return(
         <Text>No places</Text>
       )

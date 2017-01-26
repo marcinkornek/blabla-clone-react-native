@@ -39,7 +39,7 @@ export class RidesIndexAsDriver extends Component {
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
-    currentUserId: PropTypes.number,
+    currentUser: PropTypes.object,
   }
 
   constructor(props, context) {
@@ -55,9 +55,9 @@ export class RidesIndexAsDriver extends Component {
   }
 
   componentDidMount() {
-    const { fetchRidesAsDriver, currentUserId } = this.props
+    const { fetchRidesAsDriver, currentUser } = this.props
 
-    if (currentUserId) fetchRidesAsDriver(1, per, { driverId: currentUserId })
+    if (currentUser.id) fetchRidesAsDriver(1, per, { driverId: currentUser.id })
   }
 
   componentDidUpdate(prevProps) {
@@ -117,10 +117,10 @@ export class RidesIndexAsDriver extends Component {
   }
 
   loadMoreContentAsync = async () => {
-    const { fetchRidesAsDriver, currentUserId } = this.props
+    const { fetchRidesAsDriver, currentUser } = this.props
     page = page + 1
 
-    if (currentUserId) fetchRidesAsDriver(page, per, { driverId: currentUserId })
+    if (currentUser.id) fetchRidesAsDriver(page, per, { driverId: currentUser.id })
   }
 
   canLoadMore() {
@@ -128,9 +128,9 @@ export class RidesIndexAsDriver extends Component {
   }
 
   onRefresh() {
-    const { fetchRidesAsDriver, currentUserId } = this.props
+    const { fetchRidesAsDriver, currentUser } = this.props
 
-    if (currentUserId) fetchRidesAsDriver(1, per, { driverId: currentUserId })
+    if (currentUser.id) fetchRidesAsDriver(1, per, { driverId: currentUser.id })
   }
 
   render() {
@@ -149,7 +149,7 @@ const mapStateToProps = (state) => {
     isStarted: state.rides.isStarted,
     isFetching: state.rides.isFetching,
     isAuthenticated: state.session.isAuthenticated,
-    currentUserId: state.session.item.id,
+    currentUser: state.session.item,
   }
 };
 

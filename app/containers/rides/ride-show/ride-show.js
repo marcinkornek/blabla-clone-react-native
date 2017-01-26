@@ -102,7 +102,7 @@ export class RideShow extends Component {
     return (
       this.map.fitToCoordinates(coordinates, {
         edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
-        animated: false,
+        animated: true,
       })
     )
   }

@@ -116,9 +116,9 @@ export class RidesIndex extends Component {
   }
 
   renderAddFloatingRideButton() {
-    const { isAuthenticated } = this.props;
+    const { isAuthenticated, isFetching } = this.props;
 
-    if (isAuthenticated) {
+    if (isAuthenticated && !(_.isEmpty(this.state.data) && isFetching)) {
       return (
         <ActionButton buttonColor="#23a2e3">
           <ActionButton.Item buttonColor='#9b59b6' title="Add ride" onPress={() => Actions.rideNew()}>

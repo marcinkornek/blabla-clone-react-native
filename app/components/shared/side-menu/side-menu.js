@@ -47,7 +47,13 @@ export class SideMenu extends Component {
             <View style={styles.userInfo}>
               <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
               <View>
-                <Text style={styles.userInfoText}>{currentUser.first_name}</Text>
+                <Text
+                  style={styles.userInfoText}
+                  numberOfLines={1}
+                  ellipsizeMode={'tail'}
+                >
+                  {currentUser.first_name}
+                </Text>
                 {this.renderNotificationIcon()}
               </View>
             </View>
@@ -87,7 +93,7 @@ export class SideMenu extends Component {
         name="notifications-none"
         backgroundColor="#23A2E3"
         size={25}
-        style={styles.notificationIcon}
+        style={styles.userInfoNotificationIcon}
         onPress={() => this.goToAndClose('myNotifications', {})}
       />
     )
@@ -170,7 +176,7 @@ const styles = StyleSheet.create({
   avatar: {
     width: 80,
     height: 80,
-    marginRight: 10,
+    marginRight: 0,
     borderRadius: 80,
     borderWidth: 2,
     borderColor: 'white',
@@ -199,9 +205,6 @@ const styles = StyleSheet.create({
     borderColor: '#D3D3D3',
     borderBottomWidth: 1,
   },
-  notificationIcon: {
-    paddingTop: 0,
-  },
   sessionText: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -213,12 +216,16 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   userInfoText: {
+    width: 120,
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
     margin: 10,
-    marginTop: 25,
+    marginTop: 0,
     marginBottom: 0,
+  },
+  userInfoNotificationIcon: {
+    paddingTop: 10,
   },
   userInfo: {
     backgroundColor: '#23A2E3',

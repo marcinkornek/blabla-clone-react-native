@@ -3153,6 +3153,10 @@ react-native-button@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/react-native-button/-/react-native-button-1.7.1.tgz#0c3fb34e7f99dc2c9a8166094be878eb7cb3c36e"
 
+react-native-collapsible@^0.7.0:
+  version "0.7.0"
+  resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-0.7.0.tgz#ae41f7c595a4ad49a9e3f48667ff792ea8c85f61"
+
 react-native-datepicker@^1.4.3:
   version "1.4.3"
   resolved "https://registry.yarnpkg.com/react-native-datepicker/-/react-native-datepicker-1.4.3.tgz#05d66f1b545fe5e797639b5581a10581ee807d5f"

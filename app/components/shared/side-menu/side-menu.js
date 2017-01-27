@@ -11,6 +11,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { FBLoginManager } from 'react-native-facebook-login';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 export class SideMenu extends Component {
   static propTypes = {
@@ -45,7 +46,10 @@ export class SideMenu extends Component {
           >
             <View style={styles.userInfo}>
               <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
-              <Text style={styles.userInfoText}>{currentUser.first_name}</Text>
+              <View>
+                <Text style={styles.userInfoText}>{currentUser.first_name}</Text>
+                {this.renderNotificationIcon()}
+              </View>
             </View>
           </TouchableHighlight>
           <Icon.Button
@@ -75,6 +79,18 @@ export class SideMenu extends Component {
         </View>
       )
     }
+  }
+
+  renderNotificationIcon() {
+    return (
+      <MaterialIcons.Button
+        name="notifications-none"
+        backgroundColor="#23A2E3"
+        size={25}
+        style={styles.notificationIcon}
+        onPress={() => this.goToAndClose('myNotifications', {})}
+      />
+    )
   }
 
   renderSharedLinks() {
@@ -183,6 +199,9 @@ const styles = StyleSheet.create({
     borderColor: '#D3D3D3',
     borderBottomWidth: 1,
   },
+  notificationIcon: {
+    paddingTop: 0,
+  },
   sessionText: {
     fontSize: 18,
     fontWeight: 'bold',
@@ -199,6 +218,7 @@ const styles = StyleSheet.create({
     color: 'white',
     margin: 10,
     marginTop: 25,
+    marginBottom: 0,
   },
   userInfo: {
     backgroundColor: '#23A2E3',

@@ -2,17 +2,15 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { ScrollView, View, StyleSheet, ListView, RefreshControl, Text } from 'react-native';
-import { Actions } from 'react-native-router-flux';
-import { Button, List } from 'react-native-elements';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import _ from 'lodash';
 
 // actions
-import { fetchCars } from '../../../actions/cars'
+import { fetchNotifications, markNotificationAsSeen } from '../../../actions/notifications'
 
 // components
 import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
-import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-index-item'
+import { NotificationsIndexItem } from '../../../components/notifications/notifications-index-item/notifications-index-item'
 
 const per = 15
 const styles = StyleSheet.create({
@@ -21,13 +19,13 @@ const styles = StyleSheet.create({
   }
 });
 
-class CarsIndex extends Component {
+export class NotificationsIndex extends Component {
   static propTypes = {
-    pagination: PropTypes.object.isRequired,
-    cars: PropTypes.array.isRequired,
+    notifications: PropTypes.array.isRequired,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
-    currentUser: PropTypes.object,
+    isAuthenticated: PropTypes.bool.isRequired,
+    pagination: PropTypes.object.isRequired,
   }
 
   constructor(props, context) {
@@ -43,16 +41,16 @@ class CarsIndex extends Component {
   }
 
   componentDidMount() {
-    const { fetchCars, currentUser } = this.props
+    const { isAuthenticated, fetchNotifications } = this.props
 
-    if (currentUser.id) fetchCars(currentUser.id, 1, per)
+    if (isAuthenticated) fetchNotifications()
   }
 
   componentDidUpdate(prevProps) {
-    const { cars } = this.props;
+    const { notifications } = this.props;
 
-    if (cars !== prevProps.cars) {
-      let newData = this.state.data.concat(cars)
+    if (notifications !== prevProps.notifications) {
+      let newData = this.state.data.concat(notifications)
 
       this.setState({
         data: newData,
@@ -61,8 +59,8 @@ class CarsIndex extends Component {
     }
   }
 
-  renderCarsList() {
-    const { cars, isFetching, isStarted } = this.props;
+  renderNotificationsList() {
+    const { notifications, isFetching, isStarted } = this.props;
 
     if (_.isEmpty(this.state.data) && isFetching) {
       return (
@@ -71,7 +69,7 @@ class CarsIndex extends Component {
     } else if (_.isEmpty(this.state.data)) {
       return(
         <View style={styles.emptyListContainer}>
-          <Text style={styles.emptyList}>No cars</Text>
+          <Text style={styles.emptyList}>No notifications</Text>
         </View>
       )
     } else {
@@ -79,7 +77,7 @@ class CarsIndex extends Component {
         <ListView
           renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
-          renderRow={this.renderCar}
+          renderRow={this.renderNotification.bind(this)}
           canLoadMore={true}
           onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
           enableEmptySections={true}
@@ -95,35 +93,29 @@ class CarsIndex extends Component {
     }
   }
 
-  renderCar(car) {
+  renderNotification(notification) {
+    const { markAsSeen } = this.props
+
     return (
-      <CarsIndexItem
-        car={car}
-        key={`car${car.id}`}
+      <NotificationsIndexItem
+        key={`notification${notification.id}`}
+        notification={notification}
+        markAsSeen={this.markAsSeen.bind(this)}
       />
     )
   }
 
-  renderAddCarButton() {
-    const { isAuthenticated } = this.props;
+  markAsSeen(notificationId) {
+    const { markNotificationAsSeen } = this.props
 
-    if (isAuthenticated) {
-      return (
-        <Button
-          raised
-          title='Add car'
-          backgroundColor='#23a2e3'
-          onPress={() => Actions.carNew()}
-        />
-      )
-    }
+    markNotificationAsSeen(notificationId)
   }
 
   loadMoreContentAsync = async () => {
-    const { fetchCars, currentUser } = this.props
-
+    const { isAuthenticated, fetchNotifications } = this.props
     page = page + 1
-    if (currentUser.id) fetchCars(currentUser.id, page, per)
+
+    if (isAuthenticated) fetchNotifications(page, per)
   }
 
   canLoadMore() {
@@ -131,9 +123,9 @@ class CarsIndex extends Component {
   }
 
   onRefresh() {
-    const { fetchCars, currentUser } = this.props
+    const { isAuthenticated, fetchNotifications } = this.props
 
-    if (currentUser.id) fetchCars(currentUser.id, 1, per)
+    if (isAuthenticated) fetchNotifications(1, per)
   }
 
   render() {
@@ -141,8 +133,7 @@ class CarsIndex extends Component {
 
     return (
       <View style={styles.view}>
-        {this.renderAddCarButton()}
-        {this.renderCarsList()}
+        {this.renderNotificationsList()}
       </View>
     );
   }
@@ -150,16 +141,17 @@ class CarsIndex extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    pagination: state.cars.pagination,
-    cars: state.cars.items,
-    isStarted: state.cars.isStarted,
-    isFetching: state.cars.isFetching,
-    currentUser: state.session.item,
+    notifications: state.notifications.items,
+    isStarted: state.notifications.isStarted,
+    isFetching: state.notifications.isFetching,
+    pagination: state.notifications.pagination,
+    isAuthenticated: state.session.isAuthenticated,
   }
 }
 
 const mapDispatchToProps = {
-  fetchCars
+  fetchNotifications,
+  markNotificationAsSeen
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CarsIndex)
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationsIndex)

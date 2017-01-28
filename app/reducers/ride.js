@@ -1,6 +1,8 @@
 import {
   RIDE_FETCH_REQUEST,
   RIDE_FETCH_SUCCESS,
+  RIDE_CREATE_REQUEST,
+  RIDE_CREATE_SUCCESS,
   RIDE_UPDATE_REQUEST,
   RIDE_UPDATE_SUCCESS,
   RIDE_REQUEST_CREATE_SUCCESS,
@@ -44,6 +46,12 @@ export function ride(state = initialState, action) {
           longitude: item.destination_city_lng,
         }
       }
+    };
+  case RIDE_CREATE_REQUEST:
+    console.log('RIDE_CREATE_REQUEST');
+    return {
+      ...state,
+      isSaving: true
     };
   case RIDE_UPDATE_REQUEST:
     console.log('RIDE_UPDATE_REQUEST');

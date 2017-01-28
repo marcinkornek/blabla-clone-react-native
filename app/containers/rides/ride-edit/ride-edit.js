@@ -24,6 +24,7 @@ export class RideEdit extends Component {
     ride: PropTypes.object.isRequired,
     isFetching: PropTypes.bool.isRequired,
     isStarted: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     rideOptions: PropTypes.object.isRequired,
   }
 
@@ -34,10 +35,11 @@ export class RideEdit extends Component {
   }
 
   renderRideForm() {
-    const { ride, rideOptions } = this.props
+    const { ride, rideOptions, isSaving } = this.props
 
     return (
       <RideForm
+        isSaving={isSaving}
         ride={ride}
         rideOptions={rideOptions}
         onSubmit={this.handleSubmit.bind(this)}
@@ -90,6 +92,7 @@ export class RideEdit extends Component {
 const mapStateToProps = (state) => {
   return {
     ride: state.ride.item,
+    isSaving: state.ride.isSaving,
     isFetching: state.rideOptions.isFetching,
     isStarted: state.rideOptions.isStarted,
     rideOptions: state.rideOptions,

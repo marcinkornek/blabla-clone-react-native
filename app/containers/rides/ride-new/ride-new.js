@@ -21,6 +21,7 @@ export class RideNew extends Component {
   static propTypes = {
     isFetching: PropTypes.bool.isRequired,
     isStarted: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     rideOptions: PropTypes.object.isRequired,
   }
 
@@ -29,10 +30,11 @@ export class RideNew extends Component {
   }
 
   renderRideForm() {
-    const { rideOptions } = this.props
+    const { rideOptions, isSaving } = this.props
 
     return (
       <RideForm
+        isSaving={isSaving}
         rideOptions={rideOptions}
         onSubmit={this.handleSubmit.bind(this)}
       />
@@ -76,6 +78,7 @@ export class RideNew extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    isSaving: state.ride.isSaving,
     isFetching: state.rideOptions.isFetching,
     isStarted: state.rideOptions.isStarted,
     rideOptions: state.rideOptions,

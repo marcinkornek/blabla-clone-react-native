@@ -30,7 +30,7 @@ class RideForm extends Component {
   }
 
   render() {
-    const { handleSubmit, rideOptions } = this.props
+    const { handleSubmit, rideOptions, isSaving } = this.props
     const minumumStartDate = moment().format('DD.MM.YYYY')
 
     let currencies = rideOptions.currencies.map((currency, i) =>
@@ -107,7 +107,8 @@ class RideForm extends Component {
         <Button
           raised
           style={styles.submitButton}
-          title='Submit'
+          title={isSaving ? 'Saving' : 'Submit'}
+          loading={isSaving}
           backgroundColor='#23a2e3'
           onPress={handleSubmit}
         />

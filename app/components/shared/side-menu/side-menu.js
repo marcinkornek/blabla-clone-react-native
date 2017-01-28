@@ -226,7 +226,7 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
   },
   userInfoText: {
-    width: 120,
+    width: 80,
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',

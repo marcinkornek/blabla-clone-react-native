@@ -34,8 +34,8 @@ class App extends Component {
         <RouterWithRedux>
           <Scene key="drawer" component={AppDrawer} open={false}>
             <Scene key="main" >
-              <Scene key="login" component={Login} title="Login" />
               <Scene key="ridesIndex" component={RidesIndex} title="All rides" />
+              <Scene key="login" component={Login} title="Login" />
               <Scene key="register" component={Register} title="Register" />
               <Scene key="myAccount" component={requireAuth(CurrentUserShow)} title="My Account" rightTitle="Edit" onRight={()=>Actions.myAccountEdit()} />
               <Scene key="myAccountEdit" component={requireAuth(CurrentUserEdit)} title="Edit Account" />

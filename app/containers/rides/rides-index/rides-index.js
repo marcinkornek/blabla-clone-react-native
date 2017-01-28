@@ -100,7 +100,6 @@ export class RidesIndex extends Component {
               onRefresh={this.onRefresh.bind(this)}
             />
           }
-
         />
       )
     }
@@ -120,11 +119,10 @@ export class RidesIndex extends Component {
 
     if (isAuthenticated && !(_.isEmpty(this.state.data) && isFetching)) {
       return (
-        <ActionButton buttonColor="#23a2e3">
-          <ActionButton.Item buttonColor='#9b59b6' title="Add ride" onPress={() => Actions.rideNew()}>
-            <Icon name="md-create" style={styles.actionButtonIcon} />
-          </ActionButton.Item>
-        </ActionButton>
+        <ActionButton
+          buttonColor="#23a2e3"
+          onPress={() => Actions.rideNew()}
+        />
       )
     }
   }

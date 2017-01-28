@@ -1,6 +1,8 @@
 import {
   CAR_FETCH_REQUEST,
   CAR_FETCH_SUCCESS,
+  CAR_CREATE_REQUEST,
+  CAR_UPDATE_REQUEST,
 } from '../constants/action-types'
 
 export const initialState = {
@@ -30,6 +32,18 @@ export function car(state = initialState, action) {
         ...item,
         places: item.places.toString()
       }
+    };
+  case CAR_CREATE_REQUEST:
+    console.log('CAR_CREATE_REQUEST');
+    return {
+      ...state,
+      isSaving: true
+    };
+  case CAR_UPDATE_REQUEST:
+    console.log('CAR_UPDATE_REQUEST');
+    return {
+      ...state,
+      isSaving: true
     };
   default:
     return state;

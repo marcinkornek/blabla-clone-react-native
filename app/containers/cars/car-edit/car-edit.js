@@ -21,6 +21,7 @@ const styles = StyleSheet.create({
 export class CarEdit extends Component {
   static propTypes = {
     car: PropTypes.object.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     isStarted: PropTypes.bool.isRequired,
     carOptions: PropTypes.object.isRequired,
@@ -64,11 +65,12 @@ export class CarEdit extends Component {
   }
 
   renderCarForm() {
-    const { carOptions, car } = this.props
+    const { carOptions, car, isSaving } = this.props
 
     return(
       <CarForm
         car={car}
+        isSaving={isSaving}
         onSubmit={this.handleSubmit.bind(this)}
         carOptions={carOptions}
       />
@@ -93,6 +95,7 @@ export class CarEdit extends Component {
 const mapStateToProps = (state) => {
   return {
     car: state.car.item,
+    isSaving: state.car.isSaving,
     isFetching: state.carOptions.isFetching,
     isStarted: state.carOptions.isStarted,
     carOptions: state.carOptions

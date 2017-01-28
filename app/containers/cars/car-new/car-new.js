@@ -22,6 +22,7 @@ export class CarNew extends Component {
   static propTypes = {
     isFetching: PropTypes.bool.isRequired,
     isStarted: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     carOptions: PropTypes.object.isRequired,
   }
 
@@ -51,12 +52,13 @@ export class CarNew extends Component {
   }
 
   renderCarForm() {
-    const { carOptions } = this.props
+    const { carOptions, isSaving } = this.props
 
     return(
       <CarForm
-        onSubmit={this.handleSubmit.bind(this)}
+        isSaving={isSaving}
         carOptions={carOptions}
+        onSubmit={this.handleSubmit.bind(this)}
       />
     )
   }
@@ -78,6 +80,7 @@ export class CarNew extends Component {
 
 const mapStateToProps = (state) => {
   return {
+    isSaving: state.car.isSaving,
     isFetching: state.carOptions.isFetching,
     isStarted: state.carOptions.isStarted,
     carOptions: state.carOptions

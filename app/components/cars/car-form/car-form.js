@@ -19,10 +19,11 @@ export class CarForm extends Component {
     handleSubmit: PropTypes.func.isRequired,
     carOptions: PropTypes.object.isRequired,
     car: PropTypes.object,
+    isSaving: PropTypes.bool.isRequired,
   }
 
   render() {
-    const { handleSubmit, carOptions } = this.props
+    const { handleSubmit, carOptions, isSaving } = this.props
     const colors = carOptions.colors.map((color) =>
       <Picker.Item
         key={color}
@@ -117,7 +118,8 @@ export class CarForm extends Component {
         />
         <Button
           raised
-          title='Submit'
+          title={isSaving ? 'Saving' : 'Submit'}
+          loading={isSaving}
           backgroundColor='#23a2e3'
           onPress={handleSubmit}
         />

@@ -70,7 +70,6 @@ class RideForm extends Component {
           name="start_date"
           label="Start date and time"
           minDate={minumumStartDate}
-          style={{width: 240}}
           component={DatetimepickerField}
         />
         <Field

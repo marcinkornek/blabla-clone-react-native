@@ -13,13 +13,6 @@ import LoginValidator from '../login-validator/login-validator'
 import { TextField } from '../../inputs/text-field/text-field';
 
 const styles = StyleSheet.create({
-  inputStyle: {
-    marginLeft: 10,
-    marginRight: 10,
-    padding: 5,
-    paddingTop: 0,
-    paddingBottom: 10,
-  },
   loginError: {
     marginLeft: 15,
     marginBottom: 5,
@@ -75,14 +68,12 @@ export class LoginEmail extends Component {
             name="email"
             label="Email"
             keyboardType="email-address"
-            style={styles.inputStyle}
             component={TextField}
           />
           <Field
             name="password"
             label="Password"
             secureTextEntry={true}
-            style={styles.inputStyle}
             component={TextField}
           />
           <Button

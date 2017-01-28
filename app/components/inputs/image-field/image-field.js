@@ -1,23 +1,28 @@
 import React, { Component } from 'react';
-import { View, Platform } from 'react-native';
+import { View, Platform, StyleSheet, Text } from 'react-native';
 import { Button } from 'react-native-elements';
 import ImagePicker from 'react-native-image-picker';
 
-var options = {
+const options = {
   title: 'Select Image',
   storageOptions: {
     skipBackup: true,
     path: 'images'
   }
 };
+const styles = StyleSheet.create({
+  error: {
+    color: 'red',
+    marginLeft: 15,
+    marginTop: 3
+  },
+});
 
 export class ImageField extends Component {
   onChange(e) {
     const { input } = this.props;
 
     ImagePicker.showImagePicker(options, (response) => {
-      // console.log('Response = ', response);
-
       if (response.didCancel) {
         console.log('User cancelled image picker');
       }
@@ -25,33 +30,24 @@ export class ImageField extends Component {
         console.log('ImagePicker Error: ', response.error);
       }
       else {
-        // // You can display the image using either data...
-        // const source = {uri: 'data:image/jpeg;base64,' + response.data, isStatic: true};
-
-        // // or a reference to the platform specific asset location
-        // if (Platform.OS === 'ios') {
-        //   const source = {uri: response.uri.replace('file://', ''), isStatic: true};
-        // } else {
-        //   const source = {uri: response.uri, isStatic: true};
-        // }
-
-        // this.setState({
-        //   avatarSource: source
-        // });
-
         input.onChange({ uri: response.uri, name: response.fileName, type: 'image/jpg' })
       }
     });
   }
 
   render() {
+    const { input, label, meta: { touched, error }, ...custom } = this.props;
+
     return (
-      <Button
-        raised
-        title='Add photo'
-        backgroundColor='#23a2e3'
-        onPress={this.onChange.bind(this)}
-      />
+      <View>
+        <Button
+          raised
+          title='Add photo'
+          backgroundColor='#23a2e3'
+          onPress={this.onChange.bind(this)}
+        />
+        <Text style={styles.error}>{touched && error}</Text>
+      </View>
     )
   }
 }

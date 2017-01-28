@@ -21,6 +21,10 @@ const styles = StyleSheet.create({
     height: 50,
     marginRight: 10,
   },
+  currentAvatarContainer: {
+    margin: 10,
+    marginLeft: 15,
+  }
 })
 
 class CurrentUserEditForm extends Component {
@@ -29,7 +33,7 @@ class CurrentUserEditForm extends Component {
 
     if (currentUser) {
       return (
-        <View>
+        <View style={styles.currentAvatarContainer}>
           <Text>Current avatar:</Text>
           <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
         </View>
@@ -101,7 +105,7 @@ class CurrentUserEditForm extends Component {
         />
         <Button
           raised
-          title='Submit'
+          title='Update'
           backgroundColor='#23a2e3'
           onPress={handleSubmit}
         />

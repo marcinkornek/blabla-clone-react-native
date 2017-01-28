@@ -40,8 +40,21 @@ export class FBLoginView extends Component {
   }
 
   render(){
-    return (
-      <View style={[]}>
+    const { isFetching, isOauth } = this.props;
+
+    if (isFetching && isOauth) {
+      return (
+        <Button
+          raised
+          title='Logging in'
+          loading={isFetching}
+          fontSize={16}
+          backgroundColor='#3b5998'
+          buttonStyle={styles.loginButton}
+        />
+      )
+    } else {
+      return (
         <Icon.Button
           onPress={() => this.login()}
           name="facebook"
@@ -53,23 +66,24 @@ export class FBLoginView extends Component {
             Login with Facebook
           </Text>
         </Icon.Button>
-      </View>
-    )
+      )
+    }
   }
 }
 
 export class LoginFacebook extends Component {
   static propTypes = {
-    handleSubmit: PropTypes.func.isRequired
+    handleSubmit: PropTypes.func.isRequired,
+    isFetching: PropTypes.bool.isRequired,
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, isFetching, isOauth } = this.props;
 
     return (
       <View>
         <FBLogin
-          buttonView={<FBLoginView />}
+          buttonView={<FBLoginView isFetching={isFetching} isOauth={isOauth} />}
           ref={(fbLogin) => { this.fbLogin = fbLogin }}
           permissions={["email", "user_friends"]}
           loginBehavior={LoginBehavior[Platform.OS]}

@@ -72,15 +72,19 @@ class Login extends Component {
   }
 
   render() {
-    const { errors } = this.props
+    const { errors, isFetching, isOauth } = this.props
 
     return (
       <View style={styles.view}>
         <LoginEmail
+          isOauth={isOauth}
+          isFetching={isFetching}
           errors={errors}
           onSubmit={this.handleEmailLogin.bind(this)}
         />
         <LoginFacebook
+          isOauth={isOauth}
+          isFetching={isFetching}
           handleSubmit={this.handleFacebookLogin.bind(this)}
         />
         <View style={styles.registerContainer}>
@@ -102,6 +106,7 @@ const mapStateToProps = (state) => {
     errors: state.session.errors,
     isFetching: state.session.isFetching,
     isAuthenticated: state.session.isAuthenticated,
+    isOauth: state.session.isOauth,
   }
 }
 

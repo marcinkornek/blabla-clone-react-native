@@ -2,7 +2,7 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { reduxForm, Field } from 'redux-form'
-import { View, ScrollView, Text, TextInput, Picker } from 'react-native';
+import { View, ScrollView, Text, TextInput, Picker, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 import _ from 'lodash';
@@ -15,6 +15,12 @@ import { TextField } from '../../inputs/text-field/text-field';
 import { SelectField } from '../../inputs/select-field/select-field';
 import { DatetimepickerField } from '../../inputs/datetimepicker-field/datetimepicker-field';
 import { GeosuggestField } from '../../inputs/geosuggest-field/geosuggest-field';
+
+const styles = StyleSheet.create({
+  submitButton: {
+    marginTop: 10,
+  },
+});
 
 class RideForm extends Component {
   static propTypes = {
@@ -100,6 +106,7 @@ class RideForm extends Component {
         </Field>
         <Button
           raised
+          style={styles.submitButton}
           title='Submit'
           backgroundColor='#23a2e3'
           onPress={handleSubmit}

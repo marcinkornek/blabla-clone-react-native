@@ -9,6 +9,7 @@ export const initialState = {
   isStarted: false,
   isFetching: false,
   errors: [],
+  isOauth: undefined,
   isAuthenticated: false,
   item: {},
 }
@@ -22,6 +23,7 @@ export function session(state = initialState, action) {
       ...state,
       isStarted: true,
       isFetching: true,
+      isOauth: action.isOauth,
     };
   case LOGIN_SUCCESS:
     console.log('LOGIN_SUCCESS');

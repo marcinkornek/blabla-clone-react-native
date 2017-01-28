@@ -23,7 +23,8 @@ export function logInFromStorage(data) {
           'X-User-Token': data.access_token
         }
       }
-    }
+    },
+    isOauth: false
   }
 }
 
@@ -40,7 +41,8 @@ export function logInEmailBackend(data) {
         url: APIEndpoints.LOGIN_EMAIL,
         data: data
       }
-    }
+    },
+    isOauth: false
   }
 }
 
@@ -64,7 +66,8 @@ export function logInFacebookBackend(data) {
           avatar: data.profile.picture.data.url
         }
       }
-    }
+    },
+    isOauth: true
   }
 }
 

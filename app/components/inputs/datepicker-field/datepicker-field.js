@@ -6,7 +6,8 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     marginLeft: 15,
-    marginTop: 0
+    marginTop: 0,
+    marginBottom: 5,
   },
   inputStyle: {
     height: 40,

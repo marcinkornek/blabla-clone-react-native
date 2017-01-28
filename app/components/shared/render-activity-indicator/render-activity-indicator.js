@@ -10,7 +10,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const RenderActivityIndicator = ({isFetching, error, children}) => (
+export const RenderActivityIndicator = () => (
   <ActivityIndicator
     animating={true}
     style={[styles.centering, {height: 80}]}

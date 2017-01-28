@@ -14,7 +14,8 @@ const styles = StyleSheet.create({
   error: {
     color: 'red',
     marginLeft: 15,
-    marginTop: 3
+    marginTop: 3,
+    marginBottom: 5,
   },
 });
 

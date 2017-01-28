@@ -69,6 +69,12 @@ export class SideMenu extends Component {
     } else {
       return(
         <View style={styles.userInfoEmpty}>
+          <Icon
+            name="user"
+            backgroundColor="#23A2E3"
+            size={22}
+            style={styles.sessionUserIcon}
+          />
           <TouchableHighlight
             underlayColor='#23A2E3'
             onPress={() => this.goToAndClose('login', {type: 'reset'})}
@@ -209,6 +215,10 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: 'bold',
     color: 'white',
+  },
+  sessionUserIcon: {
+    color: 'white',
+    marginRight: 5,
   },
   userInfoContainer: {
     backgroundColor: '#23A2E3',

@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, Text, StyleSheet, AsyncStorage } from 'react-native';
+import { View, Text, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 
@@ -13,8 +13,26 @@ import { logInEmailBackend, logInFacebookBackend } from '../../../actions/sessio
 import { fetchCurrentUser } from '../../../actions/current-user';
 
 // components
-import { LoginEmail } from '../../../components/session/login-email/login-email';
+import LoginEmail from '../../../components/session/login-email/login-email';
 import { LoginFacebook } from '../../../components/session/login-facebook/login-facebook';
+
+const styles = StyleSheet.create({
+  registerContainer: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  registerLink: {
+    fontSize: 16,
+    fontWeight: 'bold',
+  },
+  registerText: {
+    marginRight: 5,
+    fontSize: 16,
+  },
+  view: {
+    marginTop: 60,
+  }
+});
 
 class Login extends Component {
   static propTypes = {
@@ -53,43 +71,31 @@ class Login extends Component {
       })
   }
 
-  showErrors() {
+  render() {
     const { errors } = this.props
 
-    if (typeof errors !== 'undefined' && errors.length > 0) {
-      return(
-        <Text>
-          {errors}
-        </Text>
-      )
-    }
-  }
-
-  render() {
     return (
       <View style={styles.view}>
-        {this.showErrors()}
         <LoginEmail
-          handleSubmit={this.handleEmailLogin.bind(this)}
+          errors={errors}
+          onSubmit={this.handleEmailLogin.bind(this)}
         />
         <LoginFacebook
           handleSubmit={this.handleFacebookLogin.bind(this)}
         />
-        <Button
-          raised
-          title='Register'
-          onPress={Actions.register}
-        />
+        <View style={styles.registerContainer}>
+          <Text style={styles.registerText}>Don't have an account?</Text>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={Actions.register}
+          >
+            <Text style={styles.registerLink}>Register</Text>
+          </TouchableHighlight>
+        </View>
       </View>
     )
   }
 }
-
-const styles = StyleSheet.create({
-  view: {
-    marginTop: 60,
-  }
-});
 
 const mapStateToProps = (state) => {
   return {

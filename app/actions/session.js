@@ -27,7 +27,7 @@ export function logInFromStorage(data) {
   }
 }
 
-export function logInEmailBackend({ email, password } = {}) {
+export function logInEmailBackend(data) {
   return {
     types: [
       LOGIN_REQUEST,
@@ -38,10 +38,7 @@ export function logInEmailBackend({ email, password } = {}) {
       request: {
         method: 'post',
         url: APIEndpoints.LOGIN_EMAIL,
-        data: {
-          email,
-          password
-        }
+        data: data
       }
     }
   }

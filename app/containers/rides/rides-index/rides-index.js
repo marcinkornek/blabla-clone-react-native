@@ -8,6 +8,7 @@ import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import _ from 'lodash';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // actions
 import { fetchRides } from '../../../actions/rides';
@@ -15,6 +16,8 @@ import { fetchRides } from '../../../actions/rides';
 // components
 import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
+import { RenderRidesFilters } from '../../../components/rides/render-rides-filters/render-rides-filters'
+import { RenderRidesSearch } from '../../../components/rides/render-rides-search/render-rides-search'
 
 const per = 15
 let page = 1
@@ -28,6 +31,9 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  filtersContainer: {
+    flexDirection: 'row',
   },
   view: {
     marginTop: 60,
@@ -51,12 +57,49 @@ export class RidesIndex extends Component {
     this.state = {
       data: [],
       dataSource: ds.cloneWithRows([]),
-      refreshing: false
+      refreshing: false,
+      showSearch: false,
+      showFilters: false,
     };
   }
 
   componentDidMount() {
     this.props.fetchRides(page, per)
+
+    Actions.refresh({
+      renderRightButton: () => this.renderRightButton(),
+    })
+  }
+
+  renderRightButton() {
+    return (
+      <View style={styles.filtersContainer}>
+        <Icon.Button
+          onPress={() => this.toggleSearch()}
+          name="md-search"
+          backgroundColor='transparent'
+          underlayColor='transparent'
+          color="#23a2e3"
+          size={25}
+        />
+        <MaterialCommunityIcons.Button
+          onPress={() => this.toggleFilters()}
+          name="filter-variant"
+          backgroundColor='transparent'
+          underlayColor='transparent'
+          color="#23a2e3"
+          size={25}
+        />
+      </View>
+    )
+  }
+
+  toggleSearch() {
+    this.setState({showSearch: !this.state.showSearch})
+  }
+
+  toggleFilters() {
+    this.setState({showFilters: !this.state.showFilters})
   }
 
   componentDidUpdate(prevProps) {
@@ -140,9 +183,53 @@ export class RidesIndex extends Component {
     this.props.fetchRides(1, per)
   }
 
+  renderRidesSearch() {
+    const { filters } = this.props;
+
+    if (this.state.showSearch) {
+      return (
+        <RenderRidesSearch
+          handleSubmit={this.searchRides.bind(this)}
+          filters={filters}
+        />
+      )
+    }
+  }
+
+  renderRidesFilters() {
+    const { filters } = this.props;
+
+    if (this.state.showFilters) {
+      return (
+        <RenderRidesFilters
+          handleSubmit={this.filterRides.bind(this)}
+          filters={filters}
+        />
+      )
+    }
+  }
+
+  filterRides(data) {
+    console.log('============');
+    console.log('data');
+    console.log(data);
+    console.log('============');
+    this.props.fetchRides(1, per)
+  }
+
+  searchRides(data) {
+    console.log('============');
+    console.log('data');
+    console.log(data);
+    console.log('============');
+    this.props.fetchRides(1, per)
+  }
+
   render() {
     return (
       <View style={styles.view}>
+        {this.renderRidesSearch()}
+        {this.renderRidesFilters()}
         {this.renderRidesList()}
         {this.renderAddFloatingRideButton()}
       </View>
@@ -154,6 +241,7 @@ const mapStateToProps = (state) => {
   return {
     pagination: state.rides.pagination,
     rides: state.rides.items,
+    filters: state.rides.filters,
     isStarted: state.rides.isStarted,
     isFetching: state.rides.isFetching,
     isAuthenticated: state.session.isAuthenticated,

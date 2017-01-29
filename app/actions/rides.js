@@ -75,77 +75,65 @@ export function fetchRidesAsDriver(page = 1, per = 10, { driverId } = {}) {
 }
 
 export function fetchRide(rideId) {
-  return (dispatch, getState) => {
-    const { session } = getState()
-    return dispatch({
-      types: [
-        RIDE_FETCH_REQUEST,
-        RIDE_FETCH_SUCCESS,
-        RIDE_FETCH_FAILURE
-      ],
-      payload: {
-        request: {
-          url: `${APIEndpoints.RIDES}/${rideId}`,
-        }
+  return {
+    types: [
+      RIDE_FETCH_REQUEST,
+      RIDE_FETCH_SUCCESS,
+      RIDE_FETCH_FAILURE
+    ],
+    payload: {
+      request: {
+        url: `${APIEndpoints.RIDES}/${rideId}`,
       }
-    })
+    }
   }
 }
 
 export function createRide(body) {
-  return (dispatch, getState) => {
-    const { session } = getState()
-    return dispatch({
-      types: [
-        RIDE_CREATE_REQUEST,
-        RIDE_CREATE_SUCCESS,
-        RIDE_CREATE_FAILURE
-      ],
-      payload: {
-        request: {
-          method: 'post',
-          url: APIEndpoints.RIDES,
-          data: body
-        }
+  return {
+    types: [
+      RIDE_CREATE_REQUEST,
+      RIDE_CREATE_SUCCESS,
+      RIDE_CREATE_FAILURE
+    ],
+    payload: {
+      request: {
+        method: 'post',
+        url: APIEndpoints.RIDES,
+        data: body
       }
-    })
+    }
   }
 }
 
 export function fetchRideOptions() {
-  return (dispatch, getState) => {
-    const { session } = getState()
-    return dispatch({
-      types: [
-        RIDE_OPTIONS_FETCH_REQUEST,
-        RIDE_OPTIONS_FETCH_SUCCESS,
-        RIDE_OPTIONS_FETCH_FAILURE
-      ],
-      payload: {
-        request: {
-          url: `${APIEndpoints.RIDES}/options`,
-        }
+  return {
+    types: [
+      RIDE_OPTIONS_FETCH_REQUEST,
+      RIDE_OPTIONS_FETCH_SUCCESS,
+      RIDE_OPTIONS_FETCH_FAILURE
+    ],
+    payload: {
+      request: {
+        url: `${APIEndpoints.RIDES}/options`,
       }
-    })
+    }
   }
 }
 
 export function updateRide(body, rideId) {
-  return (dispatch, getState) => {
-    const { session } = getState()
-    return dispatch({
-      types: [
-        RIDE_UPDATE_REQUEST,
-        RIDE_UPDATE_SUCCESS,
-        RIDE_UPDATE_FAILURE
-      ],
-      payload: {
-        request: {
-          method: 'put',
-          url: `${APIEndpoints.RIDES}/${rideId}`,
-          data: body
-        }
+  return {
+    types: [
+      RIDE_UPDATE_REQUEST,
+      RIDE_UPDATE_SUCCESS,
+      RIDE_UPDATE_FAILURE
+    ],
+    payload: {
+      request: {
+        method: 'put',
+        url: `${APIEndpoints.RIDES}/${rideId}`,
+        data: body
       }
-    })
+    }
   }
 }

@@ -72,20 +72,17 @@ export function logInFacebookBackend(data) {
 }
 
 export function logoutCurrentUser() {
-  return (dispatch, getState) => {
-    const { session } = getState()
-    return dispatch({
-      types: [
-        LOGOUT_REQUEST,
-        LOGOUT_SUCCESS,
-        LOGOUT_FAILURE
-      ],
-      payload: {
-        request: {
-          method: 'delete',
-          url: APIEndpoints.SESSIONS,
-        }
+  return {
+    types: [
+      LOGOUT_REQUEST,
+      LOGOUT_SUCCESS,
+      LOGOUT_FAILURE
+    ],
+    payload: {
+      request: {
+        method: 'delete',
+        url: APIEndpoints.SESSIONS,
       }
-    })
+    }
   }
 }

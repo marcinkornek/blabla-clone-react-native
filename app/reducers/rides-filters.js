@@ -1,9 +1,11 @@
 import {
   RIDE_FILTER_UPDATE,
+  RIDE_SEARCH_UPDATE,
 } from '../constants/action-types';
 
 export const initialState = {
-  filters: {}
+  filters: {},
+  search: {},
 };
 
 export function ridesFilters(state = initialState, action) {
@@ -14,6 +16,12 @@ export function ridesFilters(state = initialState, action) {
     return {
       ...state,
       filters: action.filters
+    };
+  case RIDE_SEARCH_UPDATE:
+    console.log('RIDE_SEARCH_UPDATE');
+    return {
+      ...state,
+      search: action.search
     };
   default:
     return state;

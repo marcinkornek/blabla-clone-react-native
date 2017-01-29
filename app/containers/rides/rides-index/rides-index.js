@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // actions
-import { fetchRides, updateRidesFilters } from '../../../actions/rides';
+import { fetchRides, updateRidesSearch, updateRidesFilters } from '../../../actions/rides';
 
 // components
 import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
@@ -211,17 +211,17 @@ export class RidesIndex extends Component {
   }
 
   filterRides(data) {
-    console.log('============');
-    console.log('data');
-    console.log(data);
-    console.log('============');
-    this.props.fetchRides(1, per)
-  }
-
-  searchRides(data) {
     const { updateRidesFilters, fetchRides } = this.props;
 
     updateRidesFilters(data)
+    this.clearRides()
+    fetchRides(1, per)
+  }
+
+  searchRides(data) {
+    const { updateRidesSearch, fetchRides } = this.props;
+
+    updateRidesSearch(data)
     this.clearRides()
     fetchRides(1, per)
   }
@@ -260,6 +260,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchRides,
+  updateRidesSearch,
   updateRidesFilters,
 };
 

@@ -3,6 +3,7 @@ import {
   RIDES_FETCH_SUCCESS,
   RIDES_FETCH_FAILURE,
   RIDE_FILTER_UPDATE,
+  RIDE_SEARCH_UPDATE,
   RIDE_FETCH_REQUEST,
   RIDE_FETCH_SUCCESS,
   RIDE_FETCH_FAILURE,
@@ -23,6 +24,7 @@ export function fetchRides(page = 1, per = 10, { start_city, destination_city, s
     const { session } = getState()
     const { ridesFilters } = getState()
     const filters = ridesFilters.filters
+    const search = ridesFilters.search
 
     return dispatch({
       types: [
@@ -37,6 +39,7 @@ export function fetchRides(page = 1, per = 10, { start_city, destination_city, s
             page,
             per,
             filters,
+            search,
           }
         }
       }
@@ -143,6 +146,13 @@ export function updateRide(body, rideId) {
         data: body
       }
     }
+  }
+}
+
+export function updateRidesSearch(search = {}) {
+  return {
+    type: RIDE_SEARCH_UPDATE,
+    search: search
   }
 }
 

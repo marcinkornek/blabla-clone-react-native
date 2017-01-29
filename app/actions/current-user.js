@@ -12,17 +12,20 @@ import {
 import { APIEndpoints } from '../constants/constants'
 
 export function fetchCurrentUser() {
-  return {
-    types: [
-      CURRENT_USER_FETCH_REQUEST,
-      CURRENT_USER_FETCH_SUCCESS,
-      CURRENT_USER_FETCH_FAILURE
-    ],
-    payload: {
-      request: {
-        url: `${APIEndpoints.USERS}/${session.item.id}/profile`,
+  return (dispatch, getState) => {
+    const { session } = getState()
+    return dispatch({
+      types: [
+        CURRENT_USER_FETCH_REQUEST,
+        CURRENT_USER_FETCH_SUCCESS,
+        CURRENT_USER_FETCH_FAILURE
+      ],
+      payload: {
+        request: {
+          url: `${APIEndpoints.USERS}/${session.item.id}/profile`,
+        }
       }
-    }
+    })
   }
 }
 

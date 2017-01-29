@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // actions
-import { fetchRides } from '../../../actions/rides';
+import { fetchRides, updateRidesFilters } from '../../../actions/rides';
 
 // components
 import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
@@ -37,6 +37,7 @@ const styles = StyleSheet.create({
   },
   view: {
     marginTop: 60,
+    flex: 1,
   },
 });
 
@@ -189,7 +190,7 @@ export class RidesIndex extends Component {
     if (this.state.showSearch) {
       return (
         <RenderRidesSearch
-          handleSubmit={this.searchRides.bind(this)}
+          onSubmit={this.searchRides.bind(this)}
           filters={filters}
         />
       )
@@ -202,7 +203,7 @@ export class RidesIndex extends Component {
     if (this.state.showFilters) {
       return (
         <RenderRidesFilters
-          handleSubmit={this.filterRides.bind(this)}
+          onSubmit={this.filterRides.bind(this)}
           filters={filters}
         />
       )
@@ -218,19 +219,28 @@ export class RidesIndex extends Component {
   }
 
   searchRides(data) {
-    console.log('============');
-    console.log('data');
-    console.log(data);
-    console.log('============');
-    this.props.fetchRides(1, per)
+    const { updateRidesFilters, fetchRides } = this.props;
+
+    updateRidesFilters(data)
+    this.clearRides()
+    fetchRides(1, per)
+  }
+
+  clearRides() {
+    this.setState({
+      data: [],
+      dataSource: this.state.dataSource.cloneWithRows([])
+    })
   }
 
   render() {
     return (
       <View style={styles.view}>
-        {this.renderRidesSearch()}
-        {this.renderRidesFilters()}
-        {this.renderRidesList()}
+        <View>
+          {this.renderRidesSearch()}
+          {this.renderRidesFilters()}
+          {this.renderRidesList()}
+        </View>
         {this.renderAddFloatingRideButton()}
       </View>
     );
@@ -250,6 +260,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchRides,
+  updateRidesFilters,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RidesIndex)

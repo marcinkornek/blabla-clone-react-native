@@ -38,6 +38,7 @@ export class GeosuggestField extends Component {
         <TextInput
           style={styles.inputStyle}
           onFocus={() => this.openSearchModal()}
+          onChange={() => this.openSearchModal()}
           placeholder={label}
           value={input.value.address}
           {...custom}

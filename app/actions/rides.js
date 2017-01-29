@@ -2,6 +2,7 @@ import {
   RIDES_FETCH_REQUEST,
   RIDES_FETCH_SUCCESS,
   RIDES_FETCH_FAILURE,
+  RIDE_FILTER_UPDATE,
   RIDE_FETCH_REQUEST,
   RIDE_FETCH_SUCCESS,
   RIDE_FETCH_FAILURE,
@@ -18,21 +19,28 @@ import {
 import { APIEndpoints } from '../constants/constants';
 
 export function fetchRides(page = 1, per = 10, { start_city, destination_city, start_date, hide_full } = {}) {
-  return {
-    types: [
-      RIDES_FETCH_REQUEST,
-      RIDES_FETCH_SUCCESS,
-      RIDES_FETCH_FAILURE
-    ],
-    payload: {
-      request: {
-        url: APIEndpoints.RIDES,
-        params: {
-          page,
-          per,
+  return (dispatch, getState) => {
+    const { session } = getState()
+    const { ridesFilters } = getState()
+    const filters = ridesFilters.filters
+
+    return dispatch({
+      types: [
+        RIDES_FETCH_REQUEST,
+        RIDES_FETCH_SUCCESS,
+        RIDES_FETCH_FAILURE
+      ],
+      payload: {
+        request: {
+          url: APIEndpoints.RIDES,
+          params: {
+            page,
+            per,
+            filters,
+          }
         }
       }
-    }
+    })
   }
 }
 
@@ -135,5 +143,12 @@ export function updateRide(body, rideId) {
         data: body
       }
     }
+  }
+}
+
+export function updateRidesFilters(filters = {}) {
+  return {
+    type: RIDE_FILTER_UPDATE,
+    filters: filters
   }
 }

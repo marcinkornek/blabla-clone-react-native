@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { View, Text, Picker, StyleSheet } from 'react-native';
 
 const styles = StyleSheet.create({
@@ -19,15 +19,32 @@ const styles = StyleSheet.create({
   },
 });
 
-export const SelectField = ({ input, children, meta: { touched, error }, ...custom }) => (
-  <View>
-    <Picker
-      style={styles.inputStyle}
-      selectedValue={input.value}
-      onValueChange={value => input.onChange(value)}
-      children={children}
-      {...custom}
-    />
-    <Text style={styles.error}>{touched && error}</Text>
-  </View>
-);
+export class SelectField extends Component {
+  constructor(props, context) {
+    super(props, context);
+
+    this.state = {
+      pickerValue: props.input.value
+    }
+  };
+
+  render() {
+    const { input, children, meta: { touched, error }, ...custom } = this.props;
+
+    return (
+      <View>
+        <Picker
+          style={styles.inputStyle}
+          selectedValue={this.state && this.state.pickerValue}
+          onValueChange={(value) => {
+            this.setState({pickerValue: value});
+            input.onChange(value)
+          }}
+          children={children}
+          {...custom}
+        />
+        <Text style={styles.error}>{touched && error}</Text>
+      </View>
+    )
+  }
+};

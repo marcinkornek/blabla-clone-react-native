@@ -10,20 +10,28 @@ import _ from 'lodash';
 import { SelectField } from '../../inputs/select-field/select-field';
 
 const styles = StyleSheet.create({
+  buttonsContainer: {
+    flexDirection: 'column',
+
+  },
   filtersContainer: {
     flexDirection: 'row',
   },
   selectField: {
-    width: 105,
+    width: 115,
+    flexShrink: 1,
   },
   submitButton: {
     marginTop: 10,
     height: 30,
+    marginRight: 5,
+    marginLeft: 0,
   },
   view: {
-    marginBottom: 10,
+    marginTop: 0,
+    margin: 10,
     flexDirection: 'row',
-    flexWrap: 'nowrap',
+    flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
 });
@@ -113,14 +121,16 @@ export class RenderRidesFilters extends Component {
             {[currencyPlaceholder, ...currencies]}
           </Field>
         </View>
-        {this.renderClearButton()}
-        <Button
-          raised
-          buttonStyle={styles.submitButton}
-          title={'Filter'}
-          backgroundColor='#23a2e3'
-          onPress={handleSubmit}
-        />
+        <View style={styles.buttonsContainer}>
+          <Button
+            raised
+            buttonStyle={styles.submitButton}
+            title={'Filter'}
+            backgroundColor='#23a2e3'
+            onPress={handleSubmit}
+          />
+          {this.renderClearButton()}
+        </View>
       </View>
     )
   }

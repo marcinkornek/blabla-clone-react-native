@@ -12,7 +12,6 @@ import { SelectField } from '../../inputs/select-field/select-field';
 const styles = StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'column',
-
   },
   filtersContainer: {
     flexDirection: 'row',
@@ -57,7 +56,6 @@ export class RenderRidesFilters extends Component {
 
   renderClearButton() {
     const { filters, clearFilters } = this.props;
-    console.log(filters);
 
     if (!_.isEmpty(filters)) {
       return (

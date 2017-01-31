@@ -185,14 +185,14 @@ export class RidesIndex extends Component {
   }
 
   renderRidesSearch() {
-    const { filters } = this.props;
+    const { search } = this.props;
 
     if (this.state.showSearch) {
       return (
         <RenderRidesSearch
           onSubmit={this.searchRides.bind(this)}
           clearSearch={this.clearSearch.bind(this)}
-          filters={filters}
+          search={search}
         />
       )
     }
@@ -270,6 +270,7 @@ const mapStateToProps = (state) => {
     pagination: state.rides.pagination,
     rides: state.rides.items,
     filters: state.ridesFilters.filters,
+    search: state.ridesFilters.search,
     isStarted: state.rides.isStarted,
     isFetching: state.rides.isFetching,
     isAuthenticated: state.session.isAuthenticated,

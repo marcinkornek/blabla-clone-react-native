@@ -16,6 +16,8 @@ import {
   RIDE_UPDATE_REQUEST,
   RIDE_UPDATE_SUCCESS,
   RIDE_UPDATE_FAILURE,
+  RIDE_SEARCH_CLEAR,
+  RIDE_FILTER_CLEAR,
 } from '../constants/action-types';
 import { APIEndpoints } from '../constants/constants';
 
@@ -160,5 +162,17 @@ export function updateRidesFilters(filters = {}) {
   return {
     type: RIDE_FILTER_UPDATE,
     filters: filters
+  }
+}
+
+export function clearRidesSearch() {
+  return {
+    type: RIDE_SEARCH_CLEAR,
+  }
+}
+
+export function clearRidesFilters() {
+  return {
+    type: RIDE_FILTER_CLEAR,
   }
 }

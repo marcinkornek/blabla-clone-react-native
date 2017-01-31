@@ -26,7 +26,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   clearLink: {
-    backgroundColor: '#A8A8A8',
+    backgroundColor: '#e4e4e4',
     width: 25,
     height: 25,
     borderRadius: 15,
@@ -49,11 +49,26 @@ export class GeosuggestField extends Component {
       .catch(error => console.log(error.message));  // error is a Javascript Error object
   }
 
-
   clearSelect() {
     const { input } = this.props;
 
     input.onChange(null)
+  }
+
+  renderClearButton() {
+    const { input } = this.props;
+
+    if (input.value)  {
+      return (
+        <TouchableOpacity
+          style={styles.clearLink}
+          underlayColor='white'
+          onPress={() => this.clearSelect()}
+        >
+          <Text style={styles.clearText}>x</Text>
+        </TouchableOpacity>
+      )
+    }
   }
 
   render() {
@@ -70,13 +85,7 @@ export class GeosuggestField extends Component {
             value={input.value.address}
             {...custom}
           />
-          <TouchableOpacity
-            style={styles.clearLink}
-            underlayColor='white'
-            onPress={() => this.clearSelect()}
-          >
-            <Text style={styles.clearText}>x</Text>
-          </TouchableOpacity>
+          {this.renderClearButton()}
         </View>
         <Text style={styles.error}>{touched && error}</Text>
       </View>

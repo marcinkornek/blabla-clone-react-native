@@ -42,7 +42,7 @@ export class RenderRidesSearch extends Component {
         <Button
           raised
           style={styles.submitButton}
-          title={'Submit'}
+          title={'Search'}
           backgroundColor='#23a2e3'
           onPress={handleSubmit}
         />

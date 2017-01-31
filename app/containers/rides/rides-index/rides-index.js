@@ -11,7 +11,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // actions
-import { fetchRides, updateRidesSearch, updateRidesFilters } from '../../../actions/rides';
+import { fetchRides, updateRidesSearch, updateRidesFilters, clearRidesSearch, clearRidesFilters } from '../../../actions/rides';
 
 // components
 import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
@@ -191,6 +191,7 @@ export class RidesIndex extends Component {
       return (
         <RenderRidesSearch
           onSubmit={this.searchRides.bind(this)}
+          clearSearch={this.clearSearch.bind(this)}
           filters={filters}
         />
       )
@@ -204,10 +205,27 @@ export class RidesIndex extends Component {
       return (
         <RenderRidesFilters
           onSubmit={this.filterRides.bind(this)}
+          clearFilters={this.clearFilters.bind(this)}
           filters={filters}
         />
       )
     }
+  }
+
+  clearSearch() {
+    const { fetchRides, clearRidesSearch } = this.props;
+
+    clearRidesSearch()
+    this.clearRides()
+    fetchRides(1, per)
+  }
+
+  clearFilters() {
+    const { fetchRides, clearRidesFilters } = this.props;
+
+    clearRidesFilters()
+    this.clearRides()
+    fetchRides(1, per)
   }
 
   filterRides(data) {
@@ -251,7 +269,7 @@ const mapStateToProps = (state) => {
   return {
     pagination: state.rides.pagination,
     rides: state.rides.items,
-    filters: state.rides.filters,
+    filters: state.ridesFilters.filters,
     isStarted: state.rides.isStarted,
     isFetching: state.rides.isFetching,
     isAuthenticated: state.session.isAuthenticated,
@@ -262,6 +280,8 @@ const mapDispatchToProps = {
   fetchRides,
   updateRidesSearch,
   updateRidesFilters,
+  clearRidesSearch,
+  clearRidesFilters,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RidesIndex)

@@ -26,19 +26,25 @@ export class RenderRidesFilters extends Component {
 
   render() {
     const { ride, handleSubmit } = this.props;
-    const orderTypes = ['newest', 'oldest', 'recently_added', 'cheapest', 'expensive']
+    const orderTypes = [
+      { label: 'newest', value: 'newest' },
+      { label: 'oldest', value: 'oldest' },
+      { label: 'recently added', value: 'recently_added' },
+      { label: 'cheapest', value: 'cheapest' },
+      { label: 'expensive', value: 'expensive' },
+    ]
     const orders = orderTypes.map((order) =>
       <Picker.Item
-        key={order}
-        value={order}
-        label={order}
+        key={order.value}
+        value={order.value}
+        label={order.label}
       />
     )
     const orderPlaceholder =
       <Picker.Item
         key="order-placeholder"
         value={null}
-        label="Choose order"
+        label="order"
       />
 
     return (

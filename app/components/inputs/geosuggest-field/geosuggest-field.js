@@ -8,9 +8,15 @@ const styles = StyleSheet.create({
     color: 'red',
     marginLeft: 15,
     marginTop: -5,
-    marginBottom: 5,
+    marginBottom: 10,
+  },
+  inputContainer: {
+    marginTop: 5,
+    flexDirection: 'row',
+    alignItems: 'flex-end',
   },
   inputStyle: {
+    flex: 1,
     height: 40,
     marginBottom: 5,
     marginLeft: 10,
@@ -18,6 +24,19 @@ const styles = StyleSheet.create({
     padding: 5,
     paddingTop: 0,
     paddingBottom: 10,
+  },
+  clearLink: {
+    backgroundColor: '#A8A8A8',
+    width: 25,
+    height: 25,
+    borderRadius: 15,
+    marginRight: 15,
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  clearText: {
+    color: 'white'
   },
 });
 
@@ -30,19 +49,35 @@ export class GeosuggestField extends Component {
       .catch(error => console.log(error.message));  // error is a Javascript Error object
   }
 
+
+  clearSelect() {
+    const { input } = this.props;
+
+    input.onChange(null)
+  }
+
   render() {
     const { input, label, meta: { touched, error }, ...custom } = this.props;
 
     return (
       <View>
-        <TextInput
-          style={styles.inputStyle}
-          onFocus={() => this.openSearchModal()}
-          onChange={() => this.openSearchModal()}
-          placeholder={label}
-          value={input.value.address}
-          {...custom}
-        />
+        <View style={styles.inputContainer}>
+          <TextInput
+            style={styles.inputStyle}
+            onFocus={() => this.openSearchModal()}
+            onChange={() => this.openSearchModal()}
+            placeholder={label}
+            value={input.value.address}
+            {...custom}
+          />
+          <TouchableOpacity
+            style={styles.clearLink}
+            underlayColor='white'
+            onPress={() => this.clearSelect()}
+          >
+            <Text style={styles.clearText}>x</Text>
+          </TouchableOpacity>
+        </View>
         <Text style={styles.error}>{touched && error}</Text>
       </View>
     )

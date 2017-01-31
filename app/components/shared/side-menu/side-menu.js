@@ -7,11 +7,90 @@ import {
   TouchableHighlight,
   View,
   Image,
+  Dimensions,
 } from 'react-native'
 import { Actions } from 'react-native-router-flux';
 import { FBLoginManager } from 'react-native-facebook-login';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+
+const { width, height } = Dimensions.get('window')
+const styles = StyleSheet.create({
+  avatar: {
+    width: 80,
+    height: 80,
+    marginRight: 0,
+    borderRadius: 80,
+    borderWidth: 2,
+    borderColor: 'white',
+  },
+  button: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 10,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  logoutButton: {
+    backgroundColor: '#23A2E3',
+    borderRadius: 0,
+    paddingTop: 15,
+    padding: 10,
+  },
+  menuLink: {
+    fontSize: 17,
+    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderColor: '#D3D3D3',
+    borderBottomWidth: 1,
+  },
+  sessionText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  sessionUserIcon: {
+    color: 'white',
+    marginRight: 5,
+  },
+  userInfoContainer: {
+    backgroundColor: '#23A2E3',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  userInfoText: {
+    width: width - 290,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    margin: 10,
+    marginTop: 0,
+    marginBottom: 0,
+  },
+  userInfoNotificationIcon: {
+    paddingTop: 10,
+  },
+  userInfo: {
+    backgroundColor: '#23A2E3',
+    height: 100,
+    padding: 10,
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+  },
+  userInfoEmpty: {
+    backgroundColor: '#23A2E3',
+    height: 80,
+    padding: 10,
+    flexWrap: 'wrap',
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+  },
+})
 
 export class SideMenu extends Component {
   static propTypes = {
@@ -177,80 +256,3 @@ export class SideMenu extends Component {
 SideMenu.contextTypes = {
   drawer: PropTypes.object
 };
-
-const styles = StyleSheet.create({
-  avatar: {
-    width: 80,
-    height: 80,
-    marginRight: 0,
-    borderRadius: 80,
-    borderWidth: 2,
-    borderColor: 'white',
-  },
-  button: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'black',
-    padding: 10,
-  },
-  container: {
-    flex: 1,
-    backgroundColor: 'white',
-  },
-  logoutButton: {
-    backgroundColor: '#23A2E3',
-    borderRadius: 0,
-    paddingTop: 15,
-    padding: 10,
-  },
-  menuLink: {
-    fontSize: 17,
-    padding: 10,
-    paddingTop: 15,
-    paddingBottom: 15,
-    borderColor: '#D3D3D3',
-    borderBottomWidth: 1,
-  },
-  sessionText: {
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-  },
-  sessionUserIcon: {
-    color: 'white',
-    marginRight: 5,
-  },
-  userInfoContainer: {
-    backgroundColor: '#23A2E3',
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-  },
-  userInfoText: {
-    width: 80,
-    fontSize: 18,
-    fontWeight: 'bold',
-    color: 'white',
-    margin: 10,
-    marginTop: 0,
-    marginBottom: 0,
-  },
-  userInfoNotificationIcon: {
-    paddingTop: 10,
-  },
-  userInfo: {
-    backgroundColor: '#23A2E3',
-    height: 100,
-    padding: 10,
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    flexDirection: 'row',
-  },
-  userInfoEmpty: {
-    backgroundColor: '#23A2E3',
-    height: 80,
-    padding: 10,
-    flexWrap: 'wrap',
-    alignItems: 'flex-end',
-    flexDirection: 'row',
-  },
-})

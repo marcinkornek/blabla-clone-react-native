@@ -8,7 +8,7 @@ export const RideRequestUpdated = ({ notification }) => {
       onPress={() => Actions.rideShow({rideId: notification.ride.id})}
       key={notification.id}
       title={`${notification.sender.full_name} ${notification.notification_type == 'ride_request_accepted' ? ' accepted' : ' rejected'} your ride request in ride`}
-      subtitle={`${notification.ride.start_city} - ${notification.ride.destination_city}`}
+      subtitle={`${notification.ride.start_location_address} - ${notification.ride.destination_location_address}`}
     />
   )
 }

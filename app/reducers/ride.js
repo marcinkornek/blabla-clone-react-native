@@ -35,15 +35,15 @@ export function ride(state = initialState, action) {
         ...item,
         start_date: new Date(item.start_date),
         places: item.places.toString(),
-        start_city: {
-          address: item.start_city,
-          latitude: item.start_city_lat,
-          longitude: item.start_city_lng,
+        start_location: {
+          address: item.start_location_address,
+          latitude: item.start_location_latitude,
+          longitude: item.start_location_longitude,
         },
-        destination_city: {
-          address: item.destination_city,
-          latitude: item.destination_city_lat,
-          longitude: item.destination_city_lng,
+        destination_location: {
+          address: item.destination_location_address,
+          latitude: item.destination_location_latitude,
+          longitude: item.destination_location_longitude,
         }
       }
     };
@@ -69,15 +69,15 @@ export function ride(state = initialState, action) {
         ...item,
         start_date: new Date(item.start_date),
         places: item.places.toString(),
-        start_city: {
-          address: item.start_city,
-          latitude: item.start_city_lat,
-          longitude: item.start_city_lng,
+        start_location: {
+          address: item.start_location_address,
+          latitude: item.start_location_latitude,
+          longitude: item.start_location_longitude,
         },
-        destination_city: {
-          address: item.destination_city,
-          latitude: item.destination_city_lat,
-          longitude: item.destination_city_lng,
+        destination_location: {
+          address: item.destination_location_address,
+          latitude: item.destination_location_latitude,
+          longitude: item.destination_location_longitude,
         }
       }
     };
@@ -90,15 +90,15 @@ export function ride(state = initialState, action) {
         ...item,
         start_date: new Date(item.start_date),
         places: item.places.toString(),
-        start_city: {
-          address: item.start_city,
-          latitude: item.start_city_lat,
-          longitude: item.start_city_lng,
+        start_location: {
+          address: item.start_location_address,
+          latitude: item.start_location_latitude,
+          longitude: item.start_location_longitude,
         },
-        destination_city: {
-          address: item.destination_city,
-          latitude: item.destination_city_lat,
-          longitude: item.destination_city_lng,
+        destination_location: {
+          address: item.destination_location_address,
+          latitude: item.destination_location_latitude,
+          longitude: item.destination_location_longitude,
         }
       }
     };

@@ -63,12 +63,12 @@ class RideForm extends Component {
     return (
       <ScrollView>
         <Field
-          name="start_city"
+          name="start_location"
           label="Start city"
           component={GeosuggestField}
         />
         <Field
-          name="destination_city"
+          name="destination_location"
           label="Destination city"
           component={GeosuggestField}
         />

@@ -52,14 +52,14 @@ export class RideEdit extends Component {
     var body = new FormData()
 
     data =_.pick(data, [
-      'id', 'start_city', 'destination_city', 'places', 'start_date', 'price', 'currency', 'car_id'
+      'id', 'start_location', 'destination_location', 'places', 'start_date', 'price', 'currency', 'car_id'
     ])
 
     Object.keys(data).forEach((key) => {
-      if (key == 'destination_city' || key == 'start_city') {
-        body.append(key, data[key].address)
-        body.append(key + '_lat', data[key].latitude)
-        body.append(key + '_lng', data[key].longitude)
+      if (key == 'destination_location' || key == 'start_location') {
+        body.append(key + '_address', data[key].address)
+        body.append(key + '_latitude', data[key].latitude)
+        body.append(key + '_longitude', data[key].longitude)
       } else if (key == 'start_date') {
         body.append(key, moment(data[key]).format('DD-MM-YYYY h:mm'))
       } else {

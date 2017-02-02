@@ -17,7 +17,7 @@ const styles = StyleSheet.create({
   geolocationField: {
     marginTop: -15,
     marginBottom: -5,
-    width: width - 140,
+    width: width - 150,
   },
   submitButton: {
     marginTop: 10,
@@ -64,13 +64,13 @@ export class RenderRidesSearch extends Component {
         <View style={styles.searchContainer}>
           <Field
             style={styles.geolocationField}
-            name="start_city"
+            name="start_location"
             label="Start city"
             component={GeosuggestField}
           />
           <Field
             style={styles.geolocationField}
-            name="destination_city"
+            name="destination_location"
             label="Destination city"
             component={GeosuggestField}
           />

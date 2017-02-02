@@ -56,8 +56,8 @@ export class RideShow extends Component {
   static defaultProps = {
     currentUser: {},
     ride: {
-      start_city: {},
-      destination_city: {},
+      start_location: {},
+      destination_location: {},
       car: {},
       driver: {}
     }
@@ -78,13 +78,13 @@ export class RideShow extends Component {
 
     if (ride !== oldProps.ride) {
       const coordinates = [
-        this.createMarker(ride.start_city.latitude, ride.start_city.longitude),
-        this.createMarker(ride.destination_city.latitude, ride.destination_city.longitude)
+        this.createMarker(ride.start_location.latitude, ride.start_location.longitude),
+        this.createMarker(ride.destination_location.latitude, ride.destination_location.longitude)
       ]
 
       Actions.refresh({
         rideId: ride.id,
-        title: `${ride.start_city.address} - ${ride.destination_city.address}`,
+        title: `${ride.start_location.address} - ${ride.destination_location.address}`,
         rightTitle: this.renderRightTitle(),
         onRight: this.renderRightAction()
       })
@@ -133,7 +133,7 @@ export class RideShow extends Component {
     return (
       <View style={styles.rideDetails}>
         <Text style={styles.rideDestination}>
-          {ride.start_city.address} - {ride.destination_city.address}
+          {ride.start_location.address} - {ride.destination_location.address}
         </Text>
         <Text>{moment(ride.starts_date).format('DD.MM.YY H:MM')}</Text>
         {this.renderMap()}
@@ -151,8 +151,8 @@ export class RideShow extends Component {
             ref={ref => { this.map = ref; }}
             style={styles.map}
             initialRegion={{
-              latitude: parseFloat(ride.start_city.latitude),
-              longitude: parseFloat(ride.start_city.longitude),
+              latitude: parseFloat(ride.start_location.latitude),
+              longitude: parseFloat(ride.start_location.longitude),
               latitudeDelta: 0.0922,
               longitudeDelta: 0.0421,
             }}
@@ -173,8 +173,8 @@ export class RideShow extends Component {
     const { ride } = this.props
 
     return (
-      !isNaN(ride.start_city.latitude) && !isNaN(ride.start_city.longitude) &&
-        !isNaN(ride.destination_city.latitude) && !isNaN(ride.destination_city.longitude)
+      !isNaN(ride.start_location.latitude) && !isNaN(ride.start_location.longitude) &&
+        !isNaN(ride.destination_location.latitude) && !isNaN(ride.destination_location.longitude)
     )
   }
 

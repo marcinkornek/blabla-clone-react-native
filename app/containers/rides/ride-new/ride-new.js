@@ -46,10 +46,10 @@ export class RideNew extends Component {
     var body = new FormData()
 
     Object.keys(data).forEach((key) => {
-      if (key == 'destination_city' || key == 'start_city') {
-        body.append(key, data[key].address)
-        body.append(key + '_lat', data[key].latitude)
-        body.append(key + '_lng', data[key].longitude)
+      if (key == 'destination_location' || key == 'start_location') {
+        body.append(key + '_address', data[key].address)
+        body.append(key + '_latitude', data[key].latitude)
+        body.append(key + '_longitude', data[key].longitude)
       } else {
         if (data[key]) { body.append(key, data[key]) }
       }

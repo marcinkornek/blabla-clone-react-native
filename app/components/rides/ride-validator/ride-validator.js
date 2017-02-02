@@ -1,10 +1,10 @@
 export function RideValidator(values, props) {
   const errors = {};
-  if (!values.start_city) {
-    errors.start_city = 'Required';
+  if (!values.start_location) {
+    errors.start_location = 'Required';
   }
-  if (!values.destination_city) {
-    errors.destination_city = 'Required';
+  if (!values.destination_location) {
+    errors.destination_location = 'Required';
   }
   if (!values.places) {
     errors.places = 'Required';

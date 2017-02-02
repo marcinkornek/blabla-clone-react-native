@@ -10,14 +10,10 @@ export class RidesIndexItem extends Component {
     ride: PropTypes.object.isRequired
   }
 
-  goToRide(rideId) {
-    Actions.rideShow({rideId: rideId});
-  }
-
   renderAvatar() {
-    const { ride } = this.props;
+    const { ride, withCarPhoto } = this.props;
 
-    if (this.props.withCarPhoto) {
+    if (withCarPhoto) {
       return ride.car.car_photo
     } else if (ride.driver) {
       return ride.driver.avatar
@@ -29,9 +25,9 @@ export class RidesIndexItem extends Component {
 
     return(
       <ListItem
-        onPress={() => this.goToRide(ride.id)}
+        onPress={() => Actions.rideShow({rideId: ride.id})}
         key={ride.id}
-        title={`${ride.start_city} - ${ride.destination_city}`}
+        title={`${ride.start_location} - ${ride.destination_location}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
         avatar={{uri: this.renderAvatar()}}
       />

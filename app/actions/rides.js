@@ -21,7 +21,7 @@ import {
 } from '../constants/action-types';
 import { APIEndpoints } from '../constants/constants';
 
-export function fetchRides(page = 1, per = 10, { start_city, destination_city, start_date, hide_full } = {}) {
+export function fetchRides(page = 1, per = 10) {
   return (dispatch, getState) => {
     const { session } = getState()
     const { ridesFilters } = getState()

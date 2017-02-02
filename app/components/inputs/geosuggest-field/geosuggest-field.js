@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
 
 export class GeosuggestField extends Component {
   openSearchModal() {
-    RNGooglePlaces.openAutocompleteModal()
+    RNGooglePlaces.openAutocompleteModal({type: 'cities'})
       .then((place) => {
         this.props.input.onChange(place)
       })

@@ -41,7 +41,6 @@ export class RenderRidesSearch extends Component {
 
   renderClearButton() {
     const { search, clearSearch } = this.props;
-    console.log(search);
 
     if (!_.isEmpty(search)) {
       return (

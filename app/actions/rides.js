@@ -49,7 +49,7 @@ export function fetchRides(page = 1, per = 10) {
   }
 }
 
-export function fetchRidesAsPassenger(page = 1, per = 10, { passengerId } = {}) {
+export function fetchRidesAsPassenger(page = 1, per = 10, { user_id } = {}) {
   return {
     types: [
       RIDES_FETCH_REQUEST,
@@ -58,17 +58,18 @@ export function fetchRidesAsPassenger(page = 1, per = 10, { passengerId } = {}) 
     ],
     payload: {
       request: {
-        url: `${APIEndpoints.USERS}/${passengerId}/rides_as_passenger`,
+        url: `${APIEndpoints.RIDES}/as_passenger`,
         params: {
           page,
           per,
+          user_id
         }
       }
     }
   }
 }
 
-export function fetchRidesAsDriver(page = 1, per = 10, { driverId } = {}) {
+export function fetchRidesAsDriver(page = 1, per = 10, { user_id } = {}) {
   return {
     types: [
       RIDES_FETCH_REQUEST,
@@ -77,10 +78,11 @@ export function fetchRidesAsDriver(page = 1, per = 10, { driverId } = {}) {
     ],
     payload: {
       request: {
-        url: `${APIEndpoints.USERS}/${driverId}/rides_as_driver`,
+        url: `${APIEndpoints.RIDES}/as_driver`,
         params: {
           page,
           per,
+          user_id,
         }
       }
     }

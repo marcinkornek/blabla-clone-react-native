@@ -18,7 +18,7 @@ import {
 } from '../constants/action-types'
 import { APIEndpoints } from '../constants/constants'
 
-export function fetchCars(userId, page = 1, per = 10) {
+export function fetchCars(user_id, page = 1, per = 10) {
   return {
     types: [
       CARS_FETCH_REQUEST,
@@ -27,17 +27,18 @@ export function fetchCars(userId, page = 1, per = 10) {
     ],
     payload: {
       request: {
-        url: `${APIEndpoints.USERS}/${userId}/cars`,
+        url: APIEndpoints.CARS,
         params: {
           page,
           per,
+          user_id,
         }
       }
     }
   }
 }
 
-export function fetchCar(carId) {
+export function fetchCar(car_id) {
   return {
     types: [
       CAR_FETCH_REQUEST,
@@ -46,7 +47,7 @@ export function fetchCar(carId) {
     ],
     payload: {
       request: {
-        url: `${APIEndpoints.CARS}/${carId}`,
+        url: `${APIEndpoints.CARS}/${car_id}`,
       }
     }
   }
@@ -91,7 +92,7 @@ export function initializeCar() {
   }
 }
 
-export function updateCar(body, carId) {
+export function updateCar(body, car_id) {
   return {
     types: [
       CAR_UPDATE_REQUEST,
@@ -101,7 +102,7 @@ export function updateCar(body, carId) {
     payload: {
       request: {
         method: 'put',
-        url: `${APIEndpoints.CARS}/${carId}`,
+        url: `${APIEndpoints.CARS}/${car_id}`,
         data: body,
         simple: false
       }

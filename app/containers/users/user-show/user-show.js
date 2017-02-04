@@ -64,8 +64,8 @@ export class UserShow extends Component {
 
   static defaultProps = {
     user: {
-      rides_as_driver: { items: [] },
-      cars: { items: [] },
+      rides_as_driver: [],
+      cars: [],
     }
   }
 
@@ -103,7 +103,7 @@ export class UserShow extends Component {
   renderRidesAsDriver() {
     const { user } = this.props
 
-    if (!_.isEmpty(user.rides_as_driver.items)) {
+    if (!_.isEmpty(user.rides_as_driver)) {
       return (
         <View>
           <Text style={styles.title}>Rides as driver</Text>
@@ -117,7 +117,7 @@ export class UserShow extends Component {
     const { user } = this.props
 
     return (
-      user.rides_as_driver.items.map((ride, i) =>
+      user.rides_as_driver.map((ride, i) =>
         <RidesIndexItem
           key={`ride-${i}`}
           ride={ride}
@@ -130,7 +130,7 @@ export class UserShow extends Component {
   renderUserCars() {
     const { user } = this.props
 
-    if (!_.isEmpty(user.cars.items)) {
+    if (!_.isEmpty(user.cars)) {
       return (
         <View>
           <Text style={styles.title}>Cars</Text>
@@ -144,7 +144,7 @@ export class UserShow extends Component {
     const { user, currentUser } = this.props
 
     return (
-      user.cars.items.map((car, i) =>
+      user.cars.map((car, i) =>
         <CarsIndexItem
           key={`car-${i}`}
           car={car}

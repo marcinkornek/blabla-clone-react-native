@@ -27,7 +27,7 @@ export class RidesIndexItem extends Component {
       <ListItem
         onPress={() => Actions.rideShow({rideId: ride.id})}
         key={ride.id}
-        title={`${ride.start_location} - ${ride.destination_location}`}
+        title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
         avatar={{uri: this.renderAvatar()}}
       />

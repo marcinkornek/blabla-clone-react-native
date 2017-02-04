@@ -48,6 +48,8 @@ export class RidesIndex extends Component {
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+    filters: PropTypes.object.isRequired,
+    search: PropTypes.object.isRequired,
   }
 
   constructor(props, context) {

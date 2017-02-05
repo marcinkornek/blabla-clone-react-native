@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { ScrollView, View, StyleSheet, ListView, RefreshControl, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import _ from 'lodash';
 import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
@@ -134,11 +133,11 @@ export class RidesIndex extends Component {
     } else {
       return (
         <ListView
-          renderScrollComponent={props => <InfiniteScrollView {...props} />}
           dataSource={this.state.dataSource}
           renderRow={this.renderRide}
-          canLoadMore={true}
-          onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
+          canLoadMore={this.canLoadMore.bind(this)}
+          onEndReached={this.onLoadNextPage.bind(this)}
+          onEndReachedThreshold={100}
           enableEmptySections={true}
           refreshControl={
             <RefreshControl
@@ -173,13 +172,16 @@ export class RidesIndex extends Component {
     }
   }
 
-  loadMoreContentAsync = async () => {
-    page = page + 1
-    this.props.fetchRides(page, per)
+  onLoadNextPage() {
+    const { fetchRides, pagination } = this.props;
+
+    fetchRides(pagination.current_page + 1, per);
   }
 
   canLoadMore() {
-    parseInt(page, 10) < parseInt(this.props.pagination.total_pages, 10)
+    const { total_pages, current_page } = this.props.pagination;
+
+    !total_pages || current_page < total_pages
   }
 
   onRefresh() {

@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, View, StyleSheet, ListView, RefreshControl, Text } from 'react-native';
+import { View, StyleSheet, ListView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 import InfiniteScrollView from 'react-native-infinite-scroll-view';
@@ -11,22 +11,11 @@ import _ from 'lodash';
 import { fetchRidesAsPassenger } from '../../../actions/rides';
 
 // components
-import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
+import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
 const per = 15
-let page = 1
 const styles = StyleSheet.create({
-  emptyList: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  emptyListContainer: {
-    marginTop: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   view: {
     marginTop: 60,
   },
@@ -74,37 +63,21 @@ export class RidesIndexAsPassenger extends Component {
   }
 
   renderRidesList() {
-    const { rides, isFetching, isStarted } = this.props;
+    const { rides, isFetching, isStarted, fetchRidesAsPassenger, pagination } = this.props;
 
-    if (_.isEmpty(this.state.data) && isFetching) {
-      return (
-        <RenderActivityIndicator />
-      )
-    } else if (_.isEmpty(this.state.data)) {
-      return(
-        <View style={styles.emptyListContainer}>
-          <Text style={styles.emptyList}>No rides</Text>
-        </View>
-      )
-    } else {
-      return (
-        <ListView
-          renderScrollComponent={props => <InfiniteScrollView {...props} />}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRide}
-          canLoadMore={true}
-          onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
-          enableEmptySections={true}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh.bind(this)}
-            />
-          }
-
-        />
-      )
-    }
+    return (
+      <RenderList
+        per={per}
+        pagination={pagination}
+        isFetching={isFetching}
+        isStarted={isStarted}
+        data={this.state.data}
+        dataSource={this.state.dataSource}
+        fetchItems={fetchRidesAsPassenger}
+        renderRow={this.renderRide}
+        emptyListText='No rides'
+      />
+    )
   }
 
   renderRide(ride) {
@@ -114,23 +87,6 @@ export class RidesIndexAsPassenger extends Component {
         key={`ride${ride.id}`}
       />
     )
-  }
-
-  loadMoreContentAsync = async () => {
-    const { fetchRidesAsPassenger, currentUser } = this.props
-    page = page + 1
-
-    if (currentUser.id) fetchRidesAsPassenger(page, per, { user_id: currentUser.id })
-  }
-
-  canLoadMore() {
-    parseInt(page, 10) < parseInt(this.props.pagination.total_pages, 10)
-  }
-
-  onRefresh() {
-    const { fetchRidesAsPassenger, currentUser } = this.props
-
-    if (currentUser.id) fetchRidesAsPassenger(1, per, { user_id: currentUser.id })
   }
 
   render() {

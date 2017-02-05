@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { ScrollView, View, StyleSheet, ListView, RefreshControl, Text } from 'react-native';
+import { View, StyleSheet, ListView, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 import _ from 'lodash';
@@ -13,24 +13,13 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import { fetchRides, updateRidesSearch, updateRidesFilters, clearRidesSearch, clearRidesFilters } from '../../../actions/rides';
 
 // components
-import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
+import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 import { RenderRidesFilters } from '../../../components/rides/render-rides-filters/render-rides-filters'
 import { RenderRidesSearch } from '../../../components/rides/render-rides-search/render-rides-search'
 
 const per = 15
-let page = 1
 const styles = StyleSheet.create({
-  emptyList: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  emptyListContainer: {
-    marginTop: 10,
-    flexDirection: 'column',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   filtersContainer: {
     flexDirection: 'row',
   },
@@ -66,11 +55,24 @@ export class RidesIndex extends Component {
   }
 
   componentDidMount() {
-    this.props.fetchRides(page, per)
+    this.props.fetchRides(1, per)
 
     Actions.refresh({
       renderRightButton: () => this.renderRightButton(),
     })
+  }
+
+  componentDidUpdate(prevProps) {
+    const { rides } = this.props;
+
+    if (rides !== prevProps.rides) {
+      let newData = this.state.data.concat(rides)
+
+      this.setState({
+        data: newData,
+        dataSource: this.state.dataSource.cloneWithRows(newData)
+      })
+    }
   }
 
   renderRightButton() {
@@ -104,50 +106,22 @@ export class RidesIndex extends Component {
     this.setState({showFilters: !this.state.showFilters})
   }
 
-  componentDidUpdate(prevProps) {
-    const { rides } = this.props;
-
-    if (rides !== prevProps.rides) {
-      let newData = this.state.data.concat(rides)
-
-      this.setState({
-        data: newData,
-        dataSource: this.state.dataSource.cloneWithRows(newData)
-      })
-    }
-  }
-
   renderRidesList() {
-    const { rides, isFetching, isStarted } = this.props;
+    const { rides, isFetching, isStarted, fetchRides, pagination } = this.props;
 
-    if (_.isEmpty(this.state.data) && isFetching) {
-      return (
-        <RenderActivityIndicator />
-      )
-    } else if (_.isEmpty(this.state.data)) {
-      return(
-        <View style={styles.emptyListContainer}>
-          <Text style={styles.emptyList}>No rides</Text>
-        </View>
-      )
-    } else {
-      return (
-        <ListView
-          dataSource={this.state.dataSource}
-          renderRow={this.renderRide}
-          canLoadMore={this.canLoadMore.bind(this)}
-          onEndReached={this.onLoadNextPage.bind(this)}
-          onEndReachedThreshold={100}
-          enableEmptySections={true}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh.bind(this)}
-            />
-          }
-        />
-      )
-    }
+    return (
+      <RenderList
+        per={per}
+        pagination={pagination}
+        isFetching={isFetching}
+        isStarted={isStarted}
+        data={this.state.data}
+        dataSource={this.state.dataSource}
+        fetchItems={fetchRides}
+        renderRow={this.renderRide}
+        emptyListText='No rides'
+      />
+    )
   }
 
   renderRide(ride) {
@@ -170,22 +144,6 @@ export class RidesIndex extends Component {
         />
       )
     }
-  }
-
-  onLoadNextPage() {
-    const { fetchRides, pagination } = this.props;
-
-    fetchRides(pagination.current_page + 1, per);
-  }
-
-  canLoadMore() {
-    const { total_pages, current_page } = this.props.pagination;
-
-    !total_pages || current_page < total_pages
-  }
-
-  onRefresh() {
-    this.props.fetchRides(1, per)
   }
 
   renderRidesSearch() {
@@ -216,22 +174,6 @@ export class RidesIndex extends Component {
     }
   }
 
-  clearSearch() {
-    const { fetchRides, clearRidesSearch } = this.props;
-
-    clearRidesSearch()
-    this.clearRides()
-    fetchRides(1, per)
-  }
-
-  clearFilters() {
-    const { fetchRides, clearRidesFilters } = this.props;
-
-    clearRidesFilters()
-    this.clearRides()
-    fetchRides(1, per)
-  }
-
   filterRides(data) {
     const { updateRidesFilters, fetchRides } = this.props;
 
@@ -244,6 +186,22 @@ export class RidesIndex extends Component {
     const { updateRidesSearch, fetchRides } = this.props;
 
     updateRidesSearch(data)
+    this.clearRides()
+    fetchRides(1, per)
+  }
+
+  clearSearch() {
+    const { fetchRides, clearRidesSearch } = this.props;
+
+    clearRidesSearch()
+    this.clearRides()
+    fetchRides(1, per)
+  }
+
+  clearFilters() {
+    const { fetchRides, clearRidesFilters } = this.props;
+
+    clearRidesFilters()
     this.clearRides()
     fetchRides(1, per)
   }

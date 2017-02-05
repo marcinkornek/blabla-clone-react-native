@@ -57,7 +57,7 @@ export class RidesIndexAsDriver extends Component {
   componentDidMount() {
     const { fetchRidesAsDriver, currentUser } = this.props
 
-    if (currentUser.id) fetchRidesAsDriver(1, per, { driverId: currentUser.id })
+    if (currentUser.id) fetchRidesAsDriver(1, per, { user_id: currentUser.id })
   }
 
   componentDidUpdate(prevProps) {
@@ -120,7 +120,7 @@ export class RidesIndexAsDriver extends Component {
     const { fetchRidesAsDriver, currentUser } = this.props
     page = page + 1
 
-    if (currentUser.id) fetchRidesAsDriver(page, per, { driverId: currentUser.id })
+    if (currentUser.id) fetchRidesAsDriver(page, per, { user_id: currentUser.id })
   }
 
   canLoadMore() {
@@ -130,7 +130,7 @@ export class RidesIndexAsDriver extends Component {
   onRefresh() {
     const { fetchRidesAsDriver, currentUser } = this.props
 
-    if (currentUser.id) fetchRidesAsDriver(1, per, { driverId: currentUser.id })
+    if (currentUser.id) fetchRidesAsDriver(1, per, { user_id: currentUser.id })
   }
 
   render() {

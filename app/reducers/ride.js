@@ -35,16 +35,6 @@ export function ride(state = initialState, action) {
         ...item,
         start_date: new Date(item.start_date),
         places: item.places.toString(),
-        start_location: {
-          address: item.start_location_address,
-          latitude: item.start_location_latitude,
-          longitude: item.start_location_longitude,
-        },
-        destination_location: {
-          address: item.destination_location_address,
-          latitude: item.destination_location_latitude,
-          longitude: item.destination_location_longitude,
-        }
       }
     };
   case RIDE_CREATE_REQUEST:
@@ -69,16 +59,6 @@ export function ride(state = initialState, action) {
         ...item,
         start_date: new Date(item.start_date),
         places: item.places.toString(),
-        start_location: {
-          address: item.start_location_address,
-          latitude: item.start_location_latitude,
-          longitude: item.start_location_longitude,
-        },
-        destination_location: {
-          address: item.destination_location_address,
-          latitude: item.destination_location_latitude,
-          longitude: item.destination_location_longitude,
-        }
       }
     };
    case RIDE_REQUEST_CREATE_SUCCESS:
@@ -90,16 +70,6 @@ export function ride(state = initialState, action) {
         ...item,
         start_date: new Date(item.start_date),
         places: item.places.toString(),
-        start_location: {
-          address: item.start_location_address,
-          latitude: item.start_location_latitude,
-          longitude: item.start_location_longitude,
-        },
-        destination_location: {
-          address: item.destination_location_address,
-          latitude: item.destination_location_latitude,
-          longitude: item.destination_location_longitude,
-        }
       }
     };
   default:

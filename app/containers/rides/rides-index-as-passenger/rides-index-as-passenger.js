@@ -57,7 +57,7 @@ export class RidesIndexAsPassenger extends Component {
   componentDidMount() {
     const { fetchRidesAsPassenger, currentUser } = this.props
 
-    if (currentUser.id) fetchRidesAsPassenger(1, per, { passengerId: currentUser.id })
+    if (currentUser.id) fetchRidesAsPassenger(1, per, { user_id: currentUser.id })
   }
 
   componentDidUpdate(prevProps) {
@@ -120,7 +120,7 @@ export class RidesIndexAsPassenger extends Component {
     const { fetchRidesAsPassenger, currentUser } = this.props
     page = page + 1
 
-    if (currentUser.id) fetchRidesAsPassenger(page, per, { passengerId: currentUser.id })
+    if (currentUser.id) fetchRidesAsPassenger(page, per, { user_id: currentUser.id })
   }
 
   canLoadMore() {
@@ -130,7 +130,7 @@ export class RidesIndexAsPassenger extends Component {
   onRefresh() {
     const { fetchRidesAsPassenger, currentUser } = this.props
 
-    if (currentUser.id) fetchRidesAsPassenger(1, per, { passengerId: currentUser.id })
+    if (currentUser.id) fetchRidesAsPassenger(1, per, { user_id: currentUser.id })
   }
 
   render() {

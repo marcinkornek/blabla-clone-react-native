@@ -28,7 +28,7 @@ export class RenderRideOffer extends Component {
   renderRideFormOrStatus() {
     const { ride, currentUser, handleSubmit } = this.props;
 
-    if (ride.requested) {
+    if (ride.user_ride_request) {
       return (
         <View style={styles.view}>
           <Text style={styles.title}>Booking</Text>
@@ -53,7 +53,7 @@ export class RenderRideOffer extends Component {
   renderRideStatusTime() {
     const { ride } = this.props
 
-    if (ride.requested && ride.user_ride_request.status != 'pending' ) {
+    if (ride.user_ride_request && ride.user_ride_request.status != 'pending' ) {
        return(
         <View>
           <Text>

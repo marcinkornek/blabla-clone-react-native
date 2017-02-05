@@ -26,6 +26,7 @@ class RideForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     rideOptions: PropTypes.object.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     ride: PropTypes.object
   }
 

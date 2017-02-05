@@ -23,7 +23,6 @@ import { APIEndpoints } from '../constants/constants';
 
 export function fetchRides(page = 1, per = 10) {
   return (dispatch, getState) => {
-    const { session } = getState()
     const { ridesFilters } = getState()
     const filters = ridesFilters.filters
     const search = ridesFilters.search

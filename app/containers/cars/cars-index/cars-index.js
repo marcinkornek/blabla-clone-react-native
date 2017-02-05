@@ -11,7 +11,7 @@ import _ from 'lodash';
 import { fetchCars } from '../../../actions/cars'
 
 // components
-import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
+import { RenderList } from '../../../components/shared/render-list/render-list'
 import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-index-item'
 
 const per = 15
@@ -62,38 +62,22 @@ class CarsIndex extends Component {
   }
 
   renderCarsList() {
-    const { cars, isFetching, isStarted } = this.props;
+     const { cars, isFetching, isStarted, fetchCars, pagination } = this.props;
 
-    if (_.isEmpty(this.state.data) && isFetching) {
-      return (
-        <RenderActivityIndicator />
-      )
-    } else if (_.isEmpty(this.state.data)) {
-      return(
-        <View style={styles.emptyListContainer}>
-          <Text style={styles.emptyList}>No cars</Text>
-        </View>
-      )
-    } else {
-      return (
-        <ListView
-          renderScrollComponent={props => <InfiniteScrollView {...props} />}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderCar}
-          canLoadMore={true}
-          onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
-          enableEmptySections={true}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh.bind(this)}
-            />
-          }
-
-        />
-      )
-    }
-  }
+     return (
+       <RenderList
+         per={per}
+         pagination={pagination}
+         isFetching={isFetching}
+         isStarted={isStarted}
+         data={this.state.data}
+         dataSource={this.state.dataSource}
+         fetchItems={fetchCars}
+         renderRow={this.renderCar}
+         emptyListText='No cars'
+       />
+     )
+   }
 
   renderCar(car) {
     return (
@@ -117,23 +101,6 @@ class CarsIndex extends Component {
         />
       )
     }
-  }
-
-  loadMoreContentAsync = async () => {
-    const { fetchCars, currentUser } = this.props
-
-    page = page + 1
-    if (currentUser.id) fetchCars(currentUser.id, page, per)
-  }
-
-  canLoadMore() {
-    parseInt(page, 10) < parseInt(this.props.pagination.total_pages, 10)
-  }
-
-  onRefresh() {
-    const { fetchCars, currentUser } = this.props
-
-    if (currentUser.id) fetchCars(currentUser.id, 1, per)
   }
 
   render() {

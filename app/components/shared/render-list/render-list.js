@@ -1,6 +1,6 @@
 // utils
 import React, { Component, PropTypes } from 'react';
-import { StyleSheet, ListView, RefreshControl, View, Text } from 'react-native';
+import { StyleSheet, ListView, RefreshControl, ScrollView, View, Text } from 'react-native';
 import _ from 'lodash';
 
 // components
@@ -12,10 +12,13 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold',
   },
+  emptyListWrapper: {
+    height: 10000,
+  },
   emptyListContainer: {
     marginTop: 10,
     flexDirection: 'column',
-    justifyContent: 'center',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
 });
@@ -70,8 +73,18 @@ export class RenderList extends Component {
       )
     } else if (_.isEmpty(data)) {
       return(
-        <View style={styles.emptyListContainer}>
-          <Text style={styles.emptyList}>{emptyListText}</Text>
+        <View style={styles.emptyListWrapper}>
+          <ScrollView
+            contentContainerStyle={styles.emptyListContainer}
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onRefresh.bind(this)}
+              />
+            }
+          >
+            <Text style={styles.emptyList}>{emptyListText}</Text>
+          </ScrollView>
         </View>
       )
     } else {

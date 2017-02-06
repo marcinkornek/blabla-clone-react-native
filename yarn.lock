@@ -3151,9 +3151,9 @@ react-native-button@^1.7.1:
   version "1.7.1"
   resolved "https://registry.yarnpkg.com/react-native-button/-/react-native-button-1.7.1.tgz#0c3fb34e7f99dc2c9a8166094be878eb7cb3c36e"
 
-react-native-collapsible@^0.7.0:
-  version "0.7.0"
-  resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-0.7.0.tgz#ae41f7c595a4ad49a9e3f48667ff792ea8c85f61"
+react-native-collapsible@^0.8.0:
+  version "0.8.0"
+  resolved "https://registry.yarnpkg.com/react-native-collapsible/-/react-native-collapsible-0.8.0.tgz#169af4b2e596e45fa0df0769118e8a78d1491486"
 
 react-native-datepicker@^1.4.3:
   version "1.4.4"
@@ -3244,9 +3244,9 @@ react-native-vector-icons@^4.0.0:
     lodash "^4.0.0"
     yargs "^6.3.0"
 
-react-native@0.41.1:
-  version "0.41.1"
-  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.41.1.tgz#478edc36f5d41676264e98e9b1179e10a0a3b803"
+react-native@0.41.0:
+  version "0.41.0"
+  resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.41.0.tgz#09ea967b182885f302724f14587145da3b2d2e22"
   dependencies:
     absolute-path "^0.0.0"
     art "^0.10.0"

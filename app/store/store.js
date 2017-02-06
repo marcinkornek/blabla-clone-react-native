@@ -4,6 +4,7 @@ import axios from 'axios'
 import axiosMiddleware from 'redux-axios-middleware'
 import { createStore, applyMiddleware, compose } from 'redux';
 import update from 'immutability-helper';
+import { autoRehydrate } from 'redux-persist';
 
 // constants
 import { APIRoot } from '../constants/constants'
@@ -41,4 +42,5 @@ export const store = compose(
     thunk,
     axiosMiddleware(client)
   ),
+  autoRehydrate()
 )(createStore)(Reducers);

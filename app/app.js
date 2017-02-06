@@ -3,6 +3,8 @@ import React, { Component } from 'react';
 import { Router, Scene, Actions } from 'react-native-router-flux';
 import { Provider, connect } from 'react-redux';
 import { store } from './store/store';
+import { persistStore } from 'redux-persist';
+import { AsyncStorage, Text } from 'react-native';
 
 // components
 import AppDrawer from './containers/shared/app-drawer/app-drawer'
@@ -24,38 +26,53 @@ import UsersIndex from './containers/users/users-index/users-index'
 import UserShow from './containers/users/user-show/user-show'
 import NotificationsIndex from './containers/notifications/notifications-index/notifications-index'
 import requireAuth from './containers/shared/require-auth/require-auth'
+import { RenderActivityIndicator } from './components/shared/render-activity-indicator/render-activity-indicator'
 
 const RouterWithRedux = connect()(Router);
 
 class App extends Component {
+  state = {
+    rehydrated: false
+  }
+
+   componentWillMount(){
+     persistStore(store, { storage: AsyncStorage, whitelist: ['session'] }, () => {
+       this.setState({ rehydrated: true })
+     })
+   }
+
   render() {
-    return (
-      <Provider store={store}>
-        <RouterWithRedux>
-          <Scene key="drawer" component={AppDrawer} open={false}>
-            <Scene key="main" >
-              <Scene key="ridesIndex" component={RidesIndex} title="All rides" />
-              <Scene key="login" component={Login} title="Login" />
-              <Scene key="register" component={Register} title="Register" />
-              <Scene key="myAccount" component={requireAuth(CurrentUserShow)} title="My Account" rightTitle="Edit" onRight={()=>Actions.myAccountEdit()} />
-              <Scene key="myAccountEdit" component={requireAuth(CurrentUserEdit)} title="Edit Account" />
-              <Scene key="myRidesAsPassenger" component={requireAuth(RidesIndexAsPassenger)} title="My rides as passenger" />
-              <Scene key="myRidesAsDriver" component={requireAuth(RidesIndexAsDriver)} title="My rides as driver" />
-              <Scene key="myNotifications" component={requireAuth(NotificationsIndex)} title="My notifications" />
-              <Scene key="rideShow" component={RideShow} title="Ride" />
-              <Scene key="rideNew" component={requireAuth(RideNew)} title="Add Ride" />
-              <Scene key="rideEdit" component={requireAuth(RideEdit)} title="Edit Ride" />
-              <Scene key="carsIndex" component={requireAuth(CarsIndex)} title="My cars" />
-              <Scene key="carShow" component={requireAuth(CarShow)} title="Car" />
-              <Scene key="carNew" component={requireAuth(CarNew)} title="Add car" />
-              <Scene key="carEdit" component={requireAuth(CarEdit)} title="Edit car" />
-              <Scene key="usersIndex" component={requireAuth(UsersIndex)} title="Users" />
-              <Scene key="userShow" component={requireAuth(UserShow)} />
+    if(!this.state.rehydrated){
+      return <RenderActivityIndicator />
+    } else {
+      return (
+        <Provider store={store}>
+          <RouterWithRedux>
+            <Scene key="drawer" component={AppDrawer} open={false}>
+              <Scene key="main" >
+                <Scene key="ridesIndex" component={RidesIndex} title="All rides" />
+                <Scene key="login" component={Login} title="Login" />
+                <Scene key="register" component={Register} title="Register" />
+                <Scene key="myAccount" component={requireAuth(CurrentUserShow)} title="My Account" rightTitle="Edit" onRight={()=>Actions.myAccountEdit()} />
+                <Scene key="myAccountEdit" component={requireAuth(CurrentUserEdit)} title="Edit Account" />
+                <Scene key="myRidesAsPassenger" component={requireAuth(RidesIndexAsPassenger)} title="My rides as passenger" />
+                <Scene key="myRidesAsDriver" component={requireAuth(RidesIndexAsDriver)} title="My rides as driver" />
+                <Scene key="myNotifications" component={requireAuth(NotificationsIndex)} title="My notifications" />
+                <Scene key="rideShow" component={RideShow} title="Ride" />
+                <Scene key="rideNew" component={requireAuth(RideNew)} title="Add Ride" />
+                <Scene key="rideEdit" component={requireAuth(RideEdit)} title="Edit Ride" />
+                <Scene key="carsIndex" component={requireAuth(CarsIndex)} title="My cars" />
+                <Scene key="carShow" component={requireAuth(CarShow)} title="Car" />
+                <Scene key="carNew" component={requireAuth(CarNew)} title="Add car" />
+                <Scene key="carEdit" component={requireAuth(CarEdit)} title="Edit car" />
+                <Scene key="usersIndex" component={requireAuth(UsersIndex)} title="Users" />
+                <Scene key="userShow" component={requireAuth(UserShow)} />
+              </Scene>
             </Scene>
-          </Scene>
-        </RouterWithRedux>
-      </Provider>
-    );
+          </RouterWithRedux>
+        </Provider>
+      );
+    }
   }
 }
 

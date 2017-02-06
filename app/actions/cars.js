@@ -2,6 +2,9 @@ import {
   CARS_FETCH_REQUEST,
   CARS_FETCH_SUCCESS,
   CARS_FETCH_FAILURE,
+  CARS_REFRESH_REQUEST,
+  CARS_REFRESH_SUCCESS,
+  CARS_REFRESH_FAILURE,
   CAR_FETCH_REQUEST,
   CAR_FETCH_SUCCESS,
   CAR_FETCH_FAILURE,
@@ -17,6 +20,26 @@ import {
   CAR_UPDATE_FAILURE,
 } from '../constants/action-types'
 import { APIEndpoints } from '../constants/constants'
+
+export function refreshCars(user_id, per = 10) {
+  return {
+    types: [
+      CARS_REFRESH_REQUEST,
+      CARS_REFRESH_SUCCESS,
+      CARS_REFRESH_FAILURE
+    ],
+    payload: {
+      request: {
+        url: APIEndpoints.CARS,
+        params: {
+          page: 1,
+          per,
+          user_id,
+        }
+      }
+    }
+  }
+}
 
 export function fetchCars(user_id, page = 1, per = 10) {
   return {

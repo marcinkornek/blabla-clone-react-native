@@ -1,20 +1,19 @@
 // utils
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, View, StyleSheet, ListView, RefreshControl, Text } from 'react-native';
+import { ScrollView, View, StyleSheet, Text } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
 import _ from 'lodash';
 
 // actions
-import { fetchCars } from '../../../actions/cars'
+import { fetchCars, refreshCars } from '../../../actions/cars'
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
 import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-index-item'
 
-const per = 15
+const per = 20
 const styles = StyleSheet.create({
   view: {
     marginTop: 60,
@@ -30,60 +29,48 @@ class CarsIndex extends Component {
     currentUser: PropTypes.object,
   }
 
-  constructor(props, context) {
-    super(props, context);
-
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-    this.state = {
-      data: [],
-      dataSource: ds.cloneWithRows([]),
-      refreshing: false
-    };
-  }
-
   componentDidMount() {
     const { fetchCars, currentUser } = this.props
 
     if (currentUser.id) fetchCars(currentUser.id, 1, per)
   }
 
-  componentDidUpdate(prevProps) {
-    const { cars } = this.props;
+  refreshCars(per) {
+    const { refreshCars, currentUser } = this.props
 
-    if (cars !== prevProps.cars) {
-      let newData = this.state.data.concat(cars)
-
-      this.setState({
-        data: newData,
-        dataSource: this.state.dataSource.cloneWithRows(newData)
-      })
-    }
+    refreshCars(currentUser.id, per)
   }
 
-  renderCarsList() {
-     const { cars, isFetching, isStarted, fetchCars, pagination } = this.props;
+  fetchCars(page, per) {
+    const { fetchCars, currentUser } = this.props
 
-     return (
-       <RenderList
-         per={per}
-         pagination={pagination}
-         isFetching={isFetching}
-         isStarted={isStarted}
-         data={this.state.data}
-         dataSource={this.state.dataSource}
-         fetchItems={fetchCars}
-         renderRow={this.renderCar}
-         emptyListText='No cars'
-       />
-     )
-   }
+    fetchCars(currentUser.id, page, per)
+  }
 
   renderCar(car) {
     return (
       <CarsIndexItem
         car={car}
         key={`car${car.id}`}
+      />
+    )
+  }
+
+  renderCarsList() {
+    const { cars, isFetching, isStarted, pagination } = this.props;
+
+    return (
+      <RenderList
+        items={cars}
+        pagination={pagination}
+        isFetching={isFetching}
+        isStarted={isStarted}
+        fetchItems={this.fetchCars.bind(this)}
+        refreshItems={this.refreshCars.bind(this)}
+        renderRow={this.renderCar}
+        per={per}
+        onEndReachedThreshold={200}
+        emptyListText='No cars'
       />
     )
   }
@@ -126,7 +113,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  fetchCars
+  fetchCars,
+  refreshCars,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarsIndex)

@@ -78,7 +78,27 @@ export function fetchRides(page = 1, per = 10) {
   }
 }
 
-export function fetchRidesAsPassenger(page = 1, per = 10, { user_id } = {}) {
+export function refreshRidesAsPassenger(user_id, per = 10) {
+  return {
+    types: [
+      RIDES_REFRESH_REQUEST,
+      RIDES_REFRESH_SUCCESS,
+      RIDES_REFRESH_FAILURE
+    ],
+    payload: {
+      request: {
+        url: `${APIEndpoints.RIDES}/as_passenger`,
+        params: {
+          page: 1,
+          per,
+          user_id
+        }
+      }
+    }
+  }
+}
+
+export function fetchRidesAsPassenger(user_id, page = 1, per = 10) {
   return {
     types: [
       RIDES_FETCH_REQUEST,
@@ -98,7 +118,27 @@ export function fetchRidesAsPassenger(page = 1, per = 10, { user_id } = {}) {
   }
 }
 
-export function fetchRidesAsDriver(page = 1, per = 10, { user_id } = {}) {
+export function refreshRidesAsDriver(user_id, per = 10) {
+  return {
+    types: [
+      RIDES_REFRESH_REQUEST,
+      RIDES_REFRESH_SUCCESS,
+      RIDES_REFRESH_FAILURE
+    ],
+    payload: {
+      request: {
+        url: `${APIEndpoints.RIDES}/as_driver`,
+        params: {
+          page: 1,
+          per,
+          user_id
+        }
+      }
+    }
+  }
+}
+
+export function fetchRidesAsDriver(user_id, page = 1, per = 10) {
   return {
     types: [
       RIDES_FETCH_REQUEST,

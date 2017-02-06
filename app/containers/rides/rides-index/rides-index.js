@@ -3,8 +3,6 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Button, List } from 'react-native-elements';
-import _ from 'lodash';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 

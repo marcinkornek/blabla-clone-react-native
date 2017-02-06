@@ -1,23 +1,21 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, ListView } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Button, List } from 'react-native-elements';
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
-import _ from 'lodash';
 
 // actions
-import { fetchRidesAsDriver } from '../../../actions/rides';
+import { fetchRidesAsDriver, refreshRidesAsDriver } from '../../../actions/rides';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
-const per = 15
+const per = 20
 const styles = StyleSheet.create({
   view: {
     marginTop: 60,
+    flex: 1,
   },
 });
 
@@ -31,53 +29,22 @@ export class RidesIndexAsDriver extends Component {
     currentUser: PropTypes.object,
   }
 
-  constructor(props, context) {
-    super(props, context);
-
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-    this.state = {
-      data: [],
-      dataSource: ds.cloneWithRows([]),
-      refreshing: false
-    };
-  }
-
   componentDidMount() {
     const { fetchRidesAsDriver, currentUser } = this.props
 
-    if (currentUser.id) fetchRidesAsDriver(1, per, { user_id: currentUser.id })
+    if (currentUser.id) fetchRidesAsDriver(currentUser.id, 1, per)
   }
 
-  componentDidUpdate(prevProps) {
-    const { rides } = this.props;
+   refreshRides(per) {
+    const { refreshRidesAsDriver, currentUser } = this.props
 
-    if (rides !== prevProps.rides) {
-      let newData = this.state.data.concat(rides)
-
-      this.setState({
-        data: newData,
-        dataSource: this.state.dataSource.cloneWithRows(newData)
-      })
-    }
+    refreshRidesAsDriver(currentUser.id, per)
   }
 
-  renderRidesList() {
-    const { rides, isFetching, isStarted, fetchRidesAsDriver, pagination } = this.props;
+  fetchRides(page, per) {
+    const { fetchRidesAsDriver, currentUser } = this.props
 
-    return (
-      <RenderList
-        per={per}
-        pagination={pagination}
-        isFetching={isFetching}
-        isStarted={isStarted}
-        data={this.state.data}
-        dataSource={this.state.dataSource}
-        fetchItems={fetchRidesAsDriver}
-        renderRow={this.renderRide}
-        emptyListText='No rides'
-      />
-    )
+    fetchRidesAsDriver(currentUser.id, page, per)
   }
 
   renderRide(ride) {
@@ -85,6 +52,27 @@ export class RidesIndexAsDriver extends Component {
       <RidesIndexItem
         ride={ride}
         key={`ride${ride.id}`}
+      />
+    )
+  }
+
+  renderRidesList() {
+    const { rides, isFetching, isStarted, pagination } = this.props;
+
+    return (
+      <RenderList
+        items={rides}
+        pagination={pagination}
+        isFetching={isFetching}
+        isStarted={isStarted}
+        fetchItems={this.fetchRides.bind(this)}
+        refreshItems={this.refreshRides.bind(this)}
+        renderRow={this.renderRide}
+        showAddButton={true}
+        addButtonLink={() => Actions.rideNew()}
+        per={per}
+        onEndReachedThreshold={200}
+        emptyListText='No rides as driver'
       />
     )
   }
@@ -111,6 +99,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchRidesAsDriver,
+  refreshRidesAsDriver,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RidesIndexAsDriver)

@@ -1,11 +1,10 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, ListView, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 import _ from 'lodash';
-import ActionButton from 'react-native-action-button';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -102,7 +101,7 @@ export class RidesIndex extends Component {
   }
 
   renderRidesList() {
-    const { rides, isFetching, isStarted, pagination } = this.props;
+    const { rides, isFetching, isStarted, pagination, isAuthenticated } = this.props;
 
     return (
       <RenderList
@@ -113,24 +112,13 @@ export class RidesIndex extends Component {
         fetchItems={this.fetchRides.bind(this)}
         refreshItems={this.refreshRides.bind(this)}
         renderRow={this.renderRide}
+        showAddButton={isAuthenticated}
+        addButtonLink={() => Actions.rideNew()}
         per={per}
         onEndReachedThreshold={200}
         emptyListText='No rides'
       />
     )
-  }
-
-  renderAddFloatingRideButton() {
-    const { isAuthenticated, isFetching } = this.props;
-
-    if (isAuthenticated) {
-      return (
-        <ActionButton
-          buttonColor="#23a2e3"
-          onPress={() => Actions.rideNew()}
-        />
-      )
-    }
   }
 
   renderRidesSearch() {
@@ -203,12 +191,7 @@ export class RidesIndex extends Component {
   render() {
     return (
       <View style={styles.view}>
-        <View>
-          {this.renderRidesSearch()}
-          {this.renderRidesFilters()}
-          {this.renderRidesList()}
-        </View>
-        {this.renderAddFloatingRideButton()}
+        {this.renderRidesList()}
       </View>
     );
   }

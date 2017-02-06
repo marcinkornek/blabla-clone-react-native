@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 import _ from 'lodash';
@@ -17,7 +17,8 @@ const per = 20
 const styles = StyleSheet.create({
   view: {
     marginTop: 60,
-  }
+    flex: 1,
+  },
 });
 
 class CarsIndex extends Component {
@@ -68,6 +69,8 @@ class CarsIndex extends Component {
         fetchItems={this.fetchCars.bind(this)}
         refreshItems={this.refreshCars.bind(this)}
         renderRow={this.renderCar}
+        showAddButton={true}
+        addButtonLink={() => Actions.carNew()}
         per={per}
         onEndReachedThreshold={200}
         emptyListText='No cars'
@@ -75,27 +78,9 @@ class CarsIndex extends Component {
     )
   }
 
-  renderAddCarButton() {
-    const { isAuthenticated } = this.props;
-
-    if (isAuthenticated) {
-      return (
-        <Button
-          raised
-          title='Add car'
-          backgroundColor='#23a2e3'
-          onPress={() => Actions.carNew()}
-        />
-      )
-    }
-  }
-
   render() {
-    const { isFetching, isStarted } = this.props;
-
     return (
       <View style={styles.view}>
-        {this.renderAddCarButton()}
         {this.renderCarsList()}
       </View>
     );

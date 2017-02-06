@@ -18,11 +18,7 @@ export default function requireAuth(ChildComponent) {
     }
 
     render() {
-      return (
-        <View>
-         { this.props.isAuthenticated === true ? <ChildComponent { ...this.props } /> : null }
-        </View>
-      )
+      return this.props.isAuthenticated === true ? <ChildComponent { ...this.props } /> : null
     }
   }
 

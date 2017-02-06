@@ -1,6 +1,7 @@
 import {
   RIDES_FETCH_REQUEST,
   RIDES_FETCH_SUCCESS,
+  RIDES_REFRESH_REQUEST,
   RIDES_REFRESH_SUCCESS,
 } from '../constants/action-types';
 
@@ -33,6 +34,14 @@ export function rides(state = initialState, action) {
       items: state.items.concat(items),
       pagination: pagination,
       filters: filters
+    };
+  case RIDES_REFRESH_REQUEST:
+    console.log('RIDES_REFRESH_REQUEST');
+    return {
+      ...state,
+      isStarted: true,
+      isFetching: true,
+      items: [],
     };
   case RIDES_REFRESH_SUCCESS:
     console.log('RIDES_REFRESH_SUCCESS');

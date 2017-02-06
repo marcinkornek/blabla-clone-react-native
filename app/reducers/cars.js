@@ -1,6 +1,7 @@
 import {
   CARS_FETCH_REQUEST,
   CARS_FETCH_SUCCESS,
+  CARS_REFRESH_REQUEST,
   CARS_REFRESH_SUCCESS,
 } from '../constants/action-types'
 
@@ -30,6 +31,14 @@ export function cars(state = initialState, action) {
       isFetching: false,
       items: state.items.concat(items),
       pagination: pagination
+    };
+  case CARS_REFRESH_REQUEST:
+    console.log('CARS_REFRESH_REQUEST');
+    return {
+      ...state,
+      isStarted: true,
+      isFetching: true,
+      items: [],
     };
   case CARS_REFRESH_SUCCESS:
     console.log('CARS_REFRESH_SUCCESS');

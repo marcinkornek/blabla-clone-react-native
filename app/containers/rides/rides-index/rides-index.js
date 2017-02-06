@@ -19,6 +19,7 @@ const per = 20
 const styles = StyleSheet.create({
   filtersContainer: {
     flexDirection: 'row',
+    marginTop: -10,
   },
   view: {
     marginTop: 60,
@@ -59,7 +60,7 @@ export class RidesIndex extends Component {
           backgroundColor='transparent'
           underlayColor='transparent'
           color="#23a2e3"
-          size={25}
+          size={30}
         />
         <MaterialCommunityIcons.Button
           onPress={() => this.toggleFilters()}
@@ -67,7 +68,7 @@ export class RidesIndex extends Component {
           backgroundColor='transparent'
           underlayColor='transparent'
           color="#23a2e3"
-          size={25}
+          size={30}
         />
       </View>
     )
@@ -148,47 +149,40 @@ export class RidesIndex extends Component {
   }
 
   filterRides(data) {
-    const { updateRidesFilters, fetchRides } = this.props;
+    const { updateRidesFilters, refreshRides } = this.props;
 
     updateRidesFilters(data)
-    this.clearRides()
-    fetchRides(1, per)
+    refreshRides(per)
   }
 
   searchRides(data) {
-    const { updateRidesSearch, fetchRides } = this.props;
+    const { updateRidesSearch, refreshRides } = this.props;
 
     updateRidesSearch(data)
-    this.clearRides()
-    fetchRides(1, per)
+    refreshRides(per)
   }
 
   clearSearch() {
-    const { fetchRides, clearRidesSearch } = this.props;
+    const { refreshRides, clearRidesSearch } = this.props;
 
     clearRidesSearch()
-    this.clearRides()
-    fetchRides(1, per)
+    refreshRides(per)
   }
 
   clearFilters() {
-    const { fetchRides, clearRidesFilters } = this.props;
+    const { refreshRides, clearRidesFilters } = this.props;
 
     clearRidesFilters()
-    this.clearRides()
-    fetchRides(1, per)
-  }
-
-  clearRides() {
-    this.setState({
-      data: [],
-      dataSource: this.state.dataSource.cloneWithRows([])
-    })
+    refreshRides(per)
   }
 
   render() {
     return (
       <View style={styles.view}>
+        <View>
+          {this.renderRidesSearch()}
+          {this.renderRidesFilters()}
+        </View>
         {this.renderRidesList()}
       </View>
     );

@@ -16,6 +16,7 @@ const per = 20
 const styles = StyleSheet.create({
   view: {
     marginTop: 60,
+    flex: 1,
   }
 });
 

@@ -1,6 +1,7 @@
 import {
   USERS_FETCH_REQUEST,
   USERS_FETCH_SUCCESS,
+  USERS_REFRESH_REQUEST,
   USERS_REFRESH_SUCCESS,
 } from '../constants/action-types'
 
@@ -30,6 +31,14 @@ export function users(state = initialState, action) {
       isFetching: false,
       items: state.items.concat(items),
       pagination: pagination
+    };
+  case USERS_REFRESH_REQUEST:
+    console.log('USERS_REFRESH_REQUEST');
+    return {
+      ...state,
+      isStarted: true,
+      isFetching: true,
+      items: [],
     };
   case USERS_REFRESH_SUCCESS:
     console.log('USERS_REFRESH_SUCCESS');

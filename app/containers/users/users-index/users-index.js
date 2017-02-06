@@ -1,21 +1,21 @@
 // utils
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
-import { ScrollView, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 
 // actions
-import { fetchUsers } from '../../../actions/users';
+import { fetchUsers, refreshUsers } from '../../../actions/users';
 
 // components
+import { RenderList } from '../../../components/shared/render-list/render-list'
 import { UsersIndexItem } from '../../../components/users/users-index-item/users-index-item'
-import { AsyncContent } from '../../../components/shared/async-content/async-content'
 
-const per = 10
+const per = 20
 const styles = StyleSheet.create({
   view: {
-    marginTop: 30,
+    marginTop: 60,
   }
 });
 
@@ -27,43 +27,57 @@ class UsersIndex extends Component {
   }
 
   componentDidMount() {
-    const { fetchUsers } = this.props;
+    this.props.fetchUsers(1, per)
+  }
 
-    fetchUsers(1, per)
+  refreshUsers(per) {
+    this.props.refreshUsers(per)
+  }
+
+  fetchUsers(page, per) {
+    this.props.fetchUsers(page, per)
+  }
+
+  renderUser(user) {
+    return (
+      <UsersIndexItem
+        user={user}
+        key={`user${user.id}`}
+      />
+    )
   }
 
   renderUsersList() {
-    const { users } = this.props
+    const { users, isFetching, isStarted, pagination } = this.props;
 
     return (
-      users.map((user, i) =>
-        <UsersIndexItem
-          key={i}
-          user={user}
-        />
-      )
+      <RenderList
+        items={users}
+        pagination={pagination}
+        isFetching={isFetching}
+        isStarted={isStarted}
+        fetchItems={this.fetchUsers.bind(this)}
+        refreshItems={this.refreshUsers.bind(this)}
+        renderRow={this.renderUser}
+        per={per}
+        onEndReachedThreshold={200}
+        emptyListText='No users'
+      />
     )
   }
 
   render() {
-    const { isFetching, isStarted } = this.props;
-
     return(
-      <ScrollView style={styles.view}>
-        <AsyncContent
-          isFetching={isFetching || !isStarted}
-        >
-          <List containerStyle={{marginBottom: 20}}>
-            {this.renderUsersList()}
-          </List>
-        </AsyncContent>
-      </ScrollView>
+      <View style={styles.view}>
+        {this.renderUsersList()}
+      </View>
     )
   }
 }
 
 const mapStateToProps = (state) => {
   return {
+    pagination: state.users.pagination,
     users: state.users.items,
     isStarted: state.users.isStarted,
     isFetching: state.users.isFetching,
@@ -71,7 +85,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  fetchUsers
+  fetchUsers,
+  refreshUsers,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UsersIndex)

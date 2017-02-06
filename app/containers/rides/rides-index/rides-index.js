@@ -41,7 +41,6 @@ export class RidesIndex extends Component {
   }
 
   state = {
-    refreshing: false,
     showSearch: false,
     showFilters: false,
   };
@@ -86,15 +85,20 @@ export class RidesIndex extends Component {
   }
 
   refreshRides(per) {
-    const { refreshRides } = this.props;
-
-    refreshRides(per)
+    this.props.refreshRides(per)
   }
 
   fetchRides(page, per) {
-    const { fetchRides } = this.props;
+    this.props.fetchRides(page, per)
+  }
 
-    fetchRides(page, per)
+  renderRide(ride) {
+    return (
+      <RidesIndexItem
+        ride={ride}
+        key={`ride${ride.id}`}
+      />
+    )
   }
 
   renderRidesList() {
@@ -112,15 +116,6 @@ export class RidesIndex extends Component {
         per={per}
         onEndReachedThreshold={200}
         emptyListText='No rides'
-      />
-    )
-  }
-
-  renderRide(ride) {
-    return (
-      <RidesIndexItem
-        ride={ride}
-        key={`ride${ride.id}`}
       />
     )
   }

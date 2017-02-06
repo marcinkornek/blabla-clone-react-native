@@ -1,6 +1,7 @@
 import {
   USERS_FETCH_REQUEST,
   USERS_FETCH_SUCCESS,
+  USERS_REFRESH_SUCCESS,
 } from '../constants/action-types'
 
 export const initialState = {
@@ -27,8 +28,18 @@ export function users(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: items,
+      items: state.items.concat(items),
       pagination: pagination
+    };
+  case USERS_REFRESH_SUCCESS:
+    console.log('USERS_REFRESH_SUCCESS');
+    items = action.payload.data.items
+    pagination = action.payload.data.meta
+    return {
+      ...state,
+      isFetching: false,
+      items: items,
+      pagination: pagination,
     };
   default:
     return state;

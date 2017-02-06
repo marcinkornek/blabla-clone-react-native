@@ -2,6 +2,9 @@ import {
   RIDES_FETCH_REQUEST,
   RIDES_FETCH_SUCCESS,
   RIDES_FETCH_FAILURE,
+  RIDES_REFRESH_REQUEST,
+  RIDES_REFRESH_SUCCESS,
+  RIDES_REFRESH_FAILURE,
   RIDE_FILTER_UPDATE,
   RIDE_SEARCH_UPDATE,
   RIDE_FETCH_REQUEST,
@@ -20,6 +23,33 @@ import {
   RIDE_FILTER_CLEAR,
 } from '../constants/action-types';
 import { APIEndpoints } from '../constants/constants';
+
+export function refreshRides(per = 10) {
+  return (dispatch, getState) => {
+    const { ridesFilters } = getState()
+    const filters = ridesFilters.filters
+    const search = ridesFilters.search
+
+    return dispatch({
+      types: [
+        RIDES_REFRESH_REQUEST,
+        RIDES_REFRESH_SUCCESS,
+        RIDES_REFRESH_FAILURE
+      ],
+      payload: {
+        request: {
+          url: APIEndpoints.RIDES,
+          params: {
+            page: 1,
+            per,
+            filters,
+            search,
+          }
+        }
+      }
+    })
+  }
+}
 
 export function fetchRides(page = 1, per = 10) {
   return (dispatch, getState) => {

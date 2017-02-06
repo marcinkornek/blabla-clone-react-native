@@ -10,7 +10,7 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // actions
-import { fetchRides, updateRidesSearch, updateRidesFilters, clearRidesSearch, clearRidesFilters } from '../../../actions/rides';
+import { fetchRides, refreshRides, updateRidesSearch, updateRidesFilters, clearRidesSearch, clearRidesFilters } from '../../../actions/rides';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
@@ -18,7 +18,7 @@ import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides
 import { RenderRidesFilters } from '../../../components/rides/render-rides-filters/render-rides-filters'
 import { RenderRidesSearch } from '../../../components/rides/render-rides-search/render-rides-search'
 
-const per = 15
+const per = 20
 const styles = StyleSheet.create({
   filtersContainer: {
     flexDirection: 'row',
@@ -40,19 +40,11 @@ export class RidesIndex extends Component {
     search: PropTypes.object.isRequired,
   }
 
-  constructor(props, context) {
-    super(props, context);
-
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-    this.state = {
-      data: [],
-      dataSource: ds.cloneWithRows([]),
-      refreshing: false,
-      showSearch: false,
-      showFilters: false,
-    };
-  }
+  state = {
+    refreshing: false,
+    showSearch: false,
+    showFilters: false,
+  };
 
   componentDidMount() {
     this.props.fetchRides(1, per)
@@ -60,19 +52,6 @@ export class RidesIndex extends Component {
     Actions.refresh({
       renderRightButton: () => this.renderRightButton(),
     })
-  }
-
-  componentDidUpdate(prevProps) {
-    const { rides } = this.props;
-
-    if (rides !== prevProps.rides) {
-      let newData = this.state.data.concat(rides)
-
-      this.setState({
-        data: newData,
-        dataSource: this.state.dataSource.cloneWithRows(newData)
-      })
-    }
   }
 
   renderRightButton() {
@@ -106,19 +85,32 @@ export class RidesIndex extends Component {
     this.setState({showFilters: !this.state.showFilters})
   }
 
+  refreshRides(per) {
+    const { refreshRides } = this.props;
+
+    refreshRides(per)
+  }
+
+  fetchRides(page, per) {
+    const { fetchRides } = this.props;
+
+    fetchRides(page, per)
+  }
+
   renderRidesList() {
-    const { rides, isFetching, isStarted, fetchRides, pagination } = this.props;
+    const { rides, isFetching, isStarted, pagination } = this.props;
 
     return (
       <RenderList
-        per={per}
+        items={rides}
         pagination={pagination}
         isFetching={isFetching}
         isStarted={isStarted}
-        data={this.state.data}
-        dataSource={this.state.dataSource}
-        fetchItems={fetchRides}
+        fetchItems={this.fetchRides.bind(this)}
+        refreshItems={this.refreshRides.bind(this)}
         renderRow={this.renderRide}
+        per={per}
+        onEndReachedThreshold={200}
         emptyListText='No rides'
       />
     )
@@ -136,7 +128,7 @@ export class RidesIndex extends Component {
   renderAddFloatingRideButton() {
     const { isAuthenticated, isFetching } = this.props;
 
-    if (isAuthenticated && !(_.isEmpty(this.state.data) && isFetching)) {
+    if (isAuthenticated) {
       return (
         <ActionButton
           buttonColor="#23a2e3"
@@ -241,6 +233,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchRides,
+  refreshRides,
   updateRidesSearch,
   updateRidesFilters,
   clearRidesSearch,

@@ -25,53 +25,51 @@ const styles = StyleSheet.create({
 
 export class RenderList extends Component {
   static propTypes = {
+    items: PropTypes.array.isRequired,
     pagination: PropTypes.object.isRequired,
-    data: PropTypes.array.isRequired,
-    dataSource: PropTypes.object.isRequired,
-    isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
+    isStarted: PropTypes.bool.isRequired,
     fetchItems: PropTypes.func.isRequired,
+    refreshItems: PropTypes.func.isRequired,
     renderRow: PropTypes.func.isRequired,
     per: PropTypes.number.isRequired,
+    onEndReachedThreshold: PropTypes.number,
+    emptyListText: PropTypes.string,
   }
 
-  constructor(props, context) {
-    super(props, context);
-
-    this.state = {
-      data: props.data,
-      dataSource: props.dataSource,
-      refreshing: false,
-    };
-  }
+  state = {
+    refreshing: false,
+  };
 
   onLoadNextPage() {
     const { fetchItems, per } = this.props;
-    const { current_page } = this.props.pagination;
+    const { current_page, total_pages } = this.props.pagination;
 
-    fetchItems(current_page + 1, per);
-  }
+    console.log('per', per);
 
-  canLoadMore() {
-    const { total_pages, current_page } = this.props.pagination;
-
-    !total_pages || current_page < total_pages
+    if (!total_pages || current_page < total_pages) {
+      fetchItems(current_page + 1, per);
+    }
   }
 
   onRefresh() {
-    const { fetchItems, per } = this.props;
+    console.log('refresg');
+    const { refreshItems, per } = this.props;
 
-    fetchItems(1, per)
+    refreshItems(per)
   }
 
   render() {
-    const { data, dataSource, isFetching, isStarted, renderRow, emptyListText } = this.props;
+    const { items, isFetching, renderRow, emptyListText, onEndReachedThreshold } = this.props;
 
-    if (_.isEmpty(data) && isFetching) {
+    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    const dataSource = ds.cloneWithRows(items);
+
+    if (dataSource.getRowCount() === 0 && isFetching) {
       return (
         <RenderActivityIndicator />
       )
-    } else if (_.isEmpty(data)) {
+    } else if (dataSource.getRowCount() === 0) {
       return(
         <View style={styles.emptyListWrapper}>
           <ScrollView
@@ -83,7 +81,7 @@ export class RenderList extends Component {
               />
             }
           >
-            <Text style={styles.emptyList}>{emptyListText}</Text>
+            <Text style={styles.emptyList}>{emptyListText || 'No items'}</Text>
           </ScrollView>
         </View>
       )
@@ -92,9 +90,8 @@ export class RenderList extends Component {
         <ListView
           dataSource={dataSource}
           renderRow={renderRow}
-          canLoadMore={this.canLoadMore.bind(this)}
           onEndReached={this.onLoadNextPage.bind(this)}
-          onEndReachedThreshold={100}
+          onEndReachedThreshold={onEndReachedThreshold || 150}
           enableEmptySections={true}
           refreshControl={
             <RefreshControl

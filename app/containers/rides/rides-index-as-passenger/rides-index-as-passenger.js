@@ -86,10 +86,10 @@ export class RidesIndexAsPassenger extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    pagination: state.rides.pagination,
-    rides: state.rides.items,
-    isStarted: state.rides.isStarted,
-    isFetching: state.rides.isFetching,
+    pagination: state.ridesAsPassenger.pagination,
+    rides: state.ridesAsPassenger.items,
+    isStarted: state.ridesAsPassenger.isStarted,
+    isFetching: state.ridesAsPassenger.isFetching,
     isAuthenticated: state.session.isAuthenticated,
     currentUser: state.session.item,
   }

@@ -5,6 +5,18 @@ import {
   RIDES_REFRESH_REQUEST,
   RIDES_REFRESH_SUCCESS,
   RIDES_REFRESH_FAILURE,
+  RIDES_AS_PASSENGER_FETCH_REQUEST,
+  RIDES_AS_PASSENGER_FETCH_SUCCESS,
+  RIDES_AS_PASSENGER_FETCH_FAILURE,
+  RIDES_AS_PASSENGER_REFRESH_REQUEST,
+  RIDES_AS_PASSENGER_REFRESH_SUCCESS,
+  RIDES_AS_PASSENGER_REFRESH_FAILURE,
+  RIDES_AS_DRIVER_FETCH_REQUEST,
+  RIDES_AS_DRIVER_FETCH_SUCCESS,
+  RIDES_AS_DRIVER_FETCH_FAILURE,
+  RIDES_AS_DRIVER_REFRESH_REQUEST,
+  RIDES_AS_DRIVER_REFRESH_SUCCESS,
+  RIDES_AS_DRIVER_REFRESH_FAILURE,
   RIDE_FILTER_UPDATE,
   RIDE_SEARCH_UPDATE,
   RIDE_FETCH_REQUEST,
@@ -81,9 +93,9 @@ export function fetchRides(page = 1, per = 10) {
 export function refreshRidesAsPassenger(user_id, per = 10) {
   return {
     types: [
-      RIDES_REFRESH_REQUEST,
-      RIDES_REFRESH_SUCCESS,
-      RIDES_REFRESH_FAILURE
+      RIDES_AS_PASSENGER_REFRESH_REQUEST,
+      RIDES_AS_PASSENGER_REFRESH_SUCCESS,
+      RIDES_AS_PASSENGER_REFRESH_FAILURE
     ],
     payload: {
       request: {
@@ -101,9 +113,9 @@ export function refreshRidesAsPassenger(user_id, per = 10) {
 export function fetchRidesAsPassenger(user_id, page = 1, per = 10) {
   return {
     types: [
-      RIDES_FETCH_REQUEST,
-      RIDES_FETCH_SUCCESS,
-      RIDES_FETCH_FAILURE
+      RIDES_AS_PASSENGER_FETCH_REQUEST,
+      RIDES_AS_PASSENGER_FETCH_SUCCESS,
+      RIDES_AS_PASSENGER_FETCH_FAILURE
     ],
     payload: {
       request: {
@@ -121,9 +133,9 @@ export function fetchRidesAsPassenger(user_id, page = 1, per = 10) {
 export function refreshRidesAsDriver(user_id, per = 10) {
   return {
     types: [
-      RIDES_REFRESH_REQUEST,
-      RIDES_REFRESH_SUCCESS,
-      RIDES_REFRESH_FAILURE
+      RIDES_AS_DRIVER_REFRESH_REQUEST,
+      RIDES_AS_DRIVER_REFRESH_SUCCESS,
+      RIDES_AS_DRIVER_REFRESH_FAILURE
     ],
     payload: {
       request: {
@@ -141,9 +153,9 @@ export function refreshRidesAsDriver(user_id, per = 10) {
 export function fetchRidesAsDriver(user_id, page = 1, per = 10) {
   return {
     types: [
-      RIDES_FETCH_REQUEST,
-      RIDES_FETCH_SUCCESS,
-      RIDES_FETCH_FAILURE
+      RIDES_AS_DRIVER_FETCH_REQUEST,
+      RIDES_AS_DRIVER_FETCH_SUCCESS,
+      RIDES_AS_DRIVER_FETCH_FAILURE
     ],
     payload: {
       request: {

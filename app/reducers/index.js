@@ -10,6 +10,8 @@ import { car } from './car';
 import { carOptions } from './car-options';
 import { currentUser } from './current-user';
 import { rides } from './rides';
+import { ridesAsPassenger } from './rides-as-passenger';
+import { ridesAsDriver } from './rides-as-driver';
 import { ridesFilters } from './rides-filters';
 import { ride } from './ride';
 import { rideOptions } from './ride-options';
@@ -24,6 +26,8 @@ export default combineReducers({
   car,
   carOptions,
   rides,
+  ridesAsPassenger,
+  ridesAsDriver,
   ridesFilters,
   ride,
   rideOptions,

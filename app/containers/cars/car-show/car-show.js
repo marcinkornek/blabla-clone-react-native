@@ -44,7 +44,7 @@ class CarShow extends Component {
     car: {}
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { fetchCar, carId } = this.props
     fetchCar(carId)
   }

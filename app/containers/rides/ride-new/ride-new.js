@@ -25,7 +25,7 @@ export class RideNew extends Component {
     rideOptions: PropTypes.object.isRequired,
   }
 
-  componentWillMount() {
+  componentDidMount() {
     this.props.fetchRideOptions()
   }
 

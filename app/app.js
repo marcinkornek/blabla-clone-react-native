@@ -35,7 +35,7 @@ class App extends Component {
     rehydrated: false
   }
 
-   componentWillMount(){
+   componentDidMount(){
      persistStore(store, { storage: AsyncStorage, whitelist: ['session'] }, () => {
        this.setState({ rehydrated: true })
      })

@@ -1,11 +1,12 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, Text, StyleSheet, Dimensions } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 import MapView from 'react-native-maps';
+import Collapsible from 'react-native-collapsible';
 
 // actions
 import { fetchRide } from '../../../actions/rides';
@@ -64,7 +65,8 @@ export class RideShow extends Component {
   }
 
   state = {
-    markers: []
+    markers: [],
+    hideMap: true,
   }
 
   componentDidMount() {
@@ -77,24 +79,12 @@ export class RideShow extends Component {
     const { ride } = this.props;
 
     if (ride !== oldProps.ride) {
-      const coordinates = [
-        this.createMarker(ride.start_location.latitude, ride.start_location.longitude),
-        this.createMarker(ride.destination_location.latitude, ride.destination_location.longitude)
-      ]
-
       Actions.refresh({
         rideId: ride.id,
         title: `${ride.start_location.address} - ${ride.destination_location.address}`,
         rightTitle: this.renderRightTitle(),
         onRight: this.renderRightAction()
       })
-
-      if (this.coordinatesAreValid()) {
-        this.setState({markers: coordinates})
-        setTimeout(() => {
-          this.fitToCoordinates(coordinates);
-        }, 500);
-      }
     }
   }
 
@@ -136,7 +126,22 @@ export class RideShow extends Component {
           {ride.start_location.address} - {ride.destination_location.address}
         </Text>
         <Text>{moment(ride.starts_date).format('DD.MM.YY H:MM')}</Text>
-        {this.renderMap()}
+      </View>
+    )
+  }
+
+  renderMapToggle() {
+    return (
+      <View>
+        <TouchableHighlight
+          underlayColor='white'
+          onPress={() => this.toggleMap()}
+        >
+          <Text>{this.state.hideMap ? 'Show map' : 'Hide map'}</Text>
+        </TouchableHighlight>
+        <Collapsible collapsed={this.state.hideMap}>
+          {this.renderMap()}
+        </Collapsible>
       </View>
     )
   }
@@ -227,6 +232,19 @@ export class RideShow extends Component {
     if (ride.driver.id === currentUser.id) return () => Actions.rideEdit({rideId: ride.id})
   }
 
+  toggleMap() {
+    const { ride } = this.props;
+    const coordinates = [
+      this.createMarker(ride.start_location.latitude, ride.start_location.longitude),
+      this.createMarker(ride.destination_location.latitude, ride.destination_location.longitude)
+    ]
+
+    if (this.coordinatesAreValid()) {
+      this.setState({hideMap: !this.state.hideMap, markers: coordinates})
+      this.fitToCoordinates(coordinates);
+    }
+  }
+
   render() {
     const { isFetching, isStarted } = this.props;
 
@@ -236,6 +254,7 @@ export class RideShow extends Component {
           isFetching={isFetching || !isStarted}
         >
           {this.renderRide()}
+          {this.renderMapToggle()}
           {this.renderDriver()}
           {this.renderCar()}
           {this.renderOffer()}

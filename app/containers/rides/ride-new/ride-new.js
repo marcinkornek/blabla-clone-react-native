@@ -3,6 +3,7 @@ import React, { Component, PropTypes }  from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import { Button } from 'react-native-elements';
 
 // actions
 import { fetchRideOptions, createRide } from '../../../actions/rides'
@@ -12,6 +13,17 @@ import RideForm from '../../../components/rides/ride-form/ride-form'
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 
 const styles = StyleSheet.create({
+  emptyCars: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  emptyCarsContainer: {
+    marginTop: 10,
+    flexDirection: 'column',
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
   view: {
     marginTop: 60,
   }
@@ -32,13 +44,27 @@ export class RideNew extends Component {
   renderRideForm() {
     const { rideOptions, isSaving } = this.props
 
-    return (
-      <RideForm
-        isSaving={isSaving}
-        rideOptions={rideOptions}
-        onSubmit={this.handleSubmit.bind(this)}
-      />
-    )
+    if (rideOptions.cars.length === 0) {
+      return (
+        <View style={styles.emptyCarsContainer}>
+          <Text style={styles.emptyCars}>You need to add car first to add ride</Text>
+          <Button
+            raised
+            title='Add car'
+            backgroundColor='#23a2e3'
+            onPress={() => Actions.carNew()}
+          />
+        </View>
+      )
+    } else {
+      return (
+        <RideForm
+          isSaving={isSaving}
+          rideOptions={rideOptions}
+          onSubmit={this.handleSubmit.bind(this)}
+        />
+      )
+    }
   }
 
   handleSubmit(data) {

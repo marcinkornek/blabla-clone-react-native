@@ -1,6 +1,8 @@
 import {
   NOTIFICATIONS_FETCH_REQUEST,
   NOTIFICATIONS_FETCH_SUCCESS,
+  NOTIFICATIONS_REFRESH_REQUEST,
+  NOTIFICATIONS_REFRESH_SUCCESS,
   NOTIFICATION_ADD_SUCCESS,
   NOTIFICATION_UPDATE_SUCCESS,
 } from '../constants/action-types'
@@ -31,6 +33,24 @@ export function notifications(state = initialState, action) {
       isFetching: false,
       items: items,
       pagination: pagination
+    };
+  case NOTIFICATIONS_REFRESH_REQUEST:
+    console.log('NOTIFICATIONS_REFRESH_REQUEST');
+    return {
+      ...state,
+      isStarted: true,
+      isFetching: true,
+      items: [],
+    };
+  case NOTIFICATIONS_REFRESH_SUCCESS:
+    console.log('NOTIFICATIONS_REFRESH_SUCCESS');
+    items = action.payload.data.items
+    pagination = action.payload.data.meta
+    return {
+      ...state,
+      isFetching: false,
+      items: items,
+      pagination: pagination,
     };
   case NOTIFICATION_ADD_SUCCESS:
     console.log('NOTIFICATION_ADD_SUCCESS');

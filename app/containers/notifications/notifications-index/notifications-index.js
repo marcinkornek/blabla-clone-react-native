@@ -1,22 +1,22 @@
 // utils
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, View, StyleSheet, ListView, RefreshControl, Text } from 'react-native';
-import InfiniteScrollView from 'react-native-infinite-scroll-view';
-import _ from 'lodash';
+import { View, StyleSheet } from 'react-native';
+import { Actions } from 'react-native-router-flux';
 
 // actions
-import { fetchNotifications, markNotificationAsSeen } from '../../../actions/notifications'
+import { fetchNotifications, refreshNotifications, markNotificationAsSeen } from '../../../actions/notifications'
 
 // components
-import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
+import { RenderList } from '../../../components/shared/render-list/render-list'
 import { NotificationsIndexItem } from '../../../components/notifications/notifications-index-item/notifications-index-item'
 
-const per = 15
+const per = 20
 const styles = StyleSheet.create({
   view: {
     marginTop: 60,
-  }
+    flex: 1,
+  },
 });
 
 export class NotificationsIndex extends Component {
@@ -28,73 +28,26 @@ export class NotificationsIndex extends Component {
     pagination: PropTypes.object.isRequired,
   }
 
-  constructor(props, context) {
-    super(props, context);
+  componentDidMount() {
+    const { isAuthenticated, refreshNotifications } = this.props
 
-    const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-
-    this.state = {
-      data: [],
-      dataSource: ds.cloneWithRows([]),
-      refreshing: false
-    };
+    if (isAuthenticated) refreshNotifications(per)
   }
 
-  componentDidMount() {
+  refreshNotifications(per) {
+    const { isAuthenticated, refreshNotifications } = this.props
+
+    if (isAuthenticated) refreshNotifications(per)
+  }
+
+  fetchNotifications(page, per) {
     const { isAuthenticated, fetchNotifications } = this.props
 
-    if (isAuthenticated) fetchNotifications()
-  }
-
-  componentDidUpdate(prevProps) {
-    const { notifications } = this.props;
-
-    if (notifications !== prevProps.notifications) {
-      let newData = this.state.data.concat(notifications)
-
-      this.setState({
-        data: newData,
-        dataSource: this.state.dataSource.cloneWithRows(newData)
-      })
-    }
-  }
-
-  renderNotificationsList() {
-    const { notifications, isFetching, isStarted } = this.props;
-
-    if (_.isEmpty(this.state.data) && isFetching) {
-      return (
-        <RenderActivityIndicator />
-      )
-    } else if (_.isEmpty(this.state.data)) {
-      return(
-        <View style={styles.emptyListContainer}>
-          <Text style={styles.emptyList}>No notifications</Text>
-        </View>
-      )
-    } else {
-      return (
-        <ListView
-          renderScrollComponent={props => <InfiniteScrollView {...props} />}
-          dataSource={this.state.dataSource}
-          renderRow={this.renderNotification.bind(this)}
-          canLoadMore={true}
-          onLoadMoreAsync={this.loadMoreContentAsync.bind(this)}
-          enableEmptySections={true}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onRefresh.bind(this)}
-            />
-          }
-
-        />
-      )
-    }
+    if (isAuthenticated) fetchNotifications(page, per)
   }
 
   renderNotification(notification) {
-    const { markAsSeen } = this.props
+    const { markAsSeen } = this.props;
 
     return (
       <NotificationsIndexItem
@@ -111,31 +64,31 @@ export class NotificationsIndex extends Component {
     markNotificationAsSeen(notificationId)
   }
 
-  loadMoreContentAsync = async () => {
-    const { isAuthenticated, fetchNotifications } = this.props
-    page = page + 1
+  renderNotificationsList() {
+    const { notifications, isFetching, isStarted, pagination } = this.props;
 
-    if (isAuthenticated) fetchNotifications(page, per)
-  }
-
-  canLoadMore() {
-    parseInt(page, 10) < parseInt(this.props.pagination.total_pages, 10)
-  }
-
-  onRefresh() {
-    const { isAuthenticated, fetchNotifications } = this.props
-
-    if (isAuthenticated) fetchNotifications(1, per)
+    return (
+      <RenderList
+        items={notifications}
+        pagination={pagination}
+        isFetching={isFetching}
+        isStarted={isStarted}
+        fetchItems={this.fetchNotifications.bind(this)}
+        refreshItems={this.refreshNotifications.bind(this)}
+        renderRow={this.renderNotification.bind(this)}
+        per={per}
+        onEndReachedThreshold={200}
+        emptyListText='No notifications'
+      />
+    )
   }
 
   render() {
-    const { isFetching, isStarted } = this.props;
-
-    return (
+    return(
       <View style={styles.view}>
         {this.renderNotificationsList()}
       </View>
-    );
+    )
   }
 }
 
@@ -151,7 +104,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchNotifications,
-  markNotificationAsSeen
+  refreshNotifications,
+  markNotificationAsSeen,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(NotificationsIndex)

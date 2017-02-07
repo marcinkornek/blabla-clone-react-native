@@ -3,11 +3,33 @@ import {
   NOTIFICATIONS_FETCH_REQUEST,
   NOTIFICATIONS_FETCH_SUCCESS,
   NOTIFICATIONS_FETCH_FAILURE,
+  NOTIFICATIONS_REFRESH_REQUEST,
+  NOTIFICATIONS_REFRESH_SUCCESS,
+  NOTIFICATIONS_REFRESH_FAILURE,
   NOTIFICATION_UPDATE_REQUEST,
   NOTIFICATION_UPDATE_SUCCESS,
   NOTIFICATION_UPDATE_FAILURE,
 } from '../constants/action-types'
 import { APIEndpoints } from '../constants/constants'
+
+export function refreshNotifications(per = 10) {
+  return {
+    types: [
+      NOTIFICATIONS_REFRESH_REQUEST,
+      NOTIFICATIONS_REFRESH_SUCCESS,
+      NOTIFICATIONS_REFRESH_FAILURE
+    ],
+    payload: {
+      request: {
+        url: APIEndpoints.NOTIFICATIONS,
+        params: {
+          page: 1,
+          per,
+        }
+      }
+    }
+  }
+}
 
 export function fetchNotifications(page = 1, per = 10) {
   return {

@@ -30,21 +30,21 @@ export class RidesIndexAsPassenger extends Component {
   }
 
   componentDidMount() {
-    const { fetchRidesAsPassenger, currentUser } = this.props
+    const { refreshRidesAsPassenger, currentUser } = this.props
 
-    if (currentUser.id) fetchRidesAsPassenger(currentUser.id, 1, per)
+    if (currentUser.id) refreshRidesAsPassenger(currentUser.id, per)
   }
 
    refreshRides(per) {
     const { refreshRidesAsPassenger, currentUser } = this.props
 
-    refreshRidesAsPassenger(currentUser.id, per)
+    if (currentUser.id) refreshRidesAsPassenger(currentUser.id, per)
   }
 
   fetchRides(page, per) {
     const { fetchRidesAsPassenger, currentUser } = this.props
 
-    fetchRidesAsPassenger(currentUser.id, page, per)
+    if (currentUser.id) fetchRidesAsPassenger(currentUser.id, page, per)
   }
 
   renderRide(ride) {

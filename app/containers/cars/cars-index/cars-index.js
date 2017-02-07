@@ -3,8 +3,6 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { View, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import { Button, List } from 'react-native-elements';
-import _ from 'lodash';
 
 // actions
 import { fetchCars, refreshCars } from '../../../actions/cars'
@@ -31,21 +29,21 @@ class CarsIndex extends Component {
   }
 
   componentDidMount() {
-    const { fetchCars, currentUser } = this.props
+    const { refreshCars, currentUser } = this.props
 
-    if (currentUser.id) fetchCars(currentUser.id, 1, per)
+    if (currentUser.id) refreshCars(currentUser.id, per)
   }
 
   refreshCars(per) {
     const { refreshCars, currentUser } = this.props
 
-    refreshCars(currentUser.id, per)
+    if (currentUser.id) refreshCars(currentUser.id, per)
   }
 
   fetchCars(page, per) {
     const { fetchCars, currentUser } = this.props
 
-    fetchCars(currentUser.id, page, per)
+    if (currentUser.id) fetchCars(currentUser.id, page, per)
   }
 
   renderCar(car) {

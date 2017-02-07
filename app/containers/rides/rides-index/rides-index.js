@@ -44,11 +44,19 @@ export class RidesIndex extends Component {
   };
 
   componentDidMount() {
-    this.props.fetchRides(1, per)
+    this.props.refreshRides(per)
 
     Actions.refresh({
       renderRightButton: () => this.renderRightButton(),
     })
+  }
+
+  refreshRides(per) {
+    this.props.refreshRides(per)
+  }
+
+  fetchRides(page, per) {
+    this.props.fetchRides(page, per)
   }
 
   renderRightButton() {
@@ -80,14 +88,6 @@ export class RidesIndex extends Component {
 
   toggleFilters() {
     this.setState({showFilters: !this.state.showFilters})
-  }
-
-  refreshRides(per) {
-    this.props.refreshRides(per)
-  }
-
-  fetchRides(page, per) {
-    this.props.fetchRides(page, per)
   }
 
   renderRide(ride) {

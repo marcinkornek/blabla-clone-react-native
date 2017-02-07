@@ -30,21 +30,21 @@ export class RidesIndexAsDriver extends Component {
   }
 
   componentDidMount() {
-    const { fetchRidesAsDriver, currentUser } = this.props
+    const { refreshRidesAsDriver, currentUser } = this.props
 
-    if (currentUser.id) fetchRidesAsDriver(currentUser.id, 1, per)
+    if (currentUser.id) refreshRidesAsDriver(currentUser.id, per)
   }
 
    refreshRides(per) {
     const { refreshRidesAsDriver, currentUser } = this.props
 
-    refreshRidesAsDriver(currentUser.id, per)
+    if (currentUser.id) refreshRidesAsDriver(currentUser.id, per)
   }
 
   fetchRides(page, per) {
     const { fetchRidesAsDriver, currentUser } = this.props
 
-    fetchRidesAsDriver(currentUser.id, page, per)
+    if (currentUser.id) fetchRidesAsDriver(currentUser.id, page, per)
   }
 
   renderRide(ride) {

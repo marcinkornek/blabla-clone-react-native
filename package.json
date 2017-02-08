@@ -27,6 +27,7 @@
 		"react-native-maps": "^0.12.4",
 		"react-native-router-flux": "^3.37.0",
 		"react-native-vector-icons": "^4.0.0",
+		"react-navigation": "https://github.com/react-community/react-navigation/tarball/master",
 		"react-redux": "^5.0.1",
 		"redux": "^3.6.0",
 		"redux-axios-middleware": "^3.0.0",

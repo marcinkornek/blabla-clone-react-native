@@ -45,9 +45,12 @@ class CarsIndex extends Component {
   }
 
   renderCar(car) {
+    const { navigation } = this.props;
+
     return (
       <CarsIndexItem
         car={car}
+        navigation={navigation}
         key={`car${car.id}`}
       />
     )
@@ -64,7 +67,7 @@ class CarsIndex extends Component {
         isStarted={isStarted}
         fetchItems={this.fetchCars.bind(this)}
         refreshItems={this.refreshCars.bind(this)}
-        renderRow={this.renderCar}
+        renderRow={this.renderCar.bind(this)}
         showAddButton={true}
         addButtonLink={() => navigation.navigate('carNew')}
         per={per}

@@ -28,13 +28,13 @@ import requireAuth from './containers/shared/require-auth/require-auth'
 import HamburgerButton from './containers/shared/hamburger-button/hamburger-button'
 
 export const AuthenticatedRidesTabNavigator = TabNavigator({
-  rides: { screen: RidesIndex },
+  ridesIndex: { screen: RidesIndex },
   ridesAsDriver: { screen: requireAuth(RidesIndexAsDriver) },
   ridesAsPassenger: { screen: requireAuth(RidesIndexAsPassenger) },
 })
 
 export const AuthenticatedRidesStackNavigator = StackNavigator({
-  ridesTabs: { screen: AuthenticatedRidesTabNavigator },
+  rides: { screen: AuthenticatedRidesTabNavigator },
   rideShow: { screen: RideShow },
   rideEdit: { screen: requireAuth(RideEdit) },
   rideNew: { screen: requireAuth(RideNew) },
@@ -88,7 +88,7 @@ export const AuthenticatedDrawerNavigator = DrawerNavigator({
 
 // not authenticated
 export const NotAuthenticatedRidesTabNavigator = TabNavigator({
-  rides: { screen: RidesIndex },
+  ridesIndex: { screen: RidesIndex },
 })
 
 export const NotAuthenticatedSessionStackNavigator = StackNavigator({

@@ -1,7 +1,6 @@
 // utils
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
 import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
@@ -26,6 +25,7 @@ import UsersIndex from './containers/users/users-index/users-index'
 import UserShow from './containers/users/user-show/user-show'
 import NotificationsIndex from './containers/notifications/notifications-index/notifications-index'
 import requireAuth from './containers/shared/require-auth/require-auth'
+import HamburgerButton from './containers/shared/hamburger-button/hamburger-button'
 
 export const AuthenticatedRidesTabNavigator = TabNavigator({
   rides: { screen: RidesIndex },
@@ -44,6 +44,17 @@ export const AuthenticatedRidesStackNavigator = StackNavigator({
   usersIndex: { screen: UsersIndex },
   userShow: { screen: UserShow },
   myNotifications: { screen: NotificationsIndex },
+}, {
+  navigationOptions: {
+    header: (navigation, header) => ({
+      ...header,
+      left: (
+        <HamburgerButton
+          onClick={() => navigation.navigate('DrawerOpen')}
+        />
+      ),
+    }),
+  }
 })
 
 export const AuthenticatedAccountTabNavigator = TabNavigator({
@@ -55,6 +66,17 @@ export const AuthenticatedAccountTabNavigator = TabNavigator({
 
 export const AuthenticatedAccountStackNavigator = StackNavigator({
   accountTabs: { screen: AuthenticatedAccountTabNavigator }
+}, {
+  navigationOptions: {
+    header: (navigation, header) => ({
+      ...header,
+      left: (
+        <HamburgerButton
+          onClick={() => navigation.navigate('DrawerOpen')}
+        />
+      ),
+    }),
+  }
 })
 
 export const AuthenticatedDrawerNavigator = DrawerNavigator({
@@ -73,6 +95,17 @@ export const NotAuthenticatedSessionStackNavigator = StackNavigator({
   rides: { screen: NotAuthenticatedRidesTabNavigator },
   login: { screen: Login },
   register: { screen: Register },
+}, {
+  navigationOptions: {
+    header: (navigation, header) => ({
+      ...header,
+      left: (
+        <HamburgerButton
+          onClick={() => navigation.navigate('DrawerOpen')}
+        />
+      ),
+    }),
+  }
 })
 
 export const NotAuthenticatedRidesStackNavigator = StackNavigator({
@@ -81,6 +114,17 @@ export const NotAuthenticatedRidesStackNavigator = StackNavigator({
   rideShow: { screen: RideShow },
   userShow: { screen: UserShow },
   carShow: { screen: CarShow },
+}, {
+  navigationOptions: {
+    header: (navigation, header) => ({
+      ...header,
+      left: (
+        <HamburgerButton
+          onClick={() => navigation.navigate('DrawerOpen')}
+        />
+      ),
+    }),
+  }
 })
 
 export const NotAuthenticatedDrawerNavigator = DrawerNavigator({

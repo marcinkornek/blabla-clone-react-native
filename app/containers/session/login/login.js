@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, Text, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 
 // constants
@@ -30,7 +29,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   view: {
-    marginTop: 60,
   }
 });
 
@@ -42,7 +40,7 @@ class Login extends Component {
   };
 
   handleEmailLogin(data) {
-    const { logInEmailBackend, fetchCurrentUser } = this.props;
+    const { logInEmailBackend, fetchCurrentUser, navigation } = this.props;
 
     logInEmailBackend(data)
       .then((response) => {
@@ -51,13 +49,13 @@ class Login extends Component {
           fetchCurrentUser()
           AsyncStorage.setItem('session',
             JSON.stringify({ 'email': data.email, 'access_token': data.access_token }))
-          Actions.ridesIndex({type: 'reset'})
+          navigation.navigate('ridesIndex')
         }
       })
   };
 
   handleFacebookLogin(data) {
-    const { logInFacebookBackend, fetchCurrentUser } = this.props
+    const { logInFacebookBackend, fetchCurrentUser, navigation } = this.props
 
     logInFacebookBackend(data)
       .then((response) => {
@@ -66,13 +64,13 @@ class Login extends Component {
           fetchCurrentUser()
           AsyncStorage.setItem('session',
             JSON.stringify({ 'email': data.email, 'access_token': data.access_token }))
-          Actions.ridesIndex({type: 'reset'})
+          navigation.navigate('ridesIndex')
         }
       })
   }
 
   render() {
-    const { errors, isFetching, isOauth } = this.props
+    const { errors, isFetching, isOauth, navigation } = this.props
 
     return (
       <View style={styles.view}>
@@ -91,7 +89,7 @@ class Login extends Component {
           <Text style={styles.registerText}>Don't have an account?</Text>
           <TouchableHighlight
             underlayColor='white'
-            onPress={Actions.register}
+            onPress={() => navigation.navigate('register')}
           >
             <Text style={styles.registerLink}>Register</Text>
           </TouchableHighlight>

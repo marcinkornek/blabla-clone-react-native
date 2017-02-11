@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -22,7 +21,6 @@ const styles = StyleSheet.create({
     marginTop: -10,
   },
   view: {
-    marginTop: 60,
     flex: 1,
   },
 });
@@ -38,6 +36,12 @@ export class RidesIndex extends Component {
     search: PropTypes.object.isRequired,
   }
 
+  static navigationOptions = {
+    tabBar: ({ state }) => ({
+      label: 'Rides',
+    }),
+  };
+
   state = {
     showSearch: false,
     showFilters: false,
@@ -45,10 +49,6 @@ export class RidesIndex extends Component {
 
   componentDidMount() {
     this.props.refreshRides(per)
-
-    Actions.refresh({
-      renderRightButton: () => this.renderRightButton(),
-    })
   }
 
   refreshRides(per) {
@@ -91,16 +91,19 @@ export class RidesIndex extends Component {
   }
 
   renderRide(ride) {
+    const { navigation } = this.props;
+
     return (
       <RidesIndexItem
         ride={ride}
+        navigation={navigation}
         key={`ride${ride.id}`}
       />
     )
   }
 
   renderRidesList() {
-    const { rides, isFetching, isStarted, pagination, isAuthenticated } = this.props;
+    const { rides, isFetching, isStarted, pagination, isAuthenticated, navigation } = this.props;
 
     return (
       <RenderList
@@ -110,9 +113,9 @@ export class RidesIndex extends Component {
         isStarted={isStarted}
         fetchItems={this.fetchRides.bind(this)}
         refreshItems={this.refreshRides.bind(this)}
-        renderRow={this.renderRide}
-        showAddButton={isAuthenticated}
-        addButtonLink={() => Actions.rideNew()}
+        renderRow={this.renderRide.bind(this)}
+        showAddButton={true}
+        addButtonLink={() => navigation.navigate('rideNew')}
         per={per}
         onEndReachedThreshold={200}
         emptyListText='No rides'

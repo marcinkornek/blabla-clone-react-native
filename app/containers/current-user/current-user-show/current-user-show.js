@@ -3,13 +3,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { View, ScrollView, Text, TextInput, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import moment from 'moment';
-import { Actions } from 'react-native-router-flux';
 
 // actions
 import { fetchCurrentUser } from '../../../actions/current-user';
-
-// components
-import { AsyncContent } from '../../../components/shared/async-content/async-content'
 
 const styles = StyleSheet.create({
   avatar: {
@@ -43,7 +39,6 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   view: {
-    marginTop: 50,
   },
 });
 
@@ -74,13 +69,13 @@ export class UserShow extends Component {
   }
 
   renderUserLinks() {
-    const { currentUser } = this.props
+    const { currentUser, navigation } = this.props
 
     return (
       <View style={styles.container}>
         <TouchableHighlight
           underlayColor='white'
-          onPress={() => Actions.userShow({userId: currentUser.id})}
+          onPress={() => navigation.navigate('userShow', { id: currentUser.id })}
         >
           <Text>View my public profile</Text>
         </TouchableHighlight>
@@ -109,7 +104,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  fetchCurrentUser
+  fetchCurrentUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserShow)

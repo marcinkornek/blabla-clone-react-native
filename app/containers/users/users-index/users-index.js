@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { Button, List } from 'react-native-elements';
 
 // actions
@@ -15,7 +14,6 @@ import { UsersIndexItem } from '../../../components/users/users-index-item/users
 const per = 20
 const styles = StyleSheet.create({
   view: {
-    marginTop: 60,
     flex: 1,
   }
 });
@@ -40,9 +38,12 @@ class UsersIndex extends Component {
   }
 
   renderUser(user) {
+    const { navigation } = this.props;
+
     return (
       <UsersIndexItem
         user={user}
+        navigation={navigation}
         key={`user${user.id}`}
       />
     )
@@ -59,7 +60,7 @@ class UsersIndex extends Component {
         isStarted={isStarted}
         fetchItems={this.fetchUsers.bind(this)}
         refreshItems={this.refreshUsers.bind(this)}
-        renderRow={this.renderUser}
+        renderRow={this.renderUser.bind(this)}
         per={per}
         onEndReachedThreshold={200}
         emptyListText='No users'

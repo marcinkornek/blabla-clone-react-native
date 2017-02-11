@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { View, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 
 // actions
 import { fetchNotifications, refreshNotifications, markNotificationAsSeen } from '../../../actions/notifications'
@@ -14,7 +13,6 @@ import { NotificationsIndexItem } from '../../../components/notifications/notifi
 const per = 20
 const styles = StyleSheet.create({
   view: {
-    marginTop: 60,
     flex: 1,
   },
 });

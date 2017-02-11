@@ -1,11 +1,10 @@
 import React, { PropTypes } from 'react'
 import { ListItem } from 'react-native-elements';
-import { Actions } from 'react-native-router-flux';
 
-export const RideRequestCreated = ({ notification }) => {
+export const RideRequestCreated = ({ notification, navigation }) => {
   return (
     <ListItem
-      onPress={() => Actions.rideShow({rideId: notification.ride.id})}
+      onPress={() => navigation.navigate('rideShow', {id: notification.ride.id})}
       key={notification.id}
       title={`${notification.sender.full_name} added ride request for your ride`}
       subtitle={`${notification.ride.start_location_address} - ${notification.ride.destination_location_address}`}

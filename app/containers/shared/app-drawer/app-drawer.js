@@ -1,14 +1,99 @@
 // utils
 import React, { Component, PropTypes } from 'react';
+import {
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableHighlight,
+  View,
+  Image,
+  Dimensions,
+  AsyncStorage,
+} from 'react-native'
 import { connect } from 'react-redux';
-import Drawer from 'react-native-drawer';
-import { SideMenu } from '../../../components/shared/side-menu/side-menu';
-import { Actions, DefaultRenderer } from 'react-native-router-flux';
-import { AsyncStorage } from 'react-native';
+import { FBLoginManager } from 'react-native-facebook-login';
+import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-// actions
 import { logInFromStorage, logoutCurrentUser } from '../../../actions/session';
-import { fetchCurrentUser } from '../../../actions/current-user';
+
+const { width, height } = Dimensions.get('window')
+const styles = StyleSheet.create({
+  avatar: {
+    width: 80,
+    height: 80,
+    marginRight: 0,
+    borderRadius: 80,
+    borderWidth: 2,
+    borderColor: 'white',
+  },
+  button: {
+    backgroundColor: 'white',
+    borderWidth: 1,
+    borderColor: 'black',
+    padding: 10,
+  },
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  logoutButton: {
+    backgroundColor: '#23A2E3',
+    borderRadius: 0,
+    paddingTop: 15,
+    padding: 10,
+  },
+  menuLink: {
+    fontSize: 17,
+    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderColor: '#D3D3D3',
+    borderBottomWidth: 1,
+  },
+  sessionText: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+  },
+  sessionUserIcon: {
+    color: 'white',
+    marginRight: 5,
+  },
+  userInfoContainer: {
+    backgroundColor: '#23A2E3',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+  },
+  userInfoText: {
+    width: width - 290,
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: 'white',
+    margin: 10,
+    marginTop: 0,
+    marginBottom: 0,
+  },
+  userInfoNotificationIcon: {
+    paddingTop: 10,
+  },
+  userInfo: {
+    backgroundColor: '#23A2E3',
+    height: 100,
+    padding: 10,
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    flexDirection: 'row',
+  },
+  userInfoEmpty: {
+    backgroundColor: '#23A2E3',
+    height: 80,
+    padding: 10,
+    flexWrap: 'wrap',
+    alignItems: 'flex-end',
+    flexDirection: 'row',
+  },
+})
 
 export class AppDrawer extends Component {
   static propTypes = {
@@ -18,69 +103,163 @@ export class AppDrawer extends Component {
     isAuthenticated: PropTypes.bool.isRequired,
   }
 
-  componentDidMount() {
-    const { logInFromStorage, fetchCurrentUser } = this.props;
+  goToAndClose(actionName, options = {}) {
+    const { navigation } = this.props;
 
-    AsyncStorage.getItem('session', (err, result) => {
-      if (result) {
-        data = JSON.parse(result)
-        logInFromStorage(data)
-          .then((response) => {
-            if (!response.error) {
-              fetchCurrentUser()
-            }
-          })
-      }
-    });
+    navigation.navigate(actionName, options)
   }
 
-  renderSideMenu() {
-    const { currentUser, isStarted, isFetching, isAuthenticated } = this.props;
+  onLogout() {
+    const { logoutCurrentUser, currentUser, navigation } = this.props
 
+    logoutCurrentUser(currentUser)
+      .then(AsyncStorage.clear())
+      .then(navigation.navigate('login'))
+  }
+
+  logout() {
+    FBLoginManager.logout((data) => {
+      this.onLogout()
+    })
+  }
+
+  renderUserInfo() {
+    const { currentUser } = this.props;
+
+    if (currentUser) {
+      return(
+        <View style={styles.userInfoContainer}>
+          <TouchableHighlight
+            underlayColor='#23A2E3'
+            onPress={() => this.goToAndClose('myAccount', {})}
+          >
+            <View style={styles.userInfo}>
+              <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
+              <View>
+                <Text
+                  style={styles.userInfoText}
+                  numberOfLines={1}
+                  ellipsizeMode={'tail'}
+                >
+                  {currentUser.first_name}
+                </Text>
+                {this.renderNotificationIcon()}
+              </View>
+            </View>
+          </TouchableHighlight>
+          <Icon.Button
+            name="power-off"
+            backgroundColor="#23A2E3"
+            style={styles.logoutButton}
+            onPress={this.logout.bind(this)}
+          />
+        </View>
+      )
+    } else {
+      return(
+        <View style={styles.userInfoEmpty}>
+          <Icon
+            name="user"
+            backgroundColor="#23A2E3"
+            size={22}
+            style={styles.sessionUserIcon}
+          />
+          <TouchableHighlight
+            underlayColor='#23A2E3'
+            onPress={() => this.goToAndClose('login')}
+          >
+            <Text style={styles.sessionText}>Login</Text>
+          </TouchableHighlight>
+          <Text style={styles.sessionText}> / </Text>
+          <TouchableHighlight
+            underlayColor='#23A2E3'
+            onPress={() => this.goToAndClose('register')}
+          >
+            <Text style={styles.sessionText}>Register</Text>
+          </TouchableHighlight>
+        </View>
+      )
+    }
+  }
+
+  renderNotificationIcon() {
     return (
-      <SideMenu
-        currentUser={currentUser}
-        isStarted={isStarted}
-        isFetching={isFetching}
-        isAuthenticated={isAuthenticated}
-        onLogout={this.onLogout.bind(this)}
+      <MaterialIcons.Button
+        name="notifications-none"
+        backgroundColor="#23A2E3"
+        size={25}
+        style={styles.userInfoNotificationIcon}
+        onPress={() => this.goToAndClose('myNotifications', {})}
       />
     )
   }
 
-  onLogout(currentUser) {
-    const { logoutCurrentUser } = this.props
+  renderSharedLinks() {
+    return (
+      <TouchableHighlight
+        underlayColor='white'
+        onPress={() => this.goToAndClose('rides')}
+      >
+        <Text style={styles.menuLink}>Rides</Text>
+      </TouchableHighlight>
+    )
+  }
 
-    logoutCurrentUser(currentUser)
-      .then(AsyncStorage.clear())
-      .then(Actions.login({type: 'reset'}))
+  renderSessionLinks() {
+    const { isAuthenticated } = this.props;
+
+    if (isAuthenticated) {
+      return (
+        <View>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('rideNew', {})}
+          >
+            <Text style={styles.menuLink}>Add ride</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('usersIndex')}
+          >
+            <Text style={styles.menuLink}>Users</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('myAccount', {})}
+          >
+            <Text style={styles.menuLink}>My account</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('myRidesAsPassenger', {})}
+          >
+            <Text style={styles.menuLink}>My rides as passenger</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('myRidesAsDriver', {})}
+          >
+            <Text style={styles.menuLink}>My rides as driver</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('carsIndex', {})}
+          >
+            <Text style={styles.menuLink}>My cars</Text>
+          </TouchableHighlight>
+        </View>
+      )
+    }
   }
 
   render() {
-    const state = this.props.navigationState;
-    const children = state.children;
-
-    const drawerStyles = {
-      drawer: { shadowColor: '#000000', shadowOpacity: 0.8, shadowRadius: 3 },
-      main: { paddingLeft: 3 },
-    }
-
     return (
-      <Drawer
-        type="overlay"
-        content={this.renderSideMenu()}
-        tapToClose={true}
-        openDrawerOffset={0.3} // 30% gap on the right side of drawer
-        styles={drawerStyles}
-        panOpenMask={0.1}
-        tweenEasing="easeInOutQuad"
-        tweenHandler={(ratio) => ({
-          main: { opacity:(2-ratio)/2 }
-        })}
-      >
-        <DefaultRenderer navigationState={children[0]} onNavigate={this.props.onNavigate} />
-      </Drawer>
-    );
+      <ScrollView style={styles.container}>
+        {this.renderUserInfo()}
+        {this.renderSharedLinks()}
+        {this.renderSessionLinks()}
+      </ScrollView>
+    )
   }
 }
 
@@ -94,9 +273,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  logInFromStorage,
-  fetchCurrentUser,
-  logoutCurrentUser
+  logoutCurrentUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppDrawer)

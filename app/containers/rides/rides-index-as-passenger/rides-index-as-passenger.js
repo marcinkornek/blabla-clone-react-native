@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 
 // actions
 import { fetchRidesAsPassenger, refreshRidesAsPassenger } from '../../../actions/rides';
@@ -14,7 +13,6 @@ import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides
 const per = 20
 const styles = StyleSheet.create({
   view: {
-    marginTop: 60,
     flex: 1,
   },
 });
@@ -27,6 +25,12 @@ export class RidesIndexAsPassenger extends Component {
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     currentUser: PropTypes.object,
+  }
+
+  static navigationOptions = {
+    tabBar: {
+      label: 'Rides as passenger',
+    }
   }
 
   componentDidMount() {
@@ -48,9 +52,12 @@ export class RidesIndexAsPassenger extends Component {
   }
 
   renderRide(ride) {
+    const { navigation } = this.props;
+
     return (
       <RidesIndexItem
         ride={ride}
+        navigation={navigation}
         key={`ride${ride.id}`}
       />
     )
@@ -67,7 +74,7 @@ export class RidesIndexAsPassenger extends Component {
         isStarted={isStarted}
         fetchItems={this.fetchRides.bind(this)}
         refreshItems={this.refreshRides.bind(this)}
-        renderRow={this.renderRide}
+        renderRow={this.renderRide.bind(this)}
         per={per}
         onEndReachedThreshold={200}
         emptyListText='No rides as passenger'

@@ -2,7 +2,6 @@
 import React, { Component, PropTypes }  from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
 import moment from 'moment';
 
@@ -15,7 +14,6 @@ import { AsyncContent } from '../../../components/shared/async-content/async-con
 
 const styles = StyleSheet.create({
   view: {
-    marginTop: 60,
   }
 });
 
@@ -48,7 +46,7 @@ export class RideEdit extends Component {
   }
 
   handleSubmit(data) {
-    const { updateRide, ride } = this.props
+    const { updateRide, ride, navigation } = this.props
     var body = new FormData()
 
     data =_.pick(data, [
@@ -70,7 +68,7 @@ export class RideEdit extends Component {
     updateRide(body, data.id)
       .then((response) => {
         let rideId = response.payload.data.id
-        Actions.pop({refresh: {...ride}});
+        navigation.navigate('rideShow', {id: rideId})
       })
   }
 

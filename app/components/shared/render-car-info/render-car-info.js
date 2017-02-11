@@ -1,7 +1,6 @@
 // utils
 import React, { PropTypes } from 'react'
 import { View, Image, Text, TouchableHighlight, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 
 const styles = StyleSheet.create({
   avatar: {
@@ -28,7 +27,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const RenderCarInfo = ({car}) => (
+export const RenderCarInfo = ({car, navigation}) => (
   <View style={styles.view}>
     <Text style={styles.title}>Car</Text>
     <View style={styles.container}>
@@ -40,7 +39,7 @@ export const RenderCarInfo = ({car}) => (
     </View>
     <TouchableHighlight
       underlayColor='white'
-      onPress={() => Actions.carShow({carId: car.id})}
+      onPress={() => navigation.navigate('carShow', { id: car.id })}
     >
       <Text>view car</Text>
     </TouchableHighlight>

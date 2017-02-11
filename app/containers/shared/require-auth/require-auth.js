@@ -1,6 +1,5 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
-import { Actions } from 'react-native-router-flux';
 import { View } from 'react-native';
 
 export default function requireAuth(ChildComponent) {
@@ -14,7 +13,7 @@ export default function requireAuth(ChildComponent) {
     }
 
     checkAuth(isAuthenticated) {
-      if (!isAuthenticated) this.props.authFailed()
+      if (!isAuthenticated) this.props.navigation.navigate('login')
     }
 
     render() {
@@ -28,11 +27,7 @@ export default function requireAuth(ChildComponent) {
   })
 
   const mapDispatchToProps = (dispatch, ownProps) => {
-    return {
-      authFailed: () => {
-        Actions.login({type: 'reset'});
-      }
-    }
+    return {}
   }
 
   return connect(mapStateToProps, mapDispatchToProps)(AuthenticatedComponent)

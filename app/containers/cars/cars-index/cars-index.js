@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { View, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 
 // actions
 import { fetchCars, refreshCars } from '../../../actions/cars'
@@ -14,7 +13,6 @@ import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-ind
 const per = 20
 const styles = StyleSheet.create({
   view: {
-    marginTop: 60,
     flex: 1,
   },
 });
@@ -56,7 +54,7 @@ class CarsIndex extends Component {
   }
 
   renderCarsList() {
-    const { cars, isFetching, isStarted, pagination } = this.props;
+    const { cars, isFetching, isStarted, pagination, navigation } = this.props;
 
     return (
       <RenderList
@@ -68,7 +66,7 @@ class CarsIndex extends Component {
         refreshItems={this.refreshCars.bind(this)}
         renderRow={this.renderCar}
         showAddButton={true}
-        addButtonLink={() => Actions.carNew()}
+        addButtonLink={() => navigation.navigate('carNew')}
         per={per}
         onEndReachedThreshold={200}
         emptyListText='No cars'

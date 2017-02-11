@@ -2,7 +2,6 @@
 import React, { Component, PropTypes }  from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 
 // actions
@@ -25,7 +24,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   view: {
-    marginTop: 60,
+    marginTop: 10,
   }
 });
 
@@ -42,7 +41,7 @@ export class RideNew extends Component {
   }
 
   renderRideForm() {
-    const { rideOptions, isSaving } = this.props
+    const { rideOptions, isSaving, navigation } = this.props
 
     if (rideOptions.cars.length === 0) {
       return (
@@ -52,7 +51,7 @@ export class RideNew extends Component {
             raised
             title='Add car'
             backgroundColor='#23a2e3'
-            onPress={() => Actions.carNew()}
+            onPress={() => navigation.navigate('carNew')}
           />
         </View>
       )
@@ -68,7 +67,7 @@ export class RideNew extends Component {
   }
 
   handleSubmit(data) {
-    const { createRide } = this.props
+    const { createRide, navigation } = this.props
     var body = new FormData()
 
     Object.keys(data).forEach((key) => {
@@ -83,7 +82,7 @@ export class RideNew extends Component {
     createRide(body)
       .then((response) => {
         let rideId = response.payload.data.id
-        Actions.rideShow({rideId: rideId});
+        navigation.navigate('rideShow', {id: rideId});
       })
   }
 

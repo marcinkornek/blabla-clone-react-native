@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, ScrollView, Text, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 import MapView from 'react-native-maps';
@@ -20,7 +19,7 @@ import { RenderRideOffer } from '../../../components/rides/render-ride-offer/ren
 
 const styles = StyleSheet.create({
   view: {
-    marginTop: 60,
+    marginTop: 10,
     marginLeft: 10,
   },
   rideDetails: {
@@ -70,22 +69,10 @@ export class RideShow extends Component {
   }
 
   componentDidMount() {
-    const { rideId, fetchRide } = this.props
+    const { fetchRide, navigation } = this.props
+    const id = navigation.state.params.id
 
-    fetchRide(rideId)
-  }
-
-  componentDidUpdate(oldProps) {
-    const { ride } = this.props;
-
-    if (ride !== oldProps.ride) {
-      Actions.refresh({
-        rideId: ride.id,
-        title: `${ride.start_location.address} - ${ride.destination_location.address}`,
-        rightTitle: this.renderRightTitle(),
-        onRight: this.renderRightAction()
-      })
-    }
+    fetchRide(id)
   }
 
   fitToCoordinates(coordinates) {
@@ -95,26 +82,6 @@ export class RideShow extends Component {
         animated: true,
       })
     )
-  }
-
-  renderRightTitle() {
-    const { ride, currentUser } = this.props;
-
-    if (ride.driver.id === currentUser.id) {
-      return "Edit"
-    } else {
-      return undefined
-    }
-  }
-
-  renderRightAction() {
-    const { ride, currentUser } = this.props;
-
-    if (ride.driver.id === currentUser.id) {
-      return () => Actions.rideEdit({rideId: ride.id})
-    } else {
-      return undefined
-    }
   }
 
   renderRide() {
@@ -191,14 +158,24 @@ export class RideShow extends Component {
   }
 
   renderDriver() {
+    const { ride, navigation } = this.props
+
     return(
-      <RenderUserProfile user={this.props.ride.driver} />
+      <RenderUserProfile
+        user={ride.driver}
+        navigation={navigation}
+      />
     )
   }
 
   renderCar() {
+    const { ride, navigation } = this.props
+
     return(
-      <RenderCarInfo car={this.props.ride.car} />
+      <RenderCarInfo
+        car={ride.car}
+        navigation={navigation}
+      />
     )
   }
 
@@ -216,20 +193,6 @@ export class RideShow extends Component {
     const { createRideRequest, ride } = this.props
 
     createRideRequest(ride.id, data.places)
-  }
-
-  renderRightTitle() {
-    const { ride, currentUser } = this.props;
-
-    if (ride.driver.id === currentUser.id) {
-      return "Edit"
-    }
-  }
-
-  renderRightAction() {
-    const { ride, currentUser } = this.props;
-
-    if (ride.driver.id === currentUser.id) return () => Actions.rideEdit({rideId: ride.id})
   }
 
   toggleMap() {

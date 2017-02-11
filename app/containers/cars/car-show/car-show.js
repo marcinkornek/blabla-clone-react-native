@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { TouchableHighlight, Text, View, StyleSheet, Image } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 
 // actions
 import { fetchCar } from '../../../actions/cars';
@@ -28,7 +27,6 @@ const styles = StyleSheet.create({
     margin: 10,
   },
   view: {
-    marginTop: 50,
   },
 });
 
@@ -45,41 +43,10 @@ class CarShow extends Component {
   }
 
   componentDidMount() {
-    const { fetchCar, carId } = this.props
-    fetchCar(carId)
-  }
+    const { fetchCar, navigation } = this.props
+    const id = navigation.state.params.id
 
-  componentDidUpdate(oldProps) {
-    const { car } = this.props;
-
-    if (car !== oldProps.car) {
-      Actions.refresh({
-        carId: car.id,
-        title: `${car.full_name} ${car.production_year}`,
-        rightTitle: this.renderRightTitle(),
-        onRight: this.renderRightAction()
-      })
-    }
-  }
-
-  renderRightTitle() {
-    const { car, currentUser } = this.props;
-
-    if (car.owner_id === currentUser.id) {
-      return "Edit"
-    } else {
-      return undefined
-    }
-  }
-
-  renderRightAction() {
-    const { car, currentUser } = this.props;
-
-    if (car.owner_id === currentUser.id) {
-      return () => Actions.carEdit({carId: car.id})
-    } else {
-      return undefined
-    }
+    fetchCar(id)
   }
 
   renderCar() {

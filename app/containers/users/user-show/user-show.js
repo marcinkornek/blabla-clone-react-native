@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react'
 import { View, ScrollView, Image, Text, StyleSheet } from 'react-native';
 import { connect } from 'react-redux'
-import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 import _ from 'lodash';
 
@@ -33,8 +32,7 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   title: {
-    marginTop: 10,
-    paddingBottom: 10,
+    margin: 10,
     fontSize: 16,
     fontWeight: 'bold',
     borderBottomWidth: 1,
@@ -50,7 +48,7 @@ const styles = StyleSheet.create({
     color: 'white',
   },
   view: {
-    marginTop: 50,
+    marginTop: 0,
   },
 });
 
@@ -70,20 +68,10 @@ export class UserShow extends Component {
   }
 
   componentDidMount() {
-    const { fetchUser, userId } = this.props;
+    const { fetchUser, navigation } = this.props;
+    const id = navigation.state.params.id
 
-    fetchUser(userId)
-  }
-
-  componentDidUpdate(oldProps) {
-    const { user } = this.props;
-
-    if (user !== oldProps.user) {
-      Actions.refresh({
-        userId: user.id,
-        title: `${user.full_name} profile`
-      })
-    }
+    fetchUser(id)
   }
 
   renderUserInfo() {

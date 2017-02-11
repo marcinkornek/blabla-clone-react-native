@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
 
 // actions
@@ -14,7 +13,6 @@ import { AsyncContent } from '../../../components/shared/async-content/async-con
 
 const styles = StyleSheet.create({
   view: {
-    marginTop: 60,
   }
 });
 
@@ -34,7 +32,7 @@ export class CarNew extends Component {
   }
 
   handleSubmit(data) {
-    const { createCar } = this.props
+    const { createCar, navigation } = this.props
     let body = new FormData()
 
     Object.keys(data).forEach((key) => {
@@ -47,7 +45,7 @@ export class CarNew extends Component {
     createCar(body)
       .then((response) => {
         let carId = response.payload.data.id
-        Actions.carShow({carId: carId});
+        navigation.navigate('carShow', {id: carId});
       })
   }
 

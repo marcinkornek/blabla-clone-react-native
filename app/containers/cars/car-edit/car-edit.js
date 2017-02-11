@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import _ from 'lodash';
 
 // actions
@@ -14,7 +13,6 @@ import { AsyncContent } from '../../../components/shared/async-content/async-con
 
 const styles = StyleSheet.create({
   view: {
-    marginTop: 60,
   }
 });
 
@@ -33,21 +31,8 @@ export class CarEdit extends Component {
     fetchCarsOptions()
   }
 
-  componentDidUpdate(oldProps) {
-    const { car } = this.props;
-
-    if (car !== oldProps.car) {
-      Actions.refresh({
-        carId: car.id,
-        title: `${car.full_name} ${car.production_year}`,
-        rightTitle: undefined,
-        onRight: undefined
-      })
-    }
-  }
-
   handleSubmit(data) {
-    const { updateCar } = this.props
+    const { updateCar, navigation } = this.props
     let body = new FormData()
 
     Object.keys(data).forEach((key) => {
@@ -60,7 +45,7 @@ export class CarEdit extends Component {
     updateCar(body, data.id)
       .then((response) => {
         let carId = response.payload.data.id
-        Actions.pop()
+        navigation.navigate('carShow', {id: carId})
       })
   }
 

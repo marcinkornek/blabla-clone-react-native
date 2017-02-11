@@ -2,7 +2,6 @@
 import React, { Component, PropTypes } from 'react';
 import { TouchableHighlight } from 'react-native';
 import { ListItem } from 'react-native-elements';
-import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 
 export class RidesIndexItem extends Component {
@@ -34,11 +33,11 @@ export class RidesIndexItem extends Component {
   }
 
   renderNormalRide() {
-    const { ride } = this.props;
+    const { ride, navigation } = this.props;
 
     return (
       <ListItem
-        onPress={() => Actions.rideShow({rideId: ride.id})}
+        onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
@@ -48,12 +47,12 @@ export class RidesIndexItem extends Component {
   }
 
   renderRideAsDriver() {
-    const { ride } = this.props;
+    const { ride, navigation } = this.props;
 
     return (
       <ListItem
         containerStyle={{backgroundColor: '#edf3fd'}}
-        onPress={() => Actions.rideShow({rideId: ride.id})}
+        onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
@@ -63,13 +62,13 @@ export class RidesIndexItem extends Component {
   }
 
   renderRideAsPassenger() {
-    const { ride } = this.props;
+    const { ride, navigation } = this.props;
     const color = this.rideAsPassengerColor()
 
     return (
       <ListItem
         containerStyle={{backgroundColor: color}}
-        onPress={() => Actions.rideShow({rideId: ride.id})}
+        onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}

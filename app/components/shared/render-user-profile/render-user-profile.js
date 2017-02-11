@@ -1,7 +1,6 @@
 // utils
 import React, { PropTypes } from 'react'
 import { View, Image, Text, TouchableHighlight, StyleSheet } from 'react-native';
-import { Actions } from 'react-native-router-flux';
 import moment from 'moment';
 
 // components
@@ -32,7 +31,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export const RenderUserProfile = ({user}) => (
+export const RenderUserProfile = ({user, navigation}) => (
   <View style={styles.view}>
     <Text style={styles.title}>Driver</Text>
     <View style={styles.container}>
@@ -48,7 +47,7 @@ export const RenderUserProfile = ({user}) => (
     </View>
     <TouchableHighlight
       underlayColor='white'
-      onPress={() => Actions.userShow({userId: user.id})}
+      onPress={() => navigation.navigate('userShow', { id: user.id })}
     >
       <Text>view profile</Text>
     </TouchableHighlight>

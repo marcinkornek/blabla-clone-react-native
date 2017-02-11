@@ -15,10 +15,20 @@ export class NotificationsIndexItem extends React.Component {
   renderNotification(notification) {
     switch (notification.notification_type) {
     case "ride_request_created":
-      return <RideRequestCreated notification={notification} />
+      return (
+        <RideRequestCreated
+          notification={notification}
+          navigation={navigation}
+        />
+      )
     case "ride_request_accepted":
     case "ride_request_rejected":
-      return <RideRequestUpdated notification={notification} />
+      return (
+        <RideRequestUpdated
+          notification={notification}
+          navigation={navigation}
+        />
+      )
     }
   }
 

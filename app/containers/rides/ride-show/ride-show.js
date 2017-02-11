@@ -204,7 +204,9 @@ export class RideShow extends Component {
 
     if (this.coordinatesAreValid()) {
       this.setState({hideMap: !this.state.hideMap, markers: coordinates})
-      this.fitToCoordinates(coordinates);
+      setTimeout(() => {
+        this.fitToCoordinates(coordinates);
+      }, 500);
     }
   }
 

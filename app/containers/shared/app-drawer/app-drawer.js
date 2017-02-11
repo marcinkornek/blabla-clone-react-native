@@ -243,7 +243,7 @@ export class AppDrawer extends Component {
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor='white'
-            onPress={() => this.goToAndClose('carsIndex', {})}
+            onPress={() => this.goToAndClose('myCars', {})}
           >
             <Text style={styles.menuLink}>My cars</Text>
           </TouchableHighlight>

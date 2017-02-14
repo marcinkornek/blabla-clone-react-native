@@ -13,6 +13,7 @@ import { AsyncContent } from '../../../components/shared/async-content/async-con
 
 const styles = StyleSheet.create({
   view: {
+    marginTop: 10,
   }
 });
 
@@ -28,7 +29,7 @@ export class CarEdit extends Component {
   static navigationOptions = {
     header: ({ state }) => {
       return {
-        title: 'Edit car'
+        title: 'Edit car',
       }
     }
   }

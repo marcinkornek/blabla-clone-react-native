@@ -48,19 +48,22 @@ export function createCurrentUser(body) {
 }
 
 export function updateCurrentUser(body) {
-  return {
-    types: [
-      CURRENT_USER_UPDATE_REQUEST,
-      CURRENT_USER_UPDATE_SUCCESS,
-      CURRENT_USER_UPDATE_FAILURE
-    ],
-    payload: {
-      request: {
-        method: 'put',
-        url: `${APIEndpoints.USERS}/${session.item.id}`,
-        data: body,
-        simple: false
+  return (dispatch, getState) => {
+    const { session } = getState()
+    return dispatch({
+      types: [
+        CURRENT_USER_UPDATE_REQUEST,
+        CURRENT_USER_UPDATE_SUCCESS,
+        CURRENT_USER_UPDATE_FAILURE
+      ],
+      payload: {
+        request: {
+          method: 'put',
+          url: `${APIEndpoints.USERS}/${session.item.id}`,
+          data: body,
+          simple: false
+        }
       }
-    }
+    })
   }
 }

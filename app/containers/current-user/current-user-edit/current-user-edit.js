@@ -11,9 +11,15 @@ import { updateCurrentUser } from '../../../actions/current-user';
 // components
 import CurrentUserEditForm from '../../../components/current-user/current-user-edit-form/current-user-edit-form'
 
+const styles = StyleSheet.create({
+  view: {
+    marginTop: 10,
+  }
+});
+
 export class CurrentUserEdit extends Component {
   handleSubmit(data) {
-    const { updateCurrentUser } = this.props
+    const { updateCurrentUser, navigation } = this.props
     var body = new FormData();
 
     Object.keys(data).forEach(( key ) => {
@@ -29,7 +35,7 @@ export class CurrentUserEdit extends Component {
     updateCurrentUser(body)
       .then((response) => {
         if (!response.error) {
-          navigation.navigate('myAccount');
+          navigation.navigate('accountTabs');
         }
       })
   }
@@ -47,12 +53,6 @@ export class CurrentUserEdit extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  view: {
-    marginTop: 60,
-  }
-});
 
 const mapStateToProps = (state) => {
   return {

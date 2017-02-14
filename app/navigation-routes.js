@@ -66,7 +66,8 @@ export const AuthenticatedAccountTabNavigator = TabNavigator({
 })
 
 export const AuthenticatedAccountStackNavigator = StackNavigator({
-  accountTabs: { screen: AuthenticatedAccountTabNavigator }
+  accountTabs: { screen: AuthenticatedAccountTabNavigator },
+  myProfileEdit: { screen: CurrentUserEdit },
 }, {
   navigationOptions: {
     header: (navigation, header) => ({

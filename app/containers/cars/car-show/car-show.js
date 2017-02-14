@@ -8,6 +8,7 @@ import { fetchCar } from '../../../actions/cars';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
+import { EditButton } from '../../../components/shared/edit-button/edit-button'
 
 const styles = StyleSheet.create({
   carName: {
@@ -46,13 +47,11 @@ class CarShow extends Component {
     header: ({ state }) => {
       return {
         title: state.params.myTitle,
-        left: (
-          <TouchableHighlight
-            underlayColor='white'
-            onPress={() => navigation.navigate('carEdit', {id: state.params.id})}
-          >
-            <Text>Edit</Text>
-          </TouchableHighlight>
+        right: (
+          <EditButton
+            onClick={() => state.params.navigation.navigate('carEdit', {id: state.params.id})}
+            showEdit={state.params.showEdit}
+          />
         )
       }
     }
@@ -80,7 +79,15 @@ class CarShow extends Component {
     navigation.setParams({
       myTitle: title,
       id: car.id,
+      navigation: navigation,
+      showEdit: this.showEdit()
     })
+  }
+
+  showEdit() {
+    const { car, currentUser } = this.props;
+
+    return car.owner_id === currentUser.id
   }
 
   renderCar() {

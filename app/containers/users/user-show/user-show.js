@@ -13,6 +13,7 @@ import { AsyncContent } from '../../../components/shared/async-content/async-con
 import { RenderUserAge } from '../../../components/shared/render-user-age/render-user-age'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-index-item'
+import { EditButton } from '../../../components/shared/edit-button/edit-button'
 
 const styles = StyleSheet.create({
   avatar: {
@@ -70,7 +71,13 @@ export class UserShow extends Component {
   static navigationOptions = {
     header: ({ state }) => {
       return {
-        title: state.params.myTitle
+        title: state.params.myTitle,
+        right: (
+          <EditButton
+            onClick={() => state.params.navigation.navigate('myProfileEdit')}
+            showEdit={state.params.showEdit}
+          />
+        )
       }
     }
   }
@@ -95,8 +102,17 @@ export class UserShow extends Component {
     const title = `${user.full_name} profile`
 
     navigation.setParams({
-      myTitle: title
+      myTitle: title,
+      id: user.id,
+      navigation: navigation,
+      showEdit: this.showEdit()
     })
+  }
+
+  showEdit() {
+    const { user, currentUser } = this.props;
+
+    return user.id === currentUser.id
   }
 
   renderUserInfo() {

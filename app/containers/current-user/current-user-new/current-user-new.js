@@ -11,6 +11,14 @@ import { createCurrentUser } from '../../../actions/current-user';
 import CurrentUserNewForm from '../../../components/current-user/current-user-new-form/current-user-new-form'
 
 export class CurrentUserNew extends Component {
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: 'Register'
+      }
+    }
+  }
+
   handleSubmit(data) {
     const { createCurrentUser } = this.props
     var body = new FormData();

@@ -67,11 +67,36 @@ export class UserShow extends Component {
     }
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: state.params.myTitle
+      }
+    }
+  }
+
   componentDidMount() {
     const { fetchUser, navigation } = this.props;
     const id = navigation.state.params.id
 
     fetchUser(id)
+  }
+
+  componentDidUpdate(oldProps) {
+    const { user } = this.props;
+
+    if (user !== oldProps.user) {
+      this.setParams()
+    }
+  }
+
+  setParams() {
+    const { user, navigation } = this.props;
+    const title = `${user.full_name} profile`
+
+    navigation.setParams({
+      myTitle: title
+    })
   }
 
   renderUserInfo() {

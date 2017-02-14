@@ -16,6 +16,7 @@ import { AsyncContent } from '../../../components/shared/async-content/async-con
 import { RenderUserProfile } from '../../../components/shared/render-user-profile/render-user-profile'
 import { RenderCarInfo } from '../../../components/shared/render-car-info/render-car-info'
 import { RenderRideOffer } from '../../../components/rides/render-ride-offer/render-ride-offer'
+import { EditButton } from '../../../components/shared/edit-button/edit-button'
 
 const styles = StyleSheet.create({
   view: {
@@ -63,16 +64,56 @@ export class RideShow extends Component {
     }
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: state.params.myTitle,
+        right: (
+          <EditButton
+            onClick={() => state.params.navigation.navigate('rideEdit', {id: state.params.id})}
+            showEdit={state.params.showEdit}
+          />
+        )
+      }
+    }
+  }
+
   state = {
     markers: [],
     hideMap: true,
   }
 
   componentDidMount() {
-    const { fetchRide, navigation } = this.props
+    const { fetchRide, navigation, ride } = this.props
     const id = navigation.state.params.id
 
     fetchRide(id)
+  }
+
+  componentDidUpdate(oldProps) {
+    const { ride } = this.props;
+
+    if (ride !== oldProps.ride) {
+      this.setParams()
+    }
+  }
+
+  setParams() {
+    const { ride, navigation } = this.props;
+    const title = `${ride.start_location.address} - ${ride.destination_location.address}`
+
+    navigation.setParams({
+      myTitle: title,
+      id: ride.id,
+      navigation: navigation,
+      showEdit: this.showEdit()
+    })
+  }
+
+  showEdit() {
+    const { ride, currentUser } = this.props;
+
+    return ride.driver.id === currentUser.id
   }
 
   fitToCoordinates(coordinates) {

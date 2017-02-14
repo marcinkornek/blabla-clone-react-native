@@ -25,43 +25,44 @@ import UsersIndex from './containers/users/users-index/users-index'
 import UserShow from './containers/users/user-show/user-show'
 import NotificationsIndex from './containers/notifications/notifications-index/notifications-index'
 import requireAuth from './containers/shared/require-auth/require-auth'
-import HamburgerButton from './containers/shared/hamburger-button/hamburger-button'
+import { HamburgerButton } from './components/shared/hamburger-button/hamburger-button'
 
 export const AuthenticatedRidesTabNavigator = TabNavigator({
   ridesIndex: { screen: RidesIndex },
-  ridesAsDriver: { screen: requireAuth(RidesIndexAsDriver) },
-  ridesAsPassenger: { screen: requireAuth(RidesIndexAsPassenger) },
+  ridesAsDriver: { screen: RidesIndexAsDriver },
+  ridesAsPassenger: { screen: RidesIndexAsPassenger },
 })
 
 export const AuthenticatedRidesStackNavigator = StackNavigator({
   rides: { screen: AuthenticatedRidesTabNavigator },
   rideShow: { screen: RideShow },
-  rideEdit: { screen: requireAuth(RideEdit) },
-  rideNew: { screen: requireAuth(RideNew) },
+  rideEdit: { screen: RideEdit },
+  rideNew: { screen: RideNew },
   carShow: { screen: CarShow },
-  carNew: { screen: requireAuth(CarNew) },
-  carEdit: { screen: requireAuth(CarEdit) },
+  carNew: { screen: CarNew },
+  carEdit: { screen: CarEdit },
   usersIndex: { screen: UsersIndex },
   userShow: { screen: UserShow },
   myNotifications: { screen: NotificationsIndex },
 }, {
   navigationOptions: {
     header: (navigation, header) => ({
-      ...header,
       left: (
         <HamburgerButton
           onClick={() => navigation.navigate('DrawerOpen')}
         />
       ),
+      title: 'Rides',
     }),
-  }
+  },
+  headerMode: 'float',
 })
 
 export const AuthenticatedAccountTabNavigator = TabNavigator({
-  myProfile: { screen: requireAuth(CurrentUserShow) },
-  myCars: { screen: requireAuth(CarsIndex) },
-  myRidesAsDriver: { screen: requireAuth(RidesIndexAsDriver) },
-  myRidesAsPassenger: { screen: requireAuth(RidesIndexAsPassenger) },
+  myProfile: { screen: CurrentUserShow },
+  myCars: { screen: CarsIndex },
+  myRidesAsDriver: { screen: RidesIndexAsDriver },
+  myRidesAsPassenger: { screen: RidesIndexAsPassenger },
 })
 
 export const AuthenticatedAccountStackNavigator = StackNavigator({
@@ -69,14 +70,15 @@ export const AuthenticatedAccountStackNavigator = StackNavigator({
 }, {
   navigationOptions: {
     header: (navigation, header) => ({
-      ...header,
       left: (
         <HamburgerButton
           onClick={() => navigation.navigate('DrawerOpen')}
         />
       ),
+      title: 'My account',
     }),
-  }
+  },
+  headerMode: 'float',
 })
 
 export const AuthenticatedDrawerNavigator = DrawerNavigator({
@@ -98,33 +100,34 @@ export const NotAuthenticatedSessionStackNavigator = StackNavigator({
 }, {
   navigationOptions: {
     header: (navigation, header) => ({
-      ...header,
       left: (
         <HamburgerButton
           onClick={() => navigation.navigate('DrawerOpen')}
         />
       ),
     }),
-  }
+  },
+  headerMode: 'float',
 })
 
 export const NotAuthenticatedRidesStackNavigator = StackNavigator({
   rides: { screen: NotAuthenticatedRidesTabNavigator },
-  rideNew: { screen: requireAuth(RideNew) },
+  rideNew: { screen: RideNew },
   rideShow: { screen: RideShow },
   userShow: { screen: UserShow },
   carShow: { screen: CarShow },
 }, {
   navigationOptions: {
     header: (navigation, header) => ({
-      ...header,
       left: (
         <HamburgerButton
           onClick={() => navigation.navigate('DrawerOpen')}
         />
       ),
+      title: 'Rides',
     }),
-  }
+  },
+  headerMode: 'float',
 })
 
 export const NotAuthenticatedDrawerNavigator = DrawerNavigator({

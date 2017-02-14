@@ -26,6 +26,14 @@ export class NotificationsIndex extends Component {
     pagination: PropTypes.object.isRequired,
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: 'Notifications'
+      }
+    }
+  }
+
   componentDidMount() {
     const { isAuthenticated, refreshNotifications } = this.props
 

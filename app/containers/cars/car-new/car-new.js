@@ -24,6 +24,14 @@ export class CarNew extends Component {
     carOptions: PropTypes.object.isRequired,
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: 'Add car'
+      }
+    }
+  }
+
   componentDidMount() {
     const { fetchCarsOptions, initializeCar } = this.props
 

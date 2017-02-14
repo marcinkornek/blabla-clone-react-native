@@ -29,6 +29,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   view: {
+    marginTop: 10,
   }
 });
 
@@ -38,6 +39,14 @@ class Login extends Component {
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
   };
+
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: 'Login'
+      }
+    }
+  }
 
   handleEmailLogin(data) {
     const { logInEmailBackend, fetchCurrentUser, navigation } = this.props;

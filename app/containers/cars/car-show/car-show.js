@@ -42,11 +42,45 @@ class CarShow extends Component {
     car: {}
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: state.params.myTitle,
+        left: (
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => navigation.navigate('carEdit', {id: state.params.id})}
+          >
+            <Text>Edit</Text>
+          </TouchableHighlight>
+        )
+      }
+    }
+  }
+
   componentDidMount() {
     const { fetchCar, navigation } = this.props
     const id = navigation.state.params.id
 
     fetchCar(id)
+  }
+
+  componentDidUpdate(oldProps) {
+    const { car } = this.props;
+
+    if (car !== oldProps.car) {
+      this.setParams()
+    }
+  }
+
+  setParams() {
+    const { car, navigation } = this.props;
+    const title = `${car.user.full_name} car`
+
+    navigation.setParams({
+      myTitle: title,
+      id: car.id,
+    })
   }
 
   renderCar() {

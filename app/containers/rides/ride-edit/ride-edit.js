@@ -26,6 +26,14 @@ export class RideEdit extends Component {
     rideOptions: PropTypes.object.isRequired,
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: 'Edit ride'
+      }
+    }
+  }
+
   componentDidMount() {
     const { fetchRideOptions } = this.props;
 

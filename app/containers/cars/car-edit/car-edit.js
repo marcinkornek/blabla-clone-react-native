@@ -25,6 +25,14 @@ export class CarEdit extends Component {
     carOptions: PropTypes.object.isRequired,
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: 'Edit car'
+      }
+    }
+  }
+
   componentDidMount() {
     const { fetchCarsOptions, carId } = this.props
 

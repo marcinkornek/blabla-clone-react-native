@@ -36,6 +36,14 @@ export class RideNew extends Component {
     rideOptions: PropTypes.object.isRequired,
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: 'Add ride'
+      }
+    }
+  }
+
   componentDidMount() {
     this.props.fetchRideOptions()
   }

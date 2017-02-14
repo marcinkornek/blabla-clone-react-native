@@ -13,8 +13,11 @@ import {
 import { connect } from 'react-redux';
 import { FBLoginManager } from 'react-native-facebook-login';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Collapsible from 'react-native-collapsible';
 
+// actions
 import { logInFromStorage, logoutCurrentUser } from '../../../actions/session';
 
 const { width, height } = Dimensions.get('window')
@@ -37,6 +40,21 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: 'white',
   },
+  dropdownLink: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    borderColor: '#D3D3D3',
+    borderBottomWidth: 1,
+  },
+  dropdownText: {
+    fontSize: 17,
+    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+  },
+  dropdownIcon: {
+    paddingTop: 10,
+  },
   logoutButton: {
     backgroundColor: '#23A2E3',
     borderRadius: 0,
@@ -49,6 +67,15 @@ const styles = StyleSheet.create({
     paddingTop: 15,
     paddingBottom: 15,
     borderColor: '#D3D3D3',
+    borderBottomWidth: 1,
+  },
+  menuSublink: {
+    fontSize: 15,
+    padding: 10,
+    paddingTop: 15,
+    paddingBottom: 15,
+    borderColor: '#D3D3D3',
+    backgroundColor: '#f1f1f1',
     borderBottomWidth: 1,
   },
   sessionText: {
@@ -103,6 +130,10 @@ export class AppDrawer extends Component {
     isAuthenticated: PropTypes.bool.isRequired,
   }
 
+  state = {
+    hideAccount: true,
+  }
+
   goToAndClose(actionName, options = {}) {
     const { navigation } = this.props;
 
@@ -121,6 +152,10 @@ export class AppDrawer extends Component {
     FBLoginManager.logout((data) => {
       this.onLogout()
     })
+  }
+
+  toggleAccountLinks() {
+    this.setState({hideAccount: !this.state.hideAccount})
   }
 
   renderUserInfo() {
@@ -205,7 +240,64 @@ export class AppDrawer extends Component {
     )
   }
 
-  renderSessionLinks() {
+  renderAccountLinks() {
+    return (
+      <View>
+        <Collapsible collapsed={this.state.hideAccount}>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('accountTabs', {})}
+          >
+            <Text style={styles.menuSublink}>My profile</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('myRidesAsPassenger', {})}
+          >
+            <Text style={styles.menuSublink}>My rides as passenger</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('myRidesAsDriver', {})}
+          >
+            <Text style={styles.menuSublink}>My rides as driver</Text>
+          </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('myCars', {})}
+          >
+            <Text style={styles.menuSublink}>My cars</Text>
+          </TouchableHighlight>
+        </Collapsible>
+      </View>
+    )
+  }
+
+  renderDropdownIcon() {
+    if (this.state.hideAccount) {
+      return (
+        <MaterialIcon
+          name='arrow-drop-down'
+          style={styles.dropdownIcon}
+          backgroundColor='white'
+          underlayColor='white'
+          size={35}
+        />
+      )
+    } else {
+      return (
+        <MaterialIcon
+          name='arrow-drop-up'
+          style={styles.dropdownIcon}
+          backgroundColor='white'
+          underlayColor='white'
+          size={35}
+        />
+      )
+    }
+  }
+
+  renderLoggedInAccountLinks() {
     const { isAuthenticated } = this.props;
 
     if (isAuthenticated) {
@@ -213,39 +305,30 @@ export class AppDrawer extends Component {
         <View>
           <TouchableHighlight
             underlayColor='white'
-            onPress={() => this.goToAndClose('rideNew', {})}
+            onPress={() => this.toggleAccountLinks()}
           >
-            <Text style={styles.menuLink}>Add ride</Text>
+            <View style={styles.dropdownLink}>
+              <Text style={styles.dropdownText}>My account</Text>
+              {this.renderDropdownIcon()}
+            </View>
           </TouchableHighlight>
+          {this.renderAccountLinks()}
+        </View>
+      )
+    }
+  }
+
+  renderLoggedInLinks() {
+    const { isAuthenticated } = this.props;
+
+    if (isAuthenticated) {
+      return (
+        <View>
           <TouchableHighlight
             underlayColor='white'
             onPress={() => this.goToAndClose('usersIndex')}
           >
             <Text style={styles.menuLink}>Users</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor='white'
-            onPress={() => this.goToAndClose('myAccount', {})}
-          >
-            <Text style={styles.menuLink}>My account</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor='white'
-            onPress={() => this.goToAndClose('myRidesAsPassenger', {})}
-          >
-            <Text style={styles.menuLink}>My rides as passenger</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor='white'
-            onPress={() => this.goToAndClose('myRidesAsDriver', {})}
-          >
-            <Text style={styles.menuLink}>My rides as driver</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor='white'
-            onPress={() => this.goToAndClose('myCars', {})}
-          >
-            <Text style={styles.menuLink}>My cars</Text>
           </TouchableHighlight>
         </View>
       )
@@ -256,8 +339,9 @@ export class AppDrawer extends Component {
     return (
       <ScrollView style={styles.container}>
         {this.renderUserInfo()}
+        {this.renderLoggedInAccountLinks()}
         {this.renderSharedLinks()}
-        {this.renderSessionLinks()}
+        {this.renderLoggedInLinks()}
       </ScrollView>
     )
   }

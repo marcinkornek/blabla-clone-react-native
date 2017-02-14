@@ -25,6 +25,14 @@ class UsersIndex extends Component {
     isFetching: PropTypes.bool.isRequired,
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: 'Users list'
+      }
+    }
+  }
+
   componentDidMount() {
     this.props.refreshUsers(per)
   }

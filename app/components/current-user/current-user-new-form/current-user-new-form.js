@@ -1,5 +1,5 @@
 // utils
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { View, ScrollView, Text, TextInput, Picker } from 'react-native';
@@ -16,8 +16,13 @@ import { DatepickerField } from '../../inputs/datepicker-field/datepicker-field'
 import { ImageField } from '../../inputs/image-field/image-field';
 
 class CurrentUserNewForm extends Component {
+  static propTypes = {
+    handleSubmit: PropTypes.func.isRequired,
+    isSaving: PropTypes.bool.isRequired,
+  }
+
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, isSaving } = this.props;
     const minumumBirthDate = moment().subtract(18, 'years').format('DD.MM.YYYY')
 
     return (
@@ -92,7 +97,8 @@ class CurrentUserNewForm extends Component {
         />
         <Button
           raised
-          title='Submit'
+          title={isSaving ? 'Saving' : 'Submit'}
+          loading={isSaving}
           backgroundColor='#23a2e3'
           onPress={handleSubmit}
         />

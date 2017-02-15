@@ -28,7 +28,7 @@ const styles = StyleSheet.create({
 })
 
 class CurrentUserEditForm extends Component {
-  renderCirrentAvatar() {
+  renderCurrentAvatar() {
     const { currentUser } = this.props;
 
     if (currentUser) {
@@ -42,7 +42,7 @@ class CurrentUserEditForm extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, isSaving } = this.props;
     const minumumBirthDate = moment().subtract(18, 'years').format('DD.MM.YYYY')
 
     return (
@@ -97,7 +97,7 @@ class CurrentUserEditForm extends Component {
           keyboardType="numeric"
           component={TextField}
         />
-        {this.renderCirrentAvatar()}
+        {this.renderCurrentAvatar()}
         <Field
           type="file"
           name="avatar"
@@ -105,7 +105,8 @@ class CurrentUserEditForm extends Component {
         />
         <Button
           raised
-          title='Update'
+          title={isSaving ? 'Saving' : 'Submit'}
+          loading={isSaving}
           backgroundColor='#23a2e3'
           onPress={handleSubmit}
         />

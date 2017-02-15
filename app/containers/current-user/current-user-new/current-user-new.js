@@ -26,7 +26,7 @@ export class CurrentUserNew extends Component {
   }
 
   handleSubmit(data) {
-    const { createCurrentUser } = this.props
+    const { createCurrentUser, navigation } = this.props
     var body = new FormData();
 
     Object.keys(data).forEach(( key ) => {
@@ -46,16 +46,23 @@ export class CurrentUserNew extends Component {
   }
 
   render() {
+    const { isSaving } = this.props;
+
     return (
       <ScrollView style={styles.view}>
-        <CurrentUserNewForm onSubmit={this.handleSubmit.bind(this)} />
+        <CurrentUserNewForm
+          onSubmit={this.handleSubmit.bind(this)}
+          isSaving={isSaving}
+        />
       </ScrollView>
     )
   }
 }
 
 const mapStateToProps = (state) => {
-  return {}
+  return {
+    isSaving: state.currentUser.isSaving,
+  }
 }
 
 const mapDispatchToProps = {

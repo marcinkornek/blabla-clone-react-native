@@ -47,6 +47,7 @@ export class CurrentUserEdit extends Component {
       <ScrollView style={styles.view}>
         <CurrentUserEditForm
           currentUser={currentUser}
+          isSaving={isSaving}
           onSubmit={this.handleSubmit.bind(this)}
         />
       </ScrollView>
@@ -56,7 +57,8 @@ export class CurrentUserEdit extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    currentUser: state.currentUser.item
+    currentUser: state.currentUser.item,
+    isSaving: state.currentUser.isSaving,
   }
 }
 

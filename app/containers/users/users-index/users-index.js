@@ -33,7 +33,7 @@ class UsersIndex extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.refreshUsers(per)
   }
 

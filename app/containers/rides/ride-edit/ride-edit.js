@@ -34,7 +34,7 @@ export class RideEdit extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { fetchRideOptions } = this.props;
 
     fetchRideOptions()

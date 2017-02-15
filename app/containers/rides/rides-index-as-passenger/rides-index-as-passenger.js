@@ -33,7 +33,7 @@ export class RidesIndexAsPassenger extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { refreshRidesAsPassenger, currentUser } = this.props
 
     if (currentUser.id) refreshRidesAsPassenger(currentUser.id, per)

@@ -47,7 +47,7 @@ export class RidesIndex extends Component {
     showFilters: false,
   };
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.refreshRides(per)
   }
 

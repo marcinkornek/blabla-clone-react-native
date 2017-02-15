@@ -15,7 +15,7 @@ export class Router extends Component {
     session: PropTypes.object.isRequired,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { logInFromStorage, fetchCurrentUser, session } = this.props;
 
     logInFromStorage(session)

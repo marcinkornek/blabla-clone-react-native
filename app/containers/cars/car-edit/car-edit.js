@@ -34,7 +34,7 @@ export class CarEdit extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { fetchCarsOptions, carId } = this.props
 
     fetchCarsOptions()

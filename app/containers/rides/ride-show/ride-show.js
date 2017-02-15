@@ -83,7 +83,7 @@ export class RideShow extends Component {
     hideMap: true,
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { fetchRide, navigation, ride } = this.props
     const id = navigation.state.params.id
 

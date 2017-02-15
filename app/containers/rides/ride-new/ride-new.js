@@ -44,7 +44,7 @@ export class RideNew extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.props.fetchRideOptions()
   }
 

@@ -57,7 +57,7 @@ class CarShow extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { fetchCar, navigation } = this.props
     const id = navigation.state.params.id
 

@@ -34,7 +34,7 @@ export class NotificationsIndex extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { isAuthenticated, refreshNotifications } = this.props
 
     if (isAuthenticated) refreshNotifications(per)

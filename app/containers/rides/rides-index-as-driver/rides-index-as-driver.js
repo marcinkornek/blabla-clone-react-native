@@ -33,7 +33,7 @@ export class RidesIndexAsDriver extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { refreshRidesAsDriver, currentUser } = this.props
 
     if (currentUser.id) refreshRidesAsDriver(currentUser.id, per)

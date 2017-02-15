@@ -32,7 +32,7 @@ export class CarNew extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { fetchCarsOptions, initializeCar } = this.props
 
     initializeCar()

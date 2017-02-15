@@ -82,7 +82,7 @@ export class UserShow extends Component {
     }
   }
 
-  componentDidMount() {
+  componentWillMount() {
     const { fetchUser, navigation } = this.props;
     const id = navigation.state.params.id
 

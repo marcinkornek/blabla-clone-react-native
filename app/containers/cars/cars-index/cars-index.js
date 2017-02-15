@@ -26,6 +26,14 @@ class CarsIndex extends Component {
     currentUser: PropTypes.object,
   }
 
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: 'My cars'
+      }
+    }
+  }
+
   componentWillMount() {
     const { refreshCars, currentUser } = this.props
 

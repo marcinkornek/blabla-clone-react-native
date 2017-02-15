@@ -1,7 +1,7 @@
 // utils
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { StackNavigator, TabNavigator, DrawerNavigator } from 'react-navigation';
+import { StackNavigator, TabNavigator, TabView, DrawerNavigator } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -31,6 +31,15 @@ export const AuthenticatedRidesTabNavigator = TabNavigator({
   ridesIndex: { screen: RidesIndex },
   ridesAsDriver: { screen: RidesIndexAsDriver },
   ridesAsPassenger: { screen: RidesIndexAsPassenger },
+}, {
+  initalRouteName: 'Tab1',
+  tabBarComponent: TabView.TabBarTop,
+  tabBarPosition: 'top',
+  swipeEnabled: true,
+  tabBarOptions: {
+    scrollEnabled: true,
+    tabStyle: { width: 150 }
+  }
 })
 
 export const AuthenticatedRidesStackNavigator = StackNavigator({
@@ -63,6 +72,15 @@ export const AuthenticatedAccountTabNavigator = TabNavigator({
   myCars: { screen: CarsIndex },
   myRidesAsDriver: { screen: RidesIndexAsDriver },
   myRidesAsPassenger: { screen: RidesIndexAsPassenger },
+}, {
+  initalRouteName: 'Tab1',
+  tabBarComponent: TabView.TabBarTop,
+  tabBarPosition: 'top',
+  swipeEnabled: true,
+  tabBarOptions: {
+    scrollEnabled: true,
+    tabStyle: { width: 150 }
+  }
 })
 
 export const AuthenticatedAccountStackNavigator = StackNavigator({
@@ -92,6 +110,15 @@ export const AuthenticatedDrawerNavigator = DrawerNavigator({
 // not authenticated
 export const NotAuthenticatedRidesTabNavigator = TabNavigator({
   ridesIndex: { screen: RidesIndex },
+}, {
+  initalRouteName: 'Tab1',
+  tabBarComponent: TabView.TabBarTop,
+  tabBarPosition: 'top',
+  swipeEnabled: true,
+  tabBarOptions: {
+    scrollEnabled: true,
+    tabStyle: { width: 150 }
+  }
 })
 
 export const NotAuthenticatedSessionStackNavigator = StackNavigator({

@@ -114,7 +114,7 @@ export class RidesIndex extends Component {
         fetchItems={this.fetchRides.bind(this)}
         refreshItems={this.refreshRides.bind(this)}
         renderRow={this.renderRide.bind(this)}
-        showAddButton={true}
+        showAddButton={isAuthenticated}
         addButtonLink={() => navigation.navigate('rideNew')}
         per={per}
         onEndReachedThreshold={200}

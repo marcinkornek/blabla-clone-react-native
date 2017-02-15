@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
+import { View, ScrollView, Text, TextInput, Alert, StyleSheet } from 'react-native';
 import _ from 'lodash';
 
 // actions
@@ -40,20 +40,32 @@ export class CurrentUserNew extends Component {
     createCurrentUser(body)
       .then((response) => {
         if (!response.error) {
-          navigation.navigate('login')
+          Alert.alert(
+            'Account created',
+            'Go to Login page to log in',
+            [
+              {text: 'Login', onPress: () => navigation.navigate('login')},
+            ]
+          )
         }
       })
   }
 
-  render() {
+  renderForm() {
     const { isSaving } = this.props;
 
     return (
+      <CurrentUserNewForm
+        onSubmit={this.handleSubmit.bind(this)}
+        isSaving={isSaving}
+      />
+    )
+  }
+
+  render() {
+    return (
       <ScrollView style={styles.view}>
-        <CurrentUserNewForm
-          onSubmit={this.handleSubmit.bind(this)}
-          isSaving={isSaving}
-        />
+        {this.renderForm()}
       </ScrollView>
     )
   }

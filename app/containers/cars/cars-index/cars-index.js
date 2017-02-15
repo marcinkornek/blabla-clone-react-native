@@ -27,10 +27,8 @@ class CarsIndex extends Component {
   }
 
   static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: 'My cars'
-      }
+    tabBar: {
+      label: 'My cars',
     }
   }
 

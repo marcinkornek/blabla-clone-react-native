@@ -10,6 +10,12 @@ import { createCurrentUser } from '../../../actions/current-user';
 // components
 import CurrentUserNewForm from '../../../components/current-user/current-user-new-form/current-user-new-form'
 
+const styles = StyleSheet.create({
+  view: {
+    marginTop: 10,
+  }
+});
+
 export class CurrentUserNew extends Component {
   static navigationOptions = {
     header: ({ state }) => {
@@ -47,11 +53,6 @@ export class CurrentUserNew extends Component {
     )
   }
 }
-
-const styles = StyleSheet.create({
-  view: {
-  }
-});
 
 const mapStateToProps = (state) => {
   return {}

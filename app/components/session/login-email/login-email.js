@@ -51,8 +51,8 @@ export class LoginEmail extends Component {
           onPress={this.showFormOnClick.bind(this)}
           name="envelope-o"
           style={styles.loginButton}
-          backgroundColor='white'
-          underlayColor='white'
+          backgroundColor='transparent'
+          underlayColor='transparent'
         >
           <Text style={styles.loginButtonText}>
             Login with email and password

@@ -59,8 +59,8 @@ export class FBLoginView extends Component {
           onPress={() => this.login()}
           name="facebook"
           style={styles.loginButton}
-          backgroundColor='white'
-          underlayColor='white'
+          backgroundColor='transparent'
+          underlayColor='transparent'
         >
           <Text style={styles.loginButtonText}>
             Login with Facebook

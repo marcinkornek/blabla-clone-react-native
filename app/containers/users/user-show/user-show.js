@@ -143,13 +143,14 @@ export class UserShow extends Component {
   }
 
   renderRidesAsDriverList() {
-    const { user } = this.props
+    const { user, navigation } = this.props
 
     return (
       user.rides_as_driver.map((ride, i) =>
         <RidesIndexItem
           key={`ride-${i}`}
           ride={ride}
+          navigation={navigation}
           withCarPhoto={true}
         />
       )
@@ -170,13 +171,14 @@ export class UserShow extends Component {
   }
 
   renderUserCarsList() {
-    const { user, currentUser } = this.props
+    const { user, currentUser, navigation } = this.props
 
     return (
       user.cars.map((car, i) =>
         <CarsIndexItem
           key={`car-${i}`}
           car={car}
+          navigation={navigation}
           currentUser={currentUser}
         />
       )

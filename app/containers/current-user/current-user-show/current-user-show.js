@@ -53,6 +53,12 @@ export class UserShow extends Component {
     currentUser: {}
   }
 
+  static navigationOptions = {
+    tabBar: {
+      label: 'My profile',
+    }
+  }
+
   renderUserInfo() {
     const { currentUser } = this.props
 

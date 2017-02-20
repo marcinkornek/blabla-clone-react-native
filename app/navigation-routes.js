@@ -27,12 +27,28 @@ import NotificationsIndex from './containers/notifications/notifications-index/n
 import requireAuth from './containers/shared/require-auth/require-auth'
 import { HamburgerButton } from './components/shared/hamburger-button/hamburger-button'
 
+const navigationOptionsWithHamburger = (title) => (
+  {
+    navigationOptions: {
+      header: (navigation, header) => ({
+        left: (
+          <HamburgerButton
+            onClick={() => navigation.navigate('DrawerOpen')}
+          />
+        ),
+        title: title,
+      }),
+    },
+    headerMode: 'float',
+  }
+)
+
 export const AuthenticatedRidesTabNavigator = TabNavigator({
   ridesIndex: { screen: RidesIndex },
   ridesAsDriver: { screen: RidesIndexAsDriver },
   ridesAsPassenger: { screen: RidesIndexAsPassenger },
 }, {
-  initalRouteName: 'Tab1',
+  initalRouteName: 'ridesIndex',
   tabBarComponent: TabView.TabBarTop,
   tabBarPosition: 'top',
   swipeEnabled: true,
@@ -53,19 +69,7 @@ export const AuthenticatedRidesStackNavigator = StackNavigator({
   usersIndex: { screen: UsersIndex },
   userShow: { screen: UserShow },
   myNotifications: { screen: NotificationsIndex },
-}, {
-  navigationOptions: {
-    header: (navigation, header) => ({
-      left: (
-        <HamburgerButton
-          onClick={() => navigation.navigate('DrawerOpen')}
-        />
-      ),
-      title: 'Rides',
-    }),
-  },
-  headerMode: 'float',
-})
+}, navigationOptionsWithHamburger('Rides'))
 
 export const AuthenticatedAccountTabNavigator = TabNavigator({
   myProfile: { screen: CurrentUserShow },
@@ -86,19 +90,7 @@ export const AuthenticatedAccountTabNavigator = TabNavigator({
 export const AuthenticatedAccountStackNavigator = StackNavigator({
   accountTabs: { screen: AuthenticatedAccountTabNavigator },
   myProfileEdit: { screen: CurrentUserEdit },
-}, {
-  navigationOptions: {
-    header: (navigation, header) => ({
-      left: (
-        <HamburgerButton
-          onClick={() => navigation.navigate('DrawerOpen')}
-        />
-      ),
-      title: 'My account',
-    }),
-  },
-  headerMode: 'float',
-})
+}, navigationOptionsWithHamburger('My Account'))
 
 export const AuthenticatedDrawerNavigator = DrawerNavigator({
   Rides: { screen: AuthenticatedRidesStackNavigator },
@@ -121,46 +113,26 @@ export const NotAuthenticatedRidesTabNavigator = TabNavigator({
   }
 })
 
-export const NotAuthenticatedSessionStackNavigator = StackNavigator({
-  rides: { screen: NotAuthenticatedRidesTabNavigator },
+export const NotAuthenticatedLoginStackNavigator = StackNavigator({
   login: { screen: Login },
+}, navigationOptionsWithHamburger('Login'))
+
+export const NotAuthenticatedRegisterStackNavigator = StackNavigator({
   register: { screen: Register },
-}, {
-  navigationOptions: {
-    header: (navigation, header) => ({
-      left: (
-        <HamburgerButton
-          onClick={() => navigation.navigate('DrawerOpen')}
-        />
-      ),
-    }),
-  },
-  headerMode: 'float',
-})
+}, navigationOptionsWithHamburger('Register'))
 
 export const NotAuthenticatedRidesStackNavigator = StackNavigator({
-  rides: { screen: NotAuthenticatedRidesTabNavigator },
+  ridesTab: { screen: NotAuthenticatedRidesTabNavigator },
   rideNew: { screen: RideNew },
   rideShow: { screen: RideShow },
   userShow: { screen: UserShow },
   carShow: { screen: CarShow },
-}, {
-  navigationOptions: {
-    header: (navigation, header) => ({
-      left: (
-        <HamburgerButton
-          onClick={() => navigation.navigate('DrawerOpen')}
-        />
-      ),
-      title: 'Rides',
-    }),
-  },
-  headerMode: 'float',
-})
+}, navigationOptionsWithHamburger('Rides'))
 
 export const NotAuthenticatedDrawerNavigator = DrawerNavigator({
-  Rides: { screen: NotAuthenticatedRidesStackNavigator },
-  Login: { screen: NotAuthenticatedSessionStackNavigator },
+  ridesNavigator: { screen: NotAuthenticatedRidesStackNavigator },
+  loginNavigator: { screen: NotAuthenticatedLoginStackNavigator },
+  registerNavigator: { screen: NotAuthenticatedRegisterStackNavigator },
 }, {
   contentComponent: AppDrawer
 })

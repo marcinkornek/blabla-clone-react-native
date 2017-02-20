@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, Text, StyleSheet, Dimensions, TouchableHighlight } from 'react-native';
+import { View, ScrollView, Text, StyleSheet, Dimensions, TouchableHighlight, Alert } from 'react-native';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 import MapView from 'react-native-maps';
@@ -125,6 +125,54 @@ export class RideShow extends Component {
     )
   }
 
+  coordinatesAreValid() {
+    const { ride } = this.props
+
+    return (
+      !isNaN(ride.start_location.latitude) && !isNaN(ride.start_location.longitude) &&
+        !isNaN(ride.destination_location.latitude) && !isNaN(ride.destination_location.longitude)
+    )
+  }
+
+  createMarker(latitude, longitude) {
+    return {
+      latitude: parseFloat(latitude),
+      longitude: parseFloat(longitude)
+    };
+  }
+
+  createRideRequest(data) {
+    const { createRideRequest, ride } = this.props
+
+    createRideRequest(ride.id, data.places)
+      .then((response) => {
+        if (!response.error) {
+          Alert.alert(
+            'Ride request created',
+            'We will notify you as soon as driver accept or reject your offer.',
+            [
+              {text: 'OK', onPress: () => console.log('OK Pressed')},
+            ]
+          )
+        }
+      })
+  }
+
+  toggleMap() {
+    const { ride } = this.props;
+    const coordinates = [
+      this.createMarker(ride.start_location.latitude, ride.start_location.longitude),
+      this.createMarker(ride.destination_location.latitude, ride.destination_location.longitude)
+    ]
+
+    if (this.coordinatesAreValid()) {
+      this.setState({hideMap: !this.state.hideMap, markers: coordinates})
+      setTimeout(() => {
+        this.fitToCoordinates(coordinates);
+      }, 500);
+    }
+  }
+
   renderRide() {
     const { ride } = this.props
 
@@ -182,22 +230,6 @@ export class RideShow extends Component {
     }
   }
 
-  coordinatesAreValid() {
-    const { ride } = this.props
-
-    return (
-      !isNaN(ride.start_location.latitude) && !isNaN(ride.start_location.longitude) &&
-        !isNaN(ride.destination_location.latitude) && !isNaN(ride.destination_location.longitude)
-    )
-  }
-
-  createMarker(latitude, longitude) {
-    return {
-      latitude: parseFloat(latitude),
-      longitude: parseFloat(longitude)
-    };
-  }
-
   renderDriver() {
     const { ride, navigation } = this.props
 
@@ -228,27 +260,6 @@ export class RideShow extends Component {
         handleSubmit={this.createRideRequest.bind(this)}
       />
     )
-  }
-
-  createRideRequest(data) {
-    const { createRideRequest, ride } = this.props
-
-    createRideRequest(ride.id, data.places)
-  }
-
-  toggleMap() {
-    const { ride } = this.props;
-    const coordinates = [
-      this.createMarker(ride.start_location.latitude, ride.start_location.longitude),
-      this.createMarker(ride.destination_location.latitude, ride.destination_location.longitude)
-    ]
-
-    if (this.coordinatesAreValid()) {
-      this.setState({hideMap: !this.state.hideMap, markers: coordinates})
-      setTimeout(() => {
-        this.fitToCoordinates(coordinates);
-      }, 500);
-    }
   }
 
   render() {

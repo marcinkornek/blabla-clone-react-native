@@ -79,7 +79,7 @@ export const AuthenticatedAccountTabNavigator = TabNavigator({
   myRidesAsDriver: { screen: RidesIndexAsDriver },
   myRidesAsPassenger: { screen: RidesIndexAsPassenger },
 }, {
-  initalRouteName: 'Tab1',
+  initalRouteName: 'myProfile',
   tabBarComponent: TabView.TabBarTop,
   tabBarPosition: 'top',
   swipeEnabled: true,
@@ -105,7 +105,7 @@ export const AuthenticatedDrawerNavigator = DrawerNavigator({
 export const NotAuthenticatedRidesTabNavigator = TabNavigator({
   ridesIndex: { screen: RidesIndex },
 }, {
-  initalRouteName: 'Tab1',
+  initalRouteName: 'ridesIndex',
   tabBarComponent: TabView.TabBarTop,
   tabBarPosition: 'top',
   swipeEnabled: true,

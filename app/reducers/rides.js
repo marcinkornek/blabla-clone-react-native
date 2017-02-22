@@ -4,6 +4,7 @@ import {
   RIDES_REFRESH_REQUEST,
   RIDES_REFRESH_SUCCESS,
 } from '../constants/action-types';
+import { union } from 'ramda';
 
 export const initialState = {
   isStarted: false,
@@ -31,7 +32,10 @@ export function rides(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: state.items.concat(items),
+      items: union(
+        state.items,
+        items,
+      ),
       pagination: pagination,
       filters: filters
     };

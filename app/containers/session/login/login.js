@@ -10,6 +10,7 @@ import { APIEndpoints } from '../../../constants/constants';
 // actions
 import { logInEmailBackend, logInFacebookBackend } from '../../../actions/session';
 import { fetchCurrentUser } from '../../../actions/current-user';
+import { showModal, hideModal } from '../../../actions/modals';
 
 // components
 import LoginEmail from '../../../components/session/login-email/login-email';
@@ -29,7 +30,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   view: {
-    marginTop: 10,
   }
 });
 
@@ -40,16 +40,8 @@ class Login extends Component {
     isAuthenticated: PropTypes.bool.isRequired,
   };
 
-  static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: 'Login'
-      }
-    }
-  }
-
   handleEmailLogin(data) {
-    const { logInEmailBackend, fetchCurrentUser, navigation } = this.props;
+    const { logInEmailBackend, fetchCurrentUser, hideModal } = this.props;
 
     logInEmailBackend(data)
       .then((response) => {
@@ -58,13 +50,13 @@ class Login extends Component {
           fetchCurrentUser()
           AsyncStorage.setItem('session',
             JSON.stringify({ 'email': data.email, 'access_token': data.access_token }))
-          navigation.navigate('ridesIndex')
+          hideModal()
         }
       })
   };
 
   handleFacebookLogin(data) {
-    const { logInFacebookBackend, fetchCurrentUser, navigation } = this.props
+    const { logInFacebookBackend, fetchCurrentUser, hideModal } = this.props
 
     logInFacebookBackend(data)
       .then((response) => {
@@ -73,13 +65,13 @@ class Login extends Component {
           fetchCurrentUser()
           AsyncStorage.setItem('session',
             JSON.stringify({ 'email': data.email, 'access_token': data.access_token }))
-          navigation.navigate('ridesIndex')
+          hideModal()
         }
       })
   }
 
   render() {
-    const { errors, isFetching, isOauth, navigation } = this.props
+    const { errors, isFetching, isOauth, showModal } = this.props
 
     return (
       <View style={styles.view}>
@@ -98,7 +90,7 @@ class Login extends Component {
           <Text style={styles.registerText}>Don't have an account?</Text>
           <TouchableHighlight
             underlayColor='white'
-            onPress={() => navigation.navigate('register')}
+            onPress={() => showModal('REGISTER', { title: 'Create account' })}
           >
             <Text style={styles.registerLink}>Register</Text>
           </TouchableHighlight>
@@ -121,6 +113,8 @@ const mapDispatchToProps = {
   logInEmailBackend,
   logInFacebookBackend,
   fetchCurrentUser,
+  showModal,
+  hideModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Login)

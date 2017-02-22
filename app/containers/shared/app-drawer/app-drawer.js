@@ -19,6 +19,7 @@ import Collapsible from 'react-native-collapsible';
 
 // actions
 import { logInFromStorage, logoutCurrentUser } from '../../../actions/session';
+import { showModal } from '../../../actions/modals';
 
 const { width, height } = Dimensions.get('window')
 const styles = StyleSheet.create({
@@ -140,6 +141,13 @@ export class AppDrawer extends Component {
     navigation.navigate(actionName, options)
   }
 
+  openModalAndClose(modalType, modalProps) {
+    const { navigation, showModal } = this.props;
+
+    showModal(modalType, modalProps)
+    navigation.navigate('DrawerClose')
+  }
+
   onLogout() {
     const { logoutCurrentUser, currentUser, navigation } = this.props
 
@@ -201,14 +209,14 @@ export class AppDrawer extends Component {
           />
           <TouchableHighlight
             underlayColor='#23A2E3'
-            onPress={() => this.goToAndClose('login')}
+            onPress={() => this.openModalAndClose('LOGIN', { title: 'Login' })}
           >
             <Text style={styles.sessionText}>Login</Text>
           </TouchableHighlight>
           <Text style={styles.sessionText}> / </Text>
           <TouchableHighlight
             underlayColor='#23A2E3'
-            onPress={() => this.goToAndClose('register')}
+            onPress={() => this.openModalAndClose('REGISTER', { title: 'Create account' })}
           >
             <Text style={styles.sessionText}>Register</Text>
           </TouchableHighlight>
@@ -358,6 +366,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   logoutCurrentUser,
+  showModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AppDrawer)

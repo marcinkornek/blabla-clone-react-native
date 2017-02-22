@@ -6,7 +6,6 @@ import { persistStore } from 'redux-persist';
 import { AsyncStorage, Text } from 'react-native';
 
 // components
-// import { Root } from './flux-navigation-root'
 import RootRouter from './router'
 import { RenderActivityIndicator } from './components/shared/render-activity-indicator/render-activity-indicator'
 

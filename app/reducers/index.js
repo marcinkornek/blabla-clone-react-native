@@ -3,6 +3,7 @@ import { combineReducers } from 'redux';
 import { reducer as formReducer } from 'redux-form';
 
 // reducers
+import { modal } from './modal';
 import { users } from './users';
 import { user } from './user';
 import { cars } from './cars';
@@ -19,6 +20,7 @@ import { session } from './session';
 import { notifications } from './notifications';
 
 export default combineReducers({
+  modal,
   currentUser,
   users,
   user,

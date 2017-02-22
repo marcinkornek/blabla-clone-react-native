@@ -1,11 +1,13 @@
 // utils
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { View } from 'react-native';
 import { StackNavigator, TabNavigator, TabView, DrawerNavigator } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // components
+import ModalRoot from './containers/modals/modal-root/modal-root'
 import AppDrawer from './containers/shared/app-drawer/app-drawer'
 import Register from './containers/current-user/current-user-new/current-user-new'
 import CarsIndex from './containers/cars/cars-index/cars-index'
@@ -139,8 +141,18 @@ export const NotAuthenticatedDrawerNavigator = DrawerNavigator({
 
 export const Root = ({ isAuthenticated }) => {
   if (isAuthenticated) {
-    return <AuthenticatedDrawerNavigator />
+    return (
+      <View style={{flex: 1}}>
+        <AuthenticatedDrawerNavigator />
+        <ModalRoot />
+      </View>
+    )
   } else {
-    return <NotAuthenticatedDrawerNavigator />
+    return (
+      <View style={{flex: 1}}>
+        <NotAuthenticatedDrawerNavigator />
+        <ModalRoot />
+      </View>
+    )
   }
 }

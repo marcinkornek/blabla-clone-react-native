@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 // actions
 import { createCurrentUser } from '../../../actions/current-user';
+import { showModal } from '../../../actions/modals';
 
 // components
 import CurrentUserNewForm from '../../../components/current-user/current-user-new-form/current-user-new-form'
@@ -17,16 +18,8 @@ const styles = StyleSheet.create({
 });
 
 export class CurrentUserNew extends Component {
-  static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: 'Register'
-      }
-    }
-  }
-
   handleSubmit(data) {
-    const { createCurrentUser, navigation } = this.props
+    const { createCurrentUser, showModal } = this.props
     var body = new FormData();
 
     Object.keys(data).forEach(( key ) => {
@@ -40,13 +33,7 @@ export class CurrentUserNew extends Component {
     createCurrentUser(body)
       .then((response) => {
         if (!response.error) {
-          Alert.alert(
-            'Account created',
-            'Go to Login page to log in',
-            [
-              {text: 'Login', onPress: () => navigation.navigate('login')},
-            ]
-          )
+          showModal('LOGIN', { title: 'Account created', subtitle: 'You can login now' })
         }
       })
   }
@@ -78,7 +65,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  createCurrentUser
+  createCurrentUser,
+  showModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CurrentUserNew)

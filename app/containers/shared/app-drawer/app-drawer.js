@@ -31,12 +31,6 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: 'white',
   },
-  button: {
-    backgroundColor: 'white',
-    borderWidth: 1,
-    borderColor: 'black',
-    padding: 10,
-  },
   container: {
     flex: 1,
     backgroundColor: 'white',
@@ -193,7 +187,8 @@ export class AppDrawer extends Component {
           <Icon.Button
             name="power-off"
             backgroundColor="#23A2E3"
-            style={styles.logoutButton}
+            underlayColor='#23A2E3'
+            iconStyle={styles.logoutButton}
             onPress={this.logout.bind(this)}
           />
         </View>

@@ -4,6 +4,7 @@ import {
   USERS_REFRESH_REQUEST,
   USERS_REFRESH_SUCCESS,
 } from '../constants/action-types'
+import { union } from 'ramda';
 
 export const initialState = {
   isStarted: false,
@@ -29,7 +30,10 @@ export function users(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: state.items.concat(items),
+      items: union(
+        state.items,
+        items,
+      ),
       pagination: pagination
     };
   case USERS_REFRESH_REQUEST:

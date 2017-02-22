@@ -48,7 +48,7 @@ export class RidesIndex extends Component {
   };
 
   componentWillMount() {
-    this.props.fetchRides(per)
+    this.props.fetchRides(1, per)
   }
 
   refreshRides(per) {

@@ -34,7 +34,7 @@ class UsersIndex extends Component {
   }
 
   componentWillMount() {
-    this.props.refreshUsers(per)
+    this.props.fetchUsers(1, per)
   }
 
   refreshUsers(per) {

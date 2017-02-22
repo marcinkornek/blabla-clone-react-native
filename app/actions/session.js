@@ -2,6 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGIN_CLEAR_ERRORS,
   LOGOUT_REQUEST,
   LOGOUT_SUCCESS,
   LOGOUT_FAILURE,
@@ -68,6 +69,12 @@ export function logInFacebookBackend(data) {
       }
     },
     isOauth: true
+  }
+}
+
+export function loginClearErrors() {
+  return {
+    type: LOGIN_CLEAR_ERRORS,
   }
 }
 

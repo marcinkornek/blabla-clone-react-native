@@ -2,6 +2,7 @@ import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILURE,
+  LOGIN_CLEAR_ERRORS,
   LOGOUT_SUCCESS,
 } from '../constants/action-types'
 
@@ -37,10 +38,16 @@ export function session(state = initialState, action) {
     };
   case LOGIN_FAILURE:
     console.log('LOGIN_FAILURE');
-    errors = action.error.response.data.error
+    errors = action.error.response.data.errors
     return {
       ...initialState,
       errors: [errors],
+    };
+  case LOGIN_CLEAR_ERRORS:
+    console.log('LOGIN_CLEAR_ERRORS');
+    return {
+      ...state,
+      errors: [],
     };
   case LOGOUT_SUCCESS:
     console.log('LOGOUT_SUCCESS');

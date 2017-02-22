@@ -8,7 +8,7 @@ import { Button } from 'react-native-elements';
 import { APIEndpoints } from '../../../constants/constants';
 
 // actions
-import { logInEmailBackend, logInFacebookBackend } from '../../../actions/session';
+import { logInEmailBackend, logInFacebookBackend, loginClearErrors } from '../../../actions/session';
 import { fetchCurrentUser } from '../../../actions/current-user';
 import { showModal, hideModal } from '../../../actions/modals';
 
@@ -39,6 +39,10 @@ class Login extends Component {
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
   };
+
+  componentWillMount() {
+    this.props.loginClearErrors()
+  }
 
   handleEmailLogin(data) {
     const { logInEmailBackend, fetchCurrentUser, hideModal } = this.props;
@@ -112,6 +116,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   logInEmailBackend,
   logInFacebookBackend,
+  loginClearErrors,
   fetchCurrentUser,
   showModal,
   hideModal,

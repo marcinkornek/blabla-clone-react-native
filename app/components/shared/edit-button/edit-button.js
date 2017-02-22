@@ -9,8 +9,6 @@ const styles = StyleSheet.create({
 })
 
 export const EditButton = ({onClick, showEdit}) => {
-  console.log('==================');
-  console.log(showEdit);
   if (showEdit) {
     return (
       <TouchableHighlight

@@ -41,7 +41,7 @@ export class CurrentUserEdit extends Component {
   }
 
   render() {
-    const { currentUser } = this.props;
+    const { currentUser, isSaving } = this.props;
 
     return (
       <ScrollView style={styles.view}>

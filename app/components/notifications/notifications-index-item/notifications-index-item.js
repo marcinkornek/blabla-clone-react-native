@@ -6,35 +6,32 @@ import { View } from 'react-native';
 import { RideRequestCreated } from './notifications-index-item-ride-request-created'
 import { RideRequestUpdated } from './notifications-index-item-ride-request-updated'
 
+const NOTIFICATION_COMPONENTS = {
+  'ride_request_created': RideRequestCreated,
+  'ride_request_accepted': RideRequestUpdated,
+  'ride_request_rejected': RideRequestUpdated,
+}
+
 export class NotificationsIndexItem extends React.Component {
   static propTypes = {
     notification: PropTypes.object.isRequired,
     markAsSeen: PropTypes.func.isRequired
   }
 
-  renderNotification(notification) {
-    switch (notification.notification_type) {
-    case "ride_request_created":
-      return (
-        <RideRequestCreated
-          notification={notification}
-          navigation={navigation}
-        />
-      )
-    case "ride_request_accepted":
-    case "ride_request_rejected":
-      return (
-        <RideRequestUpdated
-          notification={notification}
-          navigation={navigation}
-        />
-      )
-    }
+  renderNotification(notification, navigation) {
+    const SpecificNotification = NOTIFICATION_COMPONENTS[notification.notification_type]
+
+    return (
+      <SpecificNotification
+        notification={notification}
+        navigation={navigation}
+      />
+    )
   }
 
   render() {
-    const { notification } = this.props
+    const { notification, navigation } = this.props
 
-    return this.renderNotification(notification)
+    return this.renderNotification(notification, navigation)
   }
 }

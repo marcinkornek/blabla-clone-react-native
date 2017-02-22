@@ -53,12 +53,13 @@ export class NotificationsIndex extends Component {
   }
 
   renderNotification(notification) {
-    const { markAsSeen } = this.props;
+    const { markAsSeen, navigation } = this.props;
 
     return (
       <NotificationsIndexItem
         key={`notification${notification.id}`}
         notification={notification}
+        navigation={navigation}
         markAsSeen={this.markAsSeen.bind(this)}
       />
     )

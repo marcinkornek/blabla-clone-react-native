@@ -38,6 +38,7 @@
 		B9D8A521C4CF4741B8132775 /* libRCTFBLogin.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 537AAD232DB04149B9205BDE /* libRCTFBLogin.a */; };
 		3AC6955D45E14E1F8370D89B /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E152A67AB07B453B92E36B5D /* MaterialCommunityIcons.ttf */; };
 		3B256BF9310347D09AB6F4E6 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B3B97381F541B4BDC4ABB6 /* libAirMaps.a */; };
+		FD22D127130541D1AE9BE64F /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3440F427113413E877FE821 /* libRCTOneSignal.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -177,6 +178,8 @@
 		E152A67AB07B453B92E36B5D /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; name = "MaterialCommunityIcons.ttf"; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 		C53117CBA02F495C918D5FF0 /* AirMaps.xcodeproj */ = {isa = PBXFileReference; name = "AirMaps.xcodeproj"; path = "../node_modules/react-native-maps/ios/AirMaps.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		52B3B97381F541B4BDC4ABB6 /* libAirMaps.a */ = {isa = PBXFileReference; name = "libAirMaps.a"; path = "libAirMaps.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		13D02A0481AA4568B963D8A6 /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; name = "RCTOneSignal.xcodeproj"; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		C3440F427113413E877FE821 /* libRCTOneSignal.a */ = {isa = PBXFileReference; name = "libRCTOneSignal.a"; path = "libRCTOneSignal.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -208,6 +211,7 @@
 				B4417E5E32A74BE886B40089 /* libRNGooglePlaces.a in Frameworks */,
 				B9D8A521C4CF4741B8132775 /* libRCTFBLogin.a in Frameworks */,
 				3B256BF9310347D09AB6F4E6 /* libAirMaps.a in Frameworks */,
+				FD22D127130541D1AE9BE64F /* libRCTOneSignal.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -345,6 +349,7 @@
 				6C98F5E8EFE14DBDA805FA93 /* RNGooglePlaces.xcodeproj */,
 				C3CFBF7B3EA347D780C895FE /* RCTFBLogin.xcodeproj */,
 				C53117CBA02F495C918D5FF0 /* AirMaps.xcodeproj */,
+				13D02A0481AA4568B963D8A6 /* RCTOneSignal.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -710,6 +715,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -726,6 +732,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlablaClone.app/BlablaClone";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -813,6 +820,7 @@
 					"$(SRCROOT)/../node_modules/react-native-google-places/ios",
 					"$(SRCROOT)/../node_modules/react-native-facebook-login/RCTFBLogin/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
@@ -858,6 +866,7 @@
 					"$(SRCROOT)/../node_modules/react-native-google-places/ios",
 					"$(SRCROOT)/../node_modules/react-native-facebook-login/RCTFBLogin/**",
 					"$(SRCROOT)/../node_modules/react-native-maps/ios/**",
+					"$(SRCROOT)/../node_modules/react-native-onesignal/ios/**",
 				);
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;

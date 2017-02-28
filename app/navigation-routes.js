@@ -139,19 +139,19 @@ export const NotAuthenticatedDrawerNavigator = DrawerNavigator({
   contentComponent: AppDrawer
 })
 
-export const Root = ({ isAuthenticated }) => {
+export const Root = ({ isAuthenticated, playerId }) => {
   if (isAuthenticated) {
     return (
       <View style={{flex: 1}}>
         <AuthenticatedDrawerNavigator />
-        <ModalRoot />
+        <ModalRoot playerId={playerId} />
       </View>
     )
   } else {
     return (
       <View style={{flex: 1}}>
         <NotAuthenticatedDrawerNavigator />
-        <ModalRoot />
+        <ModalRoot playerId={playerId} />
       </View>
     )
   }

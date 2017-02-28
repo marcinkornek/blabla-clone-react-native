@@ -45,30 +45,30 @@ class Login extends Component {
   }
 
   handleEmailLogin(data) {
-    const { logInEmailBackend, fetchCurrentUser, hideModal } = this.props;
+    const { logInEmailBackend, fetchCurrentUser, hideModal, playerId } = this.props;
 
-    logInEmailBackend(data)
+    logInEmailBackend(data, playerId)
       .then((response) => {
         if (!response.error) {
           let data = response.payload.data
           fetchCurrentUser()
           AsyncStorage.setItem('session',
-            JSON.stringify({ 'email': data.email, 'access_token': data.access_token }))
+            JSON.stringify({ email: data.email, access_token: data.access_token, player_id: playerId }))
           hideModal()
         }
       })
   };
 
   handleFacebookLogin(data) {
-    const { logInFacebookBackend, fetchCurrentUser, hideModal } = this.props
+    const { logInFacebookBackend, fetchCurrentUser, hideModal, playerId } = this.props
 
-    logInFacebookBackend(data)
+    logInFacebookBackend(data, playerId)
       .then((response) => {
         if (!response.error) {
           let data = response.payload.data
           fetchCurrentUser()
           AsyncStorage.setItem('session',
-            JSON.stringify({ 'email': data.email, 'access_token': data.access_token }))
+            JSON.stringify({ email: data.email, access_token: data.access_token, player_id: playerId }))
           hideModal()
         }
       })

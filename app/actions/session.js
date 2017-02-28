@@ -9,7 +9,7 @@ import {
 } from '../constants/action-types'
 import { APIEndpoints } from '../constants/constants'
 
-export function logInFromStorage(data) {
+export function logInFromStorage(data, player_id) {
   return {
     types: [
       LOGIN_REQUEST,
@@ -22,6 +22,9 @@ export function logInFromStorage(data) {
         headers: {
           'X-User-Email': data.email,
           'X-User-Token': data.access_token
+        },
+        params: {
+          player_id,
         }
       }
     },
@@ -29,7 +32,7 @@ export function logInFromStorage(data) {
   }
 }
 
-export function logInEmailBackend(data) {
+export function logInEmailBackend(data, player_id) {
   return {
     types: [
       LOGIN_REQUEST,
@@ -40,14 +43,17 @@ export function logInEmailBackend(data) {
       request: {
         method: 'post',
         url: APIEndpoints.LOGIN_EMAIL,
-        data: data
+        data: {
+          ...data,
+          player_id,
+        }
       }
     },
     isOauth: false
   }
 }
 
-export function logInFacebookBackend(data) {
+export function logInFacebookBackend(data, player_id) {
   return {
     types: [
       LOGIN_REQUEST,
@@ -64,7 +70,8 @@ export function logInFacebookBackend(data) {
           email: data.profile.email,
           first_name: data.profile.first_name,
           last_name: data.profile.last_name,
-          avatar: data.profile.picture.data.url
+          avatar: data.profile.picture.data.url,
+          player_id,
         }
       }
     },

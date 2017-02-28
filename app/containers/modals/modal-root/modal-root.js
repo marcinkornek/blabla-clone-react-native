@@ -120,7 +120,7 @@ export class ModalRoot extends Component {
             {this.renderTitle()}
             {this.renderModalCloseIcon()}
             {this.renderSubtitle()}
-            <SpecificModal {...modalProps} />
+            <SpecificModal {...this.props} />
           </View>
         </View>
       </Modal>

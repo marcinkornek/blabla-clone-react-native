@@ -12,24 +12,32 @@ import { RenderActivityIndicator } from './components/shared/render-activity-ind
 
 class App extends Component {
   state = {
-    rehydrated: false
+    rehydrated: false,
   }
 
   componentWillMount(){
+    this.addEventListeners()
     persistStore(store, { storage: AsyncStorage, whitelist: ['session', 'currentUser', 'rides', 'users'] }, () => {
       this.setState({ rehydrated: true })
     })
-    OneSignal.addEventListener('received', this.onReceived);
-    OneSignal.addEventListener('opened', this.onOpened);
-    OneSignal.addEventListener('registered', this.onRegistered);
-    OneSignal.addEventListener('ids', this.onIds);
   }
 
   componentWillUnmount() {
+    this.removeEventListeners()
+  }
+
+  addEventListeners() {
+    OneSignal.addEventListener('received', this.onReceived);
+    OneSignal.addEventListener('opened', this.onOpened);
+    OneSignal.addEventListener('registered', this.onRegistered);
+    OneSignal.addEventListener('ids', this.onIds.bind(this));
+  }
+
+  removeEventListeners() {
     OneSignal.removeEventListener('received', this.onReceived);
     OneSignal.removeEventListener('opened', this.onOpened);
     OneSignal.removeEventListener('registered', this.onRegistered);
-    OneSignal.removeEventListener('ids', this.onIds);
+    OneSignal.removeEventListener('ids', this.onIds.bind(this));
   }
 
   onReceived(notification) {
@@ -48,7 +56,8 @@ class App extends Component {
   }
 
   onIds(device) {
-    console.log('Device info: ', device);
+    console.log('Device info: ', device.userId);
+    this.playerId = device.userId
   }
 
   render() {
@@ -57,7 +66,7 @@ class App extends Component {
     } else {
       return (
         <Provider store={store}>
-          <RootRouter />
+          <RootRouter playerId={this.playerId} />
         </Provider>
       );
     }

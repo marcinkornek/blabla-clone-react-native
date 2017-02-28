@@ -18,7 +18,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Collapsible from 'react-native-collapsible';
 
 // actions
-import { logInFromStorage, logoutCurrentUser } from '../../../actions/session';
+import { logoutCurrentUser } from '../../../actions/session';
 import { showModal } from '../../../actions/modals';
 
 const { width, height } = Dimensions.get('window')

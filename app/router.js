@@ -9,16 +9,17 @@ import { fetchCurrentUser } from './actions/current-user';
 // components
 import { Root } from './navigation-routes'
 
-export class Router extends Component {
+export class RootRouter extends Component {
   static propTypes = {
+    playerId: PropTypes.string,
     isAuthenticated: PropTypes.bool.isRequired,
     session: PropTypes.object.isRequired,
   }
 
   componentWillMount() {
-    const { logInFromStorage, fetchCurrentUser, session } = this.props;
+    const { logInFromStorage, fetchCurrentUser, session, playerId } = this.props;
 
-    logInFromStorage(session)
+    logInFromStorage(session, playerId)
       .then((response) => {
         if (!response.error) {
           fetchCurrentUser()
@@ -27,11 +28,12 @@ export class Router extends Component {
   }
 
   render() {
-    const { isAuthenticated } = this.props
+    const { isAuthenticated, playerId } = this.props
 
     return (
       <Root
         isAuthenticated={isAuthenticated}
+        playerId={playerId}
       />
     )
   }
@@ -50,4 +52,4 @@ const mapDispatchToProps = {
   fetchCurrentUser,
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Router)
+export default connect(mapStateToProps, mapDispatchToProps)(RootRouter)

@@ -55,7 +55,10 @@ export function rides(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: items,
+      items: union(
+        state.items,
+        items,
+      ),
       pagination: pagination,
       filters: filters
     };

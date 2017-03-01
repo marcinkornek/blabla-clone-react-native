@@ -4,6 +4,7 @@ import {
   RIDES_AS_PASSENGER_REFRESH_REQUEST,
   RIDES_AS_PASSENGER_REFRESH_SUCCESS,
 } from '../constants/action-types';
+import { union } from 'ramda';
 
 export const initialState = {
   isStarted: false,
@@ -31,7 +32,10 @@ export function ridesAsPassenger(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: state.items.concat(items),
+      items: union(
+        state.items,
+        items,
+      ),
       pagination: pagination,
       filters: filters
     };
@@ -51,7 +55,10 @@ export function ridesAsPassenger(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: items,
+      items: union(
+        state.items,
+        items,
+      ),
       pagination: pagination,
       filters: filters
     };

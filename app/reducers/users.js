@@ -4,7 +4,8 @@ import {
   USERS_REFRESH_REQUEST,
   USERS_REFRESH_SUCCESS,
 } from '../constants/action-types'
-import { union } from 'ramda';
+import { unionWith } from 'ramda';
+const comparator = function(a1, a2) { return a1.id === a2.id; };
 
 export const initialState = {
   isStarted: false,
@@ -30,7 +31,8 @@ export function users(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: union(
+      items: unionWith(
+        comparator,
         state.items,
         items,
       ),
@@ -51,7 +53,11 @@ export function users(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: items,
+      items: unionWith(
+        comparator,
+        state.items,
+        items,
+      ),
       pagination: pagination,
     };
   default:

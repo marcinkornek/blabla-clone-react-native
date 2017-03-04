@@ -4,7 +4,7 @@ import {
   RIDES_AS_PASSENGER_REFRESH_REQUEST,
   RIDES_AS_PASSENGER_REFRESH_SUCCESS,
 } from '../constants/action-types';
-import { union } from 'ramda';
+import { unionWith } from 'ramda';
 
 export const initialState = {
   isStarted: false,
@@ -32,7 +32,8 @@ export function ridesAsPassenger(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: union(
+      items: unionWith(
+        comparator,
         state.items,
         items,
       ),
@@ -55,7 +56,8 @@ export function ridesAsPassenger(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: union(
+      items: unionWith(
+        comparator,
         state.items,
         items,
       ),

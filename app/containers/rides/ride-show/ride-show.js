@@ -231,14 +231,16 @@ export class RideShow extends Component {
   }
 
   renderDriver() {
-    const { ride, navigation } = this.props
+    const { ride, currentUser, navigation } = this.props
 
-    return(
-      <RenderUserProfile
-        user={ride.driver}
-        navigation={navigation}
-      />
-    )
+    if (!(ride.driver.id === currentUser.id)) {
+      return(
+        <RenderUserProfile
+          user={ride.driver}
+          navigation={navigation}
+        />
+      )
+    }
   }
 
   renderCar() {
@@ -253,10 +255,12 @@ export class RideShow extends Component {
   }
 
   renderOffer() {
+    const { ride, currentUser } = this.props
+
     return(
       <RenderRideOffer
-        ride={this.props.ride}
-        currentUser={this.props.currentUser}
+        ride={ride}
+        currentUser={currentUser}
         handleSubmit={this.createRideRequest.bind(this)}
       />
     )

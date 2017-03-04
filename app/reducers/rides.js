@@ -5,6 +5,7 @@ import {
   RIDES_REFRESH_SUCCESS,
 } from '../constants/action-types';
 import { unionWith } from 'ramda';
+const comparator = function(a1, a2) { return a1.id === a2.id; };
 
 export const initialState = {
   isStarted: false,

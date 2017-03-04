@@ -21,7 +21,15 @@ class App extends Component {
   componentWillMount(){
     this.addEventListeners()
     persistStore(store, {
-      storage: AsyncStorage, whitelist: ['session', 'currentUser', 'rides', 'ridesAsDriver', 'ridesAsPassenger', 'users']
+      storage: AsyncStorage, whitelist: [
+        'session',
+        'currentUser',
+        'rides',
+        'ridesAsDriver',
+        'ridesAsPassenger',
+        'users',
+        'notifications',
+      ]
     }, () => {
       this.setState({ rehydrated: true })
     })

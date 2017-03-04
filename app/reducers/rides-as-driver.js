@@ -3,8 +3,10 @@ import {
   RIDES_AS_DRIVER_FETCH_SUCCESS,
   RIDES_AS_DRIVER_REFRESH_REQUEST,
   RIDES_AS_DRIVER_REFRESH_SUCCESS,
+  LOGOUT_SUCCESS,
 } from '../constants/action-types';
 import { unionWith } from 'ramda';
+const comparator = function(a1, a2) { return a1.id === a2.id; };
 
 export const initialState = {
   isStarted: false,
@@ -17,6 +19,10 @@ export const initialState = {
 export function ridesAsDriver(state = initialState, action) {
   let items, pagination, filters
   switch (action.type) {
+  case LOGOUT_SUCCESS:
+    return {
+      ...initialState
+    };
   case RIDES_AS_DRIVER_FETCH_REQUEST:
     console.log('RIDES_AS_DRIVER_FETCH_REQUEST');
     return {

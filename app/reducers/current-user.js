@@ -27,6 +27,10 @@ function getDateOfBirth(item) {
 export function currentUser(state = initialState, action) {
   let item, errors
   switch (action.type) {
+  case LOGOUT_SUCCESS:
+    return {
+      ...initialState
+    };
   case CURRENT_USER_FETCH_REQUEST:
     console.log('CURRENT_USER_FETCH_REQUEST');
     return {

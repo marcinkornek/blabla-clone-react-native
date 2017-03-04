@@ -5,7 +5,10 @@ import {
   NOTIFICATIONS_REFRESH_SUCCESS,
   NOTIFICATION_ADD_SUCCESS,
   NOTIFICATION_UPDATE_SUCCESS,
+  LOGOUT_SUCCESS,
 } from '../constants/action-types'
+import { unionWith } from 'ramda';
+const comparator = function(a1, a2) { return a1.id === a2.id; };
 
 export const initialState = {
   isStarted: false,
@@ -17,6 +20,10 @@ export const initialState = {
 export function notifications(state = initialState, action) {
   let item, items, pagination, unreadCount
   switch (action.type) {
+  case LOGOUT_SUCCESS:
+    return {
+      ...initialState
+    };
   case NOTIFICATIONS_FETCH_REQUEST:
     console.log('NOTIFICATIONS_FETCH_REQUEST');
     return {
@@ -31,7 +38,11 @@ export function notifications(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: items,
+      items: unionWith(
+        comparator,
+        state.items,
+        items,
+      ),
       pagination: pagination
     };
   case NOTIFICATIONS_REFRESH_REQUEST:
@@ -49,7 +60,11 @@ export function notifications(state = initialState, action) {
     return {
       ...state,
       isFetching: false,
-      items: items,
+      items: unionWith(
+        comparator,
+        state.items,
+        items,
+      ),
       pagination: pagination,
     };
   case NOTIFICATION_ADD_SUCCESS:

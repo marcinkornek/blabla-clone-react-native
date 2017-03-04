@@ -16,6 +16,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import MaterialIcon from 'react-native-vector-icons/MaterialIcons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import Collapsible from 'react-native-collapsible';
+import { store } from '../../../store/store';
+import { persistStore } from 'redux-persist';
 
 // actions
 import { logoutCurrentUser } from '../../../actions/session';
@@ -146,8 +148,31 @@ export class AppDrawer extends Component {
     const { logoutCurrentUser, currentUser, navigation } = this.props
 
     logoutCurrentUser(currentUser)
-      .then(AsyncStorage.clear())
-      .then(navigation.navigate('login'))
+      .then((response) => {
+        // persistStore(store, {
+        //   storage: AsyncStorage
+        // }, () => {
+        //   console.log('purge succeeded')
+        // }).purge([
+        //   'session',
+        //   'currentUser',
+        //   'ridesAsDriver',
+        //   'ridesAsPassenger',
+        //   'notifications',
+        // ])
+
+        // code below commented out because it's causing error "Can't find variable: Reflect"
+        // when purging array of keys (purging all items with .purge() works fine)
+        // Use code above when it's fixed
+        // https://github.com/rt2zz/redux-persist/issues/263
+        AsyncStorage.multiRemove([
+          'reduxPersist:session',
+          'reduxPersist:currentUser',
+          'reduxPersist:ridesAsDriver',
+          'reduxPersist:ridesAsPassenger',
+          'reduxPersist:notifications',
+        ])
+      })
   }
 
   logout() {

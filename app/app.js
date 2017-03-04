@@ -6,6 +6,9 @@ import { persistStore } from 'redux-persist';
 import { AsyncStorage, Text } from 'react-native';
 import OneSignal from 'react-native-onesignal';
 
+// actions
+import { addActiveNotification } from './actions/notifications';
+
 // components
 import RootRouter from './router'
 import { RenderActivityIndicator } from './components/shared/render-activity-indicator/render-activity-indicator'
@@ -51,6 +54,8 @@ class App extends Component {
     console.log('Data: ', openResult.notification.payload.additionalData);
     console.log('isActive: ', openResult.notification.isAppInFocus);
     console.log('openResult: ', openResult);
+
+    store.dispatch(addActiveNotification(openResult.notification.payload.additionalData))
   }
 
   onRegistered(notifData) {

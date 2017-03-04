@@ -51,6 +51,14 @@ export class RidesIndex extends Component {
     this.props.fetchRides(1, per)
   }
 
+  componentDidUpdate(oldProps) {
+    const { notificationActive, navigation } = this.props;
+
+    if (notificationActive !== oldProps.notificationActive) {
+      navigation.navigate('rideShow', {id: notificationActive.ride.id})
+    }
+  }
+
   refreshRides(per) {
     this.props.refreshRides(per)
   }
@@ -201,6 +209,7 @@ const mapStateToProps = (state) => {
     isStarted: state.rides.isStarted,
     isFetching: state.rides.isFetching,
     isAuthenticated: state.session.isAuthenticated,
+    notificationActive: state.notificationActive.item,
   }
 };
 

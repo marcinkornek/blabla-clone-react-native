@@ -1,5 +1,6 @@
 import {
   NOTIFICATION_ADD_SUCCESS,
+  NOTIFICATION_ACTIVE_ADD,
   NOTIFICATIONS_FETCH_REQUEST,
   NOTIFICATIONS_FETCH_SUCCESS,
   NOTIFICATIONS_FETCH_FAILURE,
@@ -69,6 +70,13 @@ export function markNotificationAsSeen(notificationId) {
 export function userNotificationAdd(notification) {
   return {
     type: NOTIFICATION_ADD_SUCCESS,
+    item: notification
+  }
+}
+
+export function addActiveNotification(notification) {
+  return {
+    type: NOTIFICATION_ACTIVE_ADD,
     item: notification
   }
 }

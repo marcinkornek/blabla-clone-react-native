@@ -17,6 +17,7 @@ import { ridesFilters } from './rides-filters';
 import { ride } from './ride';
 import { rideOptions } from './ride-options';
 import { session } from './session';
+import { notificationActive } from './notification-active';
 import { notifications } from './notifications';
 
 export default combineReducers({
@@ -34,6 +35,7 @@ export default combineReducers({
   ride,
   rideOptions,
   session,
+  notificationActive,
   notifications,
   form: formReducer
 });

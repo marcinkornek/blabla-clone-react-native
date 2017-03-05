@@ -6,6 +6,7 @@ import {
   RIDE_UPDATE_REQUEST,
   RIDE_UPDATE_SUCCESS,
   RIDE_REQUEST_CREATE_SUCCESS,
+  RIDE_REQUEST_CHANGE_SUCCESS,
 } from '../constants/action-types'
 
 export const initialState = {
@@ -63,6 +64,17 @@ export function ride(state = initialState, action) {
     };
    case RIDE_REQUEST_CREATE_SUCCESS:
     console.log('RIDE_REQUEST_CREATE_SUCCESS');
+    item = action.payload.data
+    return {
+      ...state,
+      item: {
+        ...item,
+        start_date: new Date(item.start_date),
+        places: item.places.toString(),
+      }
+    };
+  case RIDE_REQUEST_CHANGE_SUCCESS:
+    console.log('RIDE_REQUEST_CHANGE_SUCCESS');
     item = action.payload.data
     return {
       ...state,

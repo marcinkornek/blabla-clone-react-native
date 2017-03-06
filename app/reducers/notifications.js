@@ -40,8 +40,8 @@ export function notifications(state = initialState, action) {
       isFetching: false,
       items: unionWith(
         comparator,
-        state.items,
         items,
+        state.items,
       ),
       pagination: pagination
     };
@@ -62,8 +62,8 @@ export function notifications(state = initialState, action) {
       isFetching: false,
       items: unionWith(
         comparator,
-        state.items,
         items,
+        state.items,
       ),
       pagination: pagination,
     };

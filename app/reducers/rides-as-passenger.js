@@ -40,8 +40,8 @@ export function ridesAsPassenger(state = initialState, action) {
       isFetching: false,
       items: unionWith(
         comparator,
-        state.items,
         items,
+        state.items,
       ),
       pagination: pagination,
       filters: filters
@@ -64,8 +64,8 @@ export function ridesAsPassenger(state = initialState, action) {
       isFetching: false,
       items: unionWith(
         comparator,
-        state.items,
         items,
+        state.items,
       ),
       pagination: pagination,
       filters: filters

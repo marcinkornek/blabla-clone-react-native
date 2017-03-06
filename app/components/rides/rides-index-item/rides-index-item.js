@@ -1,8 +1,25 @@
 // utils
 import React, { Component, PropTypes } from 'react';
-import { TouchableHighlight } from 'react-native';
+import { TouchableHighlight, Text, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
+
+const styles = StyleSheet.create({
+  orange: {
+    color: 'orange',
+  },
+  green: {
+    color: 'green',
+  },
+  rideAsDriverContainter: {
+    backgroundColor: '#edf3fd',
+  },
+  rideAsDriverRightTitle: {
+    flex: 0,
+    width: 80,
+    marginLeft: 5,
+  },
+});
 
 export class RidesIndexItem extends Component {
   static propTypes = {
@@ -46,17 +63,45 @@ export class RidesIndexItem extends Component {
     )
   }
 
+  renderPendingRequestsCount() {
+    const { ride } = this.props;
+
+    if (ride.ride_requests_pending_count > 0) {
+      return <Text style={styles.orange}>{`${ride.ride_requests_pending_count} pending`}</Text>
+    } else {
+      return null
+    }
+  }
+
+  renderFreePlacesCount() {
+    const { ride } = this.props;
+
+    if (ride.free_places_count === 0) {
+      return <Text style={styles.green}>All taken </Text>
+    } else {
+      return <Text>{ride.free_places_count} seats free </Text>
+    }
+  }
+
   renderRideAsDriver() {
     const { ride, navigation } = this.props;
 
+    rightTitle =
+      <Text>
+        {this.renderFreePlacesCount()}
+        {this.renderPendingRequestsCount()}
+      </Text>
+
     return (
       <ListItem
-        containerStyle={{backgroundColor: '#edf3fd'}}
+        containerStyle={styles.rideAsDriverContainter}
         onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
         avatar={{uri: this.renderAvatar()}}
+        rightTitle={rightTitle}
+        rightTitleContainerStyle={styles.rideAsDriverRightTitle}
       />
     )
   }

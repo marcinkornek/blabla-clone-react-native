@@ -5,8 +5,11 @@ import {
   RIDES_AS_PASSENGER_REFRESH_SUCCESS,
   LOGOUT_SUCCESS,
 } from '../constants/action-types';
-import { unionWith } from 'ramda';
+import { unionWith, sortWith, ascend, prop } from 'ramda';
 const comparator = function(a1, a2) { return a1.id === a2.id; };
+const startDateSort = sortWith([
+  ascend(prop('start_date')),
+]);
 
 export const initialState = {
   isStarted: false,

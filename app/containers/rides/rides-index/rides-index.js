@@ -4,9 +4,18 @@ import { connect } from 'react-redux';
 import { View, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { max } from 'ramda'
 
 // actions
-import { fetchRides, refreshRides, updateRidesSearch, updateRidesFilters, clearRidesSearch, clearRidesFilters } from '../../../actions/rides';
+import {
+  fetchRides,
+  refreshRides,
+  setDefaultRidesPer,
+  updateRidesSearch,
+  updateRidesFilters,
+  clearRidesSearch,
+  clearRidesFilters,
+} from '../../../actions/rides';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
@@ -48,7 +57,10 @@ export class RidesIndex extends Component {
   };
 
   componentWillMount() {
-    this.props.fetchRides(1, per)
+    const { refreshRides, setDefaultRidesPer, rides, pagination } = this.props;
+
+    setDefaultRidesPer(per)
+    refreshRides(this.initialPer())
   }
 
   componentDidUpdate(oldProps) {
@@ -59,12 +71,24 @@ export class RidesIndex extends Component {
     }
   }
 
-  refreshRides(per) {
-    this.props.refreshRides(per)
+  refreshRides() {
+    this.props.refreshRides(this.initialPer())
   }
 
   fetchRides(page, per) {
     this.props.fetchRides(page, per)
+  }
+
+  initialPer() {
+    const { rides } = this.props;
+
+    if (rides.length >= 3 * per) {
+      return 3 * per
+    } else if (rides.length >= 2 * per) {
+      return 2 * per
+    } else {
+      return per
+    }
   }
 
   renderRightButton() {
@@ -216,6 +240,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchRides,
   refreshRides,
+  setDefaultRidesPer,
   updateRidesSearch,
   updateRidesFilters,
   clearRidesSearch,

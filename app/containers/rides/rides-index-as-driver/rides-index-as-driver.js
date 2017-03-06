@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 
 // actions
-import { fetchRidesAsDriver, refreshRidesAsDriver } from '../../../actions/rides';
+import {
+  fetchRidesAsDriver,
+  refreshRidesAsDriver,
+  setDefaultRidesAsDriverPer,
+} from '../../../actions/rides';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
@@ -34,21 +38,36 @@ export class RidesIndexAsDriver extends Component {
   }
 
   componentWillMount() {
-    const { refreshRidesAsDriver, currentUser } = this.props
+    const { refreshRidesAsDriver, setDefaultRidesAsDriverPer, currentUser } = this.props
 
-    if (currentUser.id) refreshRidesAsDriver(currentUser.id, per)
+    if (currentUser.id) {
+      setDefaultRidesAsDriverPer(per)
+      refreshRidesAsDriver(currentUser.id, this.initialPer())
+    }
   }
 
-   refreshRides(per) {
+  refreshRides(per) {
     const { refreshRidesAsDriver, currentUser } = this.props
 
-    if (currentUser.id) refreshRidesAsDriver(currentUser.id, per)
+    if (currentUser.id) refreshRidesAsDriver(currentUser.id, this.initialPer())
   }
 
   fetchRides(page, per) {
     const { fetchRidesAsDriver, currentUser } = this.props
 
     if (currentUser.id) fetchRidesAsDriver(currentUser.id, page, per)
+  }
+
+  initialPer() {
+    const { rides } = this.props;
+
+    if (rides.length >= 3 * per) {
+      return 3 * per
+    } else if (rides.length >= 2 * per) {
+      return 2 * per
+    } else {
+      return per
+    }
   }
 
   renderRide(ride) {
@@ -107,6 +126,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchRidesAsDriver,
   refreshRidesAsDriver,
+  setDefaultRidesAsDriverPer,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RidesIndexAsDriver)

@@ -3,6 +3,7 @@ import {
   RIDES_AS_PASSENGER_FETCH_SUCCESS,
   RIDES_AS_PASSENGER_REFRESH_REQUEST,
   RIDES_AS_PASSENGER_REFRESH_SUCCESS,
+  RIDES_AS_PASSENGER_SET_DEFAULT_PER,
   LOGOUT_SUCCESS,
 } from '../constants/action-types';
 import { unionWith, sortWith, ascend, prop } from 'ramda';
@@ -61,17 +62,27 @@ export function ridesAsPassenger(state = initialState, action) {
     console.log('RIDES_AS_PASSENGER_REFRESH_SUCCESS');
     items = action.payload.data.items
     pagination = action.payload.data.meta
+    const currentPage = pagination.per / state.defaultPer
+    const totalPages = Math.ceil(pagination.total_count / state.defaultPer)
     filters = action.payload.data.filters
     return {
       ...state,
       isFetching: false,
-      items: unionWith(
-        comparator,
-        items,
-        state.items,
-      ),
-      pagination: pagination,
+      items: items,
+      pagination: {
+        ...pagination,
+        current_page: currentPage,
+        next_page: currentPage + 1,
+        prev_page: currentPage - 1,
+        total_pages: totalPages,
+      },
       filters: filters
+    };
+  case RIDES_AS_PASSENGER_SET_DEFAULT_PER:
+    console.log('RIDES_AS_PASSENGER_SET_DEFAULT_PER');
+    return {
+      ...state,
+      defaultPer: action.per,
     };
   default:
     return state;

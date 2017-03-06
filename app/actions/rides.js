@@ -34,6 +34,8 @@ import {
   RIDE_SEARCH_CLEAR,
   RIDE_FILTER_CLEAR,
   RIDES_SET_DEFAULT_PER,
+  RIDES_AS_PASSENGER_SET_DEFAULT_PER,
+  RIDES_AS_DRIVER_SET_DEFAULT_PER,
 } from '../constants/action-types';
 import { APIEndpoints } from '../constants/constants';
 
@@ -264,6 +266,20 @@ export function clearRidesFilters() {
 export function setDefaultRidesPer(per) {
   return {
     type: RIDES_SET_DEFAULT_PER,
+    per: per,
+  }
+}
+
+export function setDefaultRidesAsPassengerPer(per) {
+  return {
+    type: RIDES_AS_PASSENGER_SET_DEFAULT_PER,
+    per: per,
+  }
+}
+
+export function setDefaultRidesAsDriverPer(per) {
+  return {
+    type: RIDES_AS_DRIVER_SET_DEFAULT_PER,
     per: per,
   }
 }

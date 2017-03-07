@@ -56,6 +56,10 @@ export class RidesIndex extends Component {
     showFilters: false,
   };
 
+  static defaultProps = {
+    ride: {}
+  }
+
   componentWillMount() {
     const { refreshRides, setDefaultRidesPer, rides, pagination } = this.props;
 
@@ -64,10 +68,14 @@ export class RidesIndex extends Component {
   }
 
   componentDidUpdate(oldProps) {
-    const { notificationActive, navigation } = this.props;
+    const { notificationActive, ride, navigation } = this.props;
 
     if (notificationActive !== oldProps.notificationActive) {
       navigation.navigate('rideShow', {id: notificationActive.ride.id})
+    }
+
+    if (ride.isSaving == false && oldProps.ride.isSaving == true) {
+      this.refreshRides()
     }
   }
 
@@ -234,6 +242,7 @@ const mapStateToProps = (state) => {
     isFetching: state.rides.isFetching,
     isAuthenticated: state.session.isAuthenticated,
     notificationActive: state.notificationActive.item,
+    ride: state.ride,
   }
 };
 

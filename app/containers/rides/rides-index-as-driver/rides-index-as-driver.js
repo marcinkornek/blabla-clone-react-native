@@ -37,12 +37,24 @@ export class RidesIndexAsDriver extends Component {
     }
   }
 
+  static defaultProps = {
+    ride: {}
+  }
+
   componentWillMount() {
     const { refreshRidesAsDriver, setDefaultRidesAsDriverPer, currentUser } = this.props
 
     if (currentUser.id) {
       setDefaultRidesAsDriverPer(per)
       refreshRidesAsDriver(currentUser.id, this.initialPer())
+    }
+  }
+
+  componentDidUpdate(oldProps) {
+    const { ride } = this.props;
+
+    if (ride.isSaving == false && oldProps.ride.isSaving == true) {
+      this.refreshRides()
     }
   }
 
@@ -120,6 +132,7 @@ const mapStateToProps = (state) => {
     isFetching: state.ridesAsDriver.isFetching,
     isAuthenticated: state.session.isAuthenticated,
     currentUser: state.session.item,
+    ride: state.ride,
   }
 };
 

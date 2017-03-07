@@ -32,10 +32,22 @@ class CarsIndex extends Component {
     }
   }
 
+  static defaultProps = {
+    car: {}
+  }
+
   componentWillMount() {
     const { refreshCars, currentUser } = this.props
 
     if (currentUser.id) refreshCars(currentUser.id, per)
+  }
+
+  componentDidUpdate(oldProps) {
+    const { car } = this.props;
+
+    if (car.isSaving == false && oldProps.car.isSaving == true) {
+      this.refreshCars()
+    }
   }
 
   refreshCars(per) {
@@ -99,6 +111,7 @@ const mapStateToProps = (state) => {
     isStarted: state.cars.isStarted,
     isFetching: state.cars.isFetching,
     currentUser: state.session.item,
+    car: state.car,
   }
 }
 

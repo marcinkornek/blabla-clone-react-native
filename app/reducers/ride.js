@@ -44,6 +44,18 @@ export function ride(state = initialState, action) {
       ...state,
       isSaving: true
     };
+  case RIDE_CREATE_SUCCESS:
+    console.log('RIDE_CREATE_SUCCESS');
+    item = action.payload.data
+    return {
+      ...state,
+      isSaving: false,
+      item: {
+        ...item,
+        start_date: new Date(item.start_date),
+        places: item.places.toString(),
+      }
+    };
   case RIDE_UPDATE_REQUEST:
     console.log('RIDE_UPDATE_REQUEST');
     return {

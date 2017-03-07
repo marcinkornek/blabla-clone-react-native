@@ -6,6 +6,7 @@ import _ from 'lodash';
 
 // actions
 import { fetchCarsOptions, createCar, initializeCar } from '../../../actions/cars'
+import { hideModal } from '../../../actions/modals';
 
 // components
 import CarForm from '../../../components/cars/car-form/car-form'
@@ -41,7 +42,7 @@ export class CarNew extends Component {
   }
 
   handleSubmit(data) {
-    const { createCar, navigation } = this.props
+    const { createCar, isModal, hideModal, navigation } = this.props
     let body = new FormData()
 
     Object.keys(data).forEach((key) => {
@@ -53,8 +54,12 @@ export class CarNew extends Component {
     })
     createCar(body)
       .then((response) => {
-        let carId = response.payload.data.id
-        navigation.navigate('carShow', {id: carId});
+        if (isModal) {
+          hideModal()
+        } else {
+          let carId = response.payload.data.id
+          navigation.navigate('carShow', {id: carId});
+        }
       })
   }
 
@@ -98,6 +103,7 @@ const mapDispatchToProps = {
   fetchCarsOptions,
   createCar,
   initializeCar,
+  hideModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarNew)

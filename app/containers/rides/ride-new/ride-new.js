@@ -6,6 +6,7 @@ import { Button } from 'react-native-elements';
 
 // actions
 import { fetchRideOptions, createRide } from '../../../actions/rides'
+import { showModal } from '../../../actions/modals';
 
 // components
 import RideForm from '../../../components/rides/ride-form/ride-form'
@@ -49,29 +50,20 @@ export class RideNew extends Component {
   }
 
   renderRideForm() {
-    const { rideOptions, isSaving, navigation } = this.props
+    const { rideOptions, isFetching, isStarted, isSaving, showModal } = this.props
 
-    if (rideOptions.cars.length === 0) {
-      return (
-        <View style={styles.emptyCarsContainer}>
-          <Text style={styles.emptyCars}>You need to add car first to add ride</Text>
-          <Button
-            raised
-            title='Add car'
-            backgroundColor='#23a2e3'
-            onPress={() => navigation.navigate('carNew')}
-          />
-        </View>
-      )
-    } else {
-      return (
-        <RideForm
-          isSaving={isSaving}
-          rideOptions={rideOptions}
-          onSubmit={this.handleSubmit.bind(this)}
-        />
-      )
+    if (rideOptions.cars.length === 0 && isStarted && !isFetching) {
+      showModal('CAR_NEW', { title: 'Add car', subtitle: 'You need to add car first to add ride' })
     }
+
+    return (
+      <RideForm
+        isSaving={isSaving}
+        rideOptions={rideOptions}
+        onSubmit={this.handleSubmit.bind(this)}
+        showModal={showModal}
+      />
+    )
   }
 
   handleSubmit(data) {
@@ -121,6 +113,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchRideOptions,
   createRide,
+  showModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(RideNew)

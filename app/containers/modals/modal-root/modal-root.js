@@ -10,6 +10,7 @@ import { hideModal, showModal } from '../../../actions/modals';
 // components
 import Login from '../../session/login/login'
 import Register from '../../current-user/current-user-new/current-user-new'
+import CarNew from '../../cars/car-new/car-new'
 
 const styles = StyleSheet.create({
   modal: {
@@ -49,6 +50,7 @@ const styles = StyleSheet.create({
 const MODAL_COMPONENTS = {
   'LOGIN': Login,
   'REGISTER': Register,
+  'CAR_NEW': CarNew,
 }
 
 export class ModalRoot extends Component {
@@ -120,7 +122,7 @@ export class ModalRoot extends Component {
             {this.renderTitle()}
             {this.renderModalCloseIcon()}
             {this.renderSubtitle()}
-            <SpecificModal {...this.props} />
+            <SpecificModal {...this.props} isModal={true} />
           </View>
         </View>
       </Modal>

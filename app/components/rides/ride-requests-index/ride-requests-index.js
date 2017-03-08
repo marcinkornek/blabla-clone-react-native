@@ -23,6 +23,26 @@ export class RideRequestsIndex extends Component {
     currentUser: PropTypes.object.isRequired,
   }
 
+  renderRideRequestsSummary() {
+    const { ride } = this.props
+
+    if (ride.ride_requests_pending_count > 0) {
+      return (
+        <Text>
+          {`${ride.ride_requests.length} ${pluralize('person', ride.ride_requests.length)} `}
+          {`requested ${ride.requested_places_count} of ${ride.free_places_count} available `}
+          {pluralize('place', ride.requested_places_count)}
+        </Text>
+      )
+    } else {
+      return (
+        <Text>
+          No pending ride requests
+        </Text>
+      )
+    }
+  }
+
   renderRideRequestsList() {
     const { ride, handleSubmit } = this.props
 
@@ -38,15 +58,11 @@ export class RideRequestsIndex extends Component {
   }
 
   render() {
-    const { ride } = this.props
-
     return (
       <View style={styles.view}>
         <Text style={styles.title}>Requests</Text>
         <View style={styles.container}>
-          <Text>
-            {ride.ride_requests.length} {pluralize('person', ride.ride_requests.length)} requested {ride.requested_places_count} of {ride.free_places_count} available {pluralize('place', ride.requested_places_count)}
-          </Text>
+          {this.renderRideRequestsSummary()}
           {this.renderRideRequestsList()}
         </View>
       </View>

@@ -65,9 +65,6 @@ export const AuthenticatedRidesStackNavigator = StackNavigator({
   rideShow: { screen: RideShow },
   rideEdit: { screen: RideEdit },
   rideNew: { screen: RideNew },
-  carShow: { screen: CarShow },
-  carNew: { screen: CarNew },
-  carEdit: { screen: CarEdit },
   usersIndex: { screen: UsersIndex },
   userShow: { screen: UserShow },
   myNotifications: { screen: NotificationsIndex },
@@ -92,6 +89,9 @@ export const AuthenticatedAccountTabNavigator = TabNavigator({
 export const AuthenticatedAccountStackNavigator = StackNavigator({
   accountTabs: { screen: AuthenticatedAccountTabNavigator },
   myProfileEdit: { screen: CurrentUserEdit },
+  carNew: { screen: CarNew },
+  carShow: { screen: CarShow },
+  carEdit: { screen: CarEdit },
 }, navigationOptionsWithHamburger('My Account'))
 
 export const AuthenticatedDrawerNavigator = DrawerNavigator({

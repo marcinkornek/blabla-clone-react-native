@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // components
 import ModalRoot from './containers/modals/modal-root/modal-root'
+import SettingsEdit from './containers/settings/settings-edit/settings-edit'
 import AppDrawer from './containers/shared/app-drawer/app-drawer'
 import Register from './containers/current-user/current-user-new/current-user-new'
 import CarsIndex from './containers/cars/cars-index/cars-index'
@@ -68,6 +69,7 @@ export const AuthenticatedRidesStackNavigator = StackNavigator({
   usersIndex: { screen: UsersIndex },
   userShow: { screen: UserShow },
   myNotifications: { screen: NotificationsIndex },
+  settingsIndex: { screen: SettingsEdit },
 }, navigationOptionsWithHamburger('Rides'))
 
 export const AuthenticatedAccountTabNavigator = TabNavigator({

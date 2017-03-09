@@ -4,6 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 
 // reducers
 import { modal } from './modal';
+import { settings } from './settings';
 import { users } from './users';
 import { user } from './user';
 import { cars } from './cars';
@@ -22,6 +23,7 @@ import { notifications } from './notifications';
 
 export default combineReducers({
   modal,
+  settings,
   currentUser,
   users,
   user,

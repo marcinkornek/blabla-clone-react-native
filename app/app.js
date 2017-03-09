@@ -29,6 +29,7 @@ class App extends Component {
         'ridesAsPassenger',
         'users',
         'notifications',
+        'settings',
       ]
     }, () => {
       this.setState({ rehydrated: true })

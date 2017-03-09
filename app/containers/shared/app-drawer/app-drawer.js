@@ -358,6 +358,12 @@ export class AppDrawer extends Component {
           >
             <Text style={styles.menuLink}>Users</Text>
           </TouchableHighlight>
+          <TouchableHighlight
+            underlayColor='white'
+            onPress={() => this.goToAndClose('settingsIndex')}
+          >
+            <Text style={styles.menuLink}>Settings</Text>
+          </TouchableHighlight>
         </View>
       )
     }

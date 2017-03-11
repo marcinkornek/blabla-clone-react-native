@@ -19,6 +19,9 @@ import Collapsible from 'react-native-collapsible';
 import { store } from '../../../store/store';
 import { persistStore } from 'redux-persist';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { logoutCurrentUser } from '../../../actions/session';
 import { showModal } from '../../../actions/modals';
@@ -31,16 +34,16 @@ const styles = StyleSheet.create({
     marginRight: 0,
     borderRadius: 80,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: stylesColors.appDrawerAvatarBorder,
   },
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    backgroundColor: stylesColors.appDrawerBg,
   },
   dropdownLink: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderColor: '#D3D3D3',
+    borderColor: stylesColors.appDrawerDivider,
     borderBottomWidth: 1,
   },
   dropdownText: {
@@ -53,7 +56,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   logoutButton: {
-    backgroundColor: '#23A2E3',
+    backgroundColor: stylesColors.appDrawerUserContainerBg,
     borderRadius: 0,
     paddingTop: 15,
     padding: 10,
@@ -63,7 +66,7 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 15,
     paddingBottom: 15,
-    borderColor: '#D3D3D3',
+    borderColor: stylesColors.appDrawerDivider,
     borderBottomWidth: 1,
   },
   menuSublink: {
@@ -71,21 +74,21 @@ const styles = StyleSheet.create({
     padding: 10,
     paddingTop: 15,
     paddingBottom: 15,
-    borderColor: '#D3D3D3',
-    backgroundColor: '#f1f1f1',
+    borderColor: stylesColors.appDrawerDivider,
+    backgroundColor: stylesColors.appDrawerBg,
     borderBottomWidth: 1,
   },
   sessionText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+    color: stylesColors.userInfoContainerText,
   },
   sessionUserIcon: {
-    color: 'white',
+    color: stylesColors.userInfoContainerText,
     marginRight: 5,
   },
   userInfoContainer: {
-    backgroundColor: '#23A2E3',
+    backgroundColor: stylesColors.appDrawerUserContainerBg,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -93,7 +96,7 @@ const styles = StyleSheet.create({
     width: width - 290,
     fontSize: 18,
     fontWeight: 'bold',
-    color: 'white',
+    color: stylesColors.userInfoContainerText,
     margin: 10,
     marginTop: 0,
     marginBottom: 0,
@@ -102,7 +105,7 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   userInfo: {
-    backgroundColor: '#23A2E3',
+    backgroundColor: stylesColors.appDrawerUserContainerBg,
     height: 100,
     padding: 10,
     flexWrap: 'wrap',
@@ -110,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   userInfoEmpty: {
-    backgroundColor: '#23A2E3',
+    backgroundColor: stylesColors.appDrawerUserContainerBg,
     height: 80,
     padding: 10,
     flexWrap: 'wrap',
@@ -192,7 +195,7 @@ export class AppDrawer extends Component {
       return(
         <View style={styles.userInfoContainer}>
           <TouchableHighlight
-            underlayColor='#23A2E3'
+            underlayColor={stylesColors.userInfoContainerBg}
             onPress={() => this.goToAndClose('myAccount', {})}
           >
             <View style={styles.userInfo}>
@@ -211,8 +214,8 @@ export class AppDrawer extends Component {
           </TouchableHighlight>
           <Icon.Button
             name="power-off"
-            backgroundColor="#23A2E3"
-            underlayColor='#23A2E3'
+            backgroundColor={stylesColors.userInfoContainerBg}
+            underlayColor={stylesColors.userInfoContainerBg}
             iconStyle={styles.logoutButton}
             onPress={this.logout.bind(this)}
           />
@@ -223,19 +226,19 @@ export class AppDrawer extends Component {
         <View style={styles.userInfoEmpty}>
           <Icon
             name="user"
-            backgroundColor="#23A2E3"
+            backgroundColor={stylesColors.userInfoContainerBg}
             size={22}
             style={styles.sessionUserIcon}
           />
           <TouchableHighlight
-            underlayColor='#23A2E3'
+            underlayColor={stylesColors.userInfoContainerBg}
             onPress={() => this.openModalAndClose('LOGIN', { title: 'Login' })}
           >
             <Text style={styles.sessionText}>Login</Text>
           </TouchableHighlight>
           <Text style={styles.sessionText}> / </Text>
           <TouchableHighlight
-            underlayColor='#23A2E3'
+            underlayColor={stylesColors.userInfoContainerBg}
             onPress={() => this.openModalAndClose('REGISTER', { title: 'Create account' })}
           >
             <Text style={styles.sessionText}>Register</Text>
@@ -249,7 +252,7 @@ export class AppDrawer extends Component {
     return (
       <MaterialIcons.Button
         name="notifications-none"
-        backgroundColor="#23A2E3"
+        backgroundColor={stylesColors.userInfoContainerBg}
         size={25}
         style={styles.userInfoNotificationIcon}
         onPress={() => this.goToAndClose('myNotifications', {})}
@@ -260,7 +263,7 @@ export class AppDrawer extends Component {
   renderSharedLinks() {
     return (
       <TouchableHighlight
-        underlayColor='white'
+        underlayColor={stylesColors.appDrawerBg}
         onPress={() => this.goToAndClose('rides')}
       >
         <Text style={styles.menuLink}>Rides</Text>
@@ -273,25 +276,25 @@ export class AppDrawer extends Component {
       <View>
         <Collapsible collapsed={this.state.hideAccount}>
           <TouchableHighlight
-            underlayColor='white'
+            underlayColor={stylesColors.appDrawerBg}
             onPress={() => this.goToAndClose('accountTabs', {})}
           >
             <Text style={styles.menuSublink}>My profile</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor='white'
+            underlayColor={stylesColors.appDrawerBg}
             onPress={() => this.goToAndClose('myRidesAsPassenger', {})}
           >
             <Text style={styles.menuSublink}>My rides as passenger</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor='white'
+            underlayColor={stylesColors.appDrawerBg}
             onPress={() => this.goToAndClose('myRidesAsDriver', {})}
           >
             <Text style={styles.menuSublink}>My rides as driver</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor='white'
+            underlayColor={stylesColors.appDrawerBg}
             onPress={() => this.goToAndClose('myCars', {})}
           >
             <Text style={styles.menuSublink}>My cars</Text>
@@ -307,8 +310,8 @@ export class AppDrawer extends Component {
         <MaterialIcon
           name='arrow-drop-down'
           style={styles.dropdownIcon}
-          backgroundColor='white'
-          underlayColor='white'
+          backgroundColor={stylesColors.appDrawerBg}
+          underlayColor={stylesColors.appDrawerBg}
           size={35}
         />
       )
@@ -317,8 +320,8 @@ export class AppDrawer extends Component {
         <MaterialIcon
           name='arrow-drop-up'
           style={styles.dropdownIcon}
-          backgroundColor='white'
-          underlayColor='white'
+          backgroundColor={stylesColors.appDrawerBg}
+          underlayColor={stylesColors.appDrawerBg}
           size={35}
         />
       )
@@ -332,7 +335,7 @@ export class AppDrawer extends Component {
       return (
         <View>
           <TouchableHighlight
-            underlayColor='white'
+            underlayColor={stylesColors.appDrawerBg}
             onPress={() => this.toggleAccountLinks()}
           >
             <View style={styles.dropdownLink}>
@@ -353,13 +356,13 @@ export class AppDrawer extends Component {
       return (
         <View>
           <TouchableHighlight
-            underlayColor='white'
+            underlayColor={stylesColors.appDrawerBg}
             onPress={() => this.goToAndClose('usersIndex')}
           >
             <Text style={styles.menuLink}>Users</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor='white'
+            underlayColor={stylesColors.appDrawerBg}
             onPress={() => this.goToAndClose('settingsIndex')}
           >
             <Text style={styles.menuLink}>Settings</Text>

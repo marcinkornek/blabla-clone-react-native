@@ -5,12 +5,15 @@ import pluralize from 'pluralize'
 import moment from 'moment';
 import { Button } from 'react-native-elements';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 const styles = StyleSheet.create({
   view: {
     marginTop: 10,
     marginRight: 10,
     padding: 10,
-    backgroundColor: 'white',
+    backgroundColor: stylesColors.backgroundPrimary,
   },
   container: {
     flexWrap: 'wrap',
@@ -65,14 +68,14 @@ export class RideRequestsIndexItem extends Component {
           <Button
             raised
             title='Accept'
-            backgroundColor='green'
+            backgroundColor={stylesColors.statusAccepted}
             buttonStyle={styles.acceptButton}
             onPress={this.handleAcceptClick.bind(this)}
           />
           <Button
             raised
             title='Reject'
-            backgroundColor='red'
+            backgroundColor={stylesColors.statusRejected}
             buttonStyle={styles.rejectButton}
             onPress={this.handleRejectClick.bind(this)}
           />

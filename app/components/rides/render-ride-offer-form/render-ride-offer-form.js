@@ -6,6 +6,9 @@ import { reduxForm, Field } from 'redux-form';
 import pluralize from 'pluralize';
 import { Button } from 'react-native-elements';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // components
 import { SelectField } from '../../inputs/select-field/select-field';
 
@@ -61,7 +64,7 @@ export class RenderRideOfferForm extends Component {
           <Button
             raised
             title='Book seats'
-            backgroundColor='#23a2e3'
+            backgroundColor={stylesColors.buttonSubmit}
             onPress={handleSubmit}
             fontSize={16}
             buttonStyle={styles.button}

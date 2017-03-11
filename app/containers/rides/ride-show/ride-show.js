@@ -8,6 +8,9 @@ import MapView from 'react-native-maps';
 import Collapsible from 'react-native-collapsible';
 import _ from 'lodash';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchRide } from '../../../actions/rides';
 import { createRideRequest, changeRideRequest } from '../../../actions/ride-requests';
@@ -198,7 +201,7 @@ export class RideShow extends Component {
     return (
       <View>
         <TouchableHighlight
-          underlayColor='white'
+          underlayColor={stylesColors.backgroundPrimary}
           onPress={() => this.toggleMap()}
         >
           <Text>{this.state.hideMap ? 'Show map' : 'Hide map'}</Text>

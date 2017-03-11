@@ -1,10 +1,14 @@
+// utils
 import React from 'react';
 import DatePicker from 'react-native-datepicker';
 import { Text, View, StyleSheet } from 'react-native';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 const styles = StyleSheet.create({
   error: {
-    color: 'red',
+    color: stylesColors.error,
     marginLeft: 15,
     marginTop: 0,
     marginBottom: 5,

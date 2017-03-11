@@ -3,9 +3,12 @@ import React, { Component, PropTypes } from 'react';
 import { TextInput, Text, View, TouchableOpacity, StyleSheet } from 'react-native';
 import RNGooglePlaces from 'react-native-google-places';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 const styles = StyleSheet.create({
   error: {
-    color: 'red',
+    color: stylesColors.error,
     marginLeft: 15,
     marginTop: -5,
     marginBottom: 10,
@@ -26,7 +29,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   clearLink: {
-    backgroundColor: '#e4e4e4',
+    backgroundColor: stylesColors.geosuggestFieldClearBg,
     width: 25,
     height: 25,
     borderRadius: 15,
@@ -36,7 +39,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   clearText: {
-    color: 'white'
+    color: stylesColors.geosuggestFieldClearText
   },
 });
 
@@ -62,7 +65,7 @@ export class GeosuggestField extends Component {
       return (
         <TouchableOpacity
           style={styles.clearLink}
-          underlayColor='white'
+          underlayColor={stylesColors.backgroundPrimary}
           onPress={() => this.clearSelect()}
         >
           <Text style={styles.clearText}>x</Text>

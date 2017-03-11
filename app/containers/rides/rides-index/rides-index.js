@@ -6,6 +6,9 @@ import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { max } from 'ramda'
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import {
   fetchRides,
@@ -107,7 +110,7 @@ export class RidesIndex extends Component {
           name="md-search"
           backgroundColor='transparent'
           underlayColor='transparent'
-          color="#23a2e3"
+          color={stylesColors.buttonSubmit}
           size={30}
         />
         <MaterialCommunityIcons.Button
@@ -115,7 +118,7 @@ export class RidesIndex extends Component {
           name="filter-variant"
           backgroundColor='transparent'
           underlayColor='transparent'
-          color="#23a2e3"
+          color={stylesColors.buttonSubmit}
           size={30}
         />
       </View>

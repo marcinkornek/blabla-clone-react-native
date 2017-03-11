@@ -3,6 +3,9 @@ import React, { PropTypes } from 'react'
 import { View, Image, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import moment from 'moment';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // components
 import { RenderUserAge } from '../render-user-age/render-user-age'
 
@@ -46,7 +49,7 @@ export const RenderUserProfile = ({user, navigation}) => (
       </View>
     </View>
     <TouchableHighlight
-      underlayColor='white'
+      underlayColor={stylesColors.backgroundPrimary}
       onPress={() => navigation.navigate('userShow', { id: user.id })}
     >
       <Text>view profile</Text>

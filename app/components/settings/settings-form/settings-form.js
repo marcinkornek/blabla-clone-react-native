@@ -6,6 +6,9 @@ import { View, ScrollView, Text, TextInput, Picker } from 'react-native';
 import _ from 'lodash';
 import { Button } from 'react-native-elements';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // components
 import { ToggleField } from '../../inputs/toggle-field/toggle-field';
 
@@ -33,7 +36,7 @@ export class SettingsForm extends Component {
         <Button
           raised
           title='Submit'
-          backgroundColor='#23a2e3'
+          backgroundColor={stylesColors.buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

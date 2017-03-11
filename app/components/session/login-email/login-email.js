@@ -7,6 +7,9 @@ import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import moment from 'moment';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // form validators
 import LoginValidator from '../login-validator/login-validator'
 
@@ -17,17 +20,17 @@ const styles = StyleSheet.create({
   loginError: {
     marginLeft: 15,
     marginBottom: 5,
-    color: 'red'
+    color: stylesColors.error,
   },
   loginButton: {
-    backgroundColor: '#23A2E3',
+    backgroundColor: stylesColors.loginEmailButtonBg,
     borderRadius: 0,
     padding: 15,
     margin: 15,
     justifyContent: 'center',
   },
   loginButtonText: {
-    color: 'white',
+    color: stylesColors.loginEmailButtonText,
     fontSize: 16,
   }
 });
@@ -98,7 +101,7 @@ export class LoginEmail extends Component {
             raised
             title={isFetching && !isOauth ? 'Logging in' : 'Login'}
             loading={isFetching && !isOauth}
-            backgroundColor='#23A2E3'
+            backgroundColor={stylesColors.buttonSubmit}
             onPress={handleSubmit}
           />
         </View>

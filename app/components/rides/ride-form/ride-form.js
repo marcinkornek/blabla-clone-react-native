@@ -7,6 +7,9 @@ import { Button } from 'react-native-elements';
 import moment from 'moment';
 import _ from 'lodash';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // form validators
 import { RideValidator } from '../ride-validator/ride-validator'
 
@@ -77,7 +80,7 @@ class RideForm extends Component {
           <Button
             raised
             title='Add car'
-            backgroundColor='#23a2e3'
+            backgroundColor={stylesColors.buttonSubmit}
             buttonStyle={styles.addCarButton}
             onPress={() => showModal('CAR_NEW', { title: 'Add car', subtitle: 'You need to add car first to add ride' })}
           />
@@ -148,7 +151,7 @@ class RideForm extends Component {
           buttonStyle={styles.submitButton}
           title={isSaving ? 'Saving' : 'Submit'}
           loading={isSaving}
-          backgroundColor='#23a2e3'
+          backgroundColor={stylesColors.buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

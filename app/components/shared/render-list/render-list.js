@@ -4,6 +4,9 @@ import { StyleSheet, ListView, RefreshControl, ScrollView, View, Text } from 're
 import _ from 'lodash';
 import ActionButton from 'react-native-action-button';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // components
 import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
 
@@ -117,7 +120,7 @@ export class RenderList extends Component {
     if (showAddButton) {
       return (
         <ActionButton
-          buttonColor="#23a2e3"
+          buttonColor={stylesColors.actionButton}
           onPress={addButtonLink}
         />
       )

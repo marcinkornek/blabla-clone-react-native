@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { View, Text, StyleSheet, AsyncStorage, TouchableHighlight } from 'react-native';
 import { Button } from 'react-native-elements';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // constants
 import { APIEndpoints } from '../../../constants/constants';
 
@@ -93,7 +96,7 @@ class Login extends Component {
         <View style={styles.registerContainer}>
           <Text style={styles.registerText}>Don't have an account?</Text>
           <TouchableHighlight
-            underlayColor='white'
+            underlayColor={stylesColors.backgroundPrimary}
             onPress={() => showModal('REGISTER', { title: 'Create account' })}
           >
             <Text style={styles.registerLink}>Register</Text>

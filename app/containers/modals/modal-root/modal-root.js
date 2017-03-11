@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { View, Modal, Text, StyleSheet } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { hideModal, showModal } from '../../../actions/modals';
 
@@ -29,7 +32,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 15,
     borderRadius: 5,
-    backgroundColor: 'white',
+    backgroundColor: stylesColors.modalBg,
   },
   titleContainer: {
     alignItems: 'center',
@@ -69,7 +72,7 @@ export class ModalRoot extends Component {
         <MaterialIcons.Button
           name="close"
           backgroundColor="transparent"
-          color="#23A2E3"
+          color={stylesColors.modalCloseX}
           size={25}
           onPress={this.closeModal.bind(this)}
         />

@@ -4,15 +4,18 @@ import { TouchableHighlight, Text, StyleSheet } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 const styles = StyleSheet.create({
-  orange: {
-    color: 'orange',
+  statusPending: {
+    color: stylesColors.statusPending,
   },
-  green: {
-    color: 'green',
+  rideFull: {
+    color: stylesColors.rideFull,
   },
   rideAsDriverContainter: {
-    backgroundColor: '#edf3fd',
+    backgroundColor: stylesColors.backgroundSecondary,
   },
   rideAsDriverRightTitle: {
     flex: 0,
@@ -67,7 +70,7 @@ export class RidesIndexItem extends Component {
     const { ride } = this.props;
 
     if (ride.ride_requests_pending_count > 0) {
-      return <Text style={styles.orange}>{`${ride.ride_requests_pending_count} pending`}</Text>
+      return <Text style={styles.statusPending}>{`${ride.ride_requests_pending_count} pending`}</Text>
     } else {
       return null
     }
@@ -77,7 +80,7 @@ export class RidesIndexItem extends Component {
     const { ride } = this.props;
 
     if (ride.free_places_count === 0) {
-      return <Text style={styles.green}>All taken </Text>
+      return <Text style={styles.rideFull}>All taken </Text>
     } else {
       return <Text>{ride.free_places_count} seats free </Text>
     }
@@ -127,13 +130,13 @@ export class RidesIndexItem extends Component {
 
     switch (ride.user_ride_request_status) {
     case "pending":
-      return '#fff0cc'
+      return stylesColors.statusPendingBg
     case "rejected":
-      return '#ffe5e5'
+      return stylesColors.statusRejectedBg
     case "accepted":
-      return '#e6f4e5'
+      return stylesColors.statusAcceptedBg
     default:
-      return 'white'
+      return stylesColors.statusDefaultBg
     }
   }
 

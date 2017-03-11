@@ -4,6 +4,9 @@ import { connect } from 'react-redux';
 import { View, ScrollView, Text, TextInput, StyleSheet, Image, TouchableHighlight } from 'react-native';
 import moment from 'moment';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchCurrentUser } from '../../../actions/current-user';
 
@@ -14,10 +17,10 @@ const styles = StyleSheet.create({
     margin: 10,
     borderRadius: 110,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: stylesColors.avatarBorder,
   },
   userInfoContainer: {
-    backgroundColor: '#23A2E3',
+    backgroundColor: stylesColors.userInfoContainerBg,
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -32,11 +35,11 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'white',
+    color: stylesColors.userInfoContainerText,
   },
   userInfo: {
     fontSize: 16,
-    color: 'white',
+    color: stylesColors.userInfoContainerText,
   },
   view: {
   },
@@ -80,7 +83,7 @@ export class UserShow extends Component {
     return (
       <View style={styles.container}>
         <TouchableHighlight
-          underlayColor='white'
+          underlayColor={stylesColors.backgroundPrimary}
           onPress={() => navigation.navigate('userShow', { id: currentUser.id })}
         >
           <Text>View my public profile</Text>

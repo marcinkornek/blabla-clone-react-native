@@ -5,15 +5,16 @@ import { View, Text, Switch, StyleSheet } from 'react-native';
 // styles
 import stylesColors from '../../../constants/colors';
 
-const styles = StyleSheet.create({
+const styles = (darkLayout) => StyleSheet.create({
   error: {
-    color: stylesColors.error,
+    color: stylesColors[darkLayout].error,
     marginLeft: 15,
     marginTop: -5,
     marginBottom: 5,
   },
   label: {
     marginLeft: 15,
+    color: stylesColors[darkLayout].primaryText,
   },
   input: {
     height: 40,
@@ -26,17 +27,17 @@ const styles = StyleSheet.create({
   }
 });
 
-export const ToggleField = ({ input, label, meta: { touched, error }, ...custom }) => (
+export const ToggleField = ({ input, label, meta: { touched, error }, darkLayout, ...custom }) => (
   <View>
-    <View style={styles.container}>
-      <Text style={styles.label}>{label}</Text>
+    <View style={styles(darkLayout).container}>
+      <Text style={styles(darkLayout).label}>{label}</Text>
       <Switch
-        style={styles.input}
+        style={styles(darkLayout).input}
         value={input.value}
         onValueChange={(value) => { input.onChange(value) }}
         {...custom}
       />
     </View>
-    <Text style={styles.error}>{touched && error}</Text>
+    <Text style={styles(darkLayout).error}>{touched && error}</Text>
   </View>
 );

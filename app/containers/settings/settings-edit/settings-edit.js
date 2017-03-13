@@ -13,10 +13,10 @@ import { updateSettings, resetSettings } from '../../../actions/settings'
 import SettingsForm from '../../../components/settings/settings-form/settings-form'
 
 const per = 20
-const styles = StyleSheet.create({
+const styles = (darkLayout) => StyleSheet.create({
   view: {
     flex: 1,
-    backgroundColor: stylesColors.primaryBg,
+    backgroundColor: stylesColors[darkLayout].primaryBg,
   },
 });
 
@@ -38,12 +38,13 @@ class SettingsEdit extends Component {
   }
 
   render() {
-    const { settings } = this.props;
+    const { settings, darkLayout } = this.props;
 
     return (
-      <View style={styles.view}>
+      <View style={styles(darkLayout).view}>
         <SettingsForm
           settings={settings}
+          darkLayout={darkLayout}
           onSubmit={this.handleSubmit.bind(this)}
         />
       </View>
@@ -54,6 +55,7 @@ class SettingsEdit extends Component {
 const mapStateToProps = (state) => {
   return {
     settings: state.settings,
+    darkLayout: state.settings.darkLayout,
   }
 }
 

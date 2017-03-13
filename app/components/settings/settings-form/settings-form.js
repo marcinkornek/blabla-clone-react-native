@@ -19,7 +19,7 @@ export class SettingsForm extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props
+    const { handleSubmit, settings, darkLayout } = this.props
 
     return (
       <ScrollView>
@@ -27,16 +27,18 @@ export class SettingsForm extends Component {
           name='darkLayout'
           label='Dark layout'
           component={ToggleField}
+          darkLayout={darkLayout}
         />
         <Field
           name='pushNotifications'
           label='Push notifications'
           component={ToggleField}
+          darkLayout={darkLayout}
         />
         <Button
           raised
           title='Submit'
-          backgroundColor={stylesColors.buttonSubmit}
+          backgroundColor={stylesColors[darkLayout].buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

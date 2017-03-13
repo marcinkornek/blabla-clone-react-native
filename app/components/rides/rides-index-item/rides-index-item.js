@@ -15,7 +15,7 @@ const styles = StyleSheet.create({
     color: stylesColors.rideFull,
   },
   rideAsDriverContainter: {
-    backgroundColor: stylesColors.backgroundSecondary,
+    backgroundColor: stylesColors.secondaryBg,
   },
   rideAsDriverRightTitle: {
     flex: 0,

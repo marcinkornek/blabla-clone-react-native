@@ -41,7 +41,7 @@ export const RenderCarInfo = ({car, navigation}) => (
       </View>
     </View>
     <TouchableHighlight
-      underlayColor={stylesColors.backgroundPrimary}
+      underlayColor={stylesColors.primaryBg}
       onPress={() => navigation.navigate('carShow', { id: car.id })}
     >
       <Text>view car</Text>

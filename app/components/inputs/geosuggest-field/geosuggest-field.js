@@ -65,7 +65,7 @@ export class GeosuggestField extends Component {
       return (
         <TouchableOpacity
           style={styles.clearLink}
-          underlayColor={stylesColors.backgroundPrimary}
+          underlayColor={stylesColors.primaryBg}
           onPress={() => this.clearSelect()}
         >
           <Text style={styles.clearText}>x</Text>

@@ -201,7 +201,7 @@ export class RideShow extends Component {
     return (
       <View>
         <TouchableHighlight
-          underlayColor={stylesColors.backgroundPrimary}
+          underlayColor={stylesColors.primaryBg}
           onPress={() => this.toggleMap()}
         >
           <Text>{this.state.hideMap ? 'Show map' : 'Hide map'}</Text>

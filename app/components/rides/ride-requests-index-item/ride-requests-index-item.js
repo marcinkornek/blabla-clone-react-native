@@ -13,7 +13,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginRight: 10,
     padding: 10,
-    backgroundColor: stylesColors.backgroundPrimary,
+    backgroundColor: stylesColors.primaryBg,
   },
   container: {
     flexWrap: 'wrap',

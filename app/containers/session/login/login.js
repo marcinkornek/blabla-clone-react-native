@@ -96,7 +96,7 @@ class Login extends Component {
         <View style={styles.registerContainer}>
           <Text style={styles.registerText}>Don't have an account?</Text>
           <TouchableHighlight
-            underlayColor={stylesColors.backgroundPrimary}
+            underlayColor={stylesColors.primaryBg}
             onPress={() => showModal('REGISTER', { title: 'Create account' })}
           >
             <Text style={styles.registerLink}>Register</Text>

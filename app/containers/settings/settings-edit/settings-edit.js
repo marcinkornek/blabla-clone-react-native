@@ -3,6 +3,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { View, Text, StyleSheet } from 'react-native';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { updateSettings, resetSettings } from '../../../actions/settings'
 
@@ -13,6 +16,7 @@ const per = 20
 const styles = StyleSheet.create({
   view: {
     flex: 1,
+    backgroundColor: stylesColors.primaryBg,
   },
 });
 

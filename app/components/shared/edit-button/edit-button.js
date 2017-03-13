@@ -16,7 +16,7 @@ export const EditButton = ({onClick, showEdit}) => {
     return (
       <TouchableHighlight
         onPress={onClick}
-        underlayColor={stylesColors.backgroundPrimary}
+        underlayColor={stylesColors.primaryBg}
       >
         <Text style={styles.buttonStyle}>Edit</Text>
       </TouchableHighlight>

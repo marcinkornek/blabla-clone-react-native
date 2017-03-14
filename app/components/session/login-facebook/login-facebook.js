@@ -12,16 +12,16 @@ const LoginBehavior = {
   'ios': FBLoginManager.LoginBehaviors.Browser,
   'android': FBLoginManager.LoginBehaviors.Native
 }
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   loginButton: {
-    backgroundColor: stylesColors.loginFbButtonBg,
+    backgroundColor: stylesColors[layout].loginFbButtonBg,
     borderRadius: 0,
     padding: 15,
     margin: 15,
     justifyContent: 'center',
   },
   loginButtonText: {
-    color: stylesColors.loginFbButtonText,
+    color: stylesColors[layout].loginFbButtonText,
     fontSize: 16,
   }
 });
@@ -31,7 +31,8 @@ export class FBLoginView extends Component {
     isLoggedIn: React.PropTypes.bool,
     login: React.PropTypes.func,
     logout: React.PropTypes.func,
-    props: React.PropTypes.object
+    props: React.PropTypes.object,
+    layout: PropTypes.string.isRequired,
   };
 
   login() {
@@ -43,7 +44,7 @@ export class FBLoginView extends Component {
   }
 
   render(){
-    const { isFetching, isOauth } = this.props;
+    const { isFetching, layout, isOauth } = this.props;
 
     if (isFetching && isOauth) {
       return (
@@ -52,7 +53,7 @@ export class FBLoginView extends Component {
           title='Logging in'
           loading={isFetching}
           fontSize={16}
-          buttonStyle={styles.loginButton}
+          buttonStyle={styles(layout).loginButton}
         />
       )
     } else {
@@ -60,11 +61,11 @@ export class FBLoginView extends Component {
         <Icon.Button
           onPress={() => this.login()}
           name="facebook"
-          style={styles.loginButton}
-          backgroundColor={stylesColors.transparent}
-          underlayColor={stylesColors.transparent}
+          style={styles(layout).loginButton}
+          backgroundColor={stylesColors[layout].transparent}
+          underlayColor={stylesColors[layout].transparent}
         >
-          <Text style={styles.loginButtonText}>
+          <Text style={styles(layout).loginButtonText}>
             Login with Facebook
           </Text>
         </Icon.Button>
@@ -77,15 +78,22 @@ export class LoginFacebook extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     isFetching: PropTypes.bool.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   render() {
-    const { handleSubmit, isFetching, isOauth } = this.props;
+    const { handleSubmit, isFetching, isOauth, layout } = this.props;
 
     return (
       <View>
         <FBLogin
-          buttonView={<FBLoginView isFetching={isFetching} isOauth={isOauth} />}
+          buttonView={
+            <FBLoginView
+              isFetching={isFetching}
+              isOauth={isOauth}
+              layout={layout}
+            />
+          }
           ref={(fbLogin) => { this.fbLogin = fbLogin }}
           permissions={["email", "user_friends"]}
           loginBehavior={LoginBehavior[Platform.OS]}

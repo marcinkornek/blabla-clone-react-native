@@ -16,21 +16,21 @@ import LoginValidator from '../login-validator/login-validator'
 // inputs
 import { TextField } from '../../inputs/text-field/text-field';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   loginError: {
     marginLeft: 15,
     marginBottom: 5,
-    color: stylesColors.error,
+    color: stylesColors[layout].error,
   },
   loginButton: {
-    backgroundColor: stylesColors.loginEmailButtonBg,
+    backgroundColor: stylesColors[layout].loginEmailButtonBg,
     borderRadius: 0,
     padding: 15,
     margin: 15,
     justifyContent: 'center',
   },
   loginButtonText: {
-    color: stylesColors.loginEmailButtonText,
+    color: stylesColors[layout].loginEmailButtonText,
     fontSize: 16,
   }
 });
@@ -39,6 +39,7 @@ export class LoginEmail extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     isFetching: PropTypes.bool.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   state = {
@@ -47,17 +48,18 @@ export class LoginEmail extends Component {
 
   renderEmailFormButton() {
     const { showLoginForm } = this.state
+    const { layout } = this.props
 
     if (!showLoginForm) {
       return (
         <Icon.Button
           onPress={this.showFormOnClick.bind(this)}
           name="envelope-o"
-          style={styles.loginButton}
+          style={styles(layout).loginButton}
           backgroundColor='transparent'
           underlayColor='transparent'
         >
-          <Text style={styles.loginButtonText}>
+          <Text style={styles(layout).loginButtonText}>
             Login with email and password
           </Text>
         </Icon.Button>
@@ -66,11 +68,11 @@ export class LoginEmail extends Component {
   }
 
   showErrors() {
-    const { errors } = this.props
+    const { errors, layout } = this.props
 
     if (typeof errors !== 'undefined' && errors.length > 0) {
       return(
-        <Text style={styles.loginError}>
+        <Text style={styles(layout).loginError}>
           {errors}
         </Text>
       )
@@ -78,7 +80,7 @@ export class LoginEmail extends Component {
   }
 
   renderLoginForm() {
-    const { handleSubmit, isFetching, isOauth } = this.props;
+    const { handleSubmit, isFetching, isOauth, layout } = this.props;
     const { showLoginForm } = this.state
 
     if (showLoginForm) {
@@ -101,7 +103,7 @@ export class LoginEmail extends Component {
             raised
             title={isFetching && !isOauth ? 'Logging in' : 'Login'}
             loading={isFetching && !isOauth}
-            backgroundColor={stylesColors.buttonSubmit}
+            backgroundColor={stylesColors[layout].buttonSubmit}
             onPress={handleSubmit}
           />
         </View>

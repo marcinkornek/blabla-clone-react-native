@@ -19,7 +19,7 @@ import { showModal, hideModal } from '../../../actions/modals';
 import LoginEmail from '../../../components/session/login-email/login-email';
 import { LoginFacebook } from '../../../components/session/login-facebook/login-facebook';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   registerContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
@@ -41,6 +41,7 @@ class Login extends Component {
     errors: PropTypes.array,
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
+    layout: PropTypes.string.isRequired,
   };
 
   componentWillMount() {
@@ -78,28 +79,30 @@ class Login extends Component {
   }
 
   render() {
-    const { errors, isFetching, isOauth, showModal } = this.props
+    const { errors, isFetching, isOauth, showModal, layout } = this.props
 
     return (
-      <View style={styles.view}>
+      <View style={styles(layout).view}>
         <LoginEmail
           isOauth={isOauth}
           isFetching={isFetching}
+          layout={layout}
           errors={errors}
           onSubmit={this.handleEmailLogin.bind(this)}
         />
         <LoginFacebook
           isOauth={isOauth}
           isFetching={isFetching}
+          layout={layout}
           handleSubmit={this.handleFacebookLogin.bind(this)}
         />
-        <View style={styles.registerContainer}>
-          <Text style={styles.registerText}>Don't have an account?</Text>
+        <View style={styles(layout).registerContainer}>
+          <Text style={styles(layout).registerText}>Don't have an account?</Text>
           <TouchableHighlight
-            underlayColor={stylesColors.primaryBg}
+            underlayColor={stylesColors[layout].primaryBg}
             onPress={() => showModal('REGISTER', { title: 'Create account' })}
           >
-            <Text style={styles.registerLink}>Register</Text>
+            <Text style={styles(layout).registerLink}>Register</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -113,6 +116,7 @@ const mapStateToProps = (state) => {
     isFetching: state.session.isFetching,
     isAuthenticated: state.session.isAuthenticated,
     isOauth: state.session.isOauth,
+    layout: state.settings.layout,
   }
 }
 

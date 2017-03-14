@@ -15,7 +15,7 @@ import Login from '../../session/login/login'
 import Register from '../../current-user/current-user-new/current-user-new'
 import CarNew from '../../cars/car-new/car-new'
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   modal: {
     backgroundColor: 'transparent',
     flex: 1,
@@ -31,18 +31,20 @@ const styles = StyleSheet.create({
     flex: 1,
     margin: 0,
     padding: 15,
-    borderRadius: 5,
-    backgroundColor: stylesColors.modalBg,
+    borderRadius: 0,
+    backgroundColor: stylesColors[layout].modalBg,
   },
   titleContainer: {
     alignItems: 'center',
     marginBottom: 10,
   },
   title: {
+    color: stylesColors[layout].modalText,
     fontWeight: 'bold',
     fontSize: 20,
   },
   subtitleContainer: {
+    color: stylesColors[layout].modalTextSubtitle,
     alignItems: 'center',
   },
   subtitle: {
@@ -67,12 +69,14 @@ export class ModalRoot extends Component {
   }
 
   renderModalCloseIcon() {
+    const { layout } = this.props;
+
     return (
-      <View style={styles.modalCloseIcon}>
+      <View style={styles(layout).modalCloseIcon}>
         <MaterialIcons.Button
           name="close"
           backgroundColor="transparent"
-          color={stylesColors.modalCloseX}
+          color={stylesColors[layout].modalCloseX}
           size={25}
           onPress={this.closeModal.bind(this)}
         />
@@ -81,12 +85,12 @@ export class ModalRoot extends Component {
   }
 
   renderTitle() {
-    const { modalProps } = this.props;
+    const { modalProps, layout } = this.props;
 
     if (modalProps.title) {
       return (
-        <View style={styles.titleContainer}>
-          <Text style={styles.title}>
+        <View style={styles(layout).titleContainer}>
+          <Text style={styles(layout).title}>
             {modalProps.title}
           </Text>
         </View>
@@ -95,12 +99,12 @@ export class ModalRoot extends Component {
   }
 
   renderSubtitle() {
-    const { modalProps } = this.props;
+    const { modalProps, layout } = this.props;
 
     if (modalProps.subtitle) {
       return (
-        <View style={styles.subtitleContainer}>
-          <Text style={styles.subtitle}>
+        <View style={styles(layout).subtitleContainer}>
+          <Text style={styles(layout).subtitle}>
             {modalProps.subtitle}
           </Text>
         </View>
@@ -109,9 +113,8 @@ export class ModalRoot extends Component {
   }
 
   render() {
-    const { modalType, modalProps } = this.props;
+    const { modalType, modalProps, layout } = this.props;
     if (!modalType) return null
-
     const SpecificModal = MODAL_COMPONENTS[modalType]
 
     return (
@@ -120,8 +123,8 @@ export class ModalRoot extends Component {
         onRequestClose={this.closeModal.bind(this)}
         transparent
       >
-        <View style={styles.modal}>
-          <View style={styles.modalContent}>
+        <View style={styles(layout).modal}>
+          <View style={styles(layout).modalContent}>
             {this.renderTitle()}
             {this.renderModalCloseIcon()}
             {this.renderSubtitle()}
@@ -137,6 +140,7 @@ const mapStateToProps = (state) => {
   return {
     modalType: state.modal.modalType,
     modalProps: state.modal.modalProps,
+    layout: state.settings.layout,
   }
 }
 

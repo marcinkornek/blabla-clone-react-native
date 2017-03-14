@@ -14,9 +14,9 @@ const options = {
     path: 'images'
   }
 };
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   error: {
-    color: stylesColors.error,
+    color: stylesColors[layout].error,
     marginLeft: 15,
     marginTop: 3,
     marginBottom: 5,
@@ -41,17 +41,17 @@ export class ImageField extends Component {
   }
 
   render() {
-    const { input, label, meta: { touched, error }, ...custom } = this.props;
+    const { input, label, meta: { touched, error }, layout, ...custom } = this.props;
 
     return (
       <View>
         <Button
           raised
           title='Add photo'
-          backgroundColor={stylesColors.imageFieldButton}
+          backgroundColor={stylesColors[layout].imageFieldButton}
           onPress={this.onChange.bind(this)}
         />
-        <Text style={styles.error}>{touched && error}</Text>
+        <Text style={styles(layout).error}>{touched && error}</Text>
       </View>
     )
   }

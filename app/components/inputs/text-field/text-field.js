@@ -5,9 +5,9 @@ import { TextInput, Text, View, StyleSheet } from 'react-native';
 // styles
 import stylesColors from '../../../constants/colors';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   error: {
-    color: stylesColors.error,
+    color: stylesColors[layout].error,
     marginLeft: 15,
     marginTop: -5,
     marginBottom: 5,
@@ -23,15 +23,18 @@ const styles = StyleSheet.create({
   },
 });
 
-export const TextField = ({ input, label, meta: { touched, error }, ...custom }) => (
+export const TextField = ({ input, label, meta: { touched, error }, layout, ...custom }) => {
+  return(
   <View>
     <TextInput
-      style={styles.inputStyle}
+      style={styles(layout).inputStyle}
+      placeholderTextColor={stylesColors[layout].primaryText}
       placeholder={label}
       onChangeText={(value) => input.onChange(value)}
       {...input}
       {...custom}
     />
-    <Text style={styles.error}>{touched && error}</Text>
+    <Text style={styles(layout).error}>{touched && error}</Text>
   </View>
-);
+  )
+};

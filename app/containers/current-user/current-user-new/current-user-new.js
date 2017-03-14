@@ -11,13 +11,18 @@ import { showModal } from '../../../actions/modals';
 // components
 import CurrentUserNewForm from '../../../components/current-user/current-user-new-form/current-user-new-form'
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
     marginTop: 10,
   }
 });
 
 export class CurrentUserNew extends Component {
+  static propTypes = {
+    isSaving: PropTypes.bool.isRequired,
+    layout: PropTypes.string.isRequired,
+  }
+
   handleSubmit(data) {
     const { createCurrentUser, showModal } = this.props
     var body = new FormData();
@@ -39,19 +44,22 @@ export class CurrentUserNew extends Component {
   }
 
   renderForm() {
-    const { isSaving } = this.props;
+    const { isSaving, layout } = this.props;
 
     return (
       <CurrentUserNewForm
-        onSubmit={this.handleSubmit.bind(this)}
         isSaving={isSaving}
+        layout={layout}
+        onSubmit={this.handleSubmit.bind(this)}
       />
     )
   }
 
   render() {
+    const { layout } = this.props;
+
     return (
-      <ScrollView style={styles.view}>
+      <ScrollView style={styles(layout).view}>
         {this.renderForm()}
       </ScrollView>
     )
@@ -61,6 +69,7 @@ export class CurrentUserNew extends Component {
 const mapStateToProps = (state) => {
   return {
     isSaving: state.currentUser.isSaving,
+    layout: state.settings.layout,
   }
 }
 

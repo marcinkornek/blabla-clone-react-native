@@ -6,9 +6,9 @@ import { Text, View, StyleSheet } from 'react-native';
 // styles
 import stylesColors from '../../../constants/colors';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   error: {
-    color: stylesColors.error,
+    color: stylesColors[layout].error,
     marginLeft: 15,
     marginTop: 0,
     marginBottom: 5,
@@ -18,23 +18,36 @@ const styles = StyleSheet.create({
     marginBottom: 5,
     marginLeft: 10,
     marginRight: 10,
-    padding: 5,
-    paddingTop: 0,
-    width: 190,
-  },
-  dateIcon: {
+    padding: 0,
+    width: 150,
   },
   dateInput: {
     alignItems: 'flex-start',
     paddingLeft: 5,
-  }
+    borderColor: stylesColors[layout].transparent,
+  },
+  dateText: {
+    color: stylesColors[layout].primaryText,
+    fontSize: 15,
+    paddingBottom: 5
+  },
+  placeholderText: {
+    color: stylesColors[layout].primaryText,
+    fontSize: 15,
+    paddingBottom: 5
+  },
 });
 
-export const DatepickerField = ({ input, label, meta: { touched, error }, ...custom }) => (
+export const DatepickerField = ({ input, label, meta: { touched, error }, layout, ...custom }) => (
   <View>
     <DatePicker
-      style={styles.inputStyle}
-      customStyles={{ dateIcon: styles.dateIcon, dateInput: styles.dateInput }}
+      style={styles(layout).inputStyle}
+      customStyles={{
+        dateIcon: styles(layout).dateIcon,
+        dateInput: styles(layout).dateInput,
+        placeholderText: styles(layout).placeholderText,
+        dateText: styles(layout).dateText,
+      }}
       mode="date"
       date={input.value}
       placeholder={label}
@@ -43,6 +56,6 @@ export const DatepickerField = ({ input, label, meta: { touched, error }, ...cus
       {...input}
       {...custom}
     />
-    <Text style={styles.error}>{touched && error}</Text>
+    <Text style={styles(layout).error}>{touched && error}</Text>
   </View>
 );

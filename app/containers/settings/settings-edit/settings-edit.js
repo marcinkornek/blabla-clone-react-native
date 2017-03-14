@@ -23,6 +23,7 @@ const styles = (layout) => StyleSheet.create({
 class SettingsEdit extends Component {
   static propTypes = {
     settings: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {

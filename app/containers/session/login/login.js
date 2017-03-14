@@ -25,10 +25,12 @@ const styles = (layout) => StyleSheet.create({
     justifyContent: 'center',
   },
   registerLink: {
+    color: stylesColors[layout].primaryText,
     fontSize: 16,
     fontWeight: 'bold',
   },
   registerText: {
+    color: stylesColors[layout].primaryText,
     marginRight: 5,
     fontSize: 16,
   },

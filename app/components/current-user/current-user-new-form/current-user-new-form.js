@@ -22,10 +22,11 @@ class CurrentUserNewForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     isSaving: PropTypes.bool.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   render() {
-    const { handleSubmit, isSaving } = this.props;
+    const { handleSubmit, isSaving, layout } = this.props;
     const minumumBirthDate = moment().subtract(18, 'years').format('DD.MM.YYYY')
 
     return (
@@ -35,22 +36,26 @@ class CurrentUserNewForm extends Component {
           label="First name"
           autoFocus={true}
           component={TextField}
+          layout={layout}
         />
         <Field
           name="last_name"
           label="Last name"
           component={TextField}
+          layout={layout}
         />
         <Field
           name="email"
           label="Email"
           keyboardType="email-address"
           component={TextField}
+          layout={layout}
         />
         <Field
           name="gender"
           label="Gender"
           component={SelectField}
+          layout={layout}
         >
           <Picker.Item
             key={'gender-placeholder'}
@@ -73,6 +78,7 @@ class CurrentUserNewForm extends Component {
           label="Date of birth"
           maxDate={minumumBirthDate}
           component={DatepickerField}
+          layout={layout}
         />
         <Field
           name="tel_num"
@@ -80,29 +86,33 @@ class CurrentUserNewForm extends Component {
           maxLength={10}
           keyboardType="numeric"
           component={TextField}
+          layout={layout}
         />
         <Field
           type="file"
           name="avatar"
           component={ImageField}
+          layout={layout}
         />
         <Field
           name="password"
           label="Password"
           secureTextEntry={true}
           component={TextField}
+          layout={layout}
         />
         <Field
           name="password_confirmation"
           label="Password confirmation"
           secureTextEntry={true}
           component={TextField}
+          layout={layout}
         />
         <Button
           raised
           title={isSaving ? 'Saving' : 'Submit'}
           loading={isSaving}
-          backgroundColor={stylesColors.buttonSubmit}
+          backgroundColor={stylesColors[layout].buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

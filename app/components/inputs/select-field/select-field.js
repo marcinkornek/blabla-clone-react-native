@@ -5,14 +5,15 @@ import { View, Text, Picker, StyleSheet } from 'react-native';
 // styles
 import stylesColors from '../../../constants/colors';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   error: {
-    color: stylesColors.error,
+    color: stylesColors[layout].error,
     marginLeft: 15,
     marginTop: -5,
     marginBottom: 5,
   },
   inputStyle: {
+    color: stylesColors[layout].primaryText,
     height: 40,
     marginLeft: 8,
     marginRight: 10,
@@ -33,12 +34,12 @@ export class SelectField extends Component {
   };
 
   render() {
-    const { input, children, meta: { touched, error }, ...custom } = this.props;
+    const { input, children, meta: { touched, error }, layout, ...custom } = this.props;
 
     return (
       <View>
         <Picker
-          style={styles.inputStyle}
+          style={styles(layout).inputStyle}
           selectedValue={this.state && this.state.pickerValue}
           onValueChange={(value) => {
             this.setState({pickerValue: value});
@@ -47,7 +48,7 @@ export class SelectField extends Component {
           children={children}
           {...custom}
         />
-        <Text style={styles.error}>{touched && error}</Text>
+        <Text style={styles(layout).error}>{touched && error}</Text>
       </View>
     )
   }

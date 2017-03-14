@@ -27,17 +27,19 @@ const styles = (layout) => StyleSheet.create({
   }
 });
 
-export const ToggleField = ({ input, label, meta: { touched, error }, layout, ...custom }) => (
+export const ToggleLayoutField = ({ input, label, meta: { touched, error }, layout, ...custom }) => {
+  return (
   <View>
     <View style={styles(layout).container}>
       <Text style={styles(layout).label}>{label}</Text>
       <Switch
         style={styles(layout).input}
-        value={input.value}
-        onValueChange={(value) => { input.onChange(value) }}
+        value={input.value === 'dark' ? true : false}
+        onValueChange={(value) => { input.onChange(value ? 'dark' : 'base') }}
         {...custom}
       />
     </View>
     <Text style={styles(layout).error}>{touched && error}</Text>
   </View>
-);
+  )
+};

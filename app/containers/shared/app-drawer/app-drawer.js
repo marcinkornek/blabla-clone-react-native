@@ -27,38 +27,38 @@ import { logoutCurrentUser } from '../../../actions/session';
 import { showModal } from '../../../actions/modals';
 
 const { width, height } = Dimensions.get('window')
-const styles = (darkLayout) => StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   avatar: {
     width: 80,
     height: 80,
     marginRight: 0,
     borderRadius: 80,
     borderWidth: 2,
-    borderColor: stylesColors[darkLayout].appDrawerAvatarBorder,
+    borderColor: stylesColors[layout].appDrawerAvatarBorder,
   },
   container: {
     flex: 1,
-    backgroundColor: stylesColors[darkLayout].appDrawerBg,
+    backgroundColor: stylesColors[layout].appDrawerBg,
   },
   dropdownLink: {
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderColor: stylesColors[darkLayout].appDrawerDivider,
+    borderColor: stylesColors[layout].appDrawerDivider,
     borderBottomWidth: 1,
   },
   dropdownText: {
-    color: stylesColors[darkLayout].appDrawerText,
+    color: stylesColors[layout].appDrawerText,
     fontSize: 17,
     padding: 10,
     paddingTop: 15,
     paddingBottom: 15,
   },
   dropdownIcon: {
-    color: stylesColors[darkLayout].appDrawerText,
+    color: stylesColors[layout].appDrawerText,
     paddingTop: 10,
   },
   logoutButton: {
-    backgroundColor: stylesColors[darkLayout].appDrawerUserContainerBg,
+    backgroundColor: stylesColors[layout].appDrawerUserContainerBg,
     borderRadius: 0,
     paddingTop: 15,
     padding: 10,
@@ -68,8 +68,8 @@ const styles = (darkLayout) => StyleSheet.create({
     padding: 10,
     paddingTop: 15,
     paddingBottom: 15,
-    color: stylesColors[darkLayout].appDrawerText,
-    borderColor: stylesColors[darkLayout].appDrawerDivider,
+    color: stylesColors[layout].appDrawerText,
+    borderColor: stylesColors[layout].appDrawerDivider,
     borderBottomWidth: 1,
   },
   menuSublink: {
@@ -77,22 +77,22 @@ const styles = (darkLayout) => StyleSheet.create({
     padding: 10,
     paddingTop: 15,
     paddingBottom: 15,
-    color: stylesColors[darkLayout].appDrawerText,
-    borderColor: stylesColors[darkLayout].appDrawerDivider,
-    backgroundColor: stylesColors[darkLayout].appDrawerDropdownBg,
+    color: stylesColors[layout].appDrawerText,
+    borderColor: stylesColors[layout].appDrawerDivider,
+    backgroundColor: stylesColors[layout].appDrawerDropdownBg,
     borderBottomWidth: 1,
   },
   sessionText: {
     fontSize: 18,
     fontWeight: 'bold',
-    color: stylesColors[darkLayout].userInfoContainerText,
+    color: stylesColors[layout].userInfoContainerText,
   },
   sessionUserIcon: {
-    color: stylesColors[darkLayout].userInfoContainerText,
+    color: stylesColors[layout].userInfoContainerText,
     marginRight: 5,
   },
   userInfoContainer: {
-    backgroundColor: stylesColors[darkLayout].appDrawerUserContainerBg,
+    backgroundColor: stylesColors[layout].appDrawerUserContainerBg,
     flexDirection: 'row',
     justifyContent: 'space-between',
   },
@@ -100,7 +100,7 @@ const styles = (darkLayout) => StyleSheet.create({
     width: width - 290,
     fontSize: 18,
     fontWeight: 'bold',
-    color: stylesColors[darkLayout].userInfoContainerText,
+    color: stylesColors[layout].userInfoContainerText,
     margin: 10,
     marginTop: 0,
     marginBottom: 0,
@@ -109,7 +109,7 @@ const styles = (darkLayout) => StyleSheet.create({
     paddingTop: 10,
   },
   userInfo: {
-    backgroundColor: stylesColors[darkLayout].appDrawerUserContainerBg,
+    backgroundColor: stylesColors[layout].appDrawerUserContainerBg,
     height: 100,
     padding: 10,
     flexWrap: 'wrap',
@@ -117,7 +117,7 @@ const styles = (darkLayout) => StyleSheet.create({
     flexDirection: 'row',
   },
   userInfoEmpty: {
-    backgroundColor: stylesColors[darkLayout].appDrawerUserContainerBg,
+    backgroundColor: stylesColors[layout].appDrawerUserContainerBg,
     height: 80,
     padding: 10,
     flexWrap: 'wrap',
@@ -193,20 +193,20 @@ export class AppDrawer extends Component {
   }
 
   renderUserInfo() {
-    const { currentUser, darkLayout } = this.props;
+    const { currentUser, layout } = this.props;
 
     if (currentUser) {
       return(
-        <View style={styles(darkLayout).userInfoContainer}>
+        <View style={styles(layout).userInfoContainer}>
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerUserContainerBg}
+            underlayColor={stylesColors[layout].appDrawerUserContainerBg}
             onPress={() => this.goToAndClose('myAccount', {})}
           >
-            <View style={styles(darkLayout).userInfo}>
-              <Image source={{uri: currentUser.avatar}} style={styles(darkLayout).avatar} />
+            <View style={styles(layout).userInfo}>
+              <Image source={{uri: currentUser.avatar}} style={styles(layout).avatar} />
               <View>
                 <Text
-                  style={styles(darkLayout).userInfoText}
+                  style={styles(layout).userInfoText}
                   numberOfLines={1}
                   ellipsizeMode={'tail'}
                 >
@@ -218,34 +218,34 @@ export class AppDrawer extends Component {
           </TouchableHighlight>
           <Icon.Button
             name="power-off"
-            backgroundColor={stylesColors[darkLayout].appDrawerUserContainerBg}
-            underlayColor={stylesColors[darkLayout].appDrawerUserContainerBg}
-            iconStyle={styles(darkLayout).logoutButton}
+            backgroundColor={stylesColors[layout].appDrawerUserContainerBg}
+            underlayColor={stylesColors[layout].appDrawerUserContainerBg}
+            iconStyle={styles(layout).logoutButton}
             onPress={this.logout.bind(this)}
           />
         </View>
       )
     } else {
       return(
-        <View style={styles(darkLayout).userInfoEmpty}>
+        <View style={styles(layout).userInfoEmpty}>
           <Icon
             name="user"
-            backgroundColor={stylesColors[darkLayout].appDrawerUserContainerBg}
+            backgroundColor={stylesColors[layout].appDrawerUserContainerBg}
             size={22}
-            style={styles(darkLayout).sessionUserIcon}
+            style={styles(layout).sessionUserIcon}
           />
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerUserContainerBg}
+            underlayColor={stylesColors[layout].appDrawerUserContainerBg}
             onPress={() => this.openModalAndClose('LOGIN', { title: 'Login' })}
           >
-            <Text style={styles(darkLayout).sessionText}>Login</Text>
+            <Text style={styles(layout).sessionText}>Login</Text>
           </TouchableHighlight>
-          <Text style={styles(darkLayout).sessionText}> / </Text>
+          <Text style={styles(layout).sessionText}> / </Text>
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerUserContainerBg}
+            underlayColor={stylesColors[layout].appDrawerUserContainerBg}
             onPress={() => this.openModalAndClose('REGISTER', { title: 'Create account' })}
           >
-            <Text style={styles(darkLayout).sessionText}>Register</Text>
+            <Text style={styles(layout).sessionText}>Register</Text>
           </TouchableHighlight>
         </View>
       )
@@ -253,61 +253,61 @@ export class AppDrawer extends Component {
   }
 
   renderNotificationIcon() {
-    const { darkLayout } = this.props;
+    const { layout } = this.props;
 
     return (
       <MaterialIcons.Button
         name="notifications-none"
-        backgroundColor={stylesColors[darkLayout].appDrawerUserContainerBg}
+        backgroundColor={stylesColors[layout].appDrawerUserContainerBg}
         size={25}
-        style={styles(darkLayout).userInfoNotificationIcon}
+        style={styles(layout).userInfoNotificationIcon}
         onPress={() => this.goToAndClose('myNotifications', {})}
       />
     )
   }
 
   renderSharedLinks() {
-    const { darkLayout } = this.props;
+    const { layout } = this.props;
 
     return (
       <TouchableHighlight
-        underlayColor={stylesColors[darkLayout].appDrawerBg}
+        underlayColor={stylesColors[layout].appDrawerBg}
         onPress={() => this.goToAndClose('rides')}
       >
-        <Text style={styles(darkLayout).menuLink}>Rides</Text>
+        <Text style={styles(layout).menuLink}>Rides</Text>
       </TouchableHighlight>
     )
   }
 
   renderAccountLinks() {
-    const { darkLayout } = this.props;
+    const { layout } = this.props;
 
     return (
       <View>
         <Collapsible collapsed={this.state.hideAccount}>
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerBg}
+            underlayColor={stylesColors[layout].appDrawerBg}
             onPress={() => this.goToAndClose('accountTabs', {})}
           >
-            <Text style={styles(darkLayout).menuSublink}>My profile</Text>
+            <Text style={styles(layout).menuSublink}>My profile</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerBg}
+            underlayColor={stylesColors[layout].appDrawerBg}
             onPress={() => this.goToAndClose('myRidesAsPassenger', {})}
           >
-            <Text style={styles(darkLayout).menuSublink}>My rides as passenger</Text>
+            <Text style={styles(layout).menuSublink}>My rides as passenger</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerBg}
+            underlayColor={stylesColors[layout].appDrawerBg}
             onPress={() => this.goToAndClose('myRidesAsDriver', {})}
           >
-            <Text style={styles(darkLayout).menuSublink}>My rides as driver</Text>
+            <Text style={styles(layout).menuSublink}>My rides as driver</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerBg}
+            underlayColor={stylesColors[layout].appDrawerBg}
             onPress={() => this.goToAndClose('myCars', {})}
           >
-            <Text style={styles(darkLayout).menuSublink}>My cars</Text>
+            <Text style={styles(layout).menuSublink}>My cars</Text>
           </TouchableHighlight>
         </Collapsible>
       </View>
@@ -315,15 +315,15 @@ export class AppDrawer extends Component {
   }
 
   renderDropdownIcon() {
-    const { darkLayout } = this.props;
+    const { layout } = this.props;
 
     if (this.state.hideAccount) {
       return (
         <MaterialIcon
           name='arrow-drop-down'
-          style={styles(darkLayout).dropdownIcon}
-          backgroundColor={stylesColors[darkLayout].appDrawerBg}
-          underlayColor={stylesColors[darkLayout].appDrawerBg}
+          style={styles(layout).dropdownIcon}
+          backgroundColor={stylesColors[layout].appDrawerBg}
+          underlayColor={stylesColors[layout].appDrawerBg}
           size={35}
         />
       )
@@ -331,9 +331,9 @@ export class AppDrawer extends Component {
       return (
         <MaterialIcon
           name='arrow-drop-up'
-          style={styles(darkLayout).dropdownIcon}
-          backgroundColor={stylesColors[darkLayout].appDrawerBg}
-          underlayColor={stylesColors[darkLayout].appDrawerBg}
+          style={styles(layout).dropdownIcon}
+          backgroundColor={stylesColors[layout].appDrawerBg}
+          underlayColor={stylesColors[layout].appDrawerBg}
           size={35}
         />
       )
@@ -341,17 +341,17 @@ export class AppDrawer extends Component {
   }
 
   renderLoggedInAccountLinks() {
-    const { isAuthenticated, darkLayout } = this.props;
+    const { isAuthenticated, layout } = this.props;
 
     if (isAuthenticated) {
       return (
         <View>
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerBg}
+            underlayColor={stylesColors[layout].appDrawerBg}
             onPress={() => this.toggleAccountLinks()}
           >
-            <View style={styles(darkLayout).dropdownLink}>
-              <Text style={styles(darkLayout).dropdownText}>My account</Text>
+            <View style={styles(layout).dropdownLink}>
+              <Text style={styles(layout).dropdownText}>My account</Text>
               {this.renderDropdownIcon()}
             </View>
           </TouchableHighlight>
@@ -362,22 +362,22 @@ export class AppDrawer extends Component {
   }
 
   renderLoggedInLinks() {
-    const { isAuthenticated, darkLayout } = this.props;
+    const { isAuthenticated, layout } = this.props;
 
     if (isAuthenticated) {
       return (
         <View>
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerBg}
+            underlayColor={stylesColors[layout].appDrawerBg}
             onPress={() => this.goToAndClose('usersIndex')}
           >
-            <Text style={styles(darkLayout).menuLink}>Users</Text>
+            <Text style={styles(layout).menuLink}>Users</Text>
           </TouchableHighlight>
           <TouchableHighlight
-            underlayColor={stylesColors[darkLayout].appDrawerBg}
+            underlayColor={stylesColors[layout].appDrawerBg}
             onPress={() => this.goToAndClose('settingsIndex')}
           >
-            <Text style={styles(darkLayout).menuLink}>Settings</Text>
+            <Text style={styles(layout).menuLink}>Settings</Text>
           </TouchableHighlight>
         </View>
       )
@@ -385,10 +385,10 @@ export class AppDrawer extends Component {
   }
 
   render() {
-    const { darkLayout } = this.props;
+    const { layout } = this.props;
 
     return (
-      <ScrollView style={styles(darkLayout).container}>
+      <ScrollView style={styles(layout).container}>
         {this.renderUserInfo()}
         {this.renderLoggedInAccountLinks()}
         {this.renderSharedLinks()}
@@ -404,7 +404,7 @@ const mapStateToProps = (state) => {
     isStarted: state.currentUser.isStarted,
     isFetching: state.currentUser.isFetching,
     isAuthenticated: state.session.isAuthenticated,
-    darkLayout: state.settings.darkLayout,
+    layout: state.settings.layout,
   }
 }
 

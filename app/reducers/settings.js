@@ -4,7 +4,7 @@ import {
 } from '../constants/action-types'
 
 export const initialState = {
-  darkLayout: false,
+  layout: 'base',
   pushNotifications: true,
 }
 

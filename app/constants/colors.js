@@ -1,6 +1,6 @@
 export default colors = {
   // base
-  false: {
+  base: {
     actionButton: '#23A2E3',
     appDrawerAvatarBorder: '#FFFFFF',
     appDrawerBg: '#FFFFFF',
@@ -44,7 +44,7 @@ export default colors = {
     userShowUserContainerText: '#FFFFFF',
   },
   // dark
-  true: {
+  dark: {
     actionButton: '#18719e',
     appDrawerAvatarBorder: '#FFFFFF',
     appDrawerBg: '#2F2F2F',

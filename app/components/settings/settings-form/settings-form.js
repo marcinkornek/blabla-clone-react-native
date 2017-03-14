@@ -11,6 +11,7 @@ import stylesColors from '../../../constants/colors';
 
 // components
 import { ToggleField } from '../../inputs/toggle-field/toggle-field';
+import { ToggleLayoutField } from '../../inputs/toggle-layout-field/toggle-layout-field';
 
 export class SettingsForm extends Component {
   static propTypes = {
@@ -19,26 +20,26 @@ export class SettingsForm extends Component {
   }
 
   render() {
-    const { handleSubmit, settings, darkLayout } = this.props
+    const { handleSubmit, settings, layout } = this.props
 
     return (
       <ScrollView>
         <Field
-          name='darkLayout'
+          name='layout'
           label='Dark layout'
-          component={ToggleField}
-          darkLayout={darkLayout}
+          component={ToggleLayoutField}
+          layout={layout}
         />
         <Field
           name='pushNotifications'
           label='Push notifications'
           component={ToggleField}
-          darkLayout={darkLayout}
+          layout={layout}
         />
         <Button
           raised
           title='Submit'
-          backgroundColor={stylesColors[darkLayout].buttonSubmit}
+          backgroundColor={stylesColors[layout].buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

@@ -11,7 +11,7 @@ import stylesColors from '../../../constants/colors';
 import { RenderActivityIndicator } from '../../../components/shared/render-activity-indicator/render-activity-indicator'
 
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   emptyList: {
     fontSize: 20,
     fontWeight: 'bold',
@@ -41,6 +41,7 @@ export class RenderList extends Component {
     per: PropTypes.number.isRequired,
     onEndReachedThreshold: PropTypes.number,
     emptyListText: PropTypes.string,
+    layout: PropTypes.string.isRequired,
   }
 
   state = {
@@ -85,11 +86,11 @@ export class RenderList extends Component {
   }
 
   renderEmptyView() {
-    const { emptyListText } = this.props;
+    const { emptyListText, layout } = this.props;
 
     return (
       <ScrollView
-        contentContainerStyle={styles.emptyListContainer}
+        contentContainerStyle={styles(layout).emptyListContainer}
         refreshControl={
           <RefreshControl
             refreshing={this.state.refreshing}
@@ -97,7 +98,7 @@ export class RenderList extends Component {
           />
         }
       >
-        <Text style={styles.emptyList}>{emptyListText || 'No items'}</Text>
+        <Text style={styles(layout).emptyList}>{emptyListText || 'No items'}</Text>
       </ScrollView>
     )
   }
@@ -115,12 +116,12 @@ export class RenderList extends Component {
   }
 
   renderAddFloatingButton() {
-    const { showAddButton, addButtonLink } = this.props;
+    const { showAddButton, addButtonLink, layout } = this.props;
 
     if (showAddButton) {
       return (
         <ActionButton
-          buttonColor={stylesColors.actionButton}
+          buttonColor={stylesColors[layout].actionButton}
           onPress={addButtonLink}
         />
       )
@@ -128,8 +129,10 @@ export class RenderList extends Component {
   }
 
   render() {
+    const { layout } = this.props;
+
     return (
-      <View style={styles.view}>
+      <View style={styles(layout).view}>
         {this.renderContainer()}
         {this.renderAddFloatingButton()}
       </View>

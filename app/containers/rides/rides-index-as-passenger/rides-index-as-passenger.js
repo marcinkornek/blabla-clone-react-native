@@ -15,7 +15,7 @@ import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
 const per = 20
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
     flex: 1,
   },
@@ -29,6 +29,7 @@ export class RidesIndexAsPassenger extends Component {
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     currentUser: PropTypes.object,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -71,11 +72,12 @@ export class RidesIndexAsPassenger extends Component {
   }
 
   renderRide(ride) {
-    const { navigation } = this.props;
+    const { layout, navigation } = this.props;
 
     return (
       <RidesIndexItem
         ride={ride}
+        layout={layout}
         navigation={navigation}
         key={`ride${ride.id}`}
       />
@@ -83,7 +85,7 @@ export class RidesIndexAsPassenger extends Component {
   }
 
   renderRidesList() {
-    const { rides, isFetching, isStarted, pagination } = this.props;
+    const { rides, isFetching, isStarted, layout, pagination } = this.props;
 
     return (
       <RenderList
@@ -95,6 +97,7 @@ export class RidesIndexAsPassenger extends Component {
         refreshItems={this.refreshRides.bind(this)}
         renderRow={this.renderRide.bind(this)}
         per={per}
+        layout={layout}
         onEndReachedThreshold={200}
         emptyListText='No rides as passenger'
       />
@@ -102,8 +105,10 @@ export class RidesIndexAsPassenger extends Component {
   }
 
   render() {
+    const { layout } = this.props;
+
     return (
-      <View style={styles.view}>
+      <View style={styles(layout).view}>
         {this.renderRidesList()}
       </View>
     );
@@ -118,6 +123,7 @@ const mapStateToProps = (state) => {
     isFetching: state.ridesAsPassenger.isFetching,
     isAuthenticated: state.session.isAuthenticated,
     currentUser: state.session.item,
+    layout: state.settings.layout,
   }
 };
 

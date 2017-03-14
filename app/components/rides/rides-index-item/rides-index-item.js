@@ -7,26 +7,41 @@ import moment from 'moment';
 // styles
 import stylesColors from '../../../constants/colors';
 
-const styles = StyleSheet.create({
-  statusPending: {
-    color: stylesColors.statusPending,
+const styles = (layout) => StyleSheet.create({
+  placesCount: {
+    color: stylesColors[layout].primaryText,
   },
   rideFull: {
-    color: stylesColors.rideFull,
+    color: stylesColors[layout].rideFull,
+  },
+  rideContainer: {
+    backgroundColor: stylesColors[layout].primaryBg,
+    borderLeftColor: stylesColors[layout].rideDefault,
+    borderBottomColor: stylesColors[layout].primaryBorder,
+    borderLeftWidth: 5,
+    borderBottomWidth: 2,
   },
   rideAsDriverContainter: {
-    backgroundColor: stylesColors.secondaryBg,
+    backgroundColor: stylesColors[layout].primaryBg,
+    borderLeftColor: stylesColors[layout].rideAsDriver,
+    borderBottomColor: stylesColors[layout].primaryBorder,
+    borderLeftWidth: 5,
+    borderBottomWidth: 2,
   },
   rideAsDriverRightTitle: {
     flex: 0,
     width: 80,
     marginLeft: 5,
   },
+  statusPending: {
+    color: stylesColors[layout].statusPending,
+  },
 });
 
 export class RidesIndexItem extends Component {
   static propTypes = {
-    ride: PropTypes.object.isRequired
+    ride: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   renderAvatar() {
@@ -52,11 +67,32 @@ export class RidesIndexItem extends Component {
     }
   }
 
+  renderPendingRequestsCount() {
+    const { ride, layout } = this.props;
+
+    if (ride.ride_requests_pending_count > 0) {
+      return <Text style={styles(layout).statusPending}>{`${ride.ride_requests_pending_count} pending`}</Text>
+    } else {
+      return null
+    }
+  }
+
+  renderFreePlacesCount() {
+    const { ride, layout } = this.props;
+
+    if (ride.free_places_count === 0) {
+      return <Text style={styles(layout).rideFull}>All taken </Text>
+    } else {
+      return <Text style={styles(layout).placesCount}>{ride.free_places_count} seats free </Text>
+    }
+  }
+
   renderNormalRide() {
-    const { ride, navigation } = this.props;
+    const { ride, layout, navigation } = this.props;
 
     return (
       <ListItem
+        containerStyle={styles(layout).rideContainer}
         onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
@@ -66,28 +102,8 @@ export class RidesIndexItem extends Component {
     )
   }
 
-  renderPendingRequestsCount() {
-    const { ride } = this.props;
-
-    if (ride.ride_requests_pending_count > 0) {
-      return <Text style={styles.statusPending}>{`${ride.ride_requests_pending_count} pending`}</Text>
-    } else {
-      return null
-    }
-  }
-
-  renderFreePlacesCount() {
-    const { ride } = this.props;
-
-    if (ride.free_places_count === 0) {
-      return <Text style={styles.rideFull}>All taken </Text>
-    } else {
-      return <Text>{ride.free_places_count} seats free </Text>
-    }
-  }
-
   renderRideAsDriver() {
-    const { ride, navigation } = this.props;
+    const { ride, layout, navigation } = this.props;
 
     rightTitle =
       <Text>
@@ -97,25 +113,25 @@ export class RidesIndexItem extends Component {
 
     return (
       <ListItem
-        containerStyle={styles.rideAsDriverContainter}
+        containerStyle={styles(layout).rideAsDriverContainter}
         onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
         avatar={{uri: this.renderAvatar()}}
         rightTitle={rightTitle}
-        rightTitleContainerStyle={styles.rideAsDriverRightTitle}
+        rightTitleContainerStyle={styles(layout).rideAsDriverRightTitle}
       />
     )
   }
 
   renderRideAsPassenger() {
-    const { ride, navigation } = this.props;
+    const { ride, layout, navigation } = this.props;
     const color = this.rideAsPassengerColor()
 
     return (
       <ListItem
-        containerStyle={{backgroundColor: color}}
+        containerStyle={[styles(layout).rideContainer, {borderLeftColor: color, borderLeftWidth: 5}]}
         onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
@@ -126,17 +142,17 @@ export class RidesIndexItem extends Component {
   }
 
   rideAsPassengerColor() {
-    const { ride } = this.props;
+    const { ride, layout } = this.props;
 
     switch (ride.user_ride_request_status) {
     case "pending":
-      return stylesColors.statusPendingBg
+      return stylesColors[layout].rideAsPassengerPending
     case "rejected":
-      return stylesColors.statusRejectedBg
+      return stylesColors[layout].rideAsPassengerRejected
     case "accepted":
-      return stylesColors.statusAcceptedBg
+      return stylesColors[layout].rideAsPassengerAccepted
     default:
-      return stylesColors.statusDefaultBg
+      return stylesColors[layout].rideDefault
     }
   }
 

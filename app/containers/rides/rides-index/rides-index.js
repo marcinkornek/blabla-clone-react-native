@@ -27,7 +27,7 @@ import { RenderRidesFilters } from '../../../components/rides/render-rides-filte
 import { RenderRidesSearch } from '../../../components/rides/render-rides-search/render-rides-search'
 
 const per = 20
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   filtersContainer: {
     flexDirection: 'row',
     marginTop: -10,
@@ -46,6 +46,7 @@ export class RidesIndex extends Component {
     isAuthenticated: PropTypes.bool.isRequired,
     filters: PropTypes.object.isRequired,
     search: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -103,14 +104,16 @@ export class RidesIndex extends Component {
   }
 
   renderRightButton() {
+    const { layout } = this.props;
+
     return (
-      <View style={styles.filtersContainer}>
+      <View style={styles(layout).filtersContainer}>
         <Icon.Button
           onPress={() => this.toggleSearch()}
           name="md-search"
           backgroundColor='transparent'
           underlayColor='transparent'
-          color={stylesColors.buttonSubmit}
+          color={stylesColors[layout].buttonSubmit}
           size={30}
         />
         <MaterialCommunityIcons.Button
@@ -118,7 +121,7 @@ export class RidesIndex extends Component {
           name="filter-variant"
           backgroundColor='transparent'
           underlayColor='transparent'
-          color={stylesColors.buttonSubmit}
+          color={stylesColors[layout].buttonSubmit}
           size={30}
         />
       </View>
@@ -134,11 +137,12 @@ export class RidesIndex extends Component {
   }
 
   renderRide(ride) {
-    const { navigation } = this.props;
+    const { navigation, layout } = this.props;
 
     return (
       <RidesIndexItem
         ride={ride}
+        layout={layout}
         navigation={navigation}
         key={`ride${ride.id}`}
       />
@@ -146,7 +150,7 @@ export class RidesIndex extends Component {
   }
 
   renderRidesList() {
-    const { rides, isFetching, isStarted, pagination, isAuthenticated, navigation } = this.props;
+    const { rides, isFetching, isStarted, pagination, isAuthenticated, layout, navigation } = this.props;
 
     return (
       <RenderList
@@ -160,6 +164,7 @@ export class RidesIndex extends Component {
         showAddButton={isAuthenticated}
         addButtonLink={() => navigation.navigate('rideNew')}
         per={per}
+        layout={layout}
         onEndReachedThreshold={200}
         emptyListText='No rides'
       />
@@ -223,8 +228,10 @@ export class RidesIndex extends Component {
   }
 
   render() {
+    const { layout } = this.props;
+
     return (
-      <View style={styles.view}>
+      <View style={styles(layout).view}>
         <View>
           {this.renderRidesSearch()}
           {this.renderRidesFilters()}
@@ -246,6 +253,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.session.isAuthenticated,
     notificationActive: state.notificationActive.item,
     ride: state.ride,
+    layout: state.settings.layout,
   }
 };
 

@@ -15,7 +15,7 @@ import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
 const per = 20
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
     flex: 1,
   },
@@ -29,6 +29,7 @@ export class RidesIndexAsDriver extends Component {
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     currentUser: PropTypes.object,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -83,11 +84,12 @@ export class RidesIndexAsDriver extends Component {
   }
 
   renderRide(ride) {
-    const { navigation } = this.props;
+    const { layout, navigation } = this.props;
 
     return (
       <RidesIndexItem
         ride={ride}
+        layout={layout}
         navigation={navigation}
         key={`ride${ride.id}`}
       />
@@ -95,7 +97,7 @@ export class RidesIndexAsDriver extends Component {
   }
 
   renderRidesList() {
-    const { rides, isFetching, isStarted, pagination, navigation } = this.props;
+    const { rides, isFetching, isStarted, pagination, layout, navigation } = this.props;
 
     return (
       <RenderList
@@ -109,6 +111,7 @@ export class RidesIndexAsDriver extends Component {
         showAddButton={true}
         addButtonLink={() => navigation.navigate('rideNew')}
         per={per}
+        layout={layout}
         onEndReachedThreshold={200}
         emptyListText='No rides as driver'
       />
@@ -116,8 +119,10 @@ export class RidesIndexAsDriver extends Component {
   }
 
   render() {
+    const { layout } = this.props;
+
     return (
-      <View style={styles.view}>
+      <View style={styles(layout).view}>
         {this.renderRidesList()}
       </View>
     );
@@ -133,6 +138,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.session.isAuthenticated,
     currentUser: state.session.item,
     ride: state.ride,
+    layout: state.settings.layout,
   }
 };
 

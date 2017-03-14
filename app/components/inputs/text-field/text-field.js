@@ -1,9 +1,13 @@
+// utils
 import React from 'react';
 import { TextInput, Text, View, StyleSheet } from 'react-native';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 const styles = StyleSheet.create({
   error: {
-    color: 'red',
+    color: stylesColors.error,
     marginLeft: 15,
     marginTop: -5,
     marginBottom: 5,

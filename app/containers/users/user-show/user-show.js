@@ -5,6 +5,9 @@ import { connect } from 'react-redux'
 import moment from 'moment';
 import _ from 'lodash';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchUser } from '../../../actions/users';
 
@@ -23,10 +26,10 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 110,
     borderWidth: 2,
-    borderColor: 'white',
+    borderColor: stylesColors.userShowAvatarBorder,
   },
   userInfoContainer: {
-    backgroundColor: '#23A2E3',
+    backgroundColor: stylesColors.userShowUserContainerBg,
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -36,17 +39,15 @@ const styles = StyleSheet.create({
     margin: 10,
     fontSize: 16,
     fontWeight: 'bold',
-    borderBottomWidth: 1,
-    borderBottomColor: '#ededed',
   },
   userName: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: 'white',
+    color: stylesColors.userShowUserContainerText,
   },
   userInfo: {
     fontSize: 16,
-    color: 'white',
+    color: stylesColors.userShowUserContainerText,
   },
   view: {
     marginTop: 0,

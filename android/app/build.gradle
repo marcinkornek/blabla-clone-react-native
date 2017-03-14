@@ -83,6 +83,10 @@ def enableSeparateBuildPerCPUArchitecture = false
 def enableProguardInReleaseBuilds = false
 
 android {
+    dexOptions {
+        javaMaxHeapSize "2g"
+        preDexLibraries = false
+    }
     compileSdkVersion 23
     buildToolsVersion "23.0.3"
 
@@ -90,11 +94,14 @@ android {
         applicationId "com.blablaclone"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 5
-        versionName "1.0.4"
+        versionCode 7
+        versionName "1.0.6"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
+        multiDexEnabled true
+        manifestPlaceholders = [onesignal_app_id: "fe30dbe7-d459-4dc1-94b4-398a415568b1",
+                                onesignal_google_project_number: "REMOTE"]
     }
     signingConfigs {
         release {
@@ -138,6 +145,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-onesignal')
     compile project(':react-native-maps')
     compile project(':react-native-google-places')
     compile project(':react-native-vector-icons')
@@ -146,6 +154,11 @@ dependencies {
     compile "com.android.support:appcompat-v7:23.0.1"
     compile "com.facebook.react:react-native:+"  // From node_modules
     compile project(':react-native-facebook-login')
+    compile "com.google.android.gms:play-services-base:+"
+    compile "com.google.android.gms:play-services-maps:+"
+    compile "com.google.android.gms:play-services-location:+"
+    compile "com.google.android.gms:play-services-places:+"
+    compile "com.google.android.gms:play-services-gcm:+"
 }
 
 // Run this once to be able to run the application with BUCK

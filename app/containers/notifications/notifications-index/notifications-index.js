@@ -35,9 +35,9 @@ export class NotificationsIndex extends Component {
   }
 
   componentWillMount() {
-    const { isAuthenticated, refreshNotifications } = this.props
+    const { isAuthenticated, fetchNotifications } = this.props
 
-    if (isAuthenticated) refreshNotifications(per)
+    if (isAuthenticated) fetchNotifications(1, per)
   }
 
   refreshNotifications(per) {

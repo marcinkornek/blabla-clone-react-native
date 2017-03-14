@@ -5,20 +5,23 @@ import { FBLogin, FBLoginManager } from 'react-native-facebook-login';
 import { Button } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 const LoginBehavior = {
   'ios': FBLoginManager.LoginBehaviors.Browser,
   'android': FBLoginManager.LoginBehaviors.Native
 }
 const styles = StyleSheet.create({
   loginButton: {
-    backgroundColor: '#3b5998',
+    backgroundColor: stylesColors.loginFbButtonBg,
     borderRadius: 0,
     padding: 15,
     margin: 15,
     justifyContent: 'center',
   },
   loginButtonText: {
-    color: 'white',
+    color: stylesColors.loginFbButtonText,
     fontSize: 16,
   }
 });
@@ -49,7 +52,6 @@ export class FBLoginView extends Component {
           title='Logging in'
           loading={isFetching}
           fontSize={16}
-          backgroundColor='#3b5998'
           buttonStyle={styles.loginButton}
         />
       )
@@ -59,8 +61,8 @@ export class FBLoginView extends Component {
           onPress={() => this.login()}
           name="facebook"
           style={styles.loginButton}
-          backgroundColor='transparent'
-          underlayColor='transparent'
+          backgroundColor={stylesColors.transparent}
+          underlayColor={stylesColors.transparent}
         >
           <Text style={styles.loginButtonText}>
             Login with Facebook

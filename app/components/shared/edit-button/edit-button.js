@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
 import { TouchableHighlight, Text, StyleSheet } from 'react-native';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 const styles = StyleSheet.create({
   buttonStyle: {
     marginRight: 10,
@@ -13,7 +16,7 @@ export const EditButton = ({onClick, showEdit}) => {
     return (
       <TouchableHighlight
         onPress={onClick}
-        underlayColor='white'
+        underlayColor={stylesColors.primaryBg}
       >
         <Text style={styles.buttonStyle}>Edit</Text>
       </TouchableHighlight>

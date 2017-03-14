@@ -33,10 +33,13 @@ import {
   RIDE_UPDATE_FAILURE,
   RIDE_SEARCH_CLEAR,
   RIDE_FILTER_CLEAR,
+  RIDES_SET_DEFAULT_PER,
+  RIDES_AS_PASSENGER_SET_DEFAULT_PER,
+  RIDES_AS_DRIVER_SET_DEFAULT_PER,
 } from '../constants/action-types';
 import { APIEndpoints } from '../constants/constants';
 
-export function refreshRides(per = 10) {
+export function refreshRides(per = 20) {
   return (dispatch, getState) => {
     const { ridesFilters } = getState()
     const filters = ridesFilters.filters
@@ -58,12 +61,12 @@ export function refreshRides(per = 10) {
             search,
           }
         }
-      }
+      },
     })
   }
 }
 
-export function fetchRides(page = 1, per = 10) {
+export function fetchRides(page = 1, per = 20) {
   return (dispatch, getState) => {
     const { ridesFilters } = getState()
     const filters = ridesFilters.filters
@@ -90,7 +93,7 @@ export function fetchRides(page = 1, per = 10) {
   }
 }
 
-export function refreshRidesAsPassenger(user_id, per = 10) {
+export function refreshRidesAsPassenger(user_id, per = 20) {
   return {
     types: [
       RIDES_AS_PASSENGER_REFRESH_REQUEST,
@@ -110,7 +113,7 @@ export function refreshRidesAsPassenger(user_id, per = 10) {
   }
 }
 
-export function fetchRidesAsPassenger(user_id, page = 1, per = 10) {
+export function fetchRidesAsPassenger(user_id, page = 1, per = 20) {
   return {
     types: [
       RIDES_AS_PASSENGER_FETCH_REQUEST,
@@ -130,7 +133,7 @@ export function fetchRidesAsPassenger(user_id, page = 1, per = 10) {
   }
 }
 
-export function refreshRidesAsDriver(user_id, per = 10) {
+export function refreshRidesAsDriver(user_id, per = 20) {
   return {
     types: [
       RIDES_AS_DRIVER_REFRESH_REQUEST,
@@ -150,7 +153,7 @@ export function refreshRidesAsDriver(user_id, per = 10) {
   }
 }
 
-export function fetchRidesAsDriver(user_id, page = 1, per = 10) {
+export function fetchRidesAsDriver(user_id, page = 1, per = 20) {
   return {
     types: [
       RIDES_AS_DRIVER_FETCH_REQUEST,
@@ -257,5 +260,26 @@ export function clearRidesSearch() {
 export function clearRidesFilters() {
   return {
     type: RIDE_FILTER_CLEAR,
+  }
+}
+
+export function setDefaultRidesPer(per) {
+  return {
+    type: RIDES_SET_DEFAULT_PER,
+    per: per,
+  }
+}
+
+export function setDefaultRidesAsPassengerPer(per) {
+  return {
+    type: RIDES_AS_PASSENGER_SET_DEFAULT_PER,
+    per: per,
+  }
+}
+
+export function setDefaultRidesAsDriverPer(per) {
+  return {
+    type: RIDES_AS_DRIVER_SET_DEFAULT_PER,
+    per: per,
   }
 }

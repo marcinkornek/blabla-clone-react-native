@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 // components
 import ModalRoot from './containers/modals/modal-root/modal-root'
+import SettingsEdit from './containers/settings/settings-edit/settings-edit'
 import AppDrawer from './containers/shared/app-drawer/app-drawer'
 import Register from './containers/current-user/current-user-new/current-user-new'
 import CarsIndex from './containers/cars/cars-index/cars-index'
@@ -65,12 +66,10 @@ export const AuthenticatedRidesStackNavigator = StackNavigator({
   rideShow: { screen: RideShow },
   rideEdit: { screen: RideEdit },
   rideNew: { screen: RideNew },
-  carShow: { screen: CarShow },
-  carNew: { screen: CarNew },
-  carEdit: { screen: CarEdit },
   usersIndex: { screen: UsersIndex },
   userShow: { screen: UserShow },
   myNotifications: { screen: NotificationsIndex },
+  settingsIndex: { screen: SettingsEdit },
 }, navigationOptionsWithHamburger('Rides'))
 
 export const AuthenticatedAccountTabNavigator = TabNavigator({
@@ -92,6 +91,9 @@ export const AuthenticatedAccountTabNavigator = TabNavigator({
 export const AuthenticatedAccountStackNavigator = StackNavigator({
   accountTabs: { screen: AuthenticatedAccountTabNavigator },
   myProfileEdit: { screen: CurrentUserEdit },
+  carNew: { screen: CarNew },
+  carShow: { screen: CarShow },
+  carEdit: { screen: CarEdit },
 }, navigationOptionsWithHamburger('My Account'))
 
 export const AuthenticatedDrawerNavigator = DrawerNavigator({
@@ -139,19 +141,19 @@ export const NotAuthenticatedDrawerNavigator = DrawerNavigator({
   contentComponent: AppDrawer
 })
 
-export const Root = ({ isAuthenticated }) => {
+export const Root = ({ isAuthenticated, playerId }) => {
   if (isAuthenticated) {
     return (
       <View style={{flex: 1}}>
         <AuthenticatedDrawerNavigator />
-        <ModalRoot />
+        <ModalRoot playerId={playerId} />
       </View>
     )
   } else {
     return (
       <View style={{flex: 1}}>
         <NotAuthenticatedDrawerNavigator />
-        <ModalRoot />
+        <ModalRoot playerId={playerId} />
       </View>
     )
   }

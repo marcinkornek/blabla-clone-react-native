@@ -6,6 +6,9 @@ import { reduxForm, Field } from 'redux-form'
 import { Button } from 'react-native-elements';
 import _ from 'lodash';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // components
 import { GeosuggestField } from '../../inputs/geosuggest-field/geosuggest-field';
 
@@ -48,7 +51,7 @@ export class RenderRidesSearch extends Component {
           raised
           buttonStyle={styles.submitButton}
           title={'Clear'}
-          backgroundColor='red'
+          backgroundColor={stylesColors.error}
           onPress={clearSearch}
         />
       )
@@ -79,7 +82,7 @@ export class RenderRidesSearch extends Component {
             raised
             buttonStyle={styles.submitButton}
             title={'Search'}
-            backgroundColor='#23a2e3'
+            backgroundColor={stylesColors.buttonSubmit}
             onPress={handleSubmit}
           />
           {this.renderClearButton()}

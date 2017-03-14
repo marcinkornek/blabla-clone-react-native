@@ -6,6 +6,9 @@ import { reduxForm, Field } from 'redux-form'
 import { Button } from 'react-native-elements';
 import _ from 'lodash';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // components
 import { SelectField } from '../../inputs/select-field/select-field';
 
@@ -63,7 +66,7 @@ export class RenderRidesFilters extends Component {
           raised
           buttonStyle={styles.submitButton}
           title={'Clear'}
-          backgroundColor='red'
+          backgroundColor={stylesColors.error}
           onPress={clearFilters}
         />
       )
@@ -124,7 +127,7 @@ export class RenderRidesFilters extends Component {
             raised
             buttonStyle={styles.submitButton}
             title={'Filter'}
-            backgroundColor='#23a2e3'
+            backgroundColor={stylesColors.buttonSubmit}
             onPress={handleSubmit}
           />
           {this.renderClearButton()}

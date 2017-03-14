@@ -4,12 +4,16 @@ import { connect } from 'react-redux';
 import { View, Modal, Text, StyleSheet } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { hideModal, showModal } from '../../../actions/modals';
 
 // components
 import Login from '../../session/login/login'
 import Register from '../../current-user/current-user-new/current-user-new'
+import CarNew from '../../cars/car-new/car-new'
 
 const styles = StyleSheet.create({
   modal: {
@@ -28,7 +32,7 @@ const styles = StyleSheet.create({
     margin: 0,
     padding: 15,
     borderRadius: 5,
-    backgroundColor: 'white',
+    backgroundColor: stylesColors.modalBg,
   },
   titleContainer: {
     alignItems: 'center',
@@ -49,6 +53,7 @@ const styles = StyleSheet.create({
 const MODAL_COMPONENTS = {
   'LOGIN': Login,
   'REGISTER': Register,
+  'CAR_NEW': CarNew,
 }
 
 export class ModalRoot extends Component {
@@ -67,7 +72,7 @@ export class ModalRoot extends Component {
         <MaterialIcons.Button
           name="close"
           backgroundColor="transparent"
-          color="#23A2E3"
+          color={stylesColors.modalCloseX}
           size={25}
           onPress={this.closeModal.bind(this)}
         />
@@ -120,7 +125,7 @@ export class ModalRoot extends Component {
             {this.renderTitle()}
             {this.renderModalCloseIcon()}
             {this.renderSubtitle()}
-            <SpecificModal {...modalProps} />
+            <SpecificModal {...this.props} isModal={true} />
           </View>
         </View>
       </Modal>

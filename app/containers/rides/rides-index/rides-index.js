@@ -4,9 +4,21 @@ import { connect } from 'react-redux';
 import { View, StyleSheet, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import { max } from 'ramda'
+
+// styles
+import stylesColors from '../../../constants/colors';
 
 // actions
-import { fetchRides, refreshRides, updateRidesSearch, updateRidesFilters, clearRidesSearch, clearRidesFilters } from '../../../actions/rides';
+import {
+  fetchRides,
+  refreshRides,
+  setDefaultRidesPer,
+  updateRidesSearch,
+  updateRidesFilters,
+  clearRidesSearch,
+  clearRidesFilters,
+} from '../../../actions/rides';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
@@ -47,16 +59,47 @@ export class RidesIndex extends Component {
     showFilters: false,
   };
 
-  componentWillMount() {
-    this.props.fetchRides(1, per)
+  static defaultProps = {
+    ride: {}
   }
 
-  refreshRides(per) {
-    this.props.refreshRides(per)
+  componentWillMount() {
+    const { refreshRides, setDefaultRidesPer, rides, pagination } = this.props;
+
+    setDefaultRidesPer(per)
+    refreshRides(this.initialPer())
+  }
+
+  componentDidUpdate(oldProps) {
+    const { notificationActive, ride, navigation } = this.props;
+
+    if (notificationActive !== oldProps.notificationActive) {
+      navigation.navigate('rideShow', {id: notificationActive.ride.id})
+    }
+
+    if (ride.isSaving == false && oldProps.ride.isSaving == true) {
+      this.refreshRides()
+    }
+  }
+
+  refreshRides() {
+    this.props.refreshRides(this.initialPer())
   }
 
   fetchRides(page, per) {
     this.props.fetchRides(page, per)
+  }
+
+  initialPer() {
+    const { rides } = this.props;
+
+    if (rides.length >= 3 * per) {
+      return 3 * per
+    } else if (rides.length >= 2 * per) {
+      return 2 * per
+    } else {
+      return per
+    }
   }
 
   renderRightButton() {
@@ -67,7 +110,7 @@ export class RidesIndex extends Component {
           name="md-search"
           backgroundColor='transparent'
           underlayColor='transparent'
-          color="#23a2e3"
+          color={stylesColors.buttonSubmit}
           size={30}
         />
         <MaterialCommunityIcons.Button
@@ -75,7 +118,7 @@ export class RidesIndex extends Component {
           name="filter-variant"
           backgroundColor='transparent'
           underlayColor='transparent'
-          color="#23a2e3"
+          color={stylesColors.buttonSubmit}
           size={30}
         />
       </View>
@@ -201,12 +244,15 @@ const mapStateToProps = (state) => {
     isStarted: state.rides.isStarted,
     isFetching: state.rides.isFetching,
     isAuthenticated: state.session.isAuthenticated,
+    notificationActive: state.notificationActive.item,
+    ride: state.ride,
   }
 };
 
 const mapDispatchToProps = {
   fetchRides,
   refreshRides,
+  setDefaultRidesPer,
   updateRidesSearch,
   updateRidesFilters,
   clearRidesSearch,

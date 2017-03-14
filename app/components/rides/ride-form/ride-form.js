@@ -7,6 +7,9 @@ import { Button } from 'react-native-elements';
 import moment from 'moment';
 import _ from 'lodash';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // form validators
 import { RideValidator } from '../ride-validator/ride-validator'
 
@@ -20,6 +23,20 @@ const styles = StyleSheet.create({
   submitButton: {
     marginTop: 10,
   },
+  addCarContainer: {
+    flexDirection: 'row',
+    justifyContent: 'flex-start',
+    marginLeft: 15,
+    marginBottom: 5,
+  },
+  addCarButton: {
+    width: 100,
+    padding: 5,
+    marginLeft: 0,
+  },
+  addCarText: {
+    marginTop: 5,
+  },
 });
 
 class RideForm extends Component {
@@ -28,6 +45,49 @@ class RideForm extends Component {
     rideOptions: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
     ride: PropTypes.object
+  }
+
+  renderCarField() {
+    const { rideOptions, showModal } = this.props
+
+    let cars = rideOptions.cars.map((car, i) =>
+      <Picker.Item
+        key={'car' + car.id}
+        value={car.id}
+        label={car.full_name}
+      />
+    )
+    const carPlaceholder =
+      <Picker.Item
+        key={'car-placeholder'}
+        value={null}
+        label="Choose car"
+      />
+
+    if (rideOptions.cars.length > 0) {
+      return (
+        <Field
+          name="car_id"
+          label="Car"
+          component={SelectField}
+        >
+          {[carPlaceholder, ...cars]}
+        </Field>
+      )
+    } else {
+      return (
+        <View style={styles.addCarContainer}>
+          <Button
+            raised
+            title='Add car'
+            backgroundColor={stylesColors.buttonSubmit}
+            buttonStyle={styles.addCarButton}
+            onPress={() => showModal('CAR_NEW', { title: 'Add car', subtitle: 'You need to add car first to add ride' })}
+          />
+          <Text style={styles.addCarText}>You have to add car first</Text>
+        </View>
+      )
+    }
   }
 
   render() {
@@ -46,19 +106,6 @@ class RideForm extends Component {
         key={'currency-placeholder'}
         value={null}
         label="Choose currency"
-      />
-    let cars = rideOptions.cars.map((car, i) =>
-      <Picker.Item
-        key={'car' + car.id}
-        value={car.id}
-        label={car.name}
-      />
-    )
-    const carPlaceholder =
-      <Picker.Item
-        key={'car-placeholder'}
-        value={null}
-        label="Choose car"
       />
 
     return (
@@ -79,13 +126,7 @@ class RideForm extends Component {
           minDate={minumumStartDate}
           component={DatetimepickerField}
         />
-        <Field
-          name="car_id"
-          label="Car"
-          component={SelectField}
-        >
-          {[carPlaceholder, ...cars]}
-        </Field>
+        {this.renderCarField()}
         <Field
           name="places"
           label="Places"
@@ -107,10 +148,10 @@ class RideForm extends Component {
         </Field>
         <Button
           raised
-          style={styles.submitButton}
+          buttonStyle={styles.submitButton}
           title={isSaving ? 'Saving' : 'Submit'}
           loading={isSaving}
-          backgroundColor='#23a2e3'
+          backgroundColor={stylesColors.buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

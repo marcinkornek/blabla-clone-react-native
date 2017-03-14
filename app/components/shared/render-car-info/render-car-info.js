@@ -2,6 +2,9 @@
 import React, { PropTypes } from 'react'
 import { View, Image, Text, TouchableHighlight, StyleSheet } from 'react-native';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 const styles = StyleSheet.create({
   avatar: {
     width: 40,
@@ -38,7 +41,7 @@ export const RenderCarInfo = ({car, navigation}) => (
       </View>
     </View>
     <TouchableHighlight
-      underlayColor='white'
+      underlayColor={stylesColors.primaryBg}
       onPress={() => navigation.navigate('carShow', { id: car.id })}
     >
       <Text>view car</Text>

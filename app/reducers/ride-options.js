@@ -1,6 +1,7 @@
 import {
   RIDE_OPTIONS_FETCH_REQUEST,
   RIDE_OPTIONS_FETCH_SUCCESS,
+  CAR_CREATE_SUCCESS,
 } from '../constants/action-types'
 
 export const initialState = {
@@ -27,6 +28,13 @@ export function rideOptions(state = initialState, action) {
       ...state,
       isFetching: false,
       ...item
+    };
+  case CAR_CREATE_SUCCESS:
+    console.log('CAR_CREATE_SUCCESS');
+    item = action.payload.data
+    return {
+      ...state,
+      cars: [...state.cars, item]
     };
   default:
     return state;

@@ -4,6 +4,7 @@ import { reducer as formReducer } from 'redux-form';
 
 // reducers
 import { modal } from './modal';
+import { settings } from './settings';
 import { users } from './users';
 import { user } from './user';
 import { cars } from './cars';
@@ -17,10 +18,12 @@ import { ridesFilters } from './rides-filters';
 import { ride } from './ride';
 import { rideOptions } from './ride-options';
 import { session } from './session';
+import { notificationActive } from './notification-active';
 import { notifications } from './notifications';
 
 export default combineReducers({
   modal,
+  settings,
   currentUser,
   users,
   user,
@@ -34,6 +37,7 @@ export default combineReducers({
   ride,
   rideOptions,
   session,
+  notificationActive,
   notifications,
   form: formReducer
 });

@@ -6,13 +6,18 @@ import { Button } from 'react-native-elements';
 import moment from 'moment';
 import MapView from 'react-native-maps';
 import Collapsible from 'react-native-collapsible';
+import _ from 'lodash';
+
+// styles
+import stylesColors from '../../../constants/colors';
 
 // actions
 import { fetchRide } from '../../../actions/rides';
-import { createRideRequest } from '../../../actions/ride-requests';
+import { createRideRequest, changeRideRequest } from '../../../actions/ride-requests';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
+import { RideRequestsIndex } from '../../../components/rides/ride-requests-index/ride-requests-index'
 import { RenderUserProfile } from '../../../components/shared/render-user-profile/render-user-profile'
 import { RenderCarInfo } from '../../../components/shared/render-car-info/render-car-info'
 import { RenderRideOffer } from '../../../components/rides/render-ride-offer/render-ride-offer'
@@ -120,7 +125,7 @@ export class RideShow extends Component {
     return (
       this.map.fitToCoordinates(coordinates, {
         edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
-        animated: true,
+        animated: false,
       })
     )
   }
@@ -158,6 +163,12 @@ export class RideShow extends Component {
       })
   }
 
+  changeRideRequest(rideRequestId, status) {
+    const { changeRideRequest } = this.props
+
+    changeRideRequest(rideRequestId, status)
+  }
+
   toggleMap() {
     const { ride } = this.props;
     const coordinates = [
@@ -190,7 +201,7 @@ export class RideShow extends Component {
     return (
       <View>
         <TouchableHighlight
-          underlayColor='white'
+          underlayColor={stylesColors.primaryBg}
           onPress={() => this.toggleMap()}
         >
           <Text>{this.state.hideMap ? 'Show map' : 'Hide map'}</Text>
@@ -231,14 +242,16 @@ export class RideShow extends Component {
   }
 
   renderDriver() {
-    const { ride, navigation } = this.props
+    const { ride, currentUser, navigation } = this.props
 
-    return(
-      <RenderUserProfile
-        user={ride.driver}
-        navigation={navigation}
-      />
-    )
+    if (!(ride.driver.id === currentUser.id)) {
+      return(
+        <RenderUserProfile
+          user={ride.driver}
+          navigation={navigation}
+        />
+      )
+    }
   }
 
   renderCar() {
@@ -253,13 +266,29 @@ export class RideShow extends Component {
   }
 
   renderOffer() {
+    const { ride, currentUser } = this.props
+
     return(
       <RenderRideOffer
-        ride={this.props.ride}
-        currentUser={this.props.currentUser}
+        ride={ride}
+        currentUser={currentUser}
         handleSubmit={this.createRideRequest.bind(this)}
       />
     )
+  }
+
+  renderRideRequests() {
+    const { ride, currentUser } = this.props
+
+    if (ride.driver.id === currentUser.id && !_.isEmpty(ride.ride_requests)) {
+      return(
+        <RideRequestsIndex
+          ride={ride}
+          currentUser={currentUser}
+          handleSubmit={this.changeRideRequest.bind(this)}
+        />
+      )
+    }
   }
 
   render() {
@@ -275,6 +304,7 @@ export class RideShow extends Component {
           {this.renderDriver()}
           {this.renderCar()}
           {this.renderOffer()}
+          {this.renderRideRequests()}
         </AsyncContent>
       </ScrollView>
     );
@@ -293,6 +323,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchRide,
   createRideRequest,
+  changeRideRequest,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RideShow)

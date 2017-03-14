@@ -4,7 +4,11 @@ import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 
 // actions
-import { fetchRidesAsPassenger, refreshRidesAsPassenger } from '../../../actions/rides';
+import {
+  fetchRidesAsPassenger,
+  refreshRidesAsPassenger,
+  setDefaultRidesAsPassengerPer,
+} from '../../../actions/rides';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
@@ -34,21 +38,36 @@ export class RidesIndexAsPassenger extends Component {
   }
 
   componentWillMount() {
-    const { refreshRidesAsPassenger, currentUser } = this.props
+    const { refreshRidesAsPassenger, setDefaultRidesAsPassengerPer, currentUser } = this.props
 
-    if (currentUser.id) refreshRidesAsPassenger(currentUser.id, per)
+    if (currentUser.id) {
+      setDefaultRidesAsPassengerPer(per)
+      refreshRidesAsPassenger(currentUser.id, this.initialPer())
+    }
   }
 
-   refreshRides(per) {
+  refreshRides(per) {
     const { refreshRidesAsPassenger, currentUser } = this.props
 
-    if (currentUser.id) refreshRidesAsPassenger(currentUser.id, per)
+    if (currentUser.id) refreshRidesAsPassenger(currentUser.id, this.initialPer())
   }
 
   fetchRides(page, per) {
     const { fetchRidesAsPassenger, currentUser } = this.props
 
     if (currentUser.id) fetchRidesAsPassenger(currentUser.id, page, per)
+  }
+
+  initialPer() {
+    const { rides } = this.props;
+
+    if (rides.length >= 3 * per) {
+      return 3 * per
+    } else if (rides.length >= 2 * per) {
+      return 2 * per
+    } else {
+      return per
+    }
   }
 
   renderRide(ride) {
@@ -105,6 +124,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchRidesAsPassenger,
   refreshRidesAsPassenger,
+  setDefaultRidesAsPassengerPer,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RidesIndexAsPassenger)

@@ -1,7 +1,9 @@
 import {
   CAR_FETCH_REQUEST,
   CAR_FETCH_SUCCESS,
+  CAR_CREATE_SUCCESS,
   CAR_CREATE_REQUEST,
+  CAR_UPDATE_SUCCESS,
   CAR_UPDATE_REQUEST,
 } from '../constants/action-types'
 
@@ -39,11 +41,23 @@ export function car(state = initialState, action) {
       ...state,
       isSaving: true
     };
+  case CAR_CREATE_SUCCESS:
+    console.log('CAR_CREATE_SUCCESS');
+    return {
+      ...state,
+      isSaving: false
+    };
   case CAR_UPDATE_REQUEST:
     console.log('CAR_UPDATE_REQUEST');
     return {
       ...state,
       isSaving: true
+    };
+  case CAR_UPDATE_SUCCESS:
+    console.log('CAR_UPDATE_SUCCESS');
+    return {
+      ...state,
+      isSaving: false
     };
   default:
     return state;

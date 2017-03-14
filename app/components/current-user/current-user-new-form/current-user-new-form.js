@@ -6,6 +6,9 @@ import { View, ScrollView, Text, TextInput, Picker } from 'react-native';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // form validators
 import { UserNewValidator } from '../user-new-validator/user-new-validator'
 
@@ -99,7 +102,7 @@ class CurrentUserNewForm extends Component {
           raised
           title={isSaving ? 'Saving' : 'Submit'}
           loading={isSaving}
-          backgroundColor='#23a2e3'
+          backgroundColor={stylesColors.buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

@@ -28,7 +28,7 @@ import UsersIndex from './containers/users/users-index/users-index'
 import UserShow from './containers/users/user-show/user-show'
 import NotificationsIndex from './containers/notifications/notifications-index/notifications-index'
 import requireAuth from './containers/shared/require-auth/require-auth'
-import { HamburgerButton } from './components/shared/hamburger-button/hamburger-button'
+import HamburgerButton from './containers/shared/hamburger-button/hamburger-button'
 
 const navigationOptionsWithHamburger = (title) => (
   {

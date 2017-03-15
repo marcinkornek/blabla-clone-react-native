@@ -18,7 +18,7 @@ import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides
 import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-index-item'
 import { EditButton } from '../../../components/shared/edit-button/edit-button'
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   avatar: {
     width: 110,
     height: 110,
@@ -26,16 +26,18 @@ const styles = StyleSheet.create({
     marginRight: 10,
     borderRadius: 110,
     borderWidth: 2,
-    borderColor: stylesColors.userShowAvatarBorder,
+    borderColor: stylesColors[layout].userShowAvatarBorder,
   },
   userInfoContainer: {
-    backgroundColor: stylesColors.userShowUserContainerBg,
+    backgroundColor: stylesColors[layout].userShowUserContainerBg,
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
     padding: 10,
   },
   title: {
+    backgroundColor: stylesColors[layout].primaryBg,
+    color: stylesColors[layout].primaryText,
     margin: 10,
     fontSize: 16,
     fontWeight: 'bold',
@@ -43,11 +45,11 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: stylesColors.userShowUserContainerText,
+    color: stylesColors[layout].userShowUserContainerText,
   },
   userInfo: {
     fontSize: 16,
-    color: stylesColors.userShowUserContainerText,
+    color: stylesColors[layout].userShowUserContainerText,
   },
   view: {
     marginTop: 0,
@@ -60,6 +62,7 @@ export class UserShow extends Component {
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     currentUser: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -117,26 +120,26 @@ export class UserShow extends Component {
   }
 
   renderUserInfo() {
-    const { user } = this.props
+    const { user, layout } = this.props
 
     return(
-      <View style={styles.userInfoContainer}>
-        <Image source={{uri: user.avatar}} style={styles.avatar} />
-        <Text style={styles.userName}>{user.full_name}</Text>
-        <RenderUserAge user={user} style={styles.userInfo} />
-        <Text style={styles.userInfo}>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
-        <Text style={styles.userInfo}>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
+      <View style={styles(layout).userInfoContainer}>
+        <Image source={{uri: user.avatar}} style={styles(layout).avatar} />
+        <Text style={styles(layout).userName}>{user.full_name}</Text>
+        <RenderUserAge user={user} style={styles(layout).userInfo} />
+        <Text style={styles(layout).userInfo}>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
+        <Text style={styles(layout).userInfo}>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
       </View>
     )
   }
 
   renderRidesAsDriver() {
-    const { user } = this.props
+    const { user, layout } = this.props
 
     if (!_.isEmpty(user.rides_as_driver)) {
       return (
         <View>
-          <Text style={styles.title}>Rides as driver</Text>
+          <Text style={styles(layout).title}>Rides as driver</Text>
           {this.renderRidesAsDriverList()}
         </View>
       )
@@ -144,13 +147,14 @@ export class UserShow extends Component {
   }
 
   renderRidesAsDriverList() {
-    const { user, navigation } = this.props
+    const { user, layout, navigation } = this.props
 
     return (
       user.rides_as_driver.map((ride, i) =>
         <RidesIndexItem
           key={`ride-${i}`}
           ride={ride}
+          layout={layout}
           navigation={navigation}
           withCarPhoto={true}
         />
@@ -159,12 +163,12 @@ export class UserShow extends Component {
   }
 
   renderUserCars() {
-    const { user } = this.props
+    const { user, layout } = this.props
 
     if (!_.isEmpty(user.cars)) {
       return (
         <View>
-          <Text style={styles.title}>Cars</Text>
+          <Text style={styles(layout).title}>Cars</Text>
           {this.renderUserCarsList()}
         </View>
       )
@@ -172,13 +176,14 @@ export class UserShow extends Component {
   }
 
   renderUserCarsList() {
-    const { user, currentUser, navigation } = this.props
+    const { user, currentUser, layout, navigation } = this.props
 
     return (
       user.cars.map((car, i) =>
         <CarsIndexItem
           key={`car-${i}`}
           car={car}
+          layout={layout}
           navigation={navigation}
           currentUser={currentUser}
         />
@@ -187,10 +192,10 @@ export class UserShow extends Component {
   }
 
   render() {
-    const { isStarted, isFetching } = this.props
+    const { isStarted, isFetching, layout } = this.props
 
     return (
-      <ScrollView style={styles.view}>
+      <ScrollView style={styles(layout).view}>
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
@@ -209,6 +214,7 @@ const mapStateToProps = (state) => {
     isStarted: state.user.isStarted,
     isFetching: state.user.isFetching,
     currentUser: state.session.item,
+    layout: state.settings.layout,
   }
 }
 

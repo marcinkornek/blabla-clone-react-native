@@ -17,6 +17,7 @@ import { AsyncContent } from '../../../components/shared/async-content/async-con
 
 const styles = (layout) => StyleSheet.create({
   view: {
+    flex: 1,
     paddingTop: 10,
     backgroundColor: stylesColors[layout].primaryBg,
   }

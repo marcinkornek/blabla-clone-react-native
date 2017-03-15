@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
 import _ from 'lodash';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchCarsOptions, updateCar } from '../../../actions/cars'
 
@@ -11,9 +14,11 @@ import { fetchCarsOptions, updateCar } from '../../../actions/cars'
 import CarForm from '../../../components/cars/car-form/car-form'
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
-    marginTop: 10,
+    flex: 1,
+    paddingTop: 10,
+    backgroundColor: stylesColors[layout].primaryBg,
   }
 });
 
@@ -24,6 +29,7 @@ export class CarEdit extends Component {
     isFetching: PropTypes.bool.isRequired,
     isStarted: PropTypes.bool.isRequired,
     carOptions: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -59,12 +65,13 @@ export class CarEdit extends Component {
   }
 
   renderCarForm() {
-    const { carOptions, car, isSaving } = this.props
+    const { carOptions, car, isSaving, layout } = this.props
 
     return(
       <CarForm
         car={car}
         isSaving={isSaving}
+        layout={layout}
         onSubmit={this.handleSubmit.bind(this)}
         carOptions={carOptions}
       />
@@ -72,10 +79,10 @@ export class CarEdit extends Component {
   }
 
   render() {
-    const { isFetching, isStarted } = this.props
+    const { isFetching, isStarted, layout } = this.props
 
     return (
-      <ScrollView style={styles.view}>
+      <ScrollView style={styles(layout).view}>
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
@@ -92,7 +99,8 @@ const mapStateToProps = (state) => {
     isSaving: state.car.isSaving,
     isFetching: state.carOptions.isFetching,
     isStarted: state.carOptions.isStarted,
-    carOptions: state.carOptions
+    carOptions: state.carOptions,
+    layout: state.settings.layout,
   }
 }
 

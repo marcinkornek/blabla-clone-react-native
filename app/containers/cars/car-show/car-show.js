@@ -3,6 +3,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
 import { TouchableHighlight, Text, View, StyleSheet, Image } from 'react-native';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchCar } from '../../../actions/cars';
 
@@ -10,8 +13,9 @@ import { fetchCar } from '../../../actions/cars';
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 import { EditButton } from '../../../components/shared/edit-button/edit-button'
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   carName: {
+    color: stylesColors[layout].primaryText,
     fontSize: 18,
     fontWeight: 'bold',
     marginBottom: 5,
@@ -27,7 +31,12 @@ const styles = StyleSheet.create({
     height: 100,
     margin: 10,
   },
+  primaryText: {
+    color: stylesColors[layout].primaryText,
+  },
   view: {
+    flex: 1,
+    backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 
@@ -37,6 +46,7 @@ class CarShow extends Component {
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     currentUser: PropTypes.object,
+    layout: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -91,25 +101,25 @@ class CarShow extends Component {
   }
 
   renderCar() {
-    const { car } = this.props
+    const { car, layout } = this.props
 
     return(
-      <View style={styles.container}>
-        <Image source={{uri: car.car_photo}} style={styles.photo} />
-        <Text style={styles.carName}>{car.full_name} {car.production_year}</Text>
-        <Text>{car.places_full}</Text>
-        <Text>{car.color}</Text>
-        <Text>{car.comfort}</Text>
-        <Text>{car.category}</Text>
+      <View style={styles(layout).container}>
+        <Image source={{uri: car.car_photo}} style={styles(layout).photo} />
+        <Text style={styles(layout).carName}>{car.full_name} {car.production_year}</Text>
+        <Text style={styles(layout).primaryText}>{car.places_full}</Text>
+        <Text style={styles(layout).primaryText}>{car.color}</Text>
+        <Text style={styles(layout).primaryText}>{car.comfort}</Text>
+        <Text style={styles(layout).primaryText}>{car.category}</Text>
       </View>
     )
   }
 
   render() {
-    const { isFetching, isStarted } = this.props
+    const { isFetching, isStarted, layout } = this.props
 
     return (
-      <View style={styles.view}>
+      <View style={styles(layout).view}>
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
@@ -126,6 +136,7 @@ const mapStateToProps = (state) => {
     isStarted: state.car.isStarted,
     isFetching: state.car.isFetching,
     currentUser: state.session.item,
+    layout: state.settings.layout,
   }
 }
 

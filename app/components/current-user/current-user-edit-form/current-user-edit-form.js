@@ -18,7 +18,7 @@ import { SelectField } from '../../inputs/select-field/select-field';
 import { DatepickerField } from '../../inputs/datepicker-field/datepicker-field';
 import { ImageField } from '../../inputs/image-field/image-field';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   avatar: {
     width: 50,
     height: 50,
@@ -27,25 +27,28 @@ const styles = StyleSheet.create({
   currentAvatarContainer: {
     margin: 10,
     marginLeft: 15,
-  }
+  },
+  primaryText: {
+    color: stylesColors[layout].primaryText,
+  },
 })
 
 class CurrentUserEditForm extends Component {
   renderCurrentAvatar() {
-    const { currentUser } = this.props;
+    const { currentUser, layout } = this.props;
 
     if (currentUser) {
       return (
-        <View style={styles.currentAvatarContainer}>
-          <Text>Current avatar:</Text>
-          <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
+        <View style={styles(layout).currentAvatarContainer}>
+          <Text style={styles(layout).primaryText}>Current avatar:</Text>
+          <Image source={{uri: currentUser.avatar}} style={styles(layout).avatar} />
         </View>
       )
     }
   }
 
   render() {
-    const { handleSubmit, isSaving } = this.props;
+    const { handleSubmit, isSaving, layout } = this.props;
     const minumumBirthDate = moment().subtract(18, 'years').format('DD.MM.YYYY')
 
     return (
@@ -54,22 +57,26 @@ class CurrentUserEditForm extends Component {
           name="first_name"
           label="First name"
           component={TextField}
+          layout={layout}
         />
         <Field
           name="last_name"
           label="Last name"
           component={TextField}
+          layout={layout}
         />
         <Field
           name="email"
           label="Email"
           keyboardType="email-address"
           component={TextField}
+          layout={layout}
         />
         <Field
           name="gender"
           label="Gender"
           component={SelectField}
+          layout={layout}
         >
           <Picker.Item
             key={'gender-placeholder'}
@@ -92,6 +99,7 @@ class CurrentUserEditForm extends Component {
           label="Date of birth"
           maxDate={minumumBirthDate}
           component={DatepickerField}
+          layout={layout}
         />
         <Field
           name="tel_num"
@@ -99,18 +107,20 @@ class CurrentUserEditForm extends Component {
           maxLength={10}
           keyboardType="numeric"
           component={TextField}
+          layout={layout}
         />
         {this.renderCurrentAvatar()}
         <Field
           type="file"
           name="avatar"
           component={ImageField}
+          layout={layout}
         />
         <Button
           raised
           title={isSaving ? 'Saving' : 'Submit'}
           loading={isSaving}
-          backgroundColor={stylesColors.buttonSubmit}
+          backgroundColor={stylesColors[layout].buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

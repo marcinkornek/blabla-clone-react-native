@@ -5,19 +5,29 @@ import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
 import _ from 'lodash';
 import moment from 'moment';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { updateCurrentUser } from '../../../actions/current-user';
 
 // components
 import CurrentUserEditForm from '../../../components/current-user/current-user-edit-form/current-user-edit-form'
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
-    marginTop: 10,
+    paddingTop: 10,
+    backgroundColor: stylesColors[layout].primaryBg,
   }
 });
 
 export class CurrentUserEdit extends Component {
+  static propTypes = {
+    isFetching: PropTypes.bool.isRequired,
+    currentUser: PropTypes.object,
+    layout: PropTypes.string.isRequired,
+  }
+
   handleSubmit(data) {
     const { updateCurrentUser, navigation } = this.props
     var body = new FormData();
@@ -41,13 +51,14 @@ export class CurrentUserEdit extends Component {
   }
 
   render() {
-    const { currentUser, isSaving } = this.props;
+    const { currentUser, isSaving, layout } = this.props;
 
     return (
-      <ScrollView style={styles.view}>
+      <ScrollView style={styles(layout).view}>
         <CurrentUserEditForm
           currentUser={currentUser}
           isSaving={isSaving}
+          layout={layout}
           onSubmit={this.handleSubmit.bind(this)}
         />
       </ScrollView>
@@ -59,6 +70,7 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.currentUser.item,
     isSaving: state.currentUser.isSaving,
+    layout: state.settings.layout,
   }
 }
 

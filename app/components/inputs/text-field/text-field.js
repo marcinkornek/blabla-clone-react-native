@@ -13,6 +13,7 @@ const styles = (layout) => StyleSheet.create({
     marginBottom: 5,
   },
   inputStyle: {
+    color: stylesColors[layout].primaryText,
     height: 40,
     marginBottom: 5,
     marginLeft: 10,
@@ -29,6 +30,7 @@ export const TextField = ({ input, label, meta: { touched, error }, layout, ...c
     <TextInput
       style={styles(layout).inputStyle}
       placeholderTextColor={stylesColors[layout].primaryText}
+      underlineColorAndroid={stylesColors[layout].primaryText}
       placeholder={label}
       onChangeText={(value) => input.onChange(value)}
       {...input}

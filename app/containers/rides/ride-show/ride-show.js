@@ -23,20 +23,7 @@ import { RenderCarInfo } from '../../../components/shared/render-car-info/render
 import { RenderRideOffer } from '../../../components/rides/render-ride-offer/render-ride-offer'
 import { EditButton } from '../../../components/shared/edit-button/edit-button'
 
-const styles = StyleSheet.create({
-  view: {
-    marginTop: 10,
-    marginLeft: 10,
-  },
-  rideDetails: {
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-  },
-  rideDestination: {
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
+const styles = (layout) => StyleSheet.create({
   container: {
     height: 200,
     marginRight: 10,
@@ -44,8 +31,26 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
     alignItems: 'center',
   },
+  rideDetails: {
+    flexWrap: 'wrap',
+    alignItems: 'flex-start',
+    flexDirection: 'column',
+  },
+  rideDestination: {
+    color: stylesColors[layout].primaryText,
+    fontSize: 18,
+    fontWeight: 'bold'
+  },
   map: {
     ...StyleSheet.absoluteFillObject,
+  },
+  toggleMap: {
+    color: stylesColors[layout].primaryText,
+  },
+  view: {
+    backgroundColor: stylesColors[layout].primaryBg,
+    marginTop: 10,
+    marginLeft: 10,
   },
 });
 const markerIDs = ['startCity', 'destinationCity'];
@@ -57,6 +62,7 @@ export class RideShow extends Component {
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     currentUser: PropTypes.object,
+    layout: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -185,11 +191,11 @@ export class RideShow extends Component {
   }
 
   renderRide() {
-    const { ride } = this.props
+    const { ride, layout } = this.props
 
     return (
-      <View style={styles.rideDetails}>
-        <Text style={styles.rideDestination}>
+      <View style={styles(layout).rideDetails}>
+        <Text style={styles(layout).rideDestination}>
           {ride.start_location.address} - {ride.destination_location.address}
         </Text>
         <Text>{moment(ride.starts_date).format('DD.MM.YY H:MM')}</Text>
@@ -198,13 +204,15 @@ export class RideShow extends Component {
   }
 
   renderMapToggle() {
+    const { layout } = this.props
+
     return (
       <View>
         <TouchableHighlight
-          underlayColor={stylesColors.primaryBg}
+          underlayColor={stylesColors[layout].primaryBg}
           onPress={() => this.toggleMap()}
         >
-          <Text>{this.state.hideMap ? 'Show map' : 'Hide map'}</Text>
+          <Text style={styles(layout).toggleMap}>{this.state.hideMap ? 'Show map' : 'Hide map'}</Text>
         </TouchableHighlight>
         <Collapsible collapsed={this.state.hideMap}>
           {this.renderMap()}
@@ -214,14 +222,14 @@ export class RideShow extends Component {
   }
 
   renderMap() {
-    const { ride } = this.props
+    const { ride, layout } = this.props
 
     if (this.coordinatesAreValid()) {
       return (
-        <View style={styles.container}>
+        <View style={styles(layout).container}>
           <MapView
             ref={ref => { this.map = ref; }}
-            style={styles.map}
+            style={styles(layout).map}
             initialRegion={{
               latitude: parseFloat(ride.start_location.latitude),
               longitude: parseFloat(ride.start_location.longitude),
@@ -242,12 +250,13 @@ export class RideShow extends Component {
   }
 
   renderDriver() {
-    const { ride, currentUser, navigation } = this.props
+    const { ride, currentUser, layout, navigation } = this.props
 
     if (!(ride.driver.id === currentUser.id)) {
       return(
         <RenderUserProfile
           user={ride.driver}
+          layout={layout}
           navigation={navigation}
         />
       )
@@ -255,36 +264,39 @@ export class RideShow extends Component {
   }
 
   renderCar() {
-    const { ride, navigation } = this.props
+    const { ride, layout, navigation } = this.props
 
     return(
       <RenderCarInfo
         car={ride.car}
+        layout={layout}
         navigation={navigation}
       />
     )
   }
 
   renderOffer() {
-    const { ride, currentUser } = this.props
+    const { ride, currentUser, layout } = this.props
 
     return(
       <RenderRideOffer
         ride={ride}
         currentUser={currentUser}
+        layout={layout}
         handleSubmit={this.createRideRequest.bind(this)}
       />
     )
   }
 
   renderRideRequests() {
-    const { ride, currentUser } = this.props
+    const { ride, currentUser, layout } = this.props
 
     if (ride.driver.id === currentUser.id && !_.isEmpty(ride.ride_requests)) {
       return(
         <RideRequestsIndex
           ride={ride}
           currentUser={currentUser}
+          layout={layout}
           handleSubmit={this.changeRideRequest.bind(this)}
         />
       )
@@ -292,10 +304,10 @@ export class RideShow extends Component {
   }
 
   render() {
-    const { isFetching, isStarted } = this.props;
+    const { isFetching, isStarted, layout } = this.props;
 
     return (
-      <ScrollView style={styles.view}>
+      <ScrollView style={styles(layout).view}>
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
@@ -317,6 +329,7 @@ const mapStateToProps = (state) => {
     isStarted: state.ride.isStarted,
     isFetching: state.ride.isFetching,
     currentUser: state.session.item,
+    layout: state.settings.layout,
   }
 };
 

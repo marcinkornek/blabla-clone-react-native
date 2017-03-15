@@ -8,12 +8,10 @@ import { Button } from 'react-native-elements';
 // styles
 import stylesColors from '../../../constants/colors';
 
-const styles = StyleSheet.create({
-  view: {
-    marginTop: 10,
-    marginRight: 10,
-    padding: 10,
-    backgroundColor: stylesColors.primaryBg,
+const styles = (layout) => StyleSheet.create({
+  acceptButton: {
+    marginRight: 0,
+    marginBottom: 5,
   },
   container: {
     flexWrap: 'wrap',
@@ -21,18 +19,24 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     flexDirection: 'row',
   },
-  acceptButton: {
-    marginRight: 0,
-    marginBottom: 5,
+  primaryText: {
+    color: stylesColors[layout].primaryText,
   },
   rejectButton: {
     marginRight: 0,
+  },
+  view: {
+    marginTop: 10,
+    marginRight: 10,
+    padding: 10,
+    backgroundColor: stylesColors[layout].secondaryBg,
   },
 });
 
 export class RideRequestsIndexItem extends Component {
   static propTypes = {
     handleOnClick: PropTypes.func.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   handleAcceptClick () {
@@ -48,19 +52,19 @@ export class RideRequestsIndexItem extends Component {
   }
 
   renderRideRequestInfo() {
-    const { rideRequest } = this.props
+    const { rideRequest, layout } = this.props
 
     return (
       <View>
-        <Text>Ride request from {rideRequest.passenger.full_name}</Text>
-        <Text>Requested {rideRequest.places} {pluralize('place', rideRequest.places)} ({rideRequest.status})</Text>
-        <Text>requested: {moment(new Date(rideRequest.created_at)).fromNow()}</Text>
+        <Text style={styles(layout).primaryText}>Ride request from {rideRequest.passenger.full_name}</Text>
+        <Text style={styles(layout).primaryText}>Requested {rideRequest.places} {pluralize('place', rideRequest.places)} ({rideRequest.status})</Text>
+        <Text style={styles(layout).primaryText}>requested: {moment(new Date(rideRequest.created_at)).fromNow()}</Text>
       </View>
     )
   }
 
   renderRideRequestButtons() {
-    const { rideRequest } = this.props
+    const { rideRequest, layout } = this.props
 
     if (rideRequest.status === 'pending') {
       return (
@@ -68,15 +72,15 @@ export class RideRequestsIndexItem extends Component {
           <Button
             raised
             title='Accept'
-            backgroundColor={stylesColors.statusAccepted}
-            buttonStyle={styles.acceptButton}
+            backgroundColor={stylesColors[layout].statusAccepted}
+            buttonStyle={styles(layout).acceptButton}
             onPress={this.handleAcceptClick.bind(this)}
           />
           <Button
             raised
             title='Reject'
-            backgroundColor={stylesColors.statusRejected}
-            buttonStyle={styles.rejectButton}
+            backgroundColor={stylesColors[layout].statusRejected}
+            buttonStyle={styles(layout).rejectButton}
             onPress={this.handleRejectClick.bind(this)}
           />
         </View>
@@ -85,9 +89,11 @@ export class RideRequestsIndexItem extends Component {
   }
 
   render() {
+    const { layout } = this.props
+
     return (
-      <View style={styles.view}>
-        <View style={styles.container}>
+      <View style={styles(layout).view}>
+        <View style={styles(layout).container}>
           {this.renderRideRequestInfo()}
           {this.renderRideRequestButtons()}
         </View>

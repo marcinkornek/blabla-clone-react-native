@@ -78,7 +78,7 @@ export default colors = {
     primaryBorder: '#323232',
     primaryText: '#FFFFFF',
     rideFull: '#008000',
-    secondaryBg: '#EDF3FD',
+    secondaryBg: '#757575',
     rideAsDriver: '#0000FF',
     rideAsPassengerDefault: '#FFFFFF',
     rideAsPassengerAccepted: '#008000',

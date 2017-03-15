@@ -3,16 +3,23 @@ import React, { Component, PropTypes } from 'react';
 import { View, Image, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import pluralize from 'pluralize'
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // components
 import { RideRequestsIndexItem } from '../ride-requests-index-item/ride-requests-index-item'
 
-const styles = StyleSheet.create({
-  view: {
-    marginTop: 10,
+const styles = (layout) => StyleSheet.create({
+  primaryText: {
+    color: stylesColors[layout].primaryText,
   },
   title: {
+    color: stylesColors[layout].primaryText,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  view: {
+    marginTop: 10,
   },
 });
 
@@ -21,14 +28,15 @@ export class RideRequestsIndex extends Component {
     ride: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
     currentUser: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   renderRideRequestsSummary() {
-    const { ride } = this.props
+    const { ride, layout } = this.props
 
     if (ride.ride_requests_pending_count > 0) {
       return (
-        <Text>
+        <Text style={styles(layout).primaryText}>
           {`${ride.ride_requests.length} ${pluralize('person', ride.ride_requests.length)} `}
           {`requested ${ride.requested_places_count} of ${ride.free_places_count} available `}
           {pluralize('place', ride.requested_places_count)}
@@ -36,7 +44,7 @@ export class RideRequestsIndex extends Component {
       )
     } else {
       return (
-        <Text>
+        <Text style={styles(layout).primaryText}>
           No pending ride requests
         </Text>
       )
@@ -44,13 +52,14 @@ export class RideRequestsIndex extends Component {
   }
 
   renderRideRequestsList() {
-    const { ride, handleSubmit } = this.props
+    const { ride, layout, handleSubmit } = this.props
 
     return(
       ride.ride_requests.map((rideRequest, i) =>
         <RideRequestsIndexItem
           key={rideRequest.id}
           rideRequest={rideRequest}
+          layout={layout}
           handleOnClick={handleSubmit}
         />
       )
@@ -58,10 +67,12 @@ export class RideRequestsIndex extends Component {
   }
 
   render() {
+    const { layout } = this.props
+
     return (
-      <View style={styles.view}>
-        <Text style={styles.title}>Requests</Text>
-        <View style={styles.container}>
+      <View style={styles(layout).view}>
+        <Text style={styles(layout).title}>Requests</Text>
+        <View style={styles(layout).container}>
           {this.renderRideRequestsSummary()}
           {this.renderRideRequestsList()}
         </View>

@@ -12,21 +12,26 @@ import stylesColors from '../../../constants/colors';
 // components
 import { SelectField } from '../../inputs/select-field/select-field';
 
-const styles = StyleSheet.create({
-  picker: {
-    width: 200,
-    marginLeft: -7,
-  },
+const styles = (layout) => StyleSheet.create({
   button: {
     width: 200,
     marginLeft: 0,
-  }
+  },
+  picker: {
+    color: stylesColors[layout].primaryText,
+    width: 200,
+    marginLeft: -7,
+  },
+  primaryText: {
+    color: stylesColors[layout].primaryText,
+  },
 });
 
 export class RenderRideOfferForm extends Component {
   static propTypes = {
     handleSubmit: PropTypes.func.isRequired,
     currentUser: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   isNotAuthor() {
@@ -36,7 +41,7 @@ export class RenderRideOfferForm extends Component {
   }
 
   renderRideOfferForm() {
-    const { handleSubmit, currentUser, ride } = this.props;
+    const { handleSubmit, currentUser, ride, layout } = this.props;
     const places = new Array(ride.free_places_count).fill(undefined).map((place, i) =>
       <Picker.Item
         key={i}
@@ -57,23 +62,24 @@ export class RenderRideOfferForm extends Component {
           <Field
             name='places'
             component={SelectField}
-            style={styles.picker}
+            layout={layout}
+            style={styles(layout).picker}
           >
             {[placesPlaceholder, ...places]}
           </Field>
           <Button
             raised
             title='Book seats'
-            backgroundColor={stylesColors.buttonSubmit}
+            backgroundColor={stylesColors[layout].buttonSubmit}
             onPress={handleSubmit}
             fontSize={16}
-            buttonStyle={styles.button}
+            buttonStyle={styles(layout).button}
           />
         </View>
       )
     } else if (currentUser.id && ride.free_places_count == 0 && this.isNotAuthor()) {
       return(
-        <Text>No places</Text>
+        <Text style={styles(layout).primaryText}>No places</Text>
       )
     }
   }

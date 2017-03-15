@@ -33,6 +33,12 @@ const styles = (layout) => StyleSheet.create({
     width: 80,
     marginLeft: 5,
   },
+  rideTitle: {
+    color: stylesColors[layout].primaryText,
+  },
+  rideSubtitle: {
+    color: stylesColors[layout].secondaryText,
+  },
   statusPending: {
     color: stylesColors[layout].statusPending,
   },
@@ -92,12 +98,14 @@ export class RidesIndexItem extends Component {
 
     return (
       <ListItem
-        containerStyle={styles(layout).rideContainer}
         onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
         avatar={{uri: this.renderAvatar()}}
+        containerStyle={styles(layout).rideContainer}
+        titleStyle={styles(layout).rideTitle}
+        subtitleStyle={styles(layout).rideSubtitle}
       />
     )
   }
@@ -113,7 +121,6 @@ export class RidesIndexItem extends Component {
 
     return (
       <ListItem
-        containerStyle={styles(layout).rideAsDriverContainter}
         onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
@@ -121,6 +128,9 @@ export class RidesIndexItem extends Component {
         avatar={{uri: this.renderAvatar()}}
         rightTitle={rightTitle}
         rightTitleContainerStyle={styles(layout).rideAsDriverRightTitle}
+        containerStyle={styles(layout).rideAsDriverContainter}
+        titleStyle={styles(layout).rideTitle}
+        subtitleStyle={styles(layout).rideSubtitle}
       />
     )
   }
@@ -131,12 +141,14 @@ export class RidesIndexItem extends Component {
 
     return (
       <ListItem
-        containerStyle={[styles(layout).rideContainer, {borderLeftColor: color, borderLeftWidth: 5}]}
         onPress={() => navigation.navigate('rideShow', {id: ride.id})}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
         avatar={{uri: this.renderAvatar()}}
+        containerStyle={[styles(layout).rideContainer, {borderLeftColor: color, borderLeftWidth: 5}]}
+        titleStyle={styles(layout).rideTitle}
+        subtitleStyle={styles(layout).rideSubtitle}
       />
     )
   }

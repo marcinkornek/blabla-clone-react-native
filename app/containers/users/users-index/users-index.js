@@ -12,7 +12,7 @@ import { RenderList } from '../../../components/shared/render-list/render-list'
 import { UsersIndexItem } from '../../../components/users/users-index-item/users-index-item'
 
 const per = 20
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
     flex: 1,
   }
@@ -23,6 +23,7 @@ class UsersIndex extends Component {
     users: PropTypes.array.isRequired,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -46,11 +47,12 @@ class UsersIndex extends Component {
   }
 
   renderUser(user) {
-    const { navigation } = this.props;
+    const { layout, navigation } = this.props;
 
     return (
       <UsersIndexItem
         user={user}
+        layout={layout}
         navigation={navigation}
         key={`user${user.id}`}
       />
@@ -58,7 +60,7 @@ class UsersIndex extends Component {
   }
 
   renderUsersList() {
-    const { users, isFetching, isStarted, pagination } = this.props;
+    const { users, isFetching, isStarted, pagination, layout } = this.props;
 
     return (
       <RenderList
@@ -70,6 +72,7 @@ class UsersIndex extends Component {
         refreshItems={this.refreshUsers.bind(this)}
         renderRow={this.renderUser.bind(this)}
         per={per}
+        layout={layout}
         onEndReachedThreshold={200}
         emptyListText='No users'
       />
@@ -77,8 +80,10 @@ class UsersIndex extends Component {
   }
 
   render() {
+    const { layout } = this.props;
+
     return(
-      <View style={styles.view}>
+      <View style={styles(layout).view}>
         {this.renderUsersList()}
       </View>
     )
@@ -91,6 +96,7 @@ const mapStateToProps = (state) => {
     users: state.users.items,
     isStarted: state.users.isStarted,
     isFetching: state.users.isFetching,
+    layout: state.settings.layout,
   }
 }
 

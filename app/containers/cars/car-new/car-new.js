@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
 import _ from 'lodash';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchCarsOptions, createCar, initializeCar } from '../../../actions/cars'
 import { hideModal } from '../../../actions/modals';
@@ -12,9 +15,10 @@ import { hideModal } from '../../../actions/modals';
 import CarForm from '../../../components/cars/car-form/car-form'
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
-    marginTop: 10,
+    paddingTop: 10,
+    backgroundColor: stylesColors[layout].primaryBg,
   }
 });
 
@@ -24,6 +28,7 @@ export class CarNew extends Component {
     isStarted: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     carOptions: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -64,22 +69,23 @@ export class CarNew extends Component {
   }
 
   renderCarForm() {
-    const { carOptions, isSaving } = this.props
+    const { carOptions, isSaving, layout } = this.props
 
     return(
       <CarForm
         isSaving={isSaving}
         carOptions={carOptions}
+        layout={layout}
         onSubmit={this.handleSubmit.bind(this)}
       />
     )
   }
 
   render() {
-    const { isFetching, isStarted } = this.props
+    const { isFetching, isStarted, layout } = this.props
 
     return (
-      <ScrollView style={styles.view}>
+      <ScrollView style={styles(layout).view}>
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
@@ -95,7 +101,8 @@ const mapStateToProps = (state) => {
     isSaving: state.car.isSaving,
     isFetching: state.carOptions.isFetching,
     isStarted: state.carOptions.isStarted,
-    carOptions: state.carOptions
+    carOptions: state.carOptions,
+    layout: state.settings.layout,
   }
 }
 

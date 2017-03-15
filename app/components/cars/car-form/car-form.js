@@ -23,10 +23,11 @@ export class CarForm extends Component {
     carOptions: PropTypes.object.isRequired,
     car: PropTypes.object,
     isSaving: PropTypes.bool.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   render() {
-    const { handleSubmit, carOptions, isSaving } = this.props
+    const { handleSubmit, carOptions, isSaving, layout } = this.props
     const colors = carOptions.colors.map((color) =>
       <Picker.Item
         key={color}
@@ -73,11 +74,13 @@ export class CarForm extends Component {
           name='brand'
           label='Brand'
           component={TextField}
+          layout={layout}
         />
         <Field
           name='model'
           label='Model'
           component={TextField}
+          layout={layout}
         />
         <Field
           name='places'
@@ -85,6 +88,7 @@ export class CarForm extends Component {
           keyboardType="numeric"
           maxLength={2}
           component={TextField}
+          layout={layout}
         />
         <Field
           name='production_year'
@@ -92,11 +96,13 @@ export class CarForm extends Component {
           keyboardType="numeric"
           maxLength={4}
           component={TextField}
+          layout={layout}
         />
         <Field
           name='color'
           label='Color'
           component={SelectField}
+          layout={layout}
         >
           {[colorPlaceholder, ...colors]}
         </Field>
@@ -104,6 +110,7 @@ export class CarForm extends Component {
           name='comfort'
           label='Comfort'
           component={SelectField}
+          layout={layout}
         >
           {[comfortPlaceholder, ...comforts]}
         </Field>
@@ -111,6 +118,7 @@ export class CarForm extends Component {
           name='category'
           label='Category'
           component={SelectField}
+          layout={layout}
         >
           {[categoryPlaceholder, ...categories]}
         </Field>
@@ -118,12 +126,13 @@ export class CarForm extends Component {
           type="file"
           name="car_photo"
           component={ImageField}
+          layout={layout}
         />
         <Button
           raised
           title={isSaving ? 'Saving' : 'Submit'}
           loading={isSaving}
-          backgroundColor={stylesColors.buttonSubmit}
+          backgroundColor={stylesColors[layout].buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

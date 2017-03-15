@@ -18,20 +18,21 @@ export class NotificationsIndexItem extends React.Component {
     markAsSeen: PropTypes.func.isRequired
   }
 
-  renderNotification(notification, navigation) {
+  renderNotification(notification, layout, navigation) {
     const SpecificNotification = NOTIFICATION_COMPONENTS[notification.notification_type]
 
     return (
       <SpecificNotification
         notification={notification}
+        layout={layout}
         navigation={navigation}
       />
     )
   }
 
   render() {
-    const { notification, navigation } = this.props
+    const { notification, layout, navigation } = this.props
 
-    return this.renderNotification(notification, navigation)
+    return this.renderNotification(notification, layout, navigation)
   }
 }

@@ -2,7 +2,7 @@
 import React, { PropTypes } from 'react'
 import { ListItem } from 'react-native-elements';
 
-export const RideRequestCreated = ({ notification, navigation }) => {
+export const RideRequestCreated = ({ notification, layout, navigation }) => {
   return (
     <ListItem
       onPress={() => navigation.navigate('rideShow', {id: notification.ride.id})}
@@ -14,5 +14,6 @@ export const RideRequestCreated = ({ notification, navigation }) => {
 }
 
 RideRequestCreated.propTypes = {
-  notification: PropTypes.object.isRequired
+  notification: PropTypes.object.isRequired,
+  layout: PropTypes.string.isRequired,
 }

@@ -3,6 +3,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { View, StyleSheet } from 'react-native';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchNotifications, refreshNotifications, markNotificationAsSeen } from '../../../actions/notifications'
 
@@ -11,9 +14,10 @@ import { RenderList } from '../../../components/shared/render-list/render-list'
 import { NotificationsIndexItem } from '../../../components/notifications/notifications-index-item/notifications-index-item'
 
 const per = 20
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
     flex: 1,
+    backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 
@@ -24,6 +28,7 @@ export class NotificationsIndex extends Component {
     isFetching: PropTypes.bool.isRequired,
     isAuthenticated: PropTypes.bool.isRequired,
     pagination: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -53,12 +58,13 @@ export class NotificationsIndex extends Component {
   }
 
   renderNotification(notification) {
-    const { markAsSeen, navigation } = this.props;
+    const { markAsSeen, layout, navigation } = this.props;
 
     return (
       <NotificationsIndexItem
         key={`notification${notification.id}`}
         notification={notification}
+        layout={layout}
         navigation={navigation}
         markAsSeen={this.markAsSeen.bind(this)}
       />
@@ -72,7 +78,7 @@ export class NotificationsIndex extends Component {
   }
 
   renderNotificationsList() {
-    const { notifications, isFetching, isStarted, pagination } = this.props;
+    const { notifications, isFetching, isStarted, pagination, layout } = this.props;
 
     return (
       <RenderList
@@ -83,6 +89,7 @@ export class NotificationsIndex extends Component {
         fetchItems={this.fetchNotifications.bind(this)}
         refreshItems={this.refreshNotifications.bind(this)}
         renderRow={this.renderNotification.bind(this)}
+        layout={layout}
         per={per}
         onEndReachedThreshold={200}
         emptyListText='No notifications'
@@ -91,8 +98,10 @@ export class NotificationsIndex extends Component {
   }
 
   render() {
+    const { layout } = this.props;
+
     return(
-      <View style={styles.view}>
+      <View style={styles(layout).view}>
         {this.renderNotificationsList()}
       </View>
     )
@@ -106,6 +115,7 @@ const mapStateToProps = (state) => {
     isFetching: state.notifications.isFetching,
     pagination: state.notifications.pagination,
     isAuthenticated: state.session.isAuthenticated,
+    layout: state.settings.layout,
   }
 }
 

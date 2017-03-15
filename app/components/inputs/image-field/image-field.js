@@ -12,7 +12,8 @@ const options = {
   storageOptions: {
     skipBackup: true,
     path: 'images'
-  }
+  },
+  quality: 0.3
 };
 const styles = (layout) => StyleSheet.create({
   error: {

@@ -49,8 +49,8 @@ const styles = (layout) => StyleSheet.create({
   },
   view: {
     backgroundColor: stylesColors[layout].primaryBg,
-    marginTop: 10,
-    marginLeft: 10,
+    paddingTop: 10,
+    paddingLeft: 10,
   },
 });
 const markerIDs = ['startCity', 'destinationCity'];

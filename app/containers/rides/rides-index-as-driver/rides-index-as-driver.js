@@ -3,6 +3,9 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import {
   fetchRidesAsDriver,
@@ -18,6 +21,7 @@ const per = 20
 const styles = (layout) => StyleSheet.create({
   view: {
     flex: 1,
+    backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 

@@ -3,6 +3,9 @@ import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux'
 import { View, StyleSheet } from 'react-native';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchCars, refreshCars } from '../../../actions/cars'
 
@@ -11,9 +14,10 @@ import { RenderList } from '../../../components/shared/render-list/render-list'
 import { CarsIndexItem } from '../../../components/cars/cars-index-item/cars-index-item'
 
 const per = 20
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
     flex: 1,
+    backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 
@@ -24,6 +28,7 @@ class CarsIndex extends Component {
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
     currentUser: PropTypes.object,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -63,11 +68,12 @@ class CarsIndex extends Component {
   }
 
   renderCar(car) {
-    const { navigation } = this.props;
+    const { layout, navigation } = this.props;
 
     return (
       <CarsIndexItem
         car={car}
+        layout={layout}
         navigation={navigation}
         key={`car${car.id}`}
       />
@@ -75,7 +81,7 @@ class CarsIndex extends Component {
   }
 
   renderCarsList() {
-    const { cars, isFetching, isStarted, pagination, navigation } = this.props;
+    const { cars, isFetching, isStarted, pagination, layout, navigation } = this.props;
 
     return (
       <RenderList
@@ -89,6 +95,7 @@ class CarsIndex extends Component {
         showAddButton={true}
         addButtonLink={() => navigation.navigate('carNew')}
         per={per}
+        layout={layout}
         onEndReachedThreshold={200}
         emptyListText='No cars'
       />
@@ -96,8 +103,10 @@ class CarsIndex extends Component {
   }
 
   render() {
+    const { layout } = this.props;
+
     return (
-      <View style={styles.view}>
+      <View style={styles(layout).view}>
         {this.renderCarsList()}
       </View>
     );
@@ -112,6 +121,7 @@ const mapStateToProps = (state) => {
     isFetching: state.cars.isFetching,
     currentUser: state.session.item,
     car: state.car,
+    layout: state.settings.layout,
   }
 }
 

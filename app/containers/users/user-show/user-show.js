@@ -53,6 +53,7 @@ const styles = (layout) => StyleSheet.create({
   },
   view: {
     marginTop: 0,
+    backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 

@@ -10,23 +10,31 @@ import stylesColors from '../../../constants/colors';
 // actions
 import { fetchCurrentUser } from '../../../actions/current-user';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   avatar: {
     width: 110,
     height: 110,
     margin: 10,
     borderRadius: 110,
     borderWidth: 2,
-    borderColor: stylesColors.avatarBorder,
+    borderColor: stylesColors[layout].avatarBorder,
   },
-  userInfoContainer: {
-    backgroundColor: stylesColors.userInfoContainerBg,
+  container: {
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
     padding: 10,
   },
-  container: {
+  primaryText: {
+    fontSize: 16,
+    color: stylesColors[layout].primaryText,
+  },
+  userInfo: {
+    fontSize: 16,
+    color: stylesColors[layout].userInfoContainerText,
+  },
+  userInfoContainer: {
+    backgroundColor: stylesColors[layout].userInfoContainerBg,
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -35,13 +43,10 @@ const styles = StyleSheet.create({
   userName: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: stylesColors.userInfoContainerText,
-  },
-  userInfo: {
-    fontSize: 16,
-    color: stylesColors.userInfoContainerText,
+    color: stylesColors[layout].userInfoContainerText,
   },
   view: {
+    backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 
@@ -50,6 +55,7 @@ export class UserShow extends Component {
     currentUser: PropTypes.object.isRequired,
     isStarted: PropTypes.bool.isRequired,
     isFetching: PropTypes.bool.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static defaultProps = {
@@ -63,40 +69,40 @@ export class UserShow extends Component {
   }
 
   renderUserInfo() {
-    const { currentUser } = this.props
+    const { currentUser, layout } = this.props
 
     return (
-      <View style={styles.userInfoContainer}>
-        <Image source={{uri: currentUser.avatar}} style={styles.avatar} />
-        <Text style={styles.userName}>{currentUser.first_name} {currentUser.last_name}</Text>
-        <Text style={styles.userInfo}>{currentUser.email}</Text>
-        <Text style={styles.userInfo}>{currentUser.gender}</Text>
-        <Text style={styles.userInfo}>{moment(currentUser.date_of_birth).format('DD.MM.YYYY')}</Text>
-        <Text style={styles.userInfo}>{currentUser.tel_num}</Text>
+      <View style={styles(layout).userInfoContainer}>
+        <Image source={{uri: currentUser.avatar}} style={styles(layout).avatar} />
+        <Text style={styles(layout).userName}>{currentUser.first_name} {currentUser.last_name}</Text>
+        <Text style={styles(layout).userInfo}>{currentUser.email}</Text>
+        <Text style={styles(layout).userInfo}>{currentUser.gender}</Text>
+        <Text style={styles(layout).userInfo}>{moment(currentUser.date_of_birth).format('DD.MM.YYYY')}</Text>
+        <Text style={styles(layout).userInfo}>{currentUser.tel_num}</Text>
       </View>
     )
   }
 
   renderUserLinks() {
-    const { currentUser, navigation } = this.props
+    const { currentUser, layout, navigation } = this.props
 
     return (
-      <View style={styles.container}>
+      <View style={styles(layout).container}>
         <TouchableHighlight
-          underlayColor={stylesColors.primaryBg}
+          underlayColor={stylesColors[layout].primaryBg}
           onPress={() => navigation.navigate('userShow', { id: currentUser.id })}
         >
-          <Text>View my public profile</Text>
+          <Text style={styles(layout).primaryText}>View my public profile</Text>
         </TouchableHighlight>
       </View>
     )
   }
 
   render() {
-    const { isStarted, isFetching } = this.props
+    const { isStarted, isFetching, layout } = this.props
 
     return (
-      <ScrollView style={styles.view}>
+      <ScrollView style={styles(layout).view}>
         {this.renderUserInfo()}
         {this.renderUserLinks()}
       </ScrollView>
@@ -109,6 +115,7 @@ const mapStateToProps = (state) => {
     currentUser: state.currentUser.item,
     isStarted: state.currentUser.isStarted,
     isFetching: state.currentUser.isFetching,
+    layout: state.settings.layout,
   }
 }
 

@@ -92,12 +92,14 @@ export class LoginEmail extends Component {
             label="Email"
             keyboardType="email-address"
             component={TextField}
+            layout={layout}
           />
           <Field
             name="password"
             label="Password"
             secureTextEntry={true}
             component={TextField}
+            layout={layout}
           />
           <Button
             raised

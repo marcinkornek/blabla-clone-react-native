@@ -41,6 +41,7 @@ export class CarsIndexItem extends Component {
         title={`${car.full_name} ${car.production_year}`}
         subtitle={car.places_full}
         avatar={{uri: car.car_photo}}
+        underlayColor={stylesColors[layout].secondaryBg}
         containerStyle={styles(layout).carContainer}
         titleStyle={styles(layout).carTitle}
         subtitleStyle={styles(layout).carSubtitle}

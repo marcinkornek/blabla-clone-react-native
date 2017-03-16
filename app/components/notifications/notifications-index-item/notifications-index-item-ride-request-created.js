@@ -27,6 +27,7 @@ export const RideRequestCreated = ({ notification, layout, navigation }) => {
       key={notification.id}
       title={`${notification.sender.full_name} added ride request for your ride`}
       subtitle={`${notification.ride.start_location_address} - ${notification.ride.destination_location_address}`}
+      underlayColor={stylesColors[layout].secondaryBg}
       containerStyle={styles(layout).notificationContainer}
       titleStyle={styles(layout).notificationTitle}
       subtitleStyle={styles(layout).notificationSubtitle}

@@ -27,6 +27,7 @@ export const RideRequestUpdated = ({ notification, layout, navigation }) => {
       key={notification.id}
       title={`${notification.sender.full_name} ${notification.notification_type == 'ride_request_accepted' ? ' accepted' : ' rejected'} your ride request in ride`}
       subtitle={`${notification.ride.start_location_address} - ${notification.ride.destination_location_address}`}
+      underlayColor={stylesColors[layout].secondaryBg}
       containerStyle={styles(layout).notificationContainer}
       titleStyle={styles(layout).notificationTitle}
       subtitleStyle={styles(layout).notificationSubtitle}

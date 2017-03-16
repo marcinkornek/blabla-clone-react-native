@@ -35,6 +35,7 @@ export class UsersIndexItem extends Component {
         key={user.id}
         title={user.full_name}
         avatar={{uri: user.avatar}}
+        underlayColor={stylesColors[layout].secondaryBg}
         containerStyle={styles(layout).userContainer}
         titleStyle={styles(layout).userTitle}
         subtitleStyle={styles(layout).userSubtitle}

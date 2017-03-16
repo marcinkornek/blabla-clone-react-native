@@ -103,6 +103,7 @@ export class RidesIndexItem extends Component {
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
         avatar={{uri: this.renderAvatar()}}
+        underlayColor={stylesColors[layout].secondaryBg}
         containerStyle={styles(layout).rideContainer}
         titleStyle={styles(layout).rideTitle}
         subtitleStyle={styles(layout).rideSubtitle}

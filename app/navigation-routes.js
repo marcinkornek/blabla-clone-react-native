@@ -30,19 +30,15 @@ import NotificationsIndex from './containers/notifications/notifications-index/n
 import requireAuth from './containers/shared/require-auth/require-auth'
 import HamburgerButton from './containers/shared/hamburger-button/hamburger-button'
 
-const navigationOptionsWithHamburger = (title) => (
+const headerWithHamburger = (
   {
-    navigationOptions: {
-      header: (navigation, header) => ({
-        left: (
-          <HamburgerButton
-            onClick={() => navigation.navigate('DrawerOpen')}
-          />
-        ),
-        title: title,
-      }),
-    },
-    headerMode: 'float',
+    header: (navigation, header) => ({
+      left: (
+        <HamburgerButton
+          onClick={() => navigation.navigate('DrawerOpen')}
+        />
+      ),
+    })
   }
 )
 
@@ -58,7 +54,9 @@ export const AuthenticatedRidesTabNavigator = TabNavigator({
   tabBarOptions: {
     scrollEnabled: true,
     tabStyle: { width: 150 }
-  }
+  },
+  navigationOptions: headerWithHamburger,
+  headerMode: 'float',
 })
 
 export const AuthenticatedRidesStackNavigator = StackNavigator({
@@ -70,7 +68,7 @@ export const AuthenticatedRidesStackNavigator = StackNavigator({
   userShow: { screen: UserShow },
   myNotifications: { screen: NotificationsIndex },
   settingsIndex: { screen: SettingsEdit },
-}, navigationOptionsWithHamburger('Rides'))
+})
 
 export const AuthenticatedAccountTabNavigator = TabNavigator({
   myProfile: { screen: CurrentUserShow },
@@ -85,7 +83,9 @@ export const AuthenticatedAccountTabNavigator = TabNavigator({
   tabBarOptions: {
     scrollEnabled: true,
     tabStyle: { width: 150 }
-  }
+  },
+  navigationOptions: headerWithHamburger,
+  headerMode: 'float',
 })
 
 export const AuthenticatedAccountStackNavigator = StackNavigator({
@@ -94,7 +94,7 @@ export const AuthenticatedAccountStackNavigator = StackNavigator({
   carNew: { screen: CarNew },
   carShow: { screen: CarShow },
   carEdit: { screen: CarEdit },
-}, navigationOptionsWithHamburger('My Account'))
+})
 
 export const AuthenticatedDrawerNavigator = DrawerNavigator({
   Rides: { screen: AuthenticatedRidesStackNavigator },
@@ -119,11 +119,11 @@ export const NotAuthenticatedRidesTabNavigator = TabNavigator({
 
 export const NotAuthenticatedLoginStackNavigator = StackNavigator({
   login: { screen: Login },
-}, navigationOptionsWithHamburger('Login'))
+})
 
 export const NotAuthenticatedRegisterStackNavigator = StackNavigator({
   register: { screen: Register },
-}, navigationOptionsWithHamburger('Register'))
+})
 
 export const NotAuthenticatedRidesStackNavigator = StackNavigator({
   ridesTab: { screen: NotAuthenticatedRidesTabNavigator },
@@ -131,7 +131,7 @@ export const NotAuthenticatedRidesStackNavigator = StackNavigator({
   rideShow: { screen: RideShow },
   userShow: { screen: UserShow },
   carShow: { screen: CarShow },
-}, navigationOptionsWithHamburger('Rides'))
+})
 
 export const NotAuthenticatedDrawerNavigator = DrawerNavigator({
   ridesNavigator: { screen: NotAuthenticatedRidesStackNavigator },

@@ -39,7 +39,11 @@ export class RidesIndexAsPassenger extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'Rides as passenger',
-    }
+    },
+    header: (navigation, header) => ({
+      ...header,
+      title: 'Rides as passenger'
+    })
   }
 
   componentWillMount() {

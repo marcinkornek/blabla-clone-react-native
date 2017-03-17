@@ -39,7 +39,11 @@ export class RidesIndexAsDriver extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'Rides as driver'
-    }
+    },
+    header: (navigation, header) => ({
+      ...header,
+      title: 'Rides as driver'
+    })
   }
 
   static defaultProps = {

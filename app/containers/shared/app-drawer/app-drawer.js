@@ -293,9 +293,9 @@ export class AppDrawer extends Component {
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor={stylesColors[layout].appDrawerBg}
-            onPress={() => this.goToAndClose('myRidesAsPassenger', {})}
+            onPress={() => this.goToAndClose('myCars', {})}
           >
-            <Text style={styles(layout).menuSublink}>My rides as passenger</Text>
+            <Text style={styles(layout).menuSublink}>My cars</Text>
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor={stylesColors[layout].appDrawerBg}
@@ -305,9 +305,9 @@ export class AppDrawer extends Component {
           </TouchableHighlight>
           <TouchableHighlight
             underlayColor={stylesColors[layout].appDrawerBg}
-            onPress={() => this.goToAndClose('myCars', {})}
+            onPress={() => this.goToAndClose('myRidesAsPassenger', {})}
           >
-            <Text style={styles(layout).menuSublink}>My cars</Text>
+            <Text style={styles(layout).menuSublink}>My rides as passenger</Text>
           </TouchableHighlight>
         </Collapsible>
       </View>

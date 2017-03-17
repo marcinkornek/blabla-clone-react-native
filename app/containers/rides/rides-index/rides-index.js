@@ -51,9 +51,13 @@ export class RidesIndex extends Component {
   }
 
   static navigationOptions = {
-    tabBar: ({ state }) => ({
+    tabBar: {
       label: 'Rides',
-    }),
+    },
+    header: (navigation, header) => ({
+      ...header,
+      title: 'Rides'
+    })
   };
 
   state = {

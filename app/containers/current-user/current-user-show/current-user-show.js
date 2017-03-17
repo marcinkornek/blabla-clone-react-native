@@ -65,7 +65,11 @@ export class UserShow extends Component {
   static navigationOptions = {
     tabBar: {
       label: 'My profile',
-    }
+    },
+    header: (navigation, header) => ({
+      ...header,
+      title: 'My profile'
+    })
   }
 
   renderUserInfo() {

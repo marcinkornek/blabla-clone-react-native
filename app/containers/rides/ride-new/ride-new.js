@@ -4,6 +4,9 @@ import { connect } from 'react-redux'
 import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-elements';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchRideOptions, createRide } from '../../../actions/rides'
 import { showModal } from '../../../actions/modals';
@@ -12,20 +15,11 @@ import { showModal } from '../../../actions/modals';
 import RideForm from '../../../components/rides/ride-form/ride-form'
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 
-const styles = StyleSheet.create({
-  emptyCars: {
-    fontSize: 20,
-    fontWeight: 'bold',
-    marginBottom: 10,
-  },
-  emptyCarsContainer: {
-    marginTop: 10,
-    flexDirection: 'column',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-  },
+const styles = (layout) => StyleSheet.create({
   view: {
-    marginTop: 10,
+    flex: 1,
+    paddingTop: 10,
+    backgroundColor: stylesColors[layout].primaryBg,
   }
 });
 
@@ -35,6 +29,7 @@ export class RideNew extends Component {
     isStarted: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     rideOptions: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -50,7 +45,7 @@ export class RideNew extends Component {
   }
 
   renderRideForm() {
-    const { rideOptions, isFetching, isStarted, isSaving, showModal } = this.props
+    const { rideOptions, isFetching, isStarted, isSaving, showModal, layout } = this.props
 
     if (rideOptions.cars.length === 0 && isStarted && !isFetching) {
       showModal('CAR_NEW', { title: 'Add car', subtitle: 'You need to add car first to add ride' })
@@ -60,8 +55,9 @@ export class RideNew extends Component {
       <RideForm
         isSaving={isSaving}
         rideOptions={rideOptions}
-        onSubmit={this.handleSubmit.bind(this)}
+        layout={layout}
         showModal={showModal}
+        onSubmit={this.handleSubmit.bind(this)}
       />
     )
   }
@@ -87,10 +83,10 @@ export class RideNew extends Component {
   }
 
   render() {
-    const { isFetching, isStarted } = this.props
+    const { isFetching, isStarted, layout } = this.props
 
     return (
-      <ScrollView style={styles.view}>
+      <ScrollView style={styles(layout).view}>
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
@@ -107,6 +103,7 @@ const mapStateToProps = (state) => {
     isFetching: state.rideOptions.isFetching,
     isStarted: state.rideOptions.isStarted,
     rideOptions: state.rideOptions,
+    layout: state.settings.layout,
   }
 }
 

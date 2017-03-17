@@ -5,6 +5,9 @@ import { View, ScrollView, Text, TextInput, StyleSheet } from 'react-native';
 import _ from 'lodash';
 import moment from 'moment';
 
+// styles
+import stylesColors from '../../../constants/colors';
+
 // actions
 import { fetchRideOptions, updateRide } from '../../../actions/rides'
 
@@ -12,8 +15,11 @@ import { fetchRideOptions, updateRide } from '../../../actions/rides'
 import RideForm from '../../../components/rides/ride-form/ride-form'
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   view: {
+    flex: 1,
+    paddingTop: 10,
+    backgroundColor: stylesColors[layout].primaryBg,
   }
 });
 
@@ -24,6 +30,7 @@ export class RideEdit extends Component {
     isStarted: PropTypes.bool.isRequired,
     isSaving: PropTypes.bool.isRequired,
     rideOptions: PropTypes.object.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   static navigationOptions = {
@@ -41,13 +48,14 @@ export class RideEdit extends Component {
   }
 
   renderRideForm() {
-    const { ride, rideOptions, isSaving } = this.props
+    const { ride, rideOptions, isSaving, layout } = this.props
 
     return (
       <RideForm
         isSaving={isSaving}
         ride={ride}
         rideOptions={rideOptions}
+        layout={layout}
         onSubmit={this.handleSubmit.bind(this)}
       />
     )
@@ -81,10 +89,10 @@ export class RideEdit extends Component {
   }
 
   render() {
-    const { isFetching, isStarted } = this.props
+    const { isFetching, isStarted, layout } = this.props
 
     return (
-      <ScrollView style={styles.view}>
+      <ScrollView style={styles(layout).view}>
         <AsyncContent
           isFetching={isFetching || !isStarted}
         >
@@ -102,6 +110,7 @@ const mapStateToProps = (state) => {
     isFetching: state.rideOptions.isFetching,
     isStarted: state.rideOptions.isStarted,
     rideOptions: state.rideOptions,
+    layout: state.settings.layout,
   }
 }
 

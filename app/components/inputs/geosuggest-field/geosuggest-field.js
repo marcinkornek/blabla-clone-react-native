@@ -6,9 +6,9 @@ import RNGooglePlaces from 'react-native-google-places';
 // styles
 import stylesColors from '../../../constants/colors';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   error: {
-    color: stylesColors.error,
+    color: stylesColors[layout].error,
     marginLeft: 15,
     marginTop: -5,
     marginBottom: 10,
@@ -19,6 +19,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-end',
   },
   inputStyle: {
+    color: stylesColors[layout].primaryText,
     flex: 1,
     height: 40,
     marginBottom: 5,
@@ -29,7 +30,7 @@ const styles = StyleSheet.create({
     paddingBottom: 10,
   },
   clearLink: {
-    backgroundColor: stylesColors.geosuggestFieldClearBg,
+    backgroundColor: stylesColors[layout].geosuggestFieldClearBg,
     width: 25,
     height: 25,
     borderRadius: 15,
@@ -39,7 +40,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   clearText: {
-    color: stylesColors.geosuggestFieldClearText
+    color: stylesColors[layout].geosuggestFieldClearText
   },
 });
 
@@ -59,29 +60,31 @@ export class GeosuggestField extends Component {
   }
 
   renderClearButton() {
-    const { input } = this.props;
+    const { input, layout } = this.props;
 
     if (input.value)  {
       return (
         <TouchableOpacity
-          style={styles.clearLink}
-          underlayColor={stylesColors.primaryBg}
+          style={styles(layout).clearLink}
+          underlayColor={stylesColors[layout].primaryBg}
           onPress={() => this.clearSelect()}
         >
-          <Text style={styles.clearText}>x</Text>
+          <Text style={styles(layout).clearText}>x</Text>
         </TouchableOpacity>
       )
     }
   }
 
   render() {
-    const { input, label, meta: { touched, error }, ...custom } = this.props;
+    const { input, label, meta: { touched, error }, layout, ...custom } = this.props;
 
     return (
       <View>
-        <View style={styles.inputContainer}>
+        <View style={styles(layout).inputContainer}>
           <TextInput
-            style={styles.inputStyle}
+            style={styles(layout).inputStyle}
+            placeholderTextColor={stylesColors[layout].primaryText}
+            underlineColorAndroid={stylesColors[layout].primaryText}
             onFocus={() => this.openSearchModal()}
             onChange={() => this.openSearchModal()}
             placeholder={label}
@@ -90,7 +93,7 @@ export class GeosuggestField extends Component {
           />
           {this.renderClearButton()}
         </View>
-        <Text style={styles.error}>{touched && error}</Text>
+        <Text style={styles(layout).error}>{touched && error}</Text>
       </View>
     )
   }

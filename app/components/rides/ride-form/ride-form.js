@@ -19,7 +19,7 @@ import { SelectField } from '../../inputs/select-field/select-field';
 import { DatetimepickerField } from '../../inputs/datetimepicker-field/datetimepicker-field';
 import { GeosuggestField } from '../../inputs/geosuggest-field/geosuggest-field';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   submitButton: {
     marginTop: 10,
   },
@@ -44,11 +44,12 @@ class RideForm extends Component {
     handleSubmit: PropTypes.func.isRequired,
     rideOptions: PropTypes.object.isRequired,
     isSaving: PropTypes.bool.isRequired,
-    ride: PropTypes.object
+    ride: PropTypes.object,
+    layout: PropTypes.string.isRequired,
   }
 
   renderCarField() {
-    const { rideOptions, showModal } = this.props
+    const { rideOptions, showModal, layout } = this.props
 
     let cars = rideOptions.cars.map((car, i) =>
       <Picker.Item
@@ -70,28 +71,29 @@ class RideForm extends Component {
           name="car_id"
           label="Car"
           component={SelectField}
+          layout={layout}
         >
           {[carPlaceholder, ...cars]}
         </Field>
       )
     } else {
       return (
-        <View style={styles.addCarContainer}>
+        <View style={styles(layout).addCarContainer}>
           <Button
             raised
             title='Add car'
-            backgroundColor={stylesColors.buttonSubmit}
-            buttonStyle={styles.addCarButton}
+            backgroundColor={stylesColors[layout].buttonSubmit}
+            buttonStyle={styles(layout).addCarButton}
             onPress={() => showModal('CAR_NEW', { title: 'Add car', subtitle: 'You need to add car first to add ride' })}
           />
-          <Text style={styles.addCarText}>You have to add car first</Text>
+          <Text style={styles(layout).addCarText}>You have to add car first</Text>
         </View>
       )
     }
   }
 
   render() {
-    const { handleSubmit, rideOptions, isSaving } = this.props
+    const { handleSubmit, rideOptions, isSaving, layout } = this.props
     const minumumStartDate = moment().format('DD.MM.YYYY')
 
     let currencies = rideOptions.currencies.map((currency, i) =>
@@ -114,17 +116,20 @@ class RideForm extends Component {
           name="start_location"
           label="Start city"
           component={GeosuggestField}
+          layout={layout}
         />
         <Field
           name="destination_location"
           label="Destination city"
           component={GeosuggestField}
+          layout={layout}
         />
         <Field
           name="start_date"
           label="Start date and time"
           minDate={minumumStartDate}
           component={DatetimepickerField}
+          layout={layout}
         />
         {this.renderCarField()}
         <Field
@@ -132,26 +137,29 @@ class RideForm extends Component {
           label="Places"
           keyboardType="numeric"
           component={TextField}
+          layout={layout}
         />
         <Field
           name="price"
           label="Price"
           keyboardType="numeric"
           component={TextField}
+          layout={layout}
         />
         <Field
           name="currency"
           label="Currency"
           component={SelectField}
+          layout={layout}
         >
           {[currencyPlaceholder, ...currencies]}
         </Field>
         <Button
           raised
-          buttonStyle={styles.submitButton}
+          buttonStyle={styles(layout).submitButton}
           title={isSaving ? 'Saving' : 'Submit'}
           loading={isSaving}
-          backgroundColor={stylesColors.buttonSubmit}
+          backgroundColor={stylesColors[layout].buttonSubmit}
           onPress={handleSubmit}
         />
       </ScrollView>

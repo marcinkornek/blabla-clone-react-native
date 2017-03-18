@@ -12,7 +12,7 @@ import stylesColors from '../../../constants/colors';
 // components
 import { SelectField } from '../../inputs/select-field/select-field';
 
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   buttonsContainer: {
     flexDirection: 'column',
   },
@@ -20,6 +20,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
   },
   selectField: {
+    color: stylesColors[layout].primaryText,
     width: 115,
     flexShrink: 1,
   },
@@ -55,18 +56,19 @@ export class RenderRidesFilters extends Component {
   static propTypes = {
     filters: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   renderClearButton() {
-    const { filters, clearFilters } = this.props;
+    const { filters, clearFilters, layout } = this.props;
 
     if (!_.isEmpty(filters)) {
       return (
         <Button
           raised
-          buttonStyle={styles.submitButton}
+          buttonStyle={styles(layout).submitButton}
           title={'Clear'}
-          backgroundColor={stylesColors.error}
+          backgroundColor={stylesColors[layout].error}
           onPress={clearFilters}
         />
       )
@@ -74,7 +76,7 @@ export class RenderRidesFilters extends Component {
   }
 
   render() {
-    const { ride, handleSubmit } = this.props;
+    const { ride, handleSubmit, layout } = this.props;
     const orders = ORDER_TYPES.map((item) =>
       <Picker.Item
         key={item.value}
@@ -103,31 +105,33 @@ export class RenderRidesFilters extends Component {
       />
 
     return (
-      <View style={styles.view}>
-        <View style={styles.filtersContainer}>
+      <View style={styles(layout).view}>
+        <View style={styles(layout).filtersContainer}>
           <Field
-            style={styles.selectField}
+            style={styles(layout).selectField}
             name="order_by_type"
             label="Order"
             component={SelectField}
+            layout={layout}
           >
             {[orderPlaceholder, ...orders]}
           </Field>
           <Field
-            style={styles.selectField}
+            style={styles(layout).selectField}
             name="currency"
             label="Currency"
             component={SelectField}
+            layout={layout}
           >
             {[currencyPlaceholder, ...currencies]}
           </Field>
         </View>
-        <View style={styles.buttonsContainer}>
+        <View style={styles(layout).buttonsContainer}>
           <Button
             raised
-            buttonStyle={styles.submitButton}
+            buttonStyle={styles(layout).submitButton}
             title={'Filter'}
-            backgroundColor={stylesColors.buttonSubmit}
+            backgroundColor={stylesColors[layout].buttonSubmit}
             onPress={handleSubmit}
           />
           {this.renderClearButton()}

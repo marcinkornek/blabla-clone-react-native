@@ -114,7 +114,9 @@ export const NotAuthenticatedRidesTabNavigator = TabNavigator({
   tabBarOptions: {
     scrollEnabled: true,
     tabStyle: { width: 150 }
-  }
+  },
+  navigationOptions: headerWithHamburger,
+  headerMode: 'float',
 })
 
 export const NotAuthenticatedLoginStackNavigator = StackNavigator({

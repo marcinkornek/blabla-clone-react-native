@@ -13,11 +13,12 @@ import stylesColors from '../../../constants/colors';
 import { GeosuggestField } from '../../inputs/geosuggest-field/geosuggest-field';
 
 const { width, height } = Dimensions.get('window')
-const styles = StyleSheet.create({
+const styles = (layout) => StyleSheet.create({
   searchContainer: {
     flexDirection: 'column',
   },
   geolocationField: {
+    color: stylesColors[layout].primaryText,
     marginTop: -15,
     marginBottom: -5,
     width: width - 150,
@@ -29,7 +30,8 @@ const styles = StyleSheet.create({
     marginLeft: 0,
   },
   view: {
-    marginTop: 0,
+    marginTop: 5,
+    marginBottom: 5,
     margin: 10,
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -40,18 +42,19 @@ export class RenderRidesSearch extends Component {
   static propTypes = {
     search: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
+    layout: PropTypes.string.isRequired,
   }
 
   renderClearButton() {
-    const { search, clearSearch } = this.props;
+    const { search, clearSearch, layout } = this.props;
 
     if (!_.isEmpty(search)) {
       return (
         <Button
           raised
-          buttonStyle={styles.submitButton}
+          buttonStyle={styles(layout).submitButton}
           title={'Clear'}
-          backgroundColor={stylesColors.error}
+          backgroundColor={stylesColors[layout].error}
           onPress={clearSearch}
         />
       )
@@ -59,30 +62,32 @@ export class RenderRidesSearch extends Component {
   }
 
   render() {
-    const { ride, handleSubmit } = this.props;
+    const { ride, handleSubmit, layout } = this.props;
 
     return (
-      <View style={styles.view}>
-        <View style={styles.searchContainer}>
+      <View style={styles(layout).view}>
+        <View style={styles(layout).searchContainer}>
           <Field
-            style={styles.geolocationField}
+            style={styles(layout).geolocationField}
             name="start_location"
             label="Start city"
             component={GeosuggestField}
+            layout={layout}
           />
           <Field
-            style={styles.geolocationField}
+            style={styles(layout).geolocationField}
             name="destination_location"
             label="Destination city"
             component={GeosuggestField}
+            layout={layout}
           />
         </View>
-        <View style={styles.buttonsContainer}>
+        <View style={styles(layout).buttonsContainer}>
           <Button
             raised
-            buttonStyle={styles.submitButton}
+            buttonStyle={styles(layout).submitButton}
             title={'Search'}
-            backgroundColor={stylesColors.buttonSubmit}
+            backgroundColor={stylesColors[layout].buttonSubmit}
             onPress={handleSubmit}
           />
           {this.renderClearButton()}

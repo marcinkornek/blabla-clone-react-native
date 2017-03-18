@@ -30,7 +30,7 @@ const per = 20
 const styles = (layout) => StyleSheet.create({
   filtersContainer: {
     flexDirection: 'row',
-    marginTop: -10,
+    marginTop: -5,
   },
   view: {
     flex: 1,
@@ -56,13 +56,36 @@ export class RidesIndex extends Component {
     },
     header: (navigation, header) => ({
       ...header,
-      title: 'Rides'
+      title: 'Rides',
+      right: (
+        <View style={styles('base').filtersContainer}>
+          <Icon.Button
+            onPress={() => {
+              const state = navigation.state
+              const showSearch = state.params && state.params.showSearch ? !state.params.showSearch : true
+              return (navigation.setParams({showSearch: showSearch}))
+            }}
+            name="md-search"
+            backgroundColor='transparent'
+            underlayColor='transparent'
+            color={stylesColors['base'].buttonSubmit}
+            size={30}
+          />
+          <MaterialCommunityIcons.Button
+            onPress={() => {
+              const state = navigation.state
+              const showFilters = state.params && state.params.showFilters ? !state.params.showFilters : true
+              return (navigation.setParams({showFilters: showFilters}))
+            }}
+            name="filter-variant"
+            backgroundColor='transparent'
+            underlayColor='transparent'
+            color={stylesColors['base'].buttonSubmit}
+            size={30}
+          />
+        </View>
+      )
     })
-  };
-
-  state = {
-    showSearch: false,
-    showFilters: false,
   };
 
   static defaultProps = {
@@ -133,14 +156,6 @@ export class RidesIndex extends Component {
     )
   }
 
-  toggleSearch() {
-    this.setState({showSearch: !this.state.showSearch})
-  }
-
-  toggleFilters() {
-    this.setState({showFilters: !this.state.showFilters})
-  }
-
   renderRide(ride) {
     const { navigation, layout } = this.props;
 
@@ -177,28 +192,32 @@ export class RidesIndex extends Component {
   }
 
   renderRidesSearch() {
-    const { search } = this.props;
+    const { search, layout, navigation } = this.props;
+    const state = navigation.state
 
-    if (this.state.showSearch) {
+    if (state.params && state.params.showSearch) {
       return (
         <RenderRidesSearch
+          search={search}
+          layout={layout}
           onSubmit={this.searchRides.bind(this)}
           clearSearch={this.clearSearch.bind(this)}
-          search={search}
         />
       )
     }
   }
 
   renderRidesFilters() {
-    const { filters } = this.props;
+    const { filters, layout, navigation } = this.props;
+    const state = navigation.state
 
-    if (this.state.showFilters) {
+    if (state.params && state.params.showFilters) {
       return (
         <RenderRidesFilters
+          filters={filters}
+          layout={layout}
           onSubmit={this.filterRides.bind(this)}
           clearFilters={this.clearFilters.bind(this)}
-          filters={filters}
         />
       )
     }

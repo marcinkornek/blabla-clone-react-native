@@ -13,6 +13,7 @@ import { RenderActivityIndicator } from '../../../components/shared/render-activ
 const ds = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
 const styles = (layout) => StyleSheet.create({
   emptyList: {
+    color: stylesColors[layout].primaryText,
     fontSize: 20,
     fontWeight: 'bold',
   },

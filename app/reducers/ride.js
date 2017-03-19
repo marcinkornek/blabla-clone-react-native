@@ -1,4 +1,5 @@
 import {
+  RIDE_INITIALIZE,
   RIDE_FETCH_REQUEST,
   RIDE_FETCH_SUCCESS,
   RIDE_CREATE_REQUEST,
@@ -19,12 +20,18 @@ export const initialState = {
 export function ride(state = initialState, action) {
   let item
   switch (action.type) {
+  case RIDE_INITIALIZE:
+    console.log('RIDE_INITIALIZE');
+    return {
+      ...initialState,
+      item: action.item,
+      isStarted: true,
+    };
   case RIDE_FETCH_REQUEST:
     console.log('RIDE_FETCH_REQUEST');
     return {
       ...state,
-      isStarted: true,
-      isFetching: true
+      isFetching: true,
     };
   case RIDE_FETCH_SUCCESS:
     console.log('RIDE_FETCH_SUCCESS');

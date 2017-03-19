@@ -60,7 +60,7 @@ export class RenderRideOffer extends Component {
   }
 
   renderRideStatusTime() {
-    const { ride } = this.props
+    const { ride, layout } = this.props
 
     if (ride.user_ride_request && ride.user_ride_request.status != 'pending' ) {
        return(

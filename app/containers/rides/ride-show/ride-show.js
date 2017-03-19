@@ -12,7 +12,7 @@ import _ from 'lodash';
 import stylesColors from '../../../constants/colors';
 
 // actions
-import { fetchRide } from '../../../actions/rides';
+import { initializeRide, fetchRide } from '../../../actions/rides';
 import { createRideRequest, changeRideRequest } from '../../../actions/ride-requests';
 
 // components
@@ -95,22 +95,16 @@ export class RideShow extends Component {
   }
 
   componentWillMount() {
-    const { fetchRide, navigation, ride } = this.props
-    const id = navigation.state.params.id
+    const { initializeRide, fetchRide, navigation, ride } = this.props
+    const initialRide = navigation.state.params.ride
 
-    fetchRide(id)
+    this.setParams(initialRide)
+    initializeRide(initialRide)
+    fetchRide(initialRide.id)
   }
 
-  componentDidUpdate(oldProps) {
-    const { ride } = this.props;
-
-    if (ride !== oldProps.ride) {
-      this.setParams()
-    }
-  }
-
-  setParams() {
-    const { ride, navigation } = this.props;
+  setParams(ride) {
+    const { navigation } = this.props;
     const title = `${ride.start_location.address} - ${ride.destination_location.address}`
 
     navigation.setParams({
@@ -304,20 +298,16 @@ export class RideShow extends Component {
   }
 
   render() {
-    const { isFetching, isStarted, layout } = this.props;
+    const { layout } = this.props;
 
     return (
       <ScrollView style={styles(layout).view}>
-        <AsyncContent
-          isFetching={isFetching || !isStarted}
-        >
-          {this.renderRide()}
-          {this.renderMapToggle()}
-          {this.renderDriver()}
-          {this.renderCar()}
-          {this.renderOffer()}
-          {this.renderRideRequests()}
-        </AsyncContent>
+        {this.renderRide()}
+        {this.renderMapToggle()}
+        {this.renderDriver()}
+        {this.renderCar()}
+        {this.renderOffer()}
+        {this.renderRideRequests()}
       </ScrollView>
     );
   }
@@ -334,6 +324,7 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = {
+  initializeRide,
   fetchRide,
   createRideRequest,
   changeRideRequest,

@@ -19,6 +19,7 @@ import {
   RIDES_AS_DRIVER_REFRESH_FAILURE,
   RIDE_FILTER_UPDATE,
   RIDE_SEARCH_UPDATE,
+  RIDE_INITIALIZE,
   RIDE_FETCH_REQUEST,
   RIDE_FETCH_SUCCESS,
   RIDE_FETCH_FAILURE,
@@ -281,5 +282,12 @@ export function setDefaultRidesAsDriverPer(per) {
   return {
     type: RIDES_AS_DRIVER_SET_DEFAULT_PER,
     per: per,
+  }
+}
+
+export function initializeRide(ride) {
+  return {
+    type: RIDE_INITIALIZE,
+    item: ride,
   }
 }

@@ -66,8 +66,7 @@ export class RenderRideOffer extends Component {
        return(
         <View>
           <Text style={styles(layout).primaryText}>
-            {ride.user_ride_request.status}:
-            {moment(new Date(ride.user_ride_request.updated_at)).fromNow()}
+            {ride.user_ride_request.status}: {moment(new Date(ride.user_ride_request.updated_at)).fromNow()}
           </Text>
         </View>
       )

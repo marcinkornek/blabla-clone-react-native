@@ -11,15 +11,13 @@ import stylesColors from '../../../constants/colors';
 import {
   fetchRidesAsDriver,
   refreshRidesAsDriver,
-  updateRidesAsDriverFilters,
-  clearRidesAsDriverFilters,
   setDefaultRidesAsDriverPer,
 } from '../../../actions/rides';
+import { showModal } from '../../../actions/modals';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
-import { RenderRidesAsDriverFilters } from '../../../components/rides/render-rides-as-driver-filters/render-rides-as-driver-filters'
 
 const per = 20
 const styles = (layout) => StyleSheet.create({
@@ -56,8 +54,7 @@ export class RidesIndexAsDriver extends Component {
           <MaterialCommunityIcons.Button
             onPress={() => {
               const state = navigation.state
-              const showFilters = state.params && state.params.showFilters ? !state.params.showFilters : true
-              return (navigation.setParams({showFilters: showFilters}))
+              return (navigation.setParams({showFilters: true}))
             }}
             name="filter-variant"
             backgroundColor='transparent'
@@ -80,7 +77,21 @@ export class RidesIndexAsDriver extends Component {
   }
 
   componentDidUpdate(oldProps) {
-    const { ride } = this.props;
+    const { ride, filters, navigation, showModal, modalType } = this.props;
+    const state = navigation.state
+
+    if (state.params && state.params.showFilters && oldProps.modalType === undefined) {
+      showModal('RIDES_AS_DRIVER_FILTERS', { title: 'Set filters' })
+    }
+
+    if (oldProps.modalType !== undefined) {
+      navigation.setParams({showFilters: false})
+    }
+
+    if (filters !== oldProps.filters) {
+      this.refreshRides()
+    }
+
 
     if (ride && ride.isSaving == false && oldProps.ride.isSaving == true) {
       this.refreshRides()
@@ -109,36 +120,6 @@ export class RidesIndexAsDriver extends Component {
     } else {
       return per
     }
-  }
-
-  renderRidesFilters() {
-    const { filters, layout, navigation } = this.props;
-    const state = navigation.state
-
-    if (state.params && state.params.showFilters) {
-      return (
-        <RenderRidesAsDriverFilters
-          filters={filters}
-          layout={layout}
-          onSubmit={this.filterRides.bind(this)}
-          clearFilters={this.clearFilters.bind(this)}
-        />
-      )
-    }
-  }
-
-  filterRides(data) {
-    const { updateRidesAsDriverFilters, refreshRidesAsDriver, currentUser } = this.props;
-
-    updateRidesAsDriverFilters(data)
-    if (currentUser.id) refreshRidesAsDriver(currentUser.id, this.initialPer())
-  }
-
-  clearFilters() {
-    const { clearRidesAsDriverFilters, refreshRidesAsDriver, currentUser } = this.props;
-
-    clearRidesAsDriverFilters()
-    refreshRidesAsDriver(per)
   }
 
   renderRide(ride) {
@@ -181,7 +162,6 @@ export class RidesIndexAsDriver extends Component {
 
     return (
       <View style={styles(layout).view}>
-        {this.renderRidesFilters()}
         {this.renderRidesList()}
       </View>
     );
@@ -198,6 +178,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.session.isAuthenticated,
     currentUser: state.session.item,
     ride: state.ride,
+    modalType: state.modal.modalType,
     layout: state.settings.layout,
   }
 };
@@ -205,9 +186,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchRidesAsDriver,
   refreshRidesAsDriver,
-  updateRidesAsDriverFilters,
-  clearRidesAsDriverFilters,
   setDefaultRidesAsDriverPer,
+  showModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RidesIndexAsDriver)

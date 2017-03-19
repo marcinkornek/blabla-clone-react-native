@@ -53,7 +53,7 @@ const CURRENCY_TYPES = [
   { label: 'USD', value: 'usd' },
 ]
 
-export class RenderRidesAsDriverFilters extends Component {
+export class RidesAsDriverFiltersForm extends Component {
   static propTypes = {
     filters: PropTypes.object.isRequired,
     handleSubmit: PropTypes.func.isRequired,
@@ -160,14 +160,14 @@ export class RenderRidesAsDriverFilters extends Component {
   }
 }
 
-RenderRidesAsDriverFilters = reduxForm({
+RidesAsDriverFiltersForm = reduxForm({
   form: 'RidesFiltersForm',
-})(RenderRidesAsDriverFilters)
+})(RidesAsDriverFiltersForm)
 
-RenderRidesAsDriverFilters = connect(
+RidesAsDriverFiltersForm = connect(
   (state, props) => ({
     initialValues: props.filters
   })
-)(RenderRidesAsDriverFilters)
+)(RidesAsDriverFiltersForm)
 
-export default RenderRidesAsDriverFilters
+export default RidesAsDriverFiltersForm

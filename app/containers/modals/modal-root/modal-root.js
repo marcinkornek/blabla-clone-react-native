@@ -14,6 +14,7 @@ import { hideModal, showModal } from '../../../actions/modals';
 import Login from '../../session/login/login'
 import Register from '../../current-user/current-user-new/current-user-new'
 import CarNew from '../../cars/car-new/car-new'
+import RidesAsDriverFilters from '../../rides/rides-as-driver-filters/rides-as-driver-filters'
 
 const styles = (layout) => StyleSheet.create({
   modal: {
@@ -56,6 +57,7 @@ const MODAL_COMPONENTS = {
   'LOGIN': Login,
   'REGISTER': Register,
   'CAR_NEW': CarNew,
+  'RIDES_AS_DRIVER_FILTERS': RidesAsDriverFilters,
 }
 
 export class ModalRoot extends Component {

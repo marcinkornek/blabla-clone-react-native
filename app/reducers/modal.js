@@ -4,7 +4,7 @@ import {
 } from '../constants/action-types'
 
 export const initialState = {
-  modalType: null,
+  modalType: undefined,
   modalProps: {}
 }
 

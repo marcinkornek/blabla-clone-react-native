@@ -19,6 +19,7 @@ import {
   RIDES_AS_DRIVER_REFRESH_FAILURE,
   RIDE_FILTER_UPDATE,
   RIDE_SEARCH_UPDATE,
+  RIDE_AS_DRIVER_FILTER_UPDATE,
   RIDE_INITIALIZE,
   RIDE_FETCH_REQUEST,
   RIDE_FETCH_SUCCESS,
@@ -34,6 +35,7 @@ import {
   RIDE_UPDATE_FAILURE,
   RIDE_SEARCH_CLEAR,
   RIDE_FILTER_CLEAR,
+  RIDE_AS_DRIVER_FILTER_CLEAR,
   RIDES_SET_DEFAULT_PER,
   RIDES_AS_PASSENGER_SET_DEFAULT_PER,
   RIDES_AS_DRIVER_SET_DEFAULT_PER,
@@ -135,22 +137,28 @@ export function fetchRidesAsPassenger(user_id, page = 1, per = 20) {
 }
 
 export function refreshRidesAsDriver(user_id, per = 20) {
-  return {
-    types: [
-      RIDES_AS_DRIVER_REFRESH_REQUEST,
-      RIDES_AS_DRIVER_REFRESH_SUCCESS,
-      RIDES_AS_DRIVER_REFRESH_FAILURE
-    ],
-    payload: {
-      request: {
-        url: `${APIEndpoints.RIDES}/as_driver`,
-        params: {
-          page: 1,
-          per,
-          user_id
+  return (dispatch, getState) => {
+    const { ridesAsDriverFilters } = getState()
+    const filters = ridesAsDriverFilters.filters
+
+    return dispatch({
+      types: [
+        RIDES_AS_DRIVER_REFRESH_REQUEST,
+        RIDES_AS_DRIVER_REFRESH_SUCCESS,
+        RIDES_AS_DRIVER_REFRESH_FAILURE
+      ],
+      payload: {
+        request: {
+          url: `${APIEndpoints.RIDES}/as_driver`,
+          params: {
+            page: 1,
+            per,
+            user_id,
+            filters,
+          }
         }
       }
-    }
+    })
   }
 }
 
@@ -261,6 +269,20 @@ export function clearRidesSearch() {
 export function clearRidesFilters() {
   return {
     type: RIDE_FILTER_CLEAR,
+  }
+}
+
+
+export function updateRidesAsDriverFilters(filters = {}) {
+  return {
+    type: RIDE_AS_DRIVER_FILTER_UPDATE,
+    filters: filters
+  }
+}
+
+export function clearRidesAsDriverFilters() {
+  return {
+    type: RIDE_AS_DRIVER_FILTER_CLEAR,
   }
 }
 

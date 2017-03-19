@@ -15,6 +15,7 @@ import { rides } from './rides';
 import { ridesAsPassenger } from './rides-as-passenger';
 import { ridesAsDriver } from './rides-as-driver';
 import { ridesFilters } from './rides-filters';
+import { ridesAsDriverFilters } from './rides-as-driver-filters';
 import { ride } from './ride';
 import { rideOptions } from './ride-options';
 import { session } from './session';
@@ -34,6 +35,7 @@ export default combineReducers({
   ridesAsPassenger,
   ridesAsDriver,
   ridesFilters,
+  ridesAsDriverFilters,
   ride,
   rideOptions,
   session,

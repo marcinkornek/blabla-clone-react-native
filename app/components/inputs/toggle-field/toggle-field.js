@@ -13,7 +13,7 @@ const styles = (layout) => StyleSheet.create({
     marginBottom: 5,
   },
   label: {
-    marginLeft: 15,
+    marginLeft: 10,
     color: stylesColors[layout].primaryText,
   },
   input: {

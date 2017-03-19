@@ -88,10 +88,6 @@ export class RidesIndex extends Component {
     })
   };
 
-  static defaultProps = {
-    ride: {}
-  }
-
   componentWillMount() {
     const { refreshRides, setDefaultRidesPer, rides, pagination } = this.props;
 
@@ -106,7 +102,7 @@ export class RidesIndex extends Component {
       navigation.navigate('rideShow', {id: notificationActive.ride.id})
     }
 
-    if (ride.isSaving == false && oldProps.ride.isSaving == true) {
+    if (ride && ride.isSaving == false && oldProps.ride.isSaving == true) {
       this.refreshRides()
     }
   }
@@ -224,14 +220,14 @@ export class RidesIndex extends Component {
   }
 
   filterRides(data) {
-    const { updateRidesFilters, refreshRides } = this.props;
+    const { refreshRides, updateRidesFilters } = this.props;
 
     updateRidesFilters(data)
     refreshRides(per)
   }
 
   searchRides(data) {
-    const { updateRidesSearch, refreshRides } = this.props;
+    const { refreshRides, updateRidesSearch } = this.props;
 
     updateRidesSearch(data)
     refreshRides(per)

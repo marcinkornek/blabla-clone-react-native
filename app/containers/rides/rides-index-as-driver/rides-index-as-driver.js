@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // styles
 import stylesColors from '../../../constants/colors';
@@ -10,15 +11,22 @@ import stylesColors from '../../../constants/colors';
 import {
   fetchRidesAsDriver,
   refreshRidesAsDriver,
+  updateRidesAsDriverFilters,
+  clearRidesAsDriverFilters,
   setDefaultRidesAsDriverPer,
 } from '../../../actions/rides';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
+import { RenderRidesAsDriverFilters } from '../../../components/rides/render-rides-as-driver-filters/render-rides-as-driver-filters'
 
 const per = 20
 const styles = (layout) => StyleSheet.create({
+  filtersContainer: {
+    flexDirection: 'row',
+    marginTop: -5,
+  },
   view: {
     flex: 1,
     backgroundColor: stylesColors[layout].primaryBg,
@@ -42,12 +50,24 @@ export class RidesIndexAsDriver extends Component {
     },
     header: (navigation, header) => ({
       ...header,
-      title: 'Rides as driver'
+      title: 'Rides as driver',
+      right: (
+        <View style={styles('base').filtersContainer}>
+          <MaterialCommunityIcons.Button
+            onPress={() => {
+              const state = navigation.state
+              const showFilters = state.params && state.params.showFilters ? !state.params.showFilters : true
+              return (navigation.setParams({showFilters: showFilters}))
+            }}
+            name="filter-variant"
+            backgroundColor='transparent'
+            underlayColor='transparent'
+            color={stylesColors['base'].buttonSubmit}
+            size={30}
+          />
+        </View>
+      )
     })
-  }
-
-  static defaultProps = {
-    ride: {}
   }
 
   componentWillMount() {
@@ -62,7 +82,7 @@ export class RidesIndexAsDriver extends Component {
   componentDidUpdate(oldProps) {
     const { ride } = this.props;
 
-    if (ride.isSaving == false && oldProps.ride.isSaving == true) {
+    if (ride && ride.isSaving == false && oldProps.ride.isSaving == true) {
       this.refreshRides()
     }
   }
@@ -89,6 +109,36 @@ export class RidesIndexAsDriver extends Component {
     } else {
       return per
     }
+  }
+
+  renderRidesFilters() {
+    const { filters, layout, navigation } = this.props;
+    const state = navigation.state
+
+    if (state.params && state.params.showFilters) {
+      return (
+        <RenderRidesAsDriverFilters
+          filters={filters}
+          layout={layout}
+          onSubmit={this.filterRides.bind(this)}
+          clearFilters={this.clearFilters.bind(this)}
+        />
+      )
+    }
+  }
+
+  filterRides(data) {
+    const { updateRidesAsDriverFilters, refreshRidesAsDriver, currentUser } = this.props;
+
+    updateRidesAsDriverFilters(data)
+    if (currentUser.id) refreshRidesAsDriver(currentUser.id, this.initialPer())
+  }
+
+  clearFilters() {
+    const { clearRidesAsDriverFilters, refreshRidesAsDriver, currentUser } = this.props;
+
+    clearRidesAsDriverFilters()
+    refreshRidesAsDriver(per)
   }
 
   renderRide(ride) {
@@ -131,6 +181,7 @@ export class RidesIndexAsDriver extends Component {
 
     return (
       <View style={styles(layout).view}>
+        {this.renderRidesFilters()}
         {this.renderRidesList()}
       </View>
     );
@@ -141,6 +192,7 @@ const mapStateToProps = (state) => {
   return {
     pagination: state.ridesAsDriver.pagination,
     rides: state.ridesAsDriver.items,
+    filters: state.ridesAsDriverFilters.filters,
     isStarted: state.ridesAsDriver.isStarted,
     isFetching: state.ridesAsDriver.isFetching,
     isAuthenticated: state.session.isAuthenticated,
@@ -153,6 +205,8 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   fetchRidesAsDriver,
   refreshRidesAsDriver,
+  updateRidesAsDriverFilters,
+  clearRidesAsDriverFilters,
   setDefaultRidesAsDriverPer,
 };
 

@@ -15,15 +15,13 @@ import {
   refreshRides,
   setDefaultRidesPer,
   updateRidesSearch,
-  updateRidesFilters,
   clearRidesSearch,
-  clearRidesFilters,
 } from '../../../actions/rides';
+import { showModal } from '../../../actions/modals';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
-import { RenderRidesFilters } from '../../../components/rides/render-rides-filters/render-rides-filters'
 import { RenderRidesSearch } from '../../../components/rides/render-rides-search/render-rides-search'
 
 const per = 20
@@ -31,6 +29,11 @@ const styles = (layout) => StyleSheet.create({
   filtersContainer: {
     flexDirection: 'row',
     marginTop: -5,
+  },
+  modalStyles: {
+    margin: 20,
+    flex: 0,
+    height: 370,
   },
   view: {
     flex: 1,
@@ -74,8 +77,7 @@ export class RidesIndex extends Component {
           <MaterialCommunityIcons.Button
             onPress={() => {
               const state = navigation.state
-              const showFilters = state.params && state.params.showFilters ? !state.params.showFilters : true
-              return (navigation.setParams({showFilters: showFilters}))
+              return (navigation.setParams({showFilters: true}))
             }}
             name="filter-variant"
             backgroundColor='transparent'
@@ -96,7 +98,23 @@ export class RidesIndex extends Component {
   }
 
   componentDidUpdate(oldProps) {
-    const { notificationActive, ride, navigation } = this.props;
+    const { notificationActive, ride, filters, showModal, modalType, layout, navigation } = this.props;
+    const state = navigation.state
+
+    if (state.params && state.params.showFilters && oldProps.modalType === undefined) {
+      console.log('11111');
+      showModal('RIDES_FILTERS', { title: 'Set filters', modalStyles: styles(layout).modalStyles })
+    }
+
+  if (oldProps.modalType === 'RIDES_FILTERS') {
+      console.log('222222');
+      navigation.setParams({showFilters: false})
+    }
+
+    if (filters !== oldProps.filters) {
+      this.refreshRides()
+    }
+
 
     if (notificationActive !== oldProps.notificationActive) {
       navigation.navigate('rideShow', {id: notificationActive.ride.id})
@@ -141,7 +159,10 @@ export class RidesIndex extends Component {
           size={30}
         />
         <MaterialCommunityIcons.Button
-          onPress={() => this.toggleFilters()}
+          onPress={() => {
+            const state = navigation.state
+            return (navigation.setParams({showFilters: true}))
+          }}
           name="filter-variant"
           backgroundColor='transparent'
           underlayColor='transparent'
@@ -203,29 +224,6 @@ export class RidesIndex extends Component {
     }
   }
 
-  renderRidesFilters() {
-    const { filters, layout, navigation } = this.props;
-    const state = navigation.state
-
-    if (state.params && state.params.showFilters) {
-      return (
-        <RenderRidesFilters
-          filters={filters}
-          layout={layout}
-          onSubmit={this.filterRides.bind(this)}
-          clearFilters={this.clearFilters.bind(this)}
-        />
-      )
-    }
-  }
-
-  filterRides(data) {
-    const { refreshRides, updateRidesFilters } = this.props;
-
-    updateRidesFilters(data)
-    refreshRides(per)
-  }
-
   searchRides(data) {
     const { refreshRides, updateRidesSearch } = this.props;
 
@@ -240,22 +238,12 @@ export class RidesIndex extends Component {
     refreshRides(per)
   }
 
-  clearFilters() {
-    const { refreshRides, clearRidesFilters } = this.props;
-
-    clearRidesFilters()
-    refreshRides(per)
-  }
-
   render() {
     const { layout } = this.props;
 
     return (
       <View style={styles(layout).view}>
-        <View>
-          {this.renderRidesSearch()}
-          {this.renderRidesFilters()}
-        </View>
+        {this.renderRidesSearch()}
         {this.renderRidesList()}
       </View>
     );
@@ -273,6 +261,7 @@ const mapStateToProps = (state) => {
     isAuthenticated: state.session.isAuthenticated,
     notificationActive: state.notificationActive.item,
     ride: state.ride,
+    modalType: state.modal.modalType,
     layout: state.settings.layout,
   }
 };
@@ -282,9 +271,8 @@ const mapDispatchToProps = {
   refreshRides,
   setDefaultRidesPer,
   updateRidesSearch,
-  updateRidesFilters,
   clearRidesSearch,
-  clearRidesFilters,
+  showModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RidesIndex)

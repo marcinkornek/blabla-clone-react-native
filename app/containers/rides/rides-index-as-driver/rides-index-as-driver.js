@@ -28,7 +28,7 @@ const styles = (layout) => StyleSheet.create({
   modalStyles: {
     margin: 20,
     flex: 0,
-    height: 400,
+    height: 370,
   },
   view: {
     flex: 1,
@@ -96,7 +96,6 @@ export class RidesIndexAsDriver extends Component {
     if (filters !== oldProps.filters) {
       this.refreshRides()
     }
-
 
     if (ride && ride.isSaving == false && oldProps.ride.isSaving == true) {
       this.refreshRides()

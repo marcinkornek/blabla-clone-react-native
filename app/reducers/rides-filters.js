@@ -6,7 +6,13 @@ import {
 } from '../constants/action-types';
 
 export const initialState = {
-  filters: {},
+  filters: {
+    currency: undefined,
+    order: undefined,
+    hide_full: false,
+    hide_as_driver: false,
+    hide_requested: false,
+  },
   search: {},
 };
 
@@ -29,7 +35,7 @@ export function ridesFilters(state = initialState, action) {
     console.log('RIDE_FILTER_CLEAR');
     return {
       ...state,
-      filters: {}
+      filters: initialState.filters,
     };
   case RIDE_SEARCH_CLEAR:
     console.log('RIDE_SEARCH_CLEAR');

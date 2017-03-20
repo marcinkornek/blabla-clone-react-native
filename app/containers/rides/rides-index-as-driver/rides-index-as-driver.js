@@ -89,7 +89,7 @@ export class RidesIndexAsDriver extends Component {
       showModal('RIDES_AS_DRIVER_FILTERS', { title: 'Set filters', modalStyles: styles(layout).modalStyles })
     }
 
-    if (oldProps.modalType !== undefined) {
+    if (oldProps.modalType === 'RIDES_AS_DRIVER_FILTERS') {
       navigation.setParams({showFilters: false})
     }
 

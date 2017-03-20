@@ -17,11 +17,10 @@ export const initialState = {
   isFetching: false,
   items: [],
   pagination: {},
-  filters: {}
 };
 
 export function ridesAsDriver(state = initialState, action) {
-  let items, pagination, filters
+  let items, pagination
   switch (action.type) {
   case LOGOUT_SUCCESS:
     return {
@@ -38,7 +37,6 @@ export function ridesAsDriver(state = initialState, action) {
     console.log('RIDES_AS_DRIVER_FETCH_SUCCESS');
     items = action.payload.data.items
     pagination = action.payload.data.meta
-    filters = action.payload.data.filters
     return {
       ...state,
       isFetching: false,
@@ -48,7 +46,6 @@ export function ridesAsDriver(state = initialState, action) {
         state.items,
       ),
       pagination: pagination,
-      filters: filters
     };
   case RIDES_AS_DRIVER_REFRESH_REQUEST:
     console.log('RIDES_AS_DRIVER_REFRESH_REQUEST');
@@ -63,7 +60,6 @@ export function ridesAsDriver(state = initialState, action) {
     pagination = action.payload.data.meta
     const currentPage = pagination.per / state.defaultPer
     const totalPages = Math.ceil(pagination.total_count / state.defaultPer)
-    filters = action.payload.data.filters
     return {
       ...state,
       isFetching: false,
@@ -74,8 +70,7 @@ export function ridesAsDriver(state = initialState, action) {
         next_page: currentPage + 1,
         prev_page: currentPage - 1,
         total_pages: totalPages,
-      },
-      filters: filters
+      }
     };
    case RIDES_AS_DRIVER_SET_DEFAULT_PER:
     console.log('RIDES_AS_DRIVER_SET_DEFAULT_PER');

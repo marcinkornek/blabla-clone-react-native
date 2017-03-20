@@ -102,19 +102,16 @@ export class RidesIndex extends Component {
     const state = navigation.state
 
     if (state.params && state.params.showFilters && oldProps.modalType === undefined) {
-      console.log('11111');
       showModal('RIDES_FILTERS', { title: 'Set filters', modalStyles: styles(layout).modalStyles })
     }
 
   if (oldProps.modalType === 'RIDES_FILTERS') {
-      console.log('222222');
       navigation.setParams({showFilters: false})
     }
 
     if (filters !== oldProps.filters) {
       this.refreshRides()
     }
-
 
     if (notificationActive !== oldProps.notificationActive) {
       navigation.navigate('rideShow', {id: notificationActive.ride.id})

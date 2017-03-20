@@ -15,14 +15,11 @@ import { ToggleField } from '../../inputs/toggle-field/toggle-field';
 
 const styles = (layout) => StyleSheet.create({
   buttonsContainer: {
-    flexDirection: 'column',
-  },
-  filtersContainer: {
-    flexDirection: 'column',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
   },
   selectField: {
     color: stylesColors[layout].primaryText,
-    width: 200,
     flexShrink: 1,
   },
   submitButton: {
@@ -34,7 +31,7 @@ const styles = (layout) => StyleSheet.create({
   view: {
     marginTop: 0,
     margin: 10,
-    flexDirection: 'row',
+    flexDirection: 'column',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
   },
@@ -107,45 +104,44 @@ export class RidesAsDriverFiltersForm extends Component {
 
     return (
       <View style={styles(layout).view}>
-        <View style={styles(layout).filtersContainer}>
-          <Field
-            style={styles(layout).selectField}
-            name="order_by_type"
-            label="Order"
-            component={SelectField}
-            layout={layout}
-          >
-            {[orderPlaceholder, ...orders]}
-          </Field>
-          <Field
-            style={styles(layout).selectField}
-            name="currency"
-            label="Currency"
-            component={SelectField}
-            layout={layout}
-          >
-            {[currencyPlaceholder, ...currencies]}
-          </Field>
-          <Field
-            name='show_past'
-            label='Show past'
-            component={ToggleField}
-            layout={layout}
-          />
-          <Field
-            name='hide_full'
-            label='Hide full'
-            component={ToggleField}
-            layout={layout}
-          />
-          <Field
-            name='show_only_with_pending'
-            label='Show only with pending'
-            component={ToggleField}
-            layout={layout}
-          />
-        </View>
+        <Field
+          style={styles(layout).selectField}
+          name="order_by_type"
+          label="Order"
+          component={SelectField}
+          layout={layout}
+        >
+          {[orderPlaceholder, ...orders]}
+        </Field>
+        <Field
+          style={styles(layout).selectField}
+          name="currency"
+          label="Currency"
+          component={SelectField}
+          layout={layout}
+        >
+          {[currencyPlaceholder, ...currencies]}
+        </Field>
+        <Field
+          name='show_past'
+          label='Show past'
+          component={ToggleField}
+          layout={layout}
+        />
+        <Field
+          name='hide_full'
+          label='Hide full'
+          component={ToggleField}
+          layout={layout}
+        />
+        <Field
+          name='show_only_with_pending'
+          label='Show only with pending'
+          component={ToggleField}
+          layout={layout}
+        />
         <View style={styles(layout).buttonsContainer}>
+          {this.renderClearButton()}
           <Button
             raised
             buttonStyle={styles(layout).submitButton}
@@ -153,7 +149,6 @@ export class RidesAsDriverFiltersForm extends Component {
             backgroundColor={stylesColors[layout].buttonSubmit}
             onPress={handleSubmit}
           />
-          {this.renderClearButton()}
         </View>
       </View>
     )

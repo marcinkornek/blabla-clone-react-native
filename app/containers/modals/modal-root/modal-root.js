@@ -20,6 +20,7 @@ const styles = (layout) => StyleSheet.create({
   modal: {
     backgroundColor: 'transparent',
     flex: 1,
+    justifyContent: 'center',
   },
   modalHeader: {
   },
@@ -126,7 +127,7 @@ export class ModalRoot extends Component {
         transparent
       >
         <View style={styles(layout).modal}>
-          <View style={styles(layout).modalContent}>
+          <View style={[styles(layout).modalContent, modalProps.modalStyles]}>
             {this.renderTitle()}
             {this.renderModalCloseIcon()}
             {this.renderSubtitle()}

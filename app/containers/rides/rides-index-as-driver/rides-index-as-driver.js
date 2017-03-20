@@ -25,6 +25,11 @@ const styles = (layout) => StyleSheet.create({
     flexDirection: 'row',
     marginTop: -5,
   },
+  modalStyles: {
+    margin: 20,
+    flex: 0,
+    height: 400,
+  },
   view: {
     flex: 1,
     backgroundColor: stylesColors[layout].primaryBg,
@@ -77,11 +82,11 @@ export class RidesIndexAsDriver extends Component {
   }
 
   componentDidUpdate(oldProps) {
-    const { ride, filters, navigation, showModal, modalType } = this.props;
+    const { ride, filters, navigation, showModal, modalType, layout } = this.props;
     const state = navigation.state
 
     if (state.params && state.params.showFilters && oldProps.modalType === undefined) {
-      showModal('RIDES_AS_DRIVER_FILTERS', { title: 'Set filters' })
+      showModal('RIDES_AS_DRIVER_FILTERS', { title: 'Set filters', modalStyles: styles(layout).modalStyles })
     }
 
     if (oldProps.modalType !== undefined) {

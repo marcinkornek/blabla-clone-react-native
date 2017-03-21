@@ -32,8 +32,11 @@ export class FBLoginView extends Component {
     login: React.PropTypes.func,
     logout: React.PropTypes.func,
     props: React.PropTypes.object,
-    layout: PropTypes.string.isRequired,
   };
+
+  static propTypes = {
+    layout: PropTypes.string.isRequired,
+  }
 
   login() {
     if (!this.context.isLoggedIn){

@@ -2,6 +2,7 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { View, StyleSheet } from 'react-native';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // styles
 import stylesColors from '../../../constants/colors';
@@ -12,6 +13,7 @@ import {
   refreshRidesAsPassenger,
   setDefaultRidesAsPassengerPer,
 } from '../../../actions/rides';
+import { showModal } from '../../../actions/modals';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
@@ -19,6 +21,15 @@ import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides
 
 const per = 20
 const styles = (layout) => StyleSheet.create({
+  filtersContainer: {
+    flexDirection: 'row',
+    marginTop: -5,
+  },
+  modalStyles: {
+    margin: 20,
+    flex: 0,
+    height: 380,
+  },
   view: {
     flex: 1,
     backgroundColor: stylesColors[layout].primaryBg,
@@ -38,11 +49,26 @@ export class RidesIndexAsPassenger extends Component {
 
   static navigationOptions = {
     tabBar: {
-      label: 'Rides as passenger',
+      label: 'Rides as passenger'
     },
     header: (navigation, header) => ({
       ...header,
-      title: 'Rides as passenger'
+      title: 'Rides as passenger',
+      right: (
+        <View style={styles('base').filtersContainer}>
+          <MaterialCommunityIcons.Button
+            onPress={() => {
+              const state = navigation.state
+              return (navigation.setParams({showFilters: true}))
+            }}
+            name="filter-variant"
+            backgroundColor='transparent'
+            underlayColor='transparent'
+            color={stylesColors['base'].buttonSubmit}
+            size={30}
+          />
+        </View>
+      )
     })
   }
 
@@ -52,6 +78,23 @@ export class RidesIndexAsPassenger extends Component {
     if (currentUser.id) {
       setDefaultRidesAsPassengerPer(per)
       refreshRidesAsPassenger(currentUser.id, this.initialPer())
+    }
+  }
+
+  componentDidUpdate(oldProps) {
+    const { ride, filters, navigation, showModal, modalType, layout } = this.props;
+    const state = navigation.state
+
+    if (state.params && state.params.showFilters && oldProps.modalType === undefined) {
+      showModal('RIDES_AS_PASSENGER_FILTERS', { title: 'Set filters', modalStyles: styles(layout).modalStyles })
+    }
+
+    if (oldProps.modalType === 'RIDES_AS_PASSENGER_FILTERS') {
+      navigation.setParams({showFilters: false})
+    }
+
+    if (filters !== oldProps.filters) {
+      this.refreshRides()
     }
   }
 
@@ -127,10 +170,12 @@ const mapStateToProps = (state) => {
   return {
     pagination: state.ridesAsPassenger.pagination,
     rides: state.ridesAsPassenger.items,
+    filters: state.ridesAsPassengerFilters.filters,
     isStarted: state.ridesAsPassenger.isStarted,
     isFetching: state.ridesAsPassenger.isFetching,
     isAuthenticated: state.session.isAuthenticated,
     currentUser: state.session.item,
+    modalType: state.modal.modalType,
     layout: state.settings.layout,
   }
 };
@@ -139,6 +184,7 @@ const mapDispatchToProps = {
   fetchRidesAsPassenger,
   refreshRidesAsPassenger,
   setDefaultRidesAsPassengerPer,
+  showModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RidesIndexAsPassenger)

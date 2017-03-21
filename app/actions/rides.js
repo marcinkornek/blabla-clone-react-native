@@ -20,6 +20,7 @@ import {
   RIDE_FILTER_UPDATE,
   RIDE_SEARCH_UPDATE,
   RIDE_AS_DRIVER_FILTER_UPDATE,
+  RIDE_AS_PASSENGER_FILTER_UPDATE,
   RIDE_INITIALIZE,
   RIDE_FETCH_REQUEST,
   RIDE_FETCH_SUCCESS,
@@ -36,6 +37,7 @@ import {
   RIDE_SEARCH_CLEAR,
   RIDE_FILTER_CLEAR,
   RIDE_AS_DRIVER_FILTER_CLEAR,
+  RIDE_AS_PASSENGER_FILTER_CLEAR,
   RIDES_SET_DEFAULT_PER,
   RIDES_AS_PASSENGER_SET_DEFAULT_PER,
   RIDES_AS_DRIVER_SET_DEFAULT_PER,
@@ -272,7 +274,6 @@ export function clearRidesFilters() {
   }
 }
 
-
 export function updateRidesAsDriverFilters(filters = {}) {
   return {
     type: RIDE_AS_DRIVER_FILTER_UPDATE,
@@ -283,6 +284,19 @@ export function updateRidesAsDriverFilters(filters = {}) {
 export function clearRidesAsDriverFilters() {
   return {
     type: RIDE_AS_DRIVER_FILTER_CLEAR,
+  }
+}
+
+export function updateRidesAsPassengerFilters(filters = {}) {
+  return {
+    type: RIDE_AS_PASSENGER_FILTER_UPDATE,
+    filters: filters
+  }
+}
+
+export function clearRidesAsPassengerFilters() {
+  return {
+    type: RIDE_AS_PASSENGER_FILTER_CLEAR,
   }
 }
 

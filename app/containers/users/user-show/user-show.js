@@ -190,17 +190,13 @@ export class UserShow extends Component {
   }
 
   render() {
-    const { isStarted, isFetching, layout } = this.props
+    const { layout } = this.props
 
     return (
       <ScrollView style={styles(layout).view}>
-        <AsyncContent
-          isFetching={isFetching || !isStarted}
-        >
-          {this.renderUserInfo()}
-          {this.renderRidesAsDriver()}
-          {this.renderUserCars()}
-        </AsyncContent>
+        {this.renderUserInfo()}
+        {this.renderRidesAsDriver()}
+        {this.renderUserCars()}
       </ScrollView>
     )
   }

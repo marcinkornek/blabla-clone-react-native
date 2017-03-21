@@ -9,7 +9,7 @@ import _ from 'lodash';
 import stylesColors from '../../../constants/colors';
 
 // actions
-import { fetchUser } from '../../../actions/users';
+import { initializeUser, fetchUser } from '../../../actions/users';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
@@ -79,6 +79,7 @@ export class UserShow extends Component {
         title: state.params.myTitle,
         right: (
           <EditButton
+            layout={state.params.layout}
             onClick={() => state.params.navigation.navigate('myProfileEdit')}
             showEdit={state.params.showEdit}
           />
@@ -88,34 +89,30 @@ export class UserShow extends Component {
   }
 
   componentWillMount() {
-    const { fetchUser, navigation } = this.props;
-    const id = navigation.state.params.id
+    const { initializeUser, fetchUser, navigation } = this.props;
+    const user = navigation.state.params.user
+    const layout = navigation.state.params.layout
 
-    fetchUser(id)
+    this.setParams(user, layout)
+    initializeUser(user)
+    fetchUser(user.id)
   }
 
-  componentDidUpdate(oldProps) {
-    const { user } = this.props;
-
-    if (user !== oldProps.user) {
-      this.setParams()
-    }
-  }
-
-  setParams() {
-    const { user, navigation } = this.props;
+  setParams(user, layout) {
+    const { navigation } = this.props;
     const title = `${user.full_name} profile`
 
     navigation.setParams({
       myTitle: title,
       id: user.id,
+      layout: layout,
       navigation: navigation,
-      showEdit: this.showEdit()
+      showEdit: this.showEdit(user)
     })
   }
 
-  showEdit() {
-    const { user, currentUser } = this.props;
+  showEdit(user) {
+    const { currentUser } = this.props;
 
     return user.id === currentUser.id
   }
@@ -220,7 +217,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  fetchUser
+  initializeUser,
+  fetchUser,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserShow)

@@ -1,4 +1,5 @@
 import {
+  USER_INITIALIZE,
   USER_FETCH_REQUEST,
   USER_FETCH_SUCCESS,
   USER_FETCH_FAILURE,
@@ -15,12 +16,18 @@ export const initialState = {
 export function user(state = initialState, action) {
   let item
   switch (action.type) {
+  case USER_INITIALIZE:
+    console.log('USER_INITIALIZE');
+    return {
+      ...initialState,
+      item: action.item,
+      isStarted: true,
+    };
   case USER_FETCH_REQUEST:
     console.log('USER_FETCH_REQUEST');
     return {
       ...state,
       errors: [],
-      isStarted: true,
       isFetching: true,
     };
   case USER_FETCH_SUCCESS:

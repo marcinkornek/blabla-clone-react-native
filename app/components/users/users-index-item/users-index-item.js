@@ -31,7 +31,7 @@ export class UsersIndexItem extends Component {
 
     return (
       <ListItem
-        onPress={() => navigation.navigate('userShow', { id: user.id })}
+        onPress={() => navigation.navigate('userShow', { user: user, layout: layout })}
         key={user.id}
         title={user.full_name}
         avatar={{uri: user.avatar}}

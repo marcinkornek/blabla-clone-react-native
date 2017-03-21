@@ -5,6 +5,7 @@ import {
   USERS_REFRESH_REQUEST,
   USERS_REFRESH_SUCCESS,
   USERS_REFRESH_FAILURE,
+  USER_INITIALIZE,
   USER_FETCH_REQUEST,
   USER_FETCH_SUCCESS,
   USER_FETCH_FAILURE,
@@ -61,5 +62,12 @@ export function fetchUser(userId) {
         url: `${APIEndpoints.USERS}/${userId}`,
       }
     }
+  }
+}
+
+export function initializeUser(user) {
+  return {
+    type: USER_INITIALIZE,
+    item: user,
   }
 }

@@ -109,9 +109,10 @@ export function createCar(body) {
   }
 }
 
-export function initializeCar() {
+export function initializeCar(car) {
   return {
-    type: CAR_INITIALIZE
+    type: CAR_INITIALIZE,
+    item: car,
   }
 }
 

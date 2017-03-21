@@ -81,6 +81,7 @@ export class RideShow extends Component {
         title: state.params.myTitle,
         right: (
           <EditButton
+            layout={state.params.layout}
             onClick={() => state.params.navigation.navigate('rideEdit', {id: state.params.id})}
             showEdit={state.params.showEdit}
           />
@@ -97,19 +98,21 @@ export class RideShow extends Component {
   componentWillMount() {
     const { initializeRide, fetchRide, navigation, ride } = this.props
     const initialRide = navigation.state.params.ride
+    const layout = navigation.state.params.layout
 
-    this.setParams(initialRide)
+    this.setParams(initialRide, layout)
     initializeRide(initialRide)
     fetchRide(initialRide.id)
   }
 
-  setParams(ride) {
+  setParams(ride, layout) {
     const { navigation } = this.props;
     const title = `${ride.start_location.address} - ${ride.destination_location.address}`
 
     navigation.setParams({
       myTitle: title,
       id: ride.id,
+      layout: layout,
       navigation: navigation,
       showEdit: this.showEdit(ride)
     })

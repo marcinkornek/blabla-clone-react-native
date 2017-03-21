@@ -1,4 +1,5 @@
 import {
+  CAR_INITIALIZE,
   CAR_FETCH_REQUEST,
   CAR_FETCH_SUCCESS,
   CAR_CREATE_SUCCESS,
@@ -17,12 +18,18 @@ export const initialState = {
 export function car(state = initialState, action) {
   let item
   switch (action.type) {
+  case CAR_INITIALIZE:
+    console.log('CAR_INITIALIZE');
+    return {
+      ...initialState,
+      item: action.item,
+      isStarted: true,
+    };
   case CAR_FETCH_REQUEST:
     console.log('CAR_FETCH_REQUEST')
     return {
       ...state,
-      isStarted: true,
-      isFetching: true
+      isFetching: true,
     };
   case CAR_FETCH_SUCCESS:
     console.log('CAR_FETCH_SUCCESS')

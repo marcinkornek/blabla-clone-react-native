@@ -43,7 +43,7 @@ export class CarNew extends Component {
   componentWillMount() {
     const { fetchCarsOptions, initializeCar } = this.props
 
-    initializeCar()
+    initializeCar({})
     fetchCarsOptions()
   }
 

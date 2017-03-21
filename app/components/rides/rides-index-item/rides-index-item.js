@@ -98,7 +98,7 @@ export class RidesIndexItem extends Component {
 
     return (
       <ListItem
-        onPress={() => navigation.navigate('rideShow', {ride: ride})}
+        onPress={() => navigation.navigate('rideShow', { ride: ride, layout: layout })}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
@@ -122,7 +122,7 @@ export class RidesIndexItem extends Component {
 
     return (
       <ListItem
-        onPress={() => navigation.navigate('rideShow', {ride: ride})}
+        onPress={() => navigation.navigate('rideShow', { ride: ride, layout: layout })}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
@@ -142,7 +142,7 @@ export class RidesIndexItem extends Component {
 
     return (
       <ListItem
-        onPress={() => navigation.navigate('rideShow', {ride: ride})}
+        onPress={() => navigation.navigate('rideShow', { ride: ride, layout: layout })}
         key={ride.id}
         title={`${ride.start_location.address} - ${ride.destination_location.address}`}
         subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}

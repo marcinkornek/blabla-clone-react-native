@@ -7,7 +7,7 @@ import { TouchableHighlight, Text, View, StyleSheet, Image } from 'react-native'
 import stylesColors from '../../../constants/colors';
 
 // actions
-import { fetchCar } from '../../../actions/cars';
+import { initializeCar, fetchCar } from '../../../actions/cars';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
@@ -59,6 +59,7 @@ class CarShow extends Component {
         title: state.params.myTitle,
         right: (
           <EditButton
+            layout={state.params.layout}
             onClick={() => state.params.navigation.navigate('carEdit', {id: state.params.id})}
             showEdit={state.params.showEdit}
           />
@@ -68,34 +69,30 @@ class CarShow extends Component {
   }
 
   componentWillMount() {
-    const { fetchCar, navigation } = this.props
-    const id = navigation.state.params.id
+    const { initializeCar, fetchCar, navigation } = this.props
+    const initialCar = navigation.state.params.car
+    const layout = navigation.state.params.layout
 
-    fetchCar(id)
+    this.setParams(initialCar, layout)
+    initializeCar(initialCar)
+    fetchCar(initialCar.id)
   }
 
-  componentDidUpdate(oldProps) {
-    const { car } = this.props;
-
-    if (car !== oldProps.car) {
-      this.setParams()
-    }
-  }
-
-  setParams() {
-    const { car, navigation } = this.props;
+  setParams(car, layout) {
+    const { navigation } = this.props;
     const title = `${car.user.full_name} car`
 
     navigation.setParams({
       myTitle: title,
       id: car.id,
+      layout: layout,
       navigation: navigation,
-      showEdit: this.showEdit()
+      showEdit: this.showEdit(car)
     })
   }
 
-  showEdit() {
-    const { car, currentUser } = this.props;
+  showEdit(car) {
+    const { currentUser } = this.props;
 
     return car.owner_id === currentUser.id
   }
@@ -141,7 +138,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  fetchCar
+  initializeCar,
+  fetchCar,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(CarShow)

@@ -111,12 +111,12 @@ export class RideShow extends Component {
       myTitle: title,
       id: ride.id,
       navigation: navigation,
-      showEdit: this.showEdit()
+      showEdit: this.showEdit(ride)
     })
   }
 
-  showEdit() {
-    const { ride, currentUser } = this.props;
+  showEdit(ride) {
+    const { currentUser } = this.props;
 
     return ride.driver.id === currentUser.id
   }

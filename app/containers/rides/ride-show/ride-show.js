@@ -107,7 +107,7 @@ export class RideShow extends Component {
 
   setParams(ride, layout) {
     const { navigation } = this.props;
-    const title = `${ride.start_location.address} - ${ride.destination_location.address}`
+    const title = `${ride.start_location_address} - ${ride.destination_location_address}`
 
     navigation.setParams({
       myTitle: title,
@@ -121,7 +121,7 @@ export class RideShow extends Component {
   showEdit(ride) {
     const { currentUser } = this.props;
 
-    return ride.driver.id === currentUser.id
+    return ride.driver_id === currentUser.id
   }
 
   fitToCoordinates(coordinates) {
@@ -136,6 +136,7 @@ export class RideShow extends Component {
   coordinatesAreValid() {
     const { ride } = this.props
 
+    if (ride.start_location === undefined) return false
     return (
       !isNaN(ride.start_location.latitude) && !isNaN(ride.start_location.longitude) &&
         !isNaN(ride.destination_location.latitude) && !isNaN(ride.destination_location.longitude)
@@ -193,7 +194,7 @@ export class RideShow extends Component {
     return (
       <View style={styles(layout).rideDetails}>
         <Text style={styles(layout).rideDestination}>
-          {ride.start_location.address} - {ride.destination_location.address}
+          {ride.start_location_address} - {ride.destination_location_address}
         </Text>
         <Text>{moment(ride.starts_date).format('DD.MM.YY H:MM')}</Text>
       </View>
@@ -249,7 +250,7 @@ export class RideShow extends Component {
   renderDriver() {
     const { ride, currentUser, layout, navigation } = this.props
 
-    if (!(ride.driver.id === currentUser.id)) {
+    if (ride.driver && !(ride.driver.id === currentUser.id)) {
       return(
         <RenderUserProfile
           user={ride.driver}
@@ -263,32 +264,36 @@ export class RideShow extends Component {
   renderCar() {
     const { ride, layout, navigation } = this.props
 
-    return(
-      <RenderCarInfo
-        car={ride.car}
-        layout={layout}
-        navigation={navigation}
-      />
-    )
+    if (ride.car) {
+      return(
+        <RenderCarInfo
+          car={ride.car}
+          layout={layout}
+          navigation={navigation}
+        />
+      )
+    }
   }
 
   renderOffer() {
     const { ride, currentUser, layout } = this.props
 
-    return(
-      <RenderRideOffer
-        ride={ride}
-        currentUser={currentUser}
-        layout={layout}
-        handleSubmit={this.createRideRequest.bind(this)}
-      />
-    )
+    if (ride.driver) {
+      return(
+        <RenderRideOffer
+          ride={ride}
+          currentUser={currentUser}
+          layout={layout}
+          handleSubmit={this.createRideRequest.bind(this)}
+        />
+      )
+    }
   }
 
   renderRideRequests() {
     const { ride, currentUser, layout } = this.props
 
-    if (ride.driver.id === currentUser.id && !_.isEmpty(ride.ride_requests)) {
+    if (ride.driver && (ride.driver.id === currentUser.id) && !_.isEmpty(ride.ride_requests)) {
       return(
         <RideRequestsIndex
           ride={ride}

@@ -94,7 +94,7 @@ export class UserShow extends Component {
       <View style={styles(layout).container}>
         <TouchableHighlight
           underlayColor={stylesColors[layout].primaryBg}
-          onPress={() => navigation.navigate('userShow', { id: currentUser.id })}
+          onPress={() => navigation.navigate('userShow', {user: currentUser, layout: layout})}
         >
           <Text style={styles(layout).primaryText}>View my public profile</Text>
         </TouchableHighlight>

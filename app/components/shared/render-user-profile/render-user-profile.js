@@ -54,7 +54,7 @@ export const RenderUserProfile = ({user, layout, navigation}) => (
     </View>
     <TouchableHighlight
       underlayColor={stylesColors[layout].primaryBg}
-      onPress={() => navigation.navigate('userShow', { id: user.id })}
+      onPress={() => navigation.navigate('userShow', {user: user, layout: layout})}
     >
       <Text style={styles(layout).primaryText}>view profile</Text>
     </TouchableHighlight>

@@ -48,7 +48,7 @@ export class CarNew extends Component {
   }
 
   handleSubmit(data) {
-    const { createCar, isModal, hideModal, navigation } = this.props
+    const { createCar, isModal, hideModal, layout, navigation } = this.props
     let body = new FormData()
 
     Object.keys(data).forEach((key) => {
@@ -63,8 +63,8 @@ export class CarNew extends Component {
         if (isModal) {
           hideModal()
         } else {
-          let carId = response.payload.data.id
-          navigation.navigate('carShow', {id: carId});
+          let car = response.payload.data.id
+          navigation.navigate('carShow', {car: car, layout: layout});
         }
       })
   }

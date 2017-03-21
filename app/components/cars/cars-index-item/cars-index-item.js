@@ -36,7 +36,7 @@ export class CarsIndexItem extends Component {
 
     return (
       <ListItem
-        onPress={() => navigation.navigate('carShow', { car: car, layout: layout })}
+        onPress={() => navigation.navigate('carShow', {car: car, layout: layout})}
         key={car.id}
         title={`${car.full_name} ${car.production_year}`}
         subtitle={car.places_full}

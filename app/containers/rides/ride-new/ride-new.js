@@ -63,7 +63,7 @@ export class RideNew extends Component {
   }
 
   handleSubmit(data) {
-    const { createRide, navigation } = this.props
+    const { createRide, layout, navigation } = this.props
     var body = new FormData()
 
     Object.keys(data).forEach((key) => {
@@ -77,8 +77,8 @@ export class RideNew extends Component {
     })
     createRide(body)
       .then((response) => {
-        let rideId = response.payload.data.id
-        navigation.navigate('rideShow', {id: rideId});
+        let ride = response.payload.data
+        navigation.navigate('rideShow', {ride: ride, layout: layout});
       })
   }
 

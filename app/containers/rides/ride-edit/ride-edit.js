@@ -62,7 +62,7 @@ export class RideEdit extends Component {
   }
 
   handleSubmit(data) {
-    const { updateRide, ride, navigation } = this.props
+    const { updateRide, ride, layout, navigation } = this.props
     var body = new FormData()
 
     data =_.pick(data, [
@@ -83,8 +83,8 @@ export class RideEdit extends Component {
 
     updateRide(body, data.id)
       .then((response) => {
-        let rideId = response.payload.data.id
-        navigation.navigate('rideShow', {id: rideId})
+        let ride = response.payload.data
+        navigation.navigate('rideShow', {ride: ride, layout: layout})
       })
   }
 

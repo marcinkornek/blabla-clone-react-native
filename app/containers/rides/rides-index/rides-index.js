@@ -114,7 +114,7 @@ export class RidesIndex extends Component {
     }
 
     if (notificationActive !== oldProps.notificationActive) {
-      navigation.navigate('rideShow', {id: notificationActive.ride.id})
+      navigation.navigate('rideShow', {ride: notificationActive.ride, layout: layout})
     }
 
     if (ride && ride.isSaving == false && oldProps.ride.isSaving == true) {

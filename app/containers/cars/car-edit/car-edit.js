@@ -47,7 +47,7 @@ export class CarEdit extends Component {
   }
 
   handleSubmit(data) {
-    const { updateCar, navigation } = this.props
+    const { updateCar, layout, navigation } = this.props
     let body = new FormData()
 
     Object.keys(data).forEach((key) => {
@@ -59,8 +59,8 @@ export class CarEdit extends Component {
     })
     updateCar(body, data.id)
       .then((response) => {
-        let carId = response.payload.data.id
-        navigation.navigate('carShow', {id: carId})
+        let car = response.payload.data
+        navigation.navigate('carShow', {car: car, layout: layout})
       })
   }
 

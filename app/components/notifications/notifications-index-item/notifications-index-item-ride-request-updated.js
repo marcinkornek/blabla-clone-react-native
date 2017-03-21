@@ -23,7 +23,7 @@ const styles = (layout) => StyleSheet.create({
 export const RideRequestUpdated = ({ notification, layout, navigation }) => {
   return (
     <ListItem
-      onPress={() => navigation.navigate('rideShow', {id: notification.ride.id})}
+      onPress={() => navigation.navigate('rideShow', {ride: notification.ride, layout: layout})}
       key={notification.id}
       title={`${notification.sender.full_name} ${notification.notification_type == 'ride_request_accepted' ? ' accepted' : ' rejected'} your ride request in ride`}
       subtitle={`${notification.ride.start_location_address} - ${notification.ride.destination_location_address}`}

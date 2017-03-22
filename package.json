@@ -11,6 +11,7 @@
 		"immutability-helper": "^2.1.1",
 		"lodash": "^4.17.4",
 		"moment": "^2.17.1",
+		"native-navigation": "^0.1.0",
 		"pluralize": "^3.1.0",
 		"ramda": "^0.23.0",
 		"react": "15.4.2",

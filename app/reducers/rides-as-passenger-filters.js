@@ -1,6 +1,6 @@
 import {
-  RIDE_AS_DRIVER_FILTER_UPDATE,
-  RIDE_AS_DRIVER_FILTER_CLEAR,
+  RIDE_AS_PASSENGER_FILTER_UPDATE,
+  RIDE_AS_PASSENGER_FILTER_CLEAR,
 } from '../constants/action-types';
 
 export const initialState = {
@@ -16,14 +16,14 @@ export const initialState = {
 export function ridesAsPassengerFilters(state = initialState, action) {
   let items, pagination, filters
   switch (action.type) {
-  case RIDE_AS_DRIVER_FILTER_UPDATE:
-    console.log('RIDE_AS_DRIVER_FILTER_UPDATE');
+  case RIDE_AS_PASSENGER_FILTER_UPDATE:
+    console.log('RIDE_AS_PASSENGER_FILTER_UPDATE');
     return {
       ...state,
       filters: action.filters
     };
-  case RIDE_AS_DRIVER_FILTER_CLEAR:
-    console.log('RIDE_AS_DRIVER_FILTER_CLEAR');
+  case RIDE_AS_PASSENGER_FILTER_CLEAR:
+    console.log('RIDE_AS_PASSENGER_FILTER_CLEAR');
     return {
       ...initialState,
     };

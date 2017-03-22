@@ -99,42 +99,54 @@ export function fetchRides(page = 1, per = 20) {
 }
 
 export function refreshRidesAsPassenger(user_id, per = 20) {
-  return {
-    types: [
-      RIDES_AS_PASSENGER_REFRESH_REQUEST,
-      RIDES_AS_PASSENGER_REFRESH_SUCCESS,
-      RIDES_AS_PASSENGER_REFRESH_FAILURE
-    ],
-    payload: {
-      request: {
-        url: `${APIEndpoints.RIDES}/as_passenger`,
-        params: {
-          page: 1,
-          per,
-          user_id
+  return (dispatch, getState) => {
+    const { ridesAsPassengerFilters } = getState()
+    const filters = ridesAsPassengerFilters.filters
+
+    return dispatch({
+      types: [
+        RIDES_AS_PASSENGER_REFRESH_REQUEST,
+        RIDES_AS_PASSENGER_REFRESH_SUCCESS,
+        RIDES_AS_PASSENGER_REFRESH_FAILURE
+      ],
+      payload: {
+        request: {
+          url: `${APIEndpoints.RIDES}/as_passenger`,
+          params: {
+            page: 1,
+            per,
+            user_id,
+            filters,
+          }
         }
       }
-    }
+    })
   }
 }
 
 export function fetchRidesAsPassenger(user_id, page = 1, per = 20) {
-  return {
-    types: [
-      RIDES_AS_PASSENGER_FETCH_REQUEST,
-      RIDES_AS_PASSENGER_FETCH_SUCCESS,
-      RIDES_AS_PASSENGER_FETCH_FAILURE
-    ],
-    payload: {
-      request: {
-        url: `${APIEndpoints.RIDES}/as_passenger`,
-        params: {
-          page,
-          per,
-          user_id
+  return (dispatch, getState) => {
+    const { ridesAsPassengerFilters } = getState()
+    const filters = ridesAsPassengerFilters.filters
+
+    return dispatch({
+      types: [
+        RIDES_AS_PASSENGER_FETCH_REQUEST,
+        RIDES_AS_PASSENGER_FETCH_SUCCESS,
+        RIDES_AS_PASSENGER_FETCH_FAILURE
+      ],
+      payload: {
+        request: {
+          url: `${APIEndpoints.RIDES}/as_passenger`,
+          params: {
+            page,
+            per,
+            user_id,
+            filters,
+          }
         }
       }
-    }
+    })
   }
 }
 
@@ -165,24 +177,31 @@ export function refreshRidesAsDriver(user_id, per = 20) {
 }
 
 export function fetchRidesAsDriver(user_id, page = 1, per = 20) {
-  return {
-    types: [
-      RIDES_AS_DRIVER_FETCH_REQUEST,
-      RIDES_AS_DRIVER_FETCH_SUCCESS,
-      RIDES_AS_DRIVER_FETCH_FAILURE
-    ],
-    payload: {
-      request: {
-        url: `${APIEndpoints.RIDES}/as_driver`,
-        params: {
-          page,
-          per,
-          user_id,
+  return (dispatch, getState) => {
+    const { ridesAsDriverFilters } = getState()
+    const filters = ridesAsDriverFilters.filters
+
+    return dispatch({
+      types: [
+        RIDES_AS_DRIVER_FETCH_REQUEST,
+        RIDES_AS_DRIVER_FETCH_SUCCESS,
+        RIDES_AS_DRIVER_FETCH_FAILURE
+      ],
+      payload: {
+        request: {
+          url: `${APIEndpoints.RIDES}/as_driver`,
+          params: {
+            page,
+            per,
+            user_id,
+            filters,
+          }
         }
       }
-    }
+    })
   }
 }
+
 
 export function fetchRide(rideId) {
   return {

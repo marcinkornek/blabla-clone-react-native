@@ -65,7 +65,7 @@ export class RidesAsPassengerFilters extends Component {
 
 const mapStateToProps = (state) => {
   return {
-    filters: state.ridesAsDriverFilters.filters,
+    filters: state.ridesAsPassengerFilters.filters,
     layout: state.settings.layout,
   }
 }

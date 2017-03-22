@@ -177,7 +177,7 @@ export class RidesAsPassengerFiltersForm extends Component {
 }
 
 RidesAsPassengerFiltersForm = reduxForm({
-  form: 'RidesFiltersForm',
+  form: 'RidesAsPassengerFiltersForm',
 })(RidesAsPassengerFiltersForm)
 
 RidesAsPassengerFiltersForm = connect(

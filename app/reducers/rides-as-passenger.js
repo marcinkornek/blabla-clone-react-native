@@ -17,11 +17,10 @@ export const initialState = {
   isFetching: false,
   items: [],
   pagination: {},
-  filters: {}
 };
 
 export function ridesAsPassenger(state = initialState, action) {
-  let items, pagination, filters
+  let items, pagination
   switch (action.type) {
   case LOGOUT_SUCCESS:
     return {
@@ -38,7 +37,6 @@ export function ridesAsPassenger(state = initialState, action) {
     console.log('RIDES_AS_PASSENGER_FETCH_SUCCESS');
     items = action.payload.data.items
     pagination = action.payload.data.meta
-    filters = action.payload.data.filters
     return {
       ...state,
       isFetching: false,
@@ -48,7 +46,6 @@ export function ridesAsPassenger(state = initialState, action) {
         state.items,
       ),
       pagination: pagination,
-      filters: filters
     };
   case RIDES_AS_PASSENGER_REFRESH_REQUEST:
     console.log('RIDES_AS_PASSENGER_REFRESH_REQUEST');
@@ -64,7 +61,6 @@ export function ridesAsPassenger(state = initialState, action) {
     pagination = action.payload.data.meta
     const currentPage = pagination.per / state.defaultPer
     const totalPages = Math.ceil(pagination.total_count / state.defaultPer)
-    filters = action.payload.data.filters
     return {
       ...state,
       isFetching: false,
@@ -76,7 +72,6 @@ export function ridesAsPassenger(state = initialState, action) {
         prev_page: currentPage - 1,
         total_pages: totalPages,
       },
-      filters: filters
     };
   case RIDES_AS_PASSENGER_SET_DEFAULT_PER:
     console.log('RIDES_AS_PASSENGER_SET_DEFAULT_PER');

@@ -53,6 +53,7 @@ export function ridesAsDriver(state = initialState, action) {
       ...state,
       isStarted: true,
       isFetching: true,
+      items: [],
     };
   case RIDES_AS_DRIVER_REFRESH_SUCCESS:
     console.log('RIDES_AS_DRIVER_REFRESH_SUCCESS');

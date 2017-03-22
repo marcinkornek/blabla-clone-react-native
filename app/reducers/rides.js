@@ -49,6 +49,7 @@ export function rides(state = initialState, action) {
       ...state,
       isStarted: true,
       isFetching: true,
+      items: [],
     };
   case RIDES_REFRESH_SUCCESS:
     console.log('RIDES_REFRESH_SUCCESS');

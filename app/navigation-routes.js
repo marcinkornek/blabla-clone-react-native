@@ -68,6 +68,8 @@ export const AuthenticatedRidesStackNavigator = StackNavigator({
   userShow: { screen: UserShow },
   myNotifications: { screen: NotificationsIndex },
   settingsIndex: { screen: SettingsEdit },
+}, {
+  headermode: 'float'
 })
 
 export const AuthenticatedAccountTabNavigator = TabNavigator({
@@ -94,6 +96,8 @@ export const AuthenticatedAccountStackNavigator = StackNavigator({
   carNew: { screen: CarNew },
   carShow: { screen: CarShow },
   carEdit: { screen: CarEdit },
+}, {
+  headermode: 'float'
 })
 
 export const AuthenticatedDrawerNavigator = DrawerNavigator({
@@ -121,10 +125,14 @@ export const NotAuthenticatedRidesTabNavigator = TabNavigator({
 
 export const NotAuthenticatedLoginStackNavigator = StackNavigator({
   login: { screen: Login },
+}, {
+  headermode: 'float'
 })
 
 export const NotAuthenticatedRegisterStackNavigator = StackNavigator({
   register: { screen: Register },
+}, {
+  headermode: 'float'
 })
 
 export const NotAuthenticatedRidesStackNavigator = StackNavigator({
@@ -133,6 +141,8 @@ export const NotAuthenticatedRidesStackNavigator = StackNavigator({
   rideShow: { screen: RideShow },
   userShow: { screen: UserShow },
   carShow: { screen: CarShow },
+}, {
+  headermode: 'float'
 })
 
 export const NotAuthenticatedDrawerNavigator = DrawerNavigator({

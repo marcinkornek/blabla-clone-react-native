@@ -123,20 +123,20 @@ export class RidesFiltersForm extends Component {
           {[currencyPlaceholder, ...currencies]}
         </Field>
         <Field
-          name='hide_full'
-          label='Hide full'
+          name='show_full'
+          label='Show full'
           component={ToggleField}
           layout={layout}
         />
         <Field
-          name='hide_as_driver'
-          label='Hide my rides as driver'
+          name='show_as_driver'
+          label='Show my rides as driver'
           component={ToggleField}
           layout={layout}
         />
         <Field
-          name='hide_requested'
-          label='Hide requested rides'
+          name='show_requested'
+          label='Show requested rides'
           component={ToggleField}
           layout={layout}
         />

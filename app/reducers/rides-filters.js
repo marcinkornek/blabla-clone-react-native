@@ -9,9 +9,10 @@ export const initialState = {
   filters: {
     currency: undefined,
     order: undefined,
-    hide_full: false,
-    hide_as_driver: false,
-    hide_requested: false,
+    show_past: false,
+    show_full: true,
+    show_as_driver: true,
+    show_requested: true,
   },
   search: {},
 };

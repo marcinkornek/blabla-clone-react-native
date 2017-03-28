@@ -8,7 +8,7 @@ export const initialState = {
     currency: undefined,
     order: undefined,
     show_past: false,
-    hide_full: false,
+    show_full: true,
     show_only_with_pending: false,
   },
 };

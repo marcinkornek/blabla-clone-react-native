@@ -9,7 +9,7 @@ export const initialState = {
     order: undefined,
     status: undefined,
     show_past: false,
-    hide_full: false,
+    show_full: true,
   },
 };
 

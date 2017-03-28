@@ -129,8 +129,8 @@ export class RidesAsDriverFiltersForm extends Component {
           layout={layout}
         />
         <Field
-          name='hide_full'
-          label='Hide full'
+          name='show_full'
+          label='Show full'
           component={ToggleField}
           layout={layout}
         />

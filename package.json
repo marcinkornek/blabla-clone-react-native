@@ -26,7 +26,7 @@
 		"react-native-google-places": "^2.0.4",
 		"react-native-image-picker": "^0.26.0",
 		"react-native-infinite-scroll-view": "^0.4.2",
-		"react-native-maps": "^0.12.4",
+		"react-native-maps": "^0.13.1",
 		"react-native-onesignal": "^3.0.3",
 		"react-native-router-flux": "^3.37.0",
 		"react-native-vector-icons": "^4.0.0",

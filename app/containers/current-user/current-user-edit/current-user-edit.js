@@ -23,9 +23,16 @@ const styles = (layout) => StyleSheet.create({
 
 export class CurrentUserEdit extends Component {
   static propTypes = {
-    isFetching: PropTypes.bool.isRequired,
+    isSaving: PropTypes.bool.isRequired,
     currentUser: PropTypes.object,
     layout: PropTypes.string.isRequired,
+  }
+
+  static navigationOptions = {
+    header: (navigation, header) => ({
+      ...header,
+      title: 'Edit my profile'
+    })
   }
 
   handleSubmit(data) {
@@ -35,8 +42,6 @@ export class CurrentUserEdit extends Component {
     Object.keys(data).forEach(( key ) => {
       if (key == 'avatar') {
         if (_.isObject(data[key])) { body.append(key, data[key]) }
-      } else if (key == 'date_of_birth' && _.isObject(data[key]) && data[key].getMonth === 'function') {
-        body.append(key, moment(data[key]).format('DD-MM-YYYY'))
       } else {
         if (data[key]) { body.append(key, data[key]) }
       }

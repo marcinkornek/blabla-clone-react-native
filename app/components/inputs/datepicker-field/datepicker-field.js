@@ -52,7 +52,7 @@ export const DatepickerField = ({ input, label, meta: { touched, error }, layout
       date={input.value}
       placeholder={label}
       onDateChange={(value) => {input.onChange(value)}}
-      format="DD-MM-YYYY"
+      format="YYYY-MM-DD"
       {...input}
       {...custom}
     />

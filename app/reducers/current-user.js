@@ -18,7 +18,7 @@ export const initialState = {
 
 function getDateOfBirth(item) {
   if (item.date_of_birth) {
-    return new Date(item.date_of_birth)
+    return item.date_of_birth
   } else {
     return null
   }

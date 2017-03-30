@@ -4,8 +4,9 @@ import {
   CAR_FETCH_SUCCESS,
   CAR_CREATE_SUCCESS,
   CAR_CREATE_REQUEST,
-  CAR_UPDATE_SUCCESS,
   CAR_UPDATE_REQUEST,
+  CAR_UPDATE_SUCCESS,
+  CAR_UPDATE_FAILURE,
 } from '../constants/action-types'
 
 export const initialState = {
@@ -62,6 +63,12 @@ export function car(state = initialState, action) {
     };
   case CAR_UPDATE_SUCCESS:
     console.log('CAR_UPDATE_SUCCESS');
+    return {
+      ...state,
+      isSaving: false
+    };
+  case CAR_UPDATE_FAILURE:
+    console.log('CAR_UPDATE_FAILURE');
     return {
       ...state,
       isSaving: false

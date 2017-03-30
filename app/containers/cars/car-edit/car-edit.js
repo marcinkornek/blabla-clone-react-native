@@ -54,13 +54,15 @@ export class CarEdit extends Component {
       if (key == 'car_photo') {
         if (_.isObject(data[key])) { body.append(key, data[key]) }
       } else {
-        if (!_.isEmpty(data[key])) { body.append(key, data[key]) }
+        if (data[key]) { body.append(key, data[key]) }
       }
     })
     updateCar(body, data.id)
-      .then((response) => {
-        let car = response.payload.data
-        navigation.navigate('carShow', {car: car, layout: layout})
+      .then((response)=> {
+        if (!response.error) {
+          let car = response.payload.data
+          navigation.navigate('carShow', {car: car, layout: layout})
+        }
       })
   }
 

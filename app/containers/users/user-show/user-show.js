@@ -1,6 +1,6 @@
 // utils
 import React, { Component, PropTypes } from 'react'
-import { View, ScrollView, Image, Text, StyleSheet } from 'react-native';
+import { View, ScrollView, Image, Text, TouchableHighlight, StyleSheet } from 'react-native';
 import { connect } from 'react-redux'
 import moment from 'moment';
 import _ from 'lodash';
@@ -29,14 +29,13 @@ const styles = (layout) => StyleSheet.create({
     borderColor: stylesColors[layout].userShowAvatarBorder,
   },
   userInfoContainer: {
-    backgroundColor: stylesColors[layout].userShowUserContainerBg,
+    // backgroundColor: stylesColors[layout].userShowUserContainerBg,
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
     padding: 10,
   },
   title: {
-    backgroundColor: stylesColors[layout].primaryBg,
     color: stylesColors[layout].primaryText,
     margin: 10,
     fontSize: 16,
@@ -45,15 +44,18 @@ const styles = (layout) => StyleSheet.create({
   userName: {
     fontSize: 20,
     fontWeight: 'bold',
-    color: stylesColors[layout].userShowUserContainerText,
+    // color: stylesColors[layout].userShowUserContainerText,
+    color: stylesColors[layout].primaryText,
   },
   userInfo: {
     fontSize: 16,
-    color: stylesColors[layout].userShowUserContainerText,
+    color: stylesColors[layout].primaryText,
+    // color: stylesColors[layout].userShowUserContainerText,
   },
   view: {
-    marginTop: 0,
-    backgroundColor: stylesColors[layout].primaryBg,
+    flex: 1,
+    // marginTop: 0,
+    // backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 
@@ -73,62 +75,90 @@ export class UserShow extends Component {
     }
   }
 
-  static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: state.params.myTitle,
-        right: (
-          <EditButton
-            layout={state.params.layout}
-            onClick={() => state.params.navigation.navigate('myProfileEdit')}
-            showEdit={state.params.showEdit}
-          />
-        )
-      }
-    }
+  state = {
+    showDetails: false
   }
+
+  // static navigationOptions = {
+  //   header: ({ state }) => {
+  //     return {
+  //       title: state.params.myTitle,
+  //       right: (
+  //         <EditButton
+  //           layout={state.params.layout}
+  //           onClick={() => state.params.navigation.navigate('myProfileEdit')}
+  //           showEdit={state.params.showEdit}
+  //         />
+  //       )
+  //     }
+  //   }
+  // }
 
   componentWillMount() {
-    const { initializeUser, fetchUser, navigation } = this.props;
-    const user = navigation.state.params.user
-    const layout = navigation.state.params.layout
+    const { initializeUser, fetchUser, modalProps } = this.props;
+    // const user = navigation.state.params.user
+    // const layout = navigation.state.params.layout
 
-    this.setParams(user, layout)
-    initializeUser(user)
-    fetchUser(user.id)
+    // this.setParams(user, layout)
+    initializeUser(modalProps.user)
+    fetchUser(modalProps.user.id)
   }
 
-  setParams(user, layout) {
-    const { navigation } = this.props;
-    const title = `${user.full_name} profile`
+  // setParams(user, layout) {
+  //   const { navigation } = this.props;
+  //   const title = `${user.full_name} profile`
 
-    navigation.setParams({
-      myTitle: title,
-      id: user.id,
-      layout: layout,
-      navigation: navigation,
-      showEdit: this.showEdit(user)
-    })
-  }
+  //   navigation.setParams({
+  //     myTitle: title,
+  //     id: user.id,
+  //     layout: layout,
+  //     navigation: navigation,
+  //     showEdit: this.showEdit(user)
+  //   })
+  // }
 
-  showEdit(user) {
-    const { currentUser } = this.props;
+  // showEdit(user) {
+  //   const { currentUser } = this.props;
 
-    return user.id === currentUser.id
+  //   return user.id === currentUser.id
+  // }
+
+  toggleDetails() {
+    console.log(this.state.showDetails);
+    this.setState({ showDetails: !this.state.showDetails })
   }
 
   renderUserInfo() {
-    const { user, layout } = this.props
+    const { user, layout } = this.props;
 
     return(
-      <View style={styles(layout).userInfoContainer}>
-        <Image source={{uri: user.avatar}} style={styles(layout).avatar} />
-        <Text style={styles(layout).userName}>{user.full_name}</Text>
-        <RenderUserAge user={user} style={styles(layout).userInfo} />
-        <Text style={styles(layout).userInfo}>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
-        <Text style={styles(layout).userInfo}>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
-      </View>
+      <TouchableHighlight
+        style={styles(layout).userInfoContainer}
+        underlayColor='transparent'
+        onPress={() => this.toggleDetails()}
+      >
+        <View>
+          <Image source={{uri: user.avatar}} style={styles(layout).avatar} />
+          <Text style={styles(layout).userName}>{user.full_name}</Text>
+          <RenderUserAge user={user} style={styles(layout).userInfo} />
+          <Text style={styles(layout).userInfo}>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
+          <Text style={styles(layout).userInfo}>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
+        </View>
+      </TouchableHighlight>
     )
+  }
+
+  renderDetails() {
+    const { showDetails } = this.state;
+
+    if (showDetails) {
+      return (
+        <View>
+          {this.renderRidesAsDriver()}
+          {this.renderUserCars()}
+        </View>
+      )
+    }
   }
 
   renderRidesAsDriver() {
@@ -195,8 +225,7 @@ export class UserShow extends Component {
     return (
       <ScrollView style={styles(layout).view}>
         {this.renderUserInfo()}
-        {this.renderRidesAsDriver()}
-        {this.renderUserCars()}
+        {this.renderDetails()}
       </ScrollView>
     )
   }

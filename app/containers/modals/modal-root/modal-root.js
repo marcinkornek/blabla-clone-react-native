@@ -137,9 +137,9 @@ export class ModalRoot extends Component {
         <View style={styles(layout).modal}>
           <View style={[styles(layout).modalContent, modalProps.modalStyles]}>
             {this.renderTitle()}
-            {this.renderModalCloseIcon()}
             {this.renderSubtitle()}
             <SpecificModal {...this.props} isModal={true} />
+            {this.renderModalCloseIcon()}
           </View>
         </View>
       </Modal>

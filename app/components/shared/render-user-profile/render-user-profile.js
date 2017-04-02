@@ -38,11 +38,16 @@ const styles = (layout) => StyleSheet.create({
   },
 });
 
-export const RenderUserProfile = ({user, layout, navigation}) => (
+export const RenderUserProfile = ({user, layout, onSubmit, navigation}) => (
   <View style={styles(layout).view}>
     <Text style={styles(layout).title}>Driver</Text>
     <View style={styles(layout).container}>
-      <Image source={{uri: user.avatar}} style={styles(layout).avatar} />
+      <TouchableHighlight
+        underlayColor={stylesColors[layout].primaryBg}
+        onPress={onSubmit}
+      >
+        <Image source={{uri: user.avatar}} style={styles(layout).avatar} />
+      </TouchableHighlight>
       <View>
         <View style={styles(layout).user}>
           <Text style={styles(layout).primaryText}>{user.full_name}</Text>
@@ -52,12 +57,6 @@ export const RenderUserProfile = ({user, layout, navigation}) => (
         <Text style={styles(layout).primaryText}>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
       </View>
     </View>
-    <TouchableHighlight
-      underlayColor={stylesColors[layout].primaryBg}
-      onPress={() => navigation.navigate('userShow', {user: user, layout: layout})}
-    >
-      <Text style={styles(layout).primaryText}>view profile</Text>
-    </TouchableHighlight>
   </View>
 )
 

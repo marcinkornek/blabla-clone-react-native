@@ -201,6 +201,14 @@ export class RideShow extends Component {
     })
   }
 
+  showUserModal() {
+    const { navigation, showModal, ride, layout } = this.props;
+
+    showModal('USER_SHOW', {
+      user: ride.driver, layout: layout, modalStyles: styles(layout).modalStyles
+    })
+  }
+
   renderRide() {
     const { ride, layout } = this.props
 
@@ -268,6 +276,7 @@ export class RideShow extends Component {
         <RenderUserProfile
           user={ride.driver}
           layout={layout}
+          onSubmit={this.showUserModal.bind(this)}
           navigation={navigation}
         />
       )

@@ -50,8 +50,9 @@ export const RenderUserProfile = ({user, layout, onSubmit, navigation}) => (
         <Image source={{uri: user.avatar}} style={styles(layout).imageAvatar} />
         <View>
           <View style={styles(layout).user}>
-            <Text style={styles(layout).primaryText}>{user.full_name}</Text>
-            <RenderUserAge user={user} />
+            <Text style={styles(layout).primaryText}>{user.full_name} (</Text>
+            <RenderUserAge user={user} layout={layout} />
+            <Text style={styles(layout).primaryText}>)</Text>
           </View>
           <Text style={styles(layout).primaryText}>
             member since: {moment(user.created_at).format('DD.MM.YYYY')}

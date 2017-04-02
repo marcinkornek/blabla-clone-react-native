@@ -113,7 +113,7 @@ export class UserShow extends Component {
         <View>
           <Image source={{uri: user.avatar}} style={styles(layout).avatar} />
           <Text style={styles(layout).userName}>{user.full_name}</Text>
-          <RenderUserAge user={user} style={styles(layout).userInfo} />
+          <RenderUserAge user={user} layout={layout} />
           <Text style={styles(layout).userInfo}>
             member since: {moment(user.created_at).format('DD.MM.YYYY')}
           </Text>

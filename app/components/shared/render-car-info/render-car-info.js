@@ -6,11 +6,6 @@ import { View, Image, Text, TouchableHighlight, StyleSheet } from 'react-native'
 import stylesColors from '../../../constants/colors';
 
 const styles = (layout) => StyleSheet.create({
-  avatar: {
-    width: 40,
-    height: 40,
-    marginRight: 10,
-  },
   car: {
     flexWrap: 'wrap',
     alignItems: 'flex-start',
@@ -20,6 +15,11 @@ const styles = (layout) => StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'flex-start',
     flexDirection: 'row',
+  },
+  imageAvatar: {
+    width: 40,
+    height: 40,
+    marginRight: 10,
   },
   primaryText: {
     color: stylesColors[layout].primaryText,
@@ -36,21 +36,22 @@ const styles = (layout) => StyleSheet.create({
 
 export const RenderCarInfo = ({car, layout, onSubmit, navigation}) => {
   return (
-  <View style={styles(layout).view}>
-    <Text style={styles(layout).title}>Car</Text>
-    <View style={styles(layout).container}>
-      <TouchableHighlight
-        underlayColor={stylesColors[layout].primaryBg}
-        onPress={onSubmit}
-      >
-        <Image source={{uri: car.car_photo}} style={styles(layout).avatar} />
-      </TouchableHighlight>
-      <View>
-        <Text style={styles(layout).primaryText}>{car.full_name}</Text>
-        <Text style={styles(layout).primaryText}>{car.production_year}</Text>
+  <TouchableHighlight
+    style={styles(layout).view}
+    underlayColor={stylesColors[layout].primaryBg}
+    onPress={onSubmit}
+  >
+    <View>
+      <Text style={styles(layout).title}>Car</Text>
+      <View style={styles(layout).container}>
+        <Image source={{uri: car.car_photo}} style={styles(layout).imageAvatar} />
+        <View>
+          <Text style={styles(layout).primaryText}>{car.full_name}</Text>
+          <Text style={styles(layout).primaryText}>{car.production_year}</Text>
+        </View>
       </View>
     </View>
-  </View>
+  </TouchableHighlight>
   )
 }
 

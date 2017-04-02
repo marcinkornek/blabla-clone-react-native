@@ -6,7 +6,7 @@ import {
 
 export const initialState = {
   modalType: undefined,
-  modalProps: {}
+  modalProps: {},
 }
 
 export function modal(state = initialState, action) {
@@ -15,13 +15,13 @@ export function modal(state = initialState, action) {
       console.log('SHOW_MODAL')
       return {
         modalType: action.modalType,
-        modalProps: action.modalProps
+        modalProps: action.modalProps,
       }
     case UPDATE_MODAL:
       console.log('UPDATE_MODAL')
       return {
         ...state,
-        modalProps: action.modalProps
+        modalProps: action.modalProps,
       }
     case 'HIDE_MODAL':
       console.log('HIDE_MODAL')

@@ -194,18 +194,18 @@ export class RideShow extends Component {
   }
 
   showCarModal() {
-    const { showModal, ride, layout } = this.props;
+    const { showModal, ride, layout, navigation } = this.props;
 
     showModal('CAR_SHOW', {
-      car: ride.car, layout: layout, modalStyles: styles(layout).modalStyles
+      car: ride.car, layout: layout, modalStyles: styles(layout).modalStyles, navigation: navigation
     })
   }
 
   showUserModal() {
-    const { showModal, ride, layout } = this.props;
+    const { showModal, ride, layout, navigation } = this.props;
 
     showModal('USER_SHOW', {
-      user: ride.driver, layout: layout, modalStyles: styles(layout).modalStyles
+      user: ride.driver, layout: layout, modalStyles: styles(layout).modalStyles, navigation: navigation
     })
   }
 

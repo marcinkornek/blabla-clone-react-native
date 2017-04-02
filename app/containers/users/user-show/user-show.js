@@ -34,7 +34,6 @@ const styles = (layout) => StyleSheet.create({
     backgroundColor: stylesColors[layout].secondaryBg,
   },
   userInfoContainer: {
-    // backgroundColor: stylesColors[layout].userShowUserContainerBg,
     flexDirection: 'column',
     flexWrap: 'wrap',
     alignItems: 'center',
@@ -49,18 +48,14 @@ const styles = (layout) => StyleSheet.create({
   userName: {
     fontSize: 20,
     fontWeight: 'bold',
-    // color: stylesColors[layout].userShowUserContainerText,
     color: stylesColors[layout].primaryText,
   },
   userInfo: {
     fontSize: 16,
     color: stylesColors[layout].primaryText,
-    // color: stylesColors[layout].userShowUserContainerText,
   },
   view: {
     flex: 1,
-    // marginTop: 0,
-    // backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 
@@ -84,27 +79,9 @@ export class UserShow extends Component {
     showDetails: false
   }
 
-  // static navigationOptions = {
-  //   header: ({ state }) => {
-  //     return {
-  //       title: state.params.myTitle,
-  //       right: (
-  //         <EditButton
-  //           layout={state.params.layout}
-  //           onClick={() => state.params.navigation.navigate('myProfileEdit')}
-  //           showEdit={state.params.showEdit}
-  //         />
-  //       )
-  //     }
-  //   }
-  // }
-
   componentWillMount() {
     const { initializeUser, fetchUser, modalProps } = this.props;
-    // const user = navigation.state.params.user
-    // const layout = navigation.state.params.layout
 
-    // this.setParams(user, layout)
     initializeUser(modalProps.user)
     fetchUser(modalProps.user.id)
   }
@@ -116,25 +93,6 @@ export class UserShow extends Component {
       user: user, layout: layout, modalStyles: styles(layout).modalStylesExpanded
     })
   }
-
-  // setParams(user, layout) {
-  //   const { navigation } = this.props;
-  //   const title = `${user.full_name} profile`
-
-  //   navigation.setParams({
-  //     myTitle: title,
-  //     id: user.id,
-  //     layout: layout,
-  //     navigation: navigation,
-  //     showEdit: this.showEdit(user)
-  //   })
-  // }
-
-  // showEdit(user) {
-  //   const { currentUser } = this.props;
-
-  //   return user.id === currentUser.id
-  // }
 
   toggleDetails() {
     this.setState({ showDetails: !this.state.showDetails })
@@ -155,8 +113,12 @@ export class UserShow extends Component {
           <Image source={{uri: user.avatar}} style={styles(layout).avatar} />
           <Text style={styles(layout).userName}>{user.full_name}</Text>
           <RenderUserAge user={user} style={styles(layout).userInfo} />
-          <Text style={styles(layout).userInfo}>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
-          <Text style={styles(layout).userInfo}>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
+          <Text style={styles(layout).userInfo}>
+            member since: {moment(user.created_at).format('DD.MM.YYYY')}
+          </Text>
+          <Text style={styles(layout).userInfo}>
+            last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}
+          </Text>
         </View>
       </TouchableHighlight>
     )

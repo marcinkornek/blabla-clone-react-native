@@ -1,46 +1,91 @@
 // utils
 import React, { Component, PropTypes } from 'react';
-import { TouchableHighlight, Text, StyleSheet } from 'react-native';
+import { TouchableHighlight, View, Text, StyleSheet, Image } from 'react-native';
 import { ListItem } from 'react-native-elements';
 import moment from 'moment';
+import pluralize from 'pluralize';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 // styles
 import stylesColors from '../../../constants/colors';
 
+// components
+import { PriceFormatted } from '../../shared/price-formatted/price-formatted'
+
 const styles = (layout) => StyleSheet.create({
+  borderDriver: {
+    borderLeftColor: stylesColors[layout].rideAsDriver,
+    borderLeftWidth: 6,
+  },
+  borderNormal: {
+    borderLeftColor: stylesColors[layout].rideDefault,
+    borderLeftWidth: 6,
+  },
+  borderPassengerpending: {
+    borderLeftColor: stylesColors[layout].rideAsPassengerPending,
+    borderLeftWidth: 6,
+  },
+  borderPassengerrejected: {
+    borderLeftColor: stylesColors[layout].rideAsPassengerRejected,
+    borderLeftWidth: 6,
+  },
+  borderPassengeraccepted: {
+    borderLeftColor: stylesColors[layout].rideAsPassengerAccepted,
+    borderLeftWidth: 6,
+  },
+  container: {
+    backgroundColor: stylesColors[layout].primaryBg,
+    borderColor: stylesColors[layout].primaryBorder,
+    borderWidth: 5,
+  },
+  footer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    padding: 5,
+  },
+  header: {
+    flexDirection: 'row',
+    padding: 5,
+    borderColor: stylesColors[layout].primaryBorder,
+    borderBottomWidth: 1,
+  },
+  imageAvatar: {
+    width: 30,
+    height: 30,
+    marginRight: 10,
+  },
+  imageCar: {
+    width: 70,
+    height: 70,
+    marginRight: 10,
+  },
+  location: {
+    fontSize: 16,
+  },
   placesCount: {
     color: stylesColors[layout].primaryText,
   },
-  rideFull: {
-    color: stylesColors[layout].rideFull,
+  placesFull: {
+    color: stylesColors[layout].placesFull,
   },
-  rideContainer: {
-    backgroundColor: stylesColors[layout].primaryBg,
-    borderLeftColor: stylesColors[layout].rideDefault,
-    borderBottomColor: stylesColors[layout].primaryBorder,
-    borderLeftWidth: 5,
-    borderBottomWidth: 2,
+  price: {
+    alignSelf: 'flex-start',
+    marginLeft: -5,
+    marginTop: 7,
+    paddingRight: 5,
+    paddingLeft: 5,
+    backgroundColor: stylesColors[layout].priceBg,
+    color: stylesColors[layout].priceText,
+    fontSize: 16,
+    fontWeight: 'bold',
   },
-  rideAsDriverContainter: {
-    backgroundColor: stylesColors[layout].primaryBg,
-    borderLeftColor: stylesColors[layout].rideAsDriver,
-    borderBottomColor: stylesColors[layout].primaryBorder,
-    borderLeftWidth: 5,
-    borderBottomWidth: 2,
+  rideDriverInfo: {
+    alignItems: 'flex-end',
+    marginRight: 5,
   },
-  rideAsDriverRightTitle: {
-    flex: 0,
-    width: 80,
-    marginLeft: 5,
-  },
-  rideTitle: {
-    color: stylesColors[layout].primaryText,
-  },
-  rideSubtitle: {
-    color: stylesColors[layout].secondaryText,
-  },
-  statusPending: {
-    color: stylesColors[layout].statusPending,
+  rideDriverInfoPending: {
+    color: stylesColors[layout].rideAsPassengerPending,
   },
 });
 
@@ -50,36 +95,81 @@ export class RidesIndexItem extends Component {
     layout: PropTypes.string.isRequired,
   }
 
-  renderAvatar() {
-    const { ride, withCarPhoto } = this.props;
+  renderRide() {
+    const { ride, layout, navigation } = this.props;
 
-    if (withCarPhoto) {
-      return ride.car.car_photo
-    } else if (ride.driver) {
-      return ride.driver.avatar
-    }
+    return(
+      <TouchableHighlight
+        style={styles(layout).container}
+        underlayColor={stylesColors[layout].secondaryBg}
+        onPress={() => navigation.navigate('rideShow', {ride: ride, layout: layout})}
+      >
+        <View style={{flexDirection: 'row'}}>
+          <View style={styles(layout)[this.rideBorderStyle()]}></View>
+          <View style={{flex: 1}}>
+            <View style={styles(layout).header}>
+              <View>
+                <Image source={{uri: ride.car.car_photo}} style={styles(layout).imageCar}>
+                  <Text style={styles(layout).price}>
+                    <PriceFormatted price={ride.price} currency={ride.currency} />
+                  </Text>
+                </Image>
+              </View>
+              <View style={{flex: 1}}>
+                <Text style={styles(layout).location}>{ride.start_location.address}</Text>
+                <Text style={styles(layout).location}>{ride.destination_location.address}</Text>
+                {this.renderPendingRequestsCount()}
+              </View>
+            </View>
+            <View style={styles(layout).footer}>
+              <Text>{moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')}</Text>
+              <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                <Image source={{uri: ride.driver.avatar}} style={styles(layout).imageAvatar} />
+                {this.renderFreePlacesCount()}
+                <MaterialIcons.Button
+                  name="open-in-new"
+                  backgroundColor="transparent"
+                  iconStyle={{marginRight: 0}}
+                  color={stylesColors[layout].modalCloseX}
+                  size={25}
+                  onPress={() => navigation.navigate('rideShow', {ride: ride, layout: layout})}
+                />
+              </View>
+            </View>
+          </View>
+        </View>
+      </TouchableHighlight>
+    )
   }
 
-  renderRide() {
-    const { ride } = this.props;
+  rideBorderStyle() {
+    const { ride, layout } = this.props;
 
     switch (ride.user_role) {
     case "driver":
-      return this.renderRideAsDriver()
+      return "borderDriver"
     case "passenger":
-      return this.renderRideAsPassenger()
+      return `borderPassenger${ride.user_ride_request_status}`
     default:
-      return this.renderNormalRide()
+      return "borderNormal"
     }
   }
 
   renderPendingRequestsCount() {
     const { ride, layout } = this.props;
 
-    if (ride.ride_requests_pending_count > 0) {
-      return <Text style={styles(layout).statusPending}>{`${ride.ride_requests_pending_count} pending`}</Text>
-    } else {
-      return null
+    if (ride.user_role === 'driver') {
+      if (ride.ride_requests_pending_count > 0) {
+        return (
+          <View style={styles(layout).rideDriverInfo}>
+            <Text style={styles(layout).rideDriverInfoPending}>
+              {`${ride.ride_requests_pending_count} ${pluralize('request', ride.ride_requests_pending_count)} pending`}
+            </Text>
+          </View>
+        )
+      } else {
+        return null
+      }
     }
   }
 
@@ -87,87 +177,9 @@ export class RidesIndexItem extends Component {
     const { ride, layout } = this.props;
 
     if (ride.free_places_count === 0) {
-      return <Text style={styles(layout).rideFull}>All taken </Text>
+      return <Text style={styles(layout).placesFull}>All taken</Text>
     } else {
-      return <Text style={styles(layout).placesCount}>{ride.free_places_count} seats free </Text>
-    }
-  }
-
-  renderNormalRide() {
-    const { ride, layout, navigation } = this.props;
-
-    return (
-      <ListItem
-        onPress={() => navigation.navigate('rideShow', {ride: ride, layout: layout})}
-        key={ride.id}
-        title={`${ride.start_location.address} - ${ride.destination_location.address}`}
-        subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
-        avatar={{uri: this.renderAvatar()}}
-        underlayColor={stylesColors[layout].secondaryBg}
-        containerStyle={styles(layout).rideContainer}
-        titleStyle={styles(layout).rideTitle}
-        subtitleStyle={styles(layout).rideSubtitle}
-      />
-    )
-  }
-
-  renderRideAsDriver() {
-    const { ride, layout, navigation } = this.props;
-
-    rightTitle =
-      <Text>
-        {this.renderFreePlacesCount()}
-        {this.renderPendingRequestsCount()}
-      </Text>
-
-    return (
-      <ListItem
-        onPress={() => navigation.navigate('rideShow', {ride: ride, layout: layout})}
-        key={ride.id}
-        title={`${ride.start_location.address} - ${ride.destination_location.address}`}
-        subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
-        avatar={{uri: this.renderAvatar()}}
-        underlayColor={stylesColors[layout].secondaryBg}
-        rightTitle={rightTitle}
-        rightTitleContainerStyle={styles(layout).rideAsDriverRightTitle}
-        containerStyle={styles(layout).rideAsDriverContainter}
-        titleStyle={styles(layout).rideTitle}
-        subtitleStyle={styles(layout).rideSubtitle}
-      />
-    )
-  }
-
-  renderRideAsPassenger() {
-    const { ride, layout, navigation } = this.props;
-    const color = this.rideAsPassengerColor()
-
-    return (
-      <ListItem
-        onPress={() => navigation.navigate('rideShow', {ride: ride, layout: layout})}
-        key={ride.id}
-        title={`${ride.start_location.address} - ${ride.destination_location.address}`}
-        subtitle={`${moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')} - ${ride.price} ${ride.currency}`}
-        underlayColor={stylesColors[layout].secondaryBg}
-        avatar={{uri: this.renderAvatar()}}
-        containerStyle={[styles(layout).rideContainer, {borderLeftColor: color, borderLeftWidth: 5}]}
-        titleStyle={styles(layout).rideTitle}
-        subtitleStyle={styles(layout).rideSubtitle}
-      />
-    )
-  }
-
-  rideAsPassengerColor() {
-    const { ride, layout } = this.props;
-
-    switch (ride.user_ride_request_status) {
-    case "pending":
-      return stylesColors[layout].rideAsPassengerPending
-    case "rejected":
-      return stylesColors[layout].rideAsPassengerRejected
-    case "accepted":
-      return stylesColors[layout].rideAsPassengerAccepted
-    default:
-      return stylesColors[layout].rideDefault
+      return <Text style={styles(layout).placesCount}>{ride.free_places_count} seats free</Text>
     }
   }
 

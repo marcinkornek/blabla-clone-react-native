@@ -82,6 +82,7 @@ export class UserShow extends Component {
   componentWillMount() {
     const { initializeUser, fetchUser, modalProps } = this.props;
 
+    if (modalProps.showDetails) this.setState({ showDetails: true })
     initializeUser(modalProps.user)
     fetchUser(modalProps.user.id)
   }
@@ -95,8 +96,8 @@ export class UserShow extends Component {
   }
 
   toggleDetails() {
+    if (this.props.modalProps.showDetails === true) return
     this.setState({ showDetails: !this.state.showDetails })
-
     this.expandUserModal()
   }
 
@@ -151,7 +152,7 @@ export class UserShow extends Component {
   }
 
   renderRidesAsDriverList() {
-    const { user, layout, navigation } = this.props
+    const { user, layout, modalProps } = this.props
 
     return (
       user.rides_as_driver.map((ride, i) =>
@@ -159,7 +160,7 @@ export class UserShow extends Component {
           key={`ride-${i}`}
           ride={ride}
           layout={layout}
-          navigation={navigation}
+          navigation={modalProps.navigation}
           withCarPhoto={true}
         />
       )
@@ -180,7 +181,7 @@ export class UserShow extends Component {
   }
 
   renderUserCarsList() {
-    const { user, currentUser, layout, navigation } = this.props
+    const { user, currentUser, layout, modalProps } = this.props
 
     return (
       user.cars.map((car, i) =>
@@ -188,7 +189,7 @@ export class UserShow extends Component {
           key={`car-${i}`}
           car={car}
           layout={layout}
-          navigation={navigation}
+          navigation={modalProps.navigation}
           currentUser={currentUser}
         />
       )
@@ -214,6 +215,7 @@ const mapStateToProps = (state) => {
     isFetching: state.user.isFetching,
     currentUser: state.session.item,
     layout: state.settings.layout,
+    modalProps: state.modal.modalProps,
   }
 }
 

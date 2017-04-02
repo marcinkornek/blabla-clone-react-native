@@ -53,8 +53,12 @@ export const RenderUserProfile = ({user, layout, onSubmit, navigation}) => (
             <Text style={styles(layout).primaryText}>{user.full_name}</Text>
             <RenderUserAge user={user} />
           </View>
-          <Text style={styles(layout).primaryText}>member since: {moment(user.created_at).format('DD.MM.YYYY')}</Text>
-          <Text style={styles(layout).primaryText}>last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}</Text>
+          <Text style={styles(layout).primaryText}>
+            member since: {moment(user.created_at).format('DD.MM.YYYY')}
+          </Text>
+          <Text style={styles(layout).primaryText}>
+            last seen at: {moment(user.last_seen_at || Date.now()).format('DD.MM.YYYY')}
+          </Text>
         </View>
       </View>
     </View>

@@ -1,5 +1,6 @@
 import {
   SHOW_MODAL,
+  UPDATE_MODAL,
   HIDE_MODAL,
 } from '../constants/action-types'
 
@@ -14,6 +15,12 @@ export function modal(state = initialState, action) {
       console.log('SHOW_MODAL')
       return {
         modalType: action.modalType,
+        modalProps: action.modalProps
+      }
+    case UPDATE_MODAL:
+      console.log('UPDATE_MODAL')
+      return {
+        ...state,
         modalProps: action.modalProps
       }
     case 'HIDE_MODAL':

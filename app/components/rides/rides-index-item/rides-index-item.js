@@ -35,8 +35,7 @@ const styles = (layout) => StyleSheet.create({
   },
   container: {
     backgroundColor: stylesColors[layout].primaryBg,
-    borderColor: stylesColors[layout].primaryBorder,
-    borderWidth: 5,
+    margin: 5,
   },
   footer: {
     flexDirection: 'row',
@@ -58,6 +57,8 @@ const styles = (layout) => StyleSheet.create({
   imageCar: {
     width: 70,
     height: 70,
+    marginTop: 5,
+    marginBottom: 5,
     marginRight: 10,
   },
   location: {

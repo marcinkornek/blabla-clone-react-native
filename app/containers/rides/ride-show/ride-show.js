@@ -194,7 +194,7 @@ export class RideShow extends Component {
   }
 
   showCarModal() {
-    const { navigation, showModal, ride, layout } = this.props;
+    const { showModal, ride, layout } = this.props;
 
     showModal('CAR_SHOW', {
       car: ride.car, layout: layout, modalStyles: styles(layout).modalStyles
@@ -202,7 +202,7 @@ export class RideShow extends Component {
   }
 
   showUserModal() {
-    const { navigation, showModal, ride, layout } = this.props;
+    const { showModal, ride, layout } = this.props;
 
     showModal('USER_SHOW', {
       user: ride.driver, layout: layout, modalStyles: styles(layout).modalStyles

@@ -10,6 +10,7 @@ import stylesColors from '../../../constants/colors';
 
 // actions
 import { initializeUser, fetchUser } from '../../../actions/users';
+import { updateModal } from '../../../actions/modals';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
@@ -27,6 +28,10 @@ const styles = (layout) => StyleSheet.create({
     borderRadius: 110,
     borderWidth: 2,
     borderColor: stylesColors[layout].userShowAvatarBorder,
+  },
+  modalStylesExpanded: {
+    marginTop: 0,
+    backgroundColor: stylesColors[layout].secondaryBg,
   },
   userInfoContainer: {
     // backgroundColor: stylesColors[layout].userShowUserContainerBg,
@@ -104,6 +109,14 @@ export class UserShow extends Component {
     fetchUser(modalProps.user.id)
   }
 
+  expandUserModal() {
+    const { updateModal, user, layout } = this.props;
+
+    updateModal({
+      user: user, layout: layout, modalStyles: styles(layout).modalStylesExpanded
+    })
+  }
+
   // setParams(user, layout) {
   //   const { navigation } = this.props;
   //   const title = `${user.full_name} profile`
@@ -124,8 +137,9 @@ export class UserShow extends Component {
   // }
 
   toggleDetails() {
-    console.log(this.state.showDetails);
     this.setState({ showDetails: !this.state.showDetails })
+
+    this.expandUserModal()
   }
 
   renderUserInfo() {
@@ -244,6 +258,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = {
   initializeUser,
   fetchUser,
+  updateModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserShow)

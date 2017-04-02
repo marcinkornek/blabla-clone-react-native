@@ -8,7 +8,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import stylesColors from '../../../constants/colors';
 
 // actions
-import { hideModal, showModal } from '../../../actions/modals';
+import { hideModal } from '../../../actions/modals';
 
 // components
 import Login from '../../session/login/login'
@@ -156,7 +156,6 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  showModal,
   hideModal,
 }
 

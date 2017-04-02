@@ -56,6 +56,7 @@ const styles = (layout) => StyleSheet.create({
   },
   view: {
     flex: 1,
+    backgroundColor: stylesColors[layout].secondaryBg,
   },
 });
 

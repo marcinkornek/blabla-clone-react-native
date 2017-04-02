@@ -26,6 +26,10 @@ const styles = (layout) => StyleSheet.create({
     alignItems: 'center',
     padding: 10,
   },
+  modalStylesExpanded: {
+    marginTop: 0,
+    backgroundColor: stylesColors[layout].secondaryBg,
+  },
   primaryText: {
     fontSize: 16,
     color: stylesColors[layout].primaryText,
@@ -77,7 +81,8 @@ export class UserShow extends Component {
     const { showModal, currentUser, layout, navigation } = this.props;
 
     showModal('USER_SHOW', {
-      user: currentUser, layout: layout, navigation: navigation, showDetails: true
+      user: currentUser, layout: layout, navigation: navigation,
+      showDetails: true, modalStyles: styles(layout).modalStylesExpanded
     })
   }
 

@@ -96,8 +96,14 @@ export class RidesIndexItem extends Component {
     layout: PropTypes.string.isRequired,
   }
 
+  showUserModal() {
+    const { ride, showUserModal } = this.props;
+
+    showUserModal(ride)
+  }
+
   renderRide() {
-    const { ride, layout, navigation } = this.props;
+    const { ride, onClick, layout, navigation } = this.props;
 
     return(
       <TouchableHighlight
@@ -125,7 +131,12 @@ export class RidesIndexItem extends Component {
             <View style={styles(layout).footer}>
               <Text>{moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')}</Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image source={{uri: ride.driver.avatar}} style={styles(layout).imageAvatar} />
+                <TouchableHighlight
+                  underlayColor='transparent'
+                  onPress={() => this.showUserModal()}
+                >
+                  <Image source={{uri: ride.driver.avatar}} style={styles(layout).imageAvatar} />
+                </TouchableHighlight>
                 {this.renderFreePlacesCount()}
                 <MaterialIcons.Button
                   name="open-in-new"

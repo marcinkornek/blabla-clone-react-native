@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text } from 'react-native';
+import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { max } from 'ramda'
@@ -24,6 +24,7 @@ import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 import { RenderRidesSearch } from '../../../components/rides/render-rides-search/render-rides-search'
 
+const { width, height } = Dimensions.get('window')
 const per = 20
 const styles = (layout) => StyleSheet.create({
   filtersContainer: {
@@ -34,6 +35,10 @@ const styles = (layout) => StyleSheet.create({
     margin: 20,
     flex: 0,
     height: 370,
+  },
+  modalUserStyles: {
+    marginTop: height - 300,
+    backgroundColor: stylesColors[layout].secondaryBg,
   },
   view: {
     flex: 1,
@@ -142,6 +147,14 @@ export class RidesIndex extends Component {
     }
   }
 
+  showUserModal(ride) {
+    const { showModal, layout, navigation } = this.props;
+
+    showModal('USER_SHOW', {
+      user: ride.driver, layout: layout, modalStyles: styles(layout).modalUserStyles, navigation: navigation
+    })
+  }
+
   renderRightButton() {
     const { layout } = this.props;
 
@@ -178,6 +191,7 @@ export class RidesIndex extends Component {
         ride={ride}
         layout={layout}
         navigation={navigation}
+        showUserModal={this.showUserModal.bind(this)}
         key={`ride${ride.id}`}
       />
     )

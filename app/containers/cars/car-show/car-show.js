@@ -36,7 +36,6 @@ const styles = (layout) => StyleSheet.create({
   },
   view: {
     flex: 1,
-    backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 
@@ -53,42 +52,11 @@ class CarShow extends Component {
     car: {}
   }
 
-  static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: state.params.myTitle,
-        right: (
-          <EditButton
-            layout={state.params.layout}
-            onClick={() => state.params.navigation.navigate('carEdit', {id: state.params.id})}
-            showEdit={state.params.showEdit}
-          />
-        )
-      }
-    }
-  }
-
   componentWillMount() {
-    const { initializeCar, fetchCar, navigation } = this.props
-    const initialCar = navigation.state.params.car
-    const layout = navigation.state.params.layout
+    const { initializeCar, fetchCar, modalProps } = this.props
 
-    this.setParams(initialCar, layout)
-    initializeCar(initialCar)
-    fetchCar(initialCar.id)
-  }
-
-  setParams(car, layout) {
-    const { navigation } = this.props;
-    const title = `${car.user.full_name} car`
-
-    navigation.setParams({
-      myTitle: title,
-      id: car.id,
-      layout: layout,
-      navigation: navigation,
-      showEdit: this.showEdit(car)
-    })
+    initializeCar(modalProps.car)
+    fetchCar(modalProps.car.id)
   }
 
   showEdit(car) {
@@ -102,12 +70,11 @@ class CarShow extends Component {
 
     return(
       <View style={styles(layout).container}>
-        <Image source={{uri: car.car_photo}} style={styles(layout).photo} />
         <Text style={styles(layout).carName}>{car.full_name} {car.production_year}</Text>
-        <Text style={styles(layout).primaryText}>{car.places_full}</Text>
-        <Text style={styles(layout).primaryText}>{car.color}</Text>
-        <Text style={styles(layout).primaryText}>{car.comfort}</Text>
-        <Text style={styles(layout).primaryText}>{car.category}</Text>
+        <Image source={{uri: car.car_photo}} style={styles(layout).photo} />
+        <Text style={styles(layout).primaryText}>
+          {car.places_full}, {car.color}, {car.comfort}, {car.category}
+        </Text>
       </View>
     )
   }

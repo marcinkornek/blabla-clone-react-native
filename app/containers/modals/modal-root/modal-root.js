@@ -14,6 +14,8 @@ import { hideModal, showModal } from '../../../actions/modals';
 import Login from '../../session/login/login'
 import Register from '../../current-user/current-user-new/current-user-new'
 import CarNew from '../../cars/car-new/car-new'
+import UserShow from '../../users/user-show/user-show'
+import CarShow from '../../cars/car-show/car-show'
 import RidesAsDriverFilters from '../../rides/rides-as-driver-filters/rides-as-driver-filters'
 import RidesAsPassengerFilters from '../../rides/rides-as-passenger-filters/rides-as-passenger-filters'
 import RidesFilters from '../../rides/rides-filters/rides-filters'
@@ -59,6 +61,8 @@ const styles = (layout) => StyleSheet.create({
 const MODAL_COMPONENTS = {
   'LOGIN': Login,
   'REGISTER': Register,
+  'USER_SHOW': UserShow,
+  'CAR_SHOW': CarShow,
   'CAR_NEW': CarNew,
   'RIDES_AS_DRIVER_FILTERS': RidesAsDriverFilters,
   'RIDES_AS_PASSENGER_FILTERS': RidesAsPassengerFilters,

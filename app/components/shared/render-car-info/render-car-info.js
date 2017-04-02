@@ -34,24 +34,25 @@ const styles = (layout) => StyleSheet.create({
   },
 });
 
-export const RenderCarInfo = ({car, layout, navigation}) => (
+export const RenderCarInfo = ({car, layout, onSubmit, navigation}) => {
+  return (
   <View style={styles(layout).view}>
     <Text style={styles(layout).title}>Car</Text>
     <View style={styles(layout).container}>
-      <Image source={{uri: car.car_photo}} style={styles(layout).avatar} />
+      <TouchableHighlight
+        underlayColor={stylesColors[layout].primaryBg}
+        onPress={onSubmit}
+      >
+        <Image source={{uri: car.car_photo}} style={styles(layout).avatar} />
+      </TouchableHighlight>
       <View>
         <Text style={styles(layout).primaryText}>{car.full_name}</Text>
         <Text style={styles(layout).primaryText}>{car.production_year}</Text>
       </View>
     </View>
-    <TouchableHighlight
-      underlayColor={stylesColors[layout].primaryBg}
-      onPress={() => navigation.navigate('carShow', {car: car, layout: layout})}
-    >
-      <Text style={styles(layout).primaryText}>view car</Text>
-    </TouchableHighlight>
   </View>
-)
+  )
+}
 
 RenderCarInfo.propTypes = {
   car: PropTypes.object.isRequired,

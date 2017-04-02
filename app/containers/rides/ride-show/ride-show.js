@@ -14,6 +14,7 @@ import stylesColors from '../../../constants/colors';
 // actions
 import { initializeRide, fetchRide } from '../../../actions/rides';
 import { createRideRequest, changeRideRequest } from '../../../actions/ride-requests';
+import { showModal } from '../../../actions/modals';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
@@ -23,6 +24,7 @@ import { RenderCarInfo } from '../../../components/shared/render-car-info/render
 import { RenderRideOffer } from '../../../components/rides/render-ride-offer/render-ride-offer'
 import { EditButton } from '../../../components/shared/edit-button/edit-button'
 
+const { width, height } = Dimensions.get('window')
 const styles = (layout) => StyleSheet.create({
   container: {
     height: 200,
@@ -44,6 +46,10 @@ const styles = (layout) => StyleSheet.create({
   map: {
     ...StyleSheet.absoluteFillObject,
   },
+  modalStyles: {
+    marginTop: height - 300,
+    backgroundColor: stylesColors[layout].secondaryBg,
+  },
   toggleMap: {
     color: stylesColors[layout].primaryText,
   },
@@ -54,7 +60,6 @@ const styles = (layout) => StyleSheet.create({
   },
 });
 const markerIDs = ['startCity', 'destinationCity'];
-const { width, height } = Dimensions.get('window')
 
 export class RideShow extends Component {
   static propTypes = {
@@ -188,6 +193,14 @@ export class RideShow extends Component {
     }
   }
 
+  showCarModal() {
+    const { navigation, showModal, ride, layout } = this.props;
+
+    showModal('CAR_SHOW', {
+      car: ride.car, layout: layout, modalStyles: styles(layout).modalStyles
+    })
+  }
+
   renderRide() {
     const { ride, layout } = this.props
 
@@ -269,6 +282,7 @@ export class RideShow extends Component {
         <RenderCarInfo
           car={ride.car}
           layout={layout}
+          onSubmit={this.showCarModal.bind(this)}
           navigation={navigation}
         />
       )
@@ -336,6 +350,7 @@ const mapDispatchToProps = {
   fetchRide,
   createRideRequest,
   changeRideRequest,
+  showModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RideShow)

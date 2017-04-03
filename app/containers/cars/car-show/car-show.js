@@ -1,7 +1,8 @@
 // utils
 import React, { Component, PropTypes } from 'react'
 import { connect } from 'react-redux';
-import { TouchableHighlight, Text, View, StyleSheet, Image } from 'react-native';
+import { TouchableHighlight, Text, View, ScrollView, StyleSheet, Image } from 'react-native';
+import _ from 'lodash';
 
 // styles
 import stylesColors from '../../../constants/colors';
@@ -36,6 +37,7 @@ const styles = (layout) => StyleSheet.create({
   },
   view: {
     flex: 1,
+    backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 
@@ -55,7 +57,7 @@ class CarShow extends Component {
   static navigationOptions = {
     header: ({ state }) => {
       return {
-        title: state.params.myTitle,
+        title: `${state.params.car.user.full_name} car`,
         right: (
           <EditButton
             layout={state.params.layout}
@@ -85,10 +87,8 @@ class CarShow extends Component {
 
   setParams(car, layout) {
     const { navigation } = this.props;
-    const title = `${car.user.full_name} car`
 
     navigation.setParams({
-      myTitle: title,
       id: car.id,
       layout: layout,
       navigation: navigation,
@@ -123,16 +123,19 @@ class CarShow extends Component {
   }
 
   render() {
-    const { isFetching, isStarted, layout } = this.props
+    const { isFetching, isStarted, modalProps, layout } = this.props
+    let backgroundColor
+
+    if (!_.isEmpty(modalProps)) {
+      backgroundColor = stylesColors[layout].secondaryBg
+    } else {
+      backgroundColor = stylesColors[layout].primaryBg
+    }
 
     return (
-      <View style={styles(layout).view}>
-        <AsyncContent
-          isFetching={isFetching || !isStarted}
-        >
-          {this.renderCar()}
-        </AsyncContent>
-      </View>
+      <ScrollView style={[styles(layout).view, { backgroundColor: backgroundColor } ]}>
+        {this.renderCar()}
+      </ScrollView>
     )
   }
 }
@@ -144,6 +147,7 @@ const mapStateToProps = (state) => {
     isFetching: state.car.isFetching,
     currentUser: state.session.item,
     layout: state.settings.layout,
+    modalProps: state.modal.modalProps,
   }
 }
 

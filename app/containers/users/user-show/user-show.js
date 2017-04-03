@@ -56,7 +56,7 @@ const styles = (layout) => StyleSheet.create({
   },
   view: {
     flex: 1,
-    backgroundColor: stylesColors[layout].secondaryBg,
+    backgroundColor: stylesColors[layout].primaryBg,
   },
 });
 
@@ -85,7 +85,7 @@ export class UserShow extends Component {
   static navigationOptions = {
     header: ({ state }) => {
       return {
-        title: state.params.myTitle,
+        title: `${state.params.user.full_name} profile`,
         right: (
           <EditButton
             layout={state.params.layout}
@@ -117,10 +117,8 @@ export class UserShow extends Component {
 
   setParams(user, layout) {
     const { navigation } = this.props;
-    const title = `${user.full_name} profile`
 
     navigation.setParams({
-      myTitle: title,
       id: user.id,
       layout: layout,
       navigation: navigation,
@@ -252,10 +250,17 @@ export class UserShow extends Component {
   }
 
   render() {
-    const { layout } = this.props
+    const { layout, modalProps } = this.props
+    let backgroundColor
+
+    if (!_.isEmpty(modalProps)) {
+      backgroundColor = stylesColors[layout].secondaryBg
+    } else {
+      backgroundColor = stylesColors[layout].primaryBg
+    }
 
     return (
-      <ScrollView style={styles(layout).view}>
+      <ScrollView style={[styles(layout).view, { backgroundColor: backgroundColor } ]}>
         {this.renderUserInfo()}
         {this.renderDetails()}
       </ScrollView>

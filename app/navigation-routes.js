@@ -101,21 +101,8 @@ export const NotAuthenticatedRidesTabNavigator = TabNavigator({
   headerMode: 'float',
 })
 
-export const NotAuthenticatedLoginStackNavigator = StackNavigator({
-  login: { screen: Login },
-}, {
-  headermode: 'float'
-})
-
-export const NotAuthenticatedRegisterStackNavigator = StackNavigator({
-  register: { screen: Register },
-}, {
-  headermode: 'float'
-})
-
 export const NotAuthenticatedRidesStackNavigator = StackNavigator({
   ridesTabs: { screen: NotAuthenticatedRidesTabNavigator },
-  rideNew: { screen: RideNew },
   rideShow: { screen: RideShow },
   userShow: { screen: UserShow },
   carShow: { screen: CarShow },
@@ -125,8 +112,6 @@ export const NotAuthenticatedRidesStackNavigator = StackNavigator({
 
 export const NotAuthenticatedDrawerNavigator = DrawerNavigator({
   ridesNavigator: { screen: NotAuthenticatedRidesStackNavigator },
-  loginNavigator: { screen: NotAuthenticatedLoginStackNavigator },
-  registerNavigator: { screen: NotAuthenticatedRegisterStackNavigator },
 }, {
   contentComponent: AppDrawer
 })

@@ -83,7 +83,7 @@ export class RideShow extends Component {
   static navigationOptions = {
     header: ({ state }) => {
       return {
-        title: state.params.myTitle,
+        title: `${state.params.ride.start_location_address} - ${state.params.ride.destination_location_address}`,
         right: (
           <EditButton
             layout={state.params.layout}
@@ -101,21 +101,19 @@ export class RideShow extends Component {
   }
 
   componentWillMount() {
-    const { initializeRide, fetchRide, navigation, ride } = this.props
-    const initialRide = navigation.state.params.ride
+    const { initializeRide, fetchRide, navigation } = this.props
+    const ride = navigation.state.params.ride
     const layout = navigation.state.params.layout
 
-    this.setParams(initialRide, layout)
-    initializeRide(initialRide)
-    fetchRide(initialRide.id)
+    this.setParams(ride, layout)
+    initializeRide(ride)
+    fetchRide(ride.id)
   }
 
   setParams(ride, layout) {
     const { navigation } = this.props;
-    const title = `${ride.start_location_address} - ${ride.destination_location_address}`
 
     navigation.setParams({
-      myTitle: title,
       id: ride.id,
       layout: layout,
       navigation: navigation,

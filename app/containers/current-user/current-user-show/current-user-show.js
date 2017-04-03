@@ -9,7 +9,6 @@ import stylesColors from '../../../constants/colors';
 
 // actions
 import { fetchCurrentUser } from '../../../actions/current-user';
-import { showModal } from '../../../actions/modals';
 
 const styles = (layout) => StyleSheet.create({
   avatar: {
@@ -25,10 +24,6 @@ const styles = (layout) => StyleSheet.create({
     flexWrap: 'wrap',
     alignItems: 'center',
     padding: 10,
-  },
-  modalStylesExpanded: {
-    marginTop: 0,
-    backgroundColor: stylesColors[layout].secondaryBg,
   },
   primaryText: {
     fontSize: 16,
@@ -77,15 +72,6 @@ export class UserShow extends Component {
     })
   }
 
-  showUserModal() {
-    const { showModal, currentUser, layout, navigation } = this.props;
-
-    showModal('USER_SHOW', {
-      user: currentUser, layout: layout, navigation: navigation,
-      showDetails: true, modalStyles: styles(layout).modalStylesExpanded
-    })
-  }
-
   renderUserInfo() {
     const { currentUser, layout } = this.props
 
@@ -102,13 +88,13 @@ export class UserShow extends Component {
   }
 
   renderUserLinks() {
-    const { currentUser, showModal, layout, navigation } = this.props
+    const { currentUser, layout, navigation } = this.props
 
     return (
       <View style={styles(layout).container}>
         <TouchableHighlight
           underlayColor={stylesColors[layout].primaryBg}
-          onPress={this.showUserModal.bind(this) }
+          onPress={() => navigation.navigate('userShow', {user: currentUser, layout: layout})}
         >
           <Text style={styles(layout).primaryText}>View my public profile</Text>
         </TouchableHighlight>
@@ -139,7 +125,6 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   fetchCurrentUser,
-  showModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserShow)

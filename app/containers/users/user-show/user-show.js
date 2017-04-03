@@ -77,15 +77,65 @@ export class UserShow extends Component {
   }
 
   state = {
-    showDetails: false
+    showDetails: false,
+    canToggleDetails: true,
+  }
+
+
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: state.params.myTitle,
+        right: (
+          <EditButton
+            layout={state.params.layout}
+            onClick={() => state.params.navigation.navigate('myProfileEdit')}
+            showEdit={state.params.showEdit}
+          />
+        )
+      }
+    }
   }
 
   componentWillMount() {
-    const { initializeUser, fetchUser, modalProps } = this.props;
+    const { initializeUser, fetchUser, modalProps, navigation } = this.props;
 
-    if (modalProps.showDetails) this.setState({ showDetails: true })
-    initializeUser(modalProps.user)
-    fetchUser(modalProps.user.id)
+    if (navigation) {
+      const user = navigation.state.params.user
+      const layout = navigation.state.params.layout
+
+      this.setState({ showDetails: true, canToggleDetails: false })
+      this.setParams(user, layout)
+      initializeUser(user)
+      fetchUser(user.id)
+    } else {
+      const user = modalProps.user
+
+      if (modalProps.showDetails) {
+        this.setState({ showDetails: true, canToggleDetails: false })
+      }
+      initializeUser(user)
+      fetchUser(user.id)
+    }
+  }
+
+  setParams(user, layout) {
+    const { navigation } = this.props;
+    const title = `${user.full_name} profile`
+
+    navigation.setParams({
+      myTitle: title,
+      id: user.id,
+      layout: layout,
+      navigation: navigation,
+      showEdit: this.showEdit(user)
+    })
+  }
+
+  showEdit(user) {
+    const { currentUser } = this.props;
+
+    return user.id === currentUser.id
   }
 
   expandUserModal() {
@@ -97,7 +147,7 @@ export class UserShow extends Component {
   }
 
   toggleDetails() {
-    if (this.props.modalProps.showDetails === true) return
+    if (this.state.canToggleDetails === false) return
     this.setState({ showDetails: !this.state.showDetails })
     this.expandUserModal()
   }

@@ -52,11 +52,54 @@ class CarShow extends Component {
     car: {}
   }
 
-  componentWillMount() {
-    const { initializeCar, fetchCar, modalProps } = this.props
+  static navigationOptions = {
+    header: ({ state }) => {
+      return {
+        title: state.params.myTitle,
+        right: (
+          <EditButton
+            layout={state.params.layout}
+            onClick={() => state.params.navigation.navigate('carEdit', {id: state.params.id})}
+            showEdit={state.params.showEdit}
+          />
+        )
+      }
+    }
+  }
 
-    initializeCar(modalProps.car)
-    fetchCar(modalProps.car.id)
+  componentWillMount() {
+    const { initializeCar, fetchCar, modalProps, navigation } = this.props
+    let car, layout
+
+    if (navigation) {
+      car = navigation.state.params.car
+      layout = navigation.state.params.layout
+      this.setParams(car, layout)
+    } else {
+      car = modalProps.car
+    }
+
+    initializeCar(car)
+    fetchCar(car.id)
+  }
+
+  setParams(car, layout) {
+    const { navigation } = this.props;
+    const title = `${car.user.full_name} car`
+
+    navigation.setParams({
+      myTitle: title,
+      id: car.id,
+      layout: layout,
+      navigation: navigation,
+      showEdit: this.showEdit(car)
+    })
+  }
+
+  showEdit(car) {
+    const { currentUser } = this.props;
+
+    return car.owner_id === currentUser.id
   }
 
   showEdit(car) {

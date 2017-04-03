@@ -99,24 +99,20 @@ export class UserShow extends Component {
 
   componentWillMount() {
     const { initializeUser, fetchUser, modalProps, navigation } = this.props;
+    let user, layout
 
     if (navigation) {
-      const user = navigation.state.params.user
-      const layout = navigation.state.params.layout
-
+      user = navigation.state.params.user
+      layout = navigation.state.params.layout
       this.setState({ showDetails: true, canToggleDetails: false })
       this.setParams(user, layout)
-      initializeUser(user)
-      fetchUser(user.id)
     } else {
-      const user = modalProps.user
-
-      if (modalProps.showDetails) {
-        this.setState({ showDetails: true, canToggleDetails: false })
-      }
-      initializeUser(user)
-      fetchUser(user.id)
+      user = modalProps.user
+      if (modalProps.showDetails) this.setState({ showDetails: true, canToggleDetails: false })
     }
+
+    initializeUser(user)
+    fetchUser(user.id)
   }
 
   setParams(user, layout) {

@@ -24,8 +24,8 @@ import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 import { RenderRidesSearch } from '../../../components/rides/render-rides-search/render-rides-search'
 
-const { width, height } = Dimensions.get('window')
 const per = 20
+const { width, height } = Dimensions.get('window')
 const styles = (layout) => StyleSheet.create({
   filtersContainer: {
     flexDirection: 'row',
@@ -153,34 +153,6 @@ export class RidesIndex extends Component {
     showModal('USER_SHOW', {
       user: ride.driver, layout: layout, modalStyles: styles(layout).modalUserStyles, navigation: navigation
     })
-  }
-
-  renderRightButton() {
-    const { layout } = this.props;
-
-    return (
-      <View style={styles(layout).filtersContainer}>
-        <Icon.Button
-          onPress={() => this.toggleSearch()}
-          name="md-search"
-          backgroundColor='transparent'
-          underlayColor='transparent'
-          color={stylesColors[layout].buttonSubmit}
-          size={30}
-        />
-        <MaterialCommunityIcons.Button
-          onPress={() => {
-            const state = navigation.state
-            return (navigation.setParams({showFilters: true}))
-          }}
-          name="filter-variant"
-          backgroundColor='transparent'
-          underlayColor='transparent'
-          color={stylesColors[layout].buttonSubmit}
-          size={30}
-        />
-      </View>
-    )
   }
 
   renderRide(ride) {

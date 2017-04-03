@@ -148,7 +148,7 @@ export class RidesIndexItem extends Component {
                   name="open-in-new"
                   backgroundColor="transparent"
                   iconStyle={{marginRight: 0}}
-                  color={stylesColors[layout].modalCloseX}
+                  color={stylesColors[layout].buttonSubmit}
                   size={25}
                   onPress={() => navigation.navigate('rideShow', {ride: ride, layout: layout})}
                 />

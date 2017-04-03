@@ -14,6 +14,7 @@ export function modal(state = initialState, action) {
     case SHOW_MODAL:
       console.log('SHOW_MODAL')
       return {
+        ...initialState,
         modalType: action.modalType,
         modalProps: action.modalProps,
       }

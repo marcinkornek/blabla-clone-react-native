@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, Text, Dimensions } from 'react-native';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // styles
@@ -20,6 +20,7 @@ import { RenderList } from '../../../components/shared/render-list/render-list'
 import { RidesIndexItem } from '../../../components/rides/rides-index-item/rides-index-item'
 
 const per = 20
+const { width, height } = Dimensions.get('window')
 const styles = (layout) => StyleSheet.create({
   filtersContainer: {
     flexDirection: 'row',
@@ -29,6 +30,10 @@ const styles = (layout) => StyleSheet.create({
     margin: 20,
     flex: 0,
     height: 370,
+  },
+  modalUserStyles: {
+    marginTop: height - 300,
+    backgroundColor: stylesColors[layout].secondaryBg,
   },
   view: {
     flex: 1,
@@ -126,14 +131,23 @@ export class RidesIndexAsDriver extends Component {
     }
   }
 
+  showUserModal(ride) {
+    const { showModal, layout, navigation } = this.props;
+
+    showModal('USER_SHOW', {
+      user: ride.driver, layout: layout, modalStyles: styles(layout).modalUserStyles, navigation: navigation
+    })
+  }
+
   renderRide(ride) {
-    const { layout, navigation } = this.props;
+    const { navigation, layout } = this.props;
 
     return (
       <RidesIndexItem
         ride={ride}
         layout={layout}
         navigation={navigation}
+        showUserModal={this.showUserModal.bind(this)}
         key={`ride${ride.id}`}
       />
     )

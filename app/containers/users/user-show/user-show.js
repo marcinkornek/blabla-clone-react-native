@@ -10,7 +10,7 @@ import stylesColors from '../../../constants/colors';
 
 // actions
 import { initializeUser, fetchUser } from '../../../actions/users';
-import { updateModal } from '../../../actions/modals';
+import { showModal, updateModal } from '../../../actions/modals';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
@@ -198,6 +198,14 @@ export class UserShow extends Component {
     }
   }
 
+  showUserModal(ride) {
+    const { showModal, layout, navigation } = this.props;
+
+    showModal('USER_SHOW', {
+      user: ride.driver, layout: layout, modalStyles: styles(layout).modalUserStyles, navigation: navigation
+    })
+  }
+
   renderRidesAsDriverList() {
     const { user, layout, modalProps } = this.props
 
@@ -208,7 +216,7 @@ export class UserShow extends Component {
           ride={ride}
           layout={layout}
           navigation={modalProps.navigation}
-          withCarPhoto={true}
+          showUserModal={this.showUserModal.bind(this)}
         />
       )
     )
@@ -270,6 +278,7 @@ const mapDispatchToProps = {
   initializeUser,
   fetchUser,
   updateModal,
+  showModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserShow)

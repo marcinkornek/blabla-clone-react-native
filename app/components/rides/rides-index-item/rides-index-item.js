@@ -106,6 +106,15 @@ export class RidesIndexItem extends Component {
     showUserModal(ride)
   }
 
+  showRide() {
+    const { navigation, ride, layout, hideModal } = this.props;
+
+    hideModal()
+    if (navigation) {
+      navigation.navigate('rideShow', {ride: ride, layout: layout})
+    }
+  }
+
   renderRide() {
     const { ride, onClick, layout, navigation } = this.props;
 
@@ -113,7 +122,7 @@ export class RidesIndexItem extends Component {
       <TouchableHighlight
         style={styles(layout).container}
         underlayColor={stylesColors[layout].secondaryBg}
-        onPress={() => navigation.navigate('rideShow', {ride: ride, layout: layout})}
+        onPress={this.showRide.bind(this)}
       >
         <View style={{flexDirection: 'row'}}>
           <View style={styles(layout)[this.rideBorderStyle()]}></View>
@@ -150,7 +159,7 @@ export class RidesIndexItem extends Component {
                   iconStyle={{marginRight: 0}}
                   color={stylesColors[layout].buttonSubmit}
                   size={25}
-                  onPress={() => navigation.navigate('rideShow', {ride: ride, layout: layout})}
+                  onPress={() => this.showRide.bind(this)}
                 />
               </View>
             </View>

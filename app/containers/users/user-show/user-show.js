@@ -10,7 +10,7 @@ import stylesColors from '../../../constants/colors';
 
 // actions
 import { initializeUser, fetchUser } from '../../../actions/users';
-import { showModal, updateModal } from '../../../actions/modals';
+import { showModal, updateModal, hideModal } from '../../../actions/modals';
 
 // components
 import { AsyncContent } from '../../../components/shared/async-content/async-content'
@@ -133,10 +133,10 @@ export class UserShow extends Component {
   }
 
   expandUserModal() {
-    const { updateModal, user, layout } = this.props;
+    const { updateModal, user, layout, modalProps } = this.props;
 
     updateModal({
-      user: user, layout: layout, modalStyles: styles(layout).modalStylesExpanded
+      user: user, layout: layout, modalStyles: styles(layout).modalStylesExpanded, navigation: modalProps.navigation
     })
   }
 
@@ -204,8 +204,22 @@ export class UserShow extends Component {
     })
   }
 
+  getNavigation() {
+    const { modalProps, navigation } = this.props
+
+    if (navigation) {
+      return navigation
+    } else if (!_.isEmpty(modalProps)) {
+      return modalProps.navigation
+    }
+  }
+
+  hideModal() {
+    this.props.hideModal()
+  }
+
   renderRidesAsDriverList() {
-    const { user, layout, modalProps } = this.props
+    const { user, layout } = this.props
 
     return (
       user.rides_as_driver.map((ride, i) =>
@@ -213,7 +227,8 @@ export class UserShow extends Component {
           key={`ride-${i}`}
           ride={ride}
           layout={layout}
-          navigation={modalProps.navigation}
+          navigation={this.getNavigation()}
+          hideModal={this.hideModal.bind(this)}
           showUserModal={this.showUserModal.bind(this)}
         />
       )
@@ -284,6 +299,7 @@ const mapDispatchToProps = {
   fetchUser,
   updateModal,
   showModal,
+  hideModal,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserShow)

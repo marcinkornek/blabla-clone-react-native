@@ -13,7 +13,7 @@ import {
   refreshRidesAsPassenger,
   setDefaultRidesAsPassengerPer,
 } from '../../../actions/rides';
-import { showModal } from '../../../actions/modals';
+import { showModal, hideModal } from '../../../actions/modals';
 
 // components
 import { RenderList } from '../../../components/shared/render-list/render-list'
@@ -135,6 +135,10 @@ export class RidesIndexAsPassenger extends Component {
     })
   }
 
+  hideModal() {
+    this.props.hideModal()
+  }
+
   renderRide(ride) {
     const { navigation, layout } = this.props;
 
@@ -144,6 +148,7 @@ export class RidesIndexAsPassenger extends Component {
         layout={layout}
         navigation={navigation}
         showUserModal={this.showUserModal.bind(this)}
+        hideModal={this.hideModal.bind(this)}
         key={`ride${ride.id}`}
       />
     )
@@ -199,6 +204,7 @@ const mapDispatchToProps = {
   refreshRidesAsPassenger,
   setDefaultRidesAsPassengerPer,
   showModal,
+  hideModal,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(RidesIndexAsPassenger)

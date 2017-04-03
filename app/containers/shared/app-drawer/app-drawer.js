@@ -297,18 +297,6 @@ export class AppDrawer extends Component {
           >
             <Text style={styles(layout).menuSublink}>My cars</Text>
           </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor={stylesColors[layout].appDrawerBg}
-            onPress={() => this.goToAndClose('myRidesAsDriver', {})}
-          >
-            <Text style={styles(layout).menuSublink}>My rides as driver</Text>
-          </TouchableHighlight>
-          <TouchableHighlight
-            underlayColor={stylesColors[layout].appDrawerBg}
-            onPress={() => this.goToAndClose('myRidesAsPassenger', {})}
-          >
-            <Text style={styles(layout).menuSublink}>My rides as passenger</Text>
-          </TouchableHighlight>
         </Collapsible>
       </View>
     )

@@ -75,8 +75,6 @@ export const AuthenticatedRidesStackNavigator = StackNavigator({
 export const AuthenticatedAccountTabNavigator = TabNavigator({
   myProfile: { screen: CurrentUserShow },
   myCars: { screen: CarsIndex },
-  myRidesAsDriver: { screen: RidesIndexAsDriver },
-  myRidesAsPassenger: { screen: RidesIndexAsPassenger },
 }, {
   initalRouteName: 'myProfile',
   tabBarComponent: TabView.TabBarTop,

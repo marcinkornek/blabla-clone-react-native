@@ -45,7 +45,7 @@ class CarsIndex extends Component {
     car: {}
   }
 
-  componentWillMount() {
+  componentDidMount() {
     const { refreshCars, currentUser } = this.props
 
     if (currentUser.id) refreshCars(currentUser.id, per)

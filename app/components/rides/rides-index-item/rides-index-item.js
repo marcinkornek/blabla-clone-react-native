@@ -34,7 +34,7 @@ const styles = (layout) => StyleSheet.create({
     borderLeftWidth: 6,
   },
   container: {
-    backgroundColor: stylesColors[layout].primaryBg,
+    backgroundColor: stylesColors[layout].rideBg,
     margin: 5,
   },
   footer: {
@@ -46,7 +46,7 @@ const styles = (layout) => StyleSheet.create({
   header: {
     flexDirection: 'row',
     padding: 5,
-    borderColor: stylesColors[layout].primaryBorder,
+    borderColor: stylesColors[layout].rideBorder,
     borderBottomWidth: 1,
   },
   imageAvatar: {

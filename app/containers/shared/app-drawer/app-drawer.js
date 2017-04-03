@@ -272,7 +272,7 @@ export class AppDrawer extends Component {
     return (
       <TouchableHighlight
         underlayColor={stylesColors[layout].appDrawerBg}
-        onPress={() => this.goToAndClose('rides')}
+        onPress={() => this.goToAndClose('ridesIndex')}
       >
         <Text style={styles(layout).menuLink}>Rides</Text>
       </TouchableHighlight>
@@ -287,7 +287,7 @@ export class AppDrawer extends Component {
         <Collapsible collapsed={this.state.hideAccount}>
           <TouchableHighlight
             underlayColor={stylesColors[layout].appDrawerBg}
-            onPress={() => this.goToAndClose('accountTabs', {})}
+            onPress={() => this.goToAndClose('myProfile', {})}
           >
             <Text style={styles(layout).menuSublink}>My profile</Text>
           </TouchableHighlight>

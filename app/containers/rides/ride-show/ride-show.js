@@ -106,7 +106,7 @@ export class RideShow extends Component {
     const layout = navigation.state.params.layout
 
     this.setParams(initialRide, layout)
-    // initializeRide(initialRide)
+    initializeRide(initialRide)
     fetchRide(initialRide.id)
   }
 

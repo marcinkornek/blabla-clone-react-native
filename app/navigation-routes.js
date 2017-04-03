@@ -61,6 +61,8 @@ export const AuthenticatedRidesTabNavigator = TabNavigator({
 
 export const AuthenticatedRidesStackNavigator = StackNavigator({
   rides: { screen: AuthenticatedRidesTabNavigator },
+  myProfile: { screen: CurrentUserShow },
+  myCars: { screen: CarsIndex },
   rideShow: { screen: RideShow },
   rideEdit: { screen: RideEdit },
   rideNew: { screen: RideNew },
@@ -72,24 +74,7 @@ export const AuthenticatedRidesStackNavigator = StackNavigator({
   headermode: 'float'
 })
 
-export const AuthenticatedAccountTabNavigator = TabNavigator({
-  myProfile: { screen: CurrentUserShow },
-  myCars: { screen: CarsIndex },
-}, {
-  initalRouteName: 'myProfile',
-  tabBarComponent: TabView.TabBarTop,
-  tabBarPosition: 'top',
-  swipeEnabled: true,
-  tabBarOptions: {
-    scrollEnabled: true,
-    tabStyle: { width: 150 }
-  },
-  navigationOptions: headerWithHamburger,
-  headerMode: 'float',
-})
-
 export const AuthenticatedAccountStackNavigator = StackNavigator({
-  accountTabs: { screen: AuthenticatedAccountTabNavigator },
   myProfileEdit: { screen: CurrentUserEdit },
   carNew: { screen: CarNew },
   carShow: { screen: CarShow },

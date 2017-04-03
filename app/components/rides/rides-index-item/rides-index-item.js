@@ -63,6 +63,7 @@ const styles = (layout) => StyleSheet.create({
   },
   location: {
     fontSize: 16,
+    color: stylesColors[layout].primaryText,
   },
   placesCount: {
     color: stylesColors[layout].primaryText,
@@ -80,6 +81,9 @@ const styles = (layout) => StyleSheet.create({
     color: stylesColors[layout].priceText,
     fontSize: 16,
     fontWeight: 'bold',
+  },
+  primaryText: {
+    color: stylesColors[layout].primaryText,
   },
   rideDriverInfo: {
     alignItems: 'flex-end',
@@ -129,7 +133,9 @@ export class RidesIndexItem extends Component {
               </View>
             </View>
             <View style={styles(layout).footer}>
-              <Text>{moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')}</Text>
+              <Text style={styles(layout).primaryText}>
+                {moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')}
+              </Text>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <TouchableHighlight
                   underlayColor='transparent'

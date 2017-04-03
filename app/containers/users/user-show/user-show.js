@@ -258,6 +258,7 @@ export class UserShow extends Component {
           car={car}
           layout={layout}
           navigation={modalProps.navigation}
+          hideModal={this.hideModal.bind(this)}
           currentUser={currentUser}
         />
       )

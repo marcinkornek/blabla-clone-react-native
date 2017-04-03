@@ -31,12 +31,19 @@ export class CarsIndexItem extends Component {
     layout: PropTypes.string.isRequired,
   }
 
+  showCar() {
+    const { car, layout, navigation, hideModal } = this.props;
+
+    hideModal()
+    if (navigation) navigation.navigate('carShow', {car: car, layout: layout})
+  }
+
   render() {
     const { car, layout, navigation } = this.props;
 
     return (
       <ListItem
-        onPress={() => navigation.navigate('carShow', {car: car, layout: layout})}
+        onPress={this.showCar.bind(this)}
         key={car.id}
         title={`${car.full_name} ${car.production_year}`}
         subtitle={car.places_full}

@@ -200,7 +200,7 @@ export class AppDrawer extends Component {
         <View style={styles(layout).userInfoContainer}>
           <TouchableHighlight
             underlayColor={stylesColors[layout].appDrawerUserContainerBg}
-            onPress={() => this.goToAndClose('myAccount', {})}
+            onPress={() => this.goToAndClose('myProfile', {})}
           >
             <View style={styles(layout).userInfo}>
               <Image source={{uri: currentUser.avatar}} style={styles(layout).avatar} />
@@ -272,7 +272,7 @@ export class AppDrawer extends Component {
     return (
       <TouchableHighlight
         underlayColor={stylesColors[layout].appDrawerBg}
-        onPress={() => this.goToAndClose('ridesIndex')}
+        onPress={() => this.goToAndClose('ridesTabs')}
       >
         <Text style={styles(layout).menuLink}>Rides</Text>
       </TouchableHighlight>

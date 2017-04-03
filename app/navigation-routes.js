@@ -42,6 +42,7 @@ const headerWithHamburger = (
   }
 )
 
+// authenticated
 export const AuthenticatedRidesTabNavigator = TabNavigator({
   ridesIndex: { screen: RidesIndex },
   ridesAsDriver: { screen: RidesIndexAsDriver },
@@ -60,32 +61,26 @@ export const AuthenticatedRidesTabNavigator = TabNavigator({
 })
 
 export const AuthenticatedRidesStackNavigator = StackNavigator({
-  rides: { screen: AuthenticatedRidesTabNavigator },
-  myProfile: { screen: CurrentUserShow },
-  myCars: { screen: CarsIndex },
+  ridesTabs: { screen: AuthenticatedRidesTabNavigator },
+  rideNew: { screen: RideNew },
   rideShow: { screen: RideShow },
   rideEdit: { screen: RideEdit },
-  rideNew: { screen: RideNew },
   usersIndex: { screen: UsersIndex },
   userShow: { screen: UserShow },
+  myProfile: { screen: CurrentUserShow },
+  myProfileEdit: { screen: CurrentUserEdit },
+  myCars: { screen: CarsIndex },
+  carNew: { screen: CarNew },
+  carShow: { screen: CarShow },
+  carEdit: { screen: CarEdit },
   myNotifications: { screen: NotificationsIndex },
   settingsIndex: { screen: SettingsEdit },
 }, {
   headermode: 'float'
 })
 
-export const AuthenticatedAccountStackNavigator = StackNavigator({
-  myProfileEdit: { screen: CurrentUserEdit },
-  carNew: { screen: CarNew },
-  carShow: { screen: CarShow },
-  carEdit: { screen: CarEdit },
-}, {
-  headermode: 'float'
-})
-
 export const AuthenticatedDrawerNavigator = DrawerNavigator({
-  Rides: { screen: AuthenticatedRidesStackNavigator },
-  myAccount: { screen: AuthenticatedAccountStackNavigator },
+  rides: { screen: AuthenticatedRidesStackNavigator },
 }, {
   contentComponent: AppDrawer
 })
@@ -119,7 +114,7 @@ export const NotAuthenticatedRegisterStackNavigator = StackNavigator({
 })
 
 export const NotAuthenticatedRidesStackNavigator = StackNavigator({
-  ridesTab: { screen: NotAuthenticatedRidesTabNavigator },
+  ridesTabs: { screen: NotAuthenticatedRidesTabNavigator },
   rideNew: { screen: RideNew },
   rideShow: { screen: RideShow },
   userShow: { screen: UserShow },

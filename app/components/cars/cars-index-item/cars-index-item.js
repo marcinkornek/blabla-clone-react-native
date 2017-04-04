@@ -34,7 +34,7 @@ export class CarsIndexItem extends Component {
   showCar() {
     const { car, layout, navigation, hideModal } = this.props;
 
-    hideModal()
+    if (hideModal) hideModal()
     if (navigation) navigation.navigate('carShow', {car: car, layout: layout})
   }
 

@@ -109,7 +109,7 @@ export class RidesIndexItem extends Component {
   showRide() {
     const { navigation, ride, layout, hideModal } = this.props;
 
-    hideModal()
+    if (hideModal) hideModal()
     if (navigation) {
       navigation.navigate('rideShow', {ride: ride, layout: layout})
     }

@@ -1,0 +1,2 @@
+json_key_file "/home/mars/ruby/react-native/Google Play Android Developer-0e74a312bee7.json" # Path to the json secret file - Follow https://github.com/fastlane/supply#setup to get one
+package_name "" # e.g. com.krausefx.app

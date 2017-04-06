@@ -1,0 +1,4 @@
+* ulepszenie push notifications
+* dodanie możliwości akceptowania/odrzucania propozycji przejazdów
+* aktualizowanie listy przejazdów po dodaniu przejazdu
+* aktualizowanie listy samochodów po dodaniu samochodu

@@ -1,0 +1,2 @@
+* dodanie filtrów i wyszukiwania miasta startu i docelowego
+* poprawa błędów

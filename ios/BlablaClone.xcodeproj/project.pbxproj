@@ -39,6 +39,7 @@
 		3AC6955D45E14E1F8370D89B /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E152A67AB07B453B92E36B5D /* MaterialCommunityIcons.ttf */; };
 		3B256BF9310347D09AB6F4E6 /* libAirMaps.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 52B3B97381F541B4BDC4ABB6 /* libAirMaps.a */; };
 		FD22D127130541D1AE9BE64F /* libRCTOneSignal.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C3440F427113413E877FE821 /* libRCTOneSignal.a */; };
+		F4E681D354284F10A829FFC7 /* libSMXCrashlytics.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CA55A79B0A4E497C977AF899 /* libSMXCrashlytics.a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -180,6 +181,8 @@
 		52B3B97381F541B4BDC4ABB6 /* libAirMaps.a */ = {isa = PBXFileReference; name = "libAirMaps.a"; path = "libAirMaps.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 		13D02A0481AA4568B963D8A6 /* RCTOneSignal.xcodeproj */ = {isa = PBXFileReference; name = "RCTOneSignal.xcodeproj"; path = "../node_modules/react-native-onesignal/ios/RCTOneSignal.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
 		C3440F427113413E877FE821 /* libRCTOneSignal.a */ = {isa = PBXFileReference; name = "libRCTOneSignal.a"; path = "libRCTOneSignal.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
+		B9C57AFEDA29402AB4F8B939 /* SMXCrashlytics.xcodeproj */ = {isa = PBXFileReference; name = "SMXCrashlytics.xcodeproj"; path = "../node_modules/react-native-fabric/ios/SMXCrashlytics.xcodeproj"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = wrapper.pb-project; explicitFileType = undefined; includeInIndex = 0; };
+		CA55A79B0A4E497C977AF899 /* libSMXCrashlytics.a */ = {isa = PBXFileReference; name = "libSMXCrashlytics.a"; path = "libSMXCrashlytics.a"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = archive.ar; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +215,7 @@
 				B9D8A521C4CF4741B8132775 /* libRCTFBLogin.a in Frameworks */,
 				3B256BF9310347D09AB6F4E6 /* libAirMaps.a in Frameworks */,
 				FD22D127130541D1AE9BE64F /* libRCTOneSignal.a in Frameworks */,
+				F4E681D354284F10A829FFC7 /* libSMXCrashlytics.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -350,6 +354,7 @@
 				C3CFBF7B3EA347D780C895FE /* RCTFBLogin.xcodeproj */,
 				C53117CBA02F495C918D5FF0 /* AirMaps.xcodeproj */,
 				13D02A0481AA4568B963D8A6 /* RCTOneSignal.xcodeproj */,
+				B9C57AFEDA29402AB4F8B939 /* SMXCrashlytics.xcodeproj */,
 			);
 			name = Libraries;
 			sourceTree = "<group>";
@@ -716,6 +721,7 @@
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 				);
 			};
 			name = Debug;
@@ -732,6 +738,7 @@
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BlablaClone.app/BlablaClone";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
 					"\"$(SRCROOT)/$(TARGET_NAME)\"",
@@ -757,6 +764,10 @@
 				);
 				PRODUCT_NAME = BlablaClone;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics",
+				);
 			};
 			name = Debug;
 		};
@@ -774,6 +785,10 @@
 				);
 				PRODUCT_NAME = BlablaClone;
 				VERSIONING_SYSTEM = "apple-generic";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-fabric/ios/SMXCrashlytics",
+				);
 			};
 			name = Release;
 		};

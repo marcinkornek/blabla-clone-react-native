@@ -21,6 +21,8 @@
 		"react-native-datepicker": "^1.4.3",
 		"react-native-drawer": "^2.3.0",
 		"react-native-elements": "^0.10.0",
+		"react-native-fabric": "^0.4.1",
+		"react-native-fabric-crashlytics": "^0.1.8",
 		"react-native-facebook-login": "^1.4.0",
 		"react-native-google-places": "^2.0.4",
 		"react-native-image-picker": "^0.26.0",

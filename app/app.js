@@ -5,6 +5,9 @@ import { store } from './store/store';
 import { persistStore } from 'redux-persist';
 import { AsyncStorage, Text } from 'react-native';
 import OneSignal from 'react-native-onesignal';
+import crashlytics from 'react-native-fabric-crashlytics';
+
+crashlytics.init();
 
 // actions
 import { addActiveNotification } from './actions/notifications';

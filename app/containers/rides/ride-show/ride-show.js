@@ -215,7 +215,7 @@ export class RideShow extends Component {
         <Text style={styles(layout).rideDestination}>
           {ride.start_location_address} - {ride.destination_location_address}
         </Text>
-        <Text>{moment(ride.starts_date).format('DD.MM.YY H:MM')}</Text>
+        <Text>{moment(ride.start_date).format('DD.MM.YY H:MM')}</Text>
       </View>
     )
   }

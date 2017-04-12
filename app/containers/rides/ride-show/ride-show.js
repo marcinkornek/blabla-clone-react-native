@@ -332,7 +332,6 @@ export class RideShow extends Component {
     return (
       <ScrollView style={styles(layout).view}>
         {this.renderRide()}
-        {this.renderMapToggle()}
         {this.renderDriver()}
         {this.renderCar()}
         {this.renderOffer()}

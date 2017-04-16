@@ -37,6 +37,10 @@ const styles = (layout) => StyleSheet.create({
     backgroundColor: stylesColors[layout].rideBg,
     margin: 5,
   },
+  containerPast: {
+    backgroundColor: stylesColors[layout].ridePastBg,
+    margin: 5,
+  },
   footer: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -115,12 +119,16 @@ export class RidesIndexItem extends Component {
     }
   }
 
+  isRidePast() {
+    return moment().diff(new Date(this.props.ride.start_date)) < 0
+  }
+
   renderRide() {
     const { ride, onClick, layout, navigation } = this.props;
 
     return(
       <TouchableHighlight
-        style={styles(layout).container}
+        style={this.isRidePast() ? styles(layout).container : styles(layout).containerPast}
         underlayColor={stylesColors[layout].secondaryBg}
         onPress={this.showRide.bind(this)}
       >

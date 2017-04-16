@@ -11,6 +11,8 @@ import stylesColors from '../../../constants/colors';
 
 // components
 import { PriceFormatted } from '../../shared/price-formatted/price-formatted'
+import { RidesIndexItemFuture } from '../rides-index-item-future/rides-index-item-future'
+import { RidesIndexItemPast } from '../rides-index-item-past/rides-index-item-past'
 
 const styles = (layout) => StyleSheet.create({
   borderDriver: {
@@ -102,123 +104,19 @@ export class RidesIndexItem extends Component {
   static propTypes = {
     ride: PropTypes.object.isRequired,
     layout: PropTypes.string.isRequired,
-  }
-
-  showUserModal() {
-    const { ride, showUserModal } = this.props;
-
-    showUserModal(ride)
-  }
-
-  showRide() {
-    const { navigation, ride, layout, hideModal } = this.props;
-
-    if (hideModal) hideModal()
-    if (navigation) {
-      navigation.navigate('rideShow', {ride: ride, layout: layout})
-    }
+    showUserModal: PropTypes.func.isRequired,
+    hideModal: PropTypes.func.isRequired,
   }
 
   isRidePast() {
     return moment().diff(new Date(this.props.ride.start_date)) < 0
   }
 
-  renderRide() {
-    const { ride, onClick, layout, navigation } = this.props;
-
-    return(
-      <TouchableHighlight
-        style={this.isRidePast() ? styles(layout).container : styles(layout).containerPast}
-        underlayColor={stylesColors[layout].secondaryBg}
-        onPress={this.showRide.bind(this)}
-      >
-        <View style={{flexDirection: 'row'}}>
-          <View style={styles(layout)[this.rideBorderStyle()]}></View>
-          <View style={{flex: 1}}>
-            <View style={styles(layout).header}>
-              <View>
-                <Image source={{uri: ride.car.car_photo}} style={styles(layout).imageCar}>
-                  <Text style={styles(layout).price}>
-                    <PriceFormatted price={ride.price} currency={ride.currency} />
-                  </Text>
-                </Image>
-              </View>
-              <View style={{flex: 1}}>
-                <Text style={styles(layout).location}>{ride.start_location.address}</Text>
-                <Text style={styles(layout).location}>{ride.destination_location.address}</Text>
-                {this.renderPendingRequestsCount()}
-              </View>
-            </View>
-            <View style={styles(layout).footer}>
-              <Text style={styles(layout).primaryText}>
-                {moment(new Date(ride.start_date)).format('DD.MM.YY - H:mm')}
-              </Text>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <TouchableHighlight
-                  underlayColor='transparent'
-                  onPress={() => this.showUserModal()}
-                >
-                  <Image source={{uri: ride.driver.avatar}} style={styles(layout).imageAvatar} />
-                </TouchableHighlight>
-                {this.renderFreePlacesCount()}
-                <MaterialIcons.Button
-                  name="open-in-new"
-                  backgroundColor="transparent"
-                  iconStyle={{marginRight: 0}}
-                  color={stylesColors[layout].buttonSubmit}
-                  size={25}
-                  onPress={() => this.showRide.bind(this)}
-                />
-              </View>
-            </View>
-          </View>
-        </View>
-      </TouchableHighlight>
-    )
-  }
-
-  rideBorderStyle() {
-    const { ride, layout } = this.props;
-
-    switch (ride.user_role) {
-    case "driver":
-      return "borderDriver"
-    case "passenger":
-      return `borderPassenger${ride.user_ride_request_status}`
-    default:
-      return "borderNormal"
-    }
-  }
-
-  renderPendingRequestsCount() {
-    const { ride, layout } = this.props;
-
-    if (ride.user_role === 'driver') {
-      if (ride.ride_requests_pending_count > 0) {
-        return (
-          <View style={styles(layout).rideDriverInfo}>
-            <Text style={styles(layout).rideDriverInfoPending}>
-              {`${ride.ride_requests_pending_count} ${pluralize('request', ride.ride_requests_pending_count)} pending`}
-            </Text>
-          </View>
-        )
-      } else {
-        return null
-      }
-    }
-  }
-
-  renderFreePlacesCount() {
-    const { ride, layout } = this.props;
-
-    if (ride.free_places_count === 0) {
-      return <Text style={styles(layout).placesFull}>All taken</Text>
-    } else {
-      return <Text style={styles(layout).placesCount}>{ride.free_places_count} seats free</Text>
-    }
-  }
-
   render() {
-    return this.renderRide()
+    if (this.isRidePast()) {
+      return <RidesIndexItemFuture {...this.props} />
+    } else {
+      return <RidesIndexItemPast {...this.props} />
+    }
   }
 };

@@ -17,6 +17,7 @@
 		"react-native": "^0.42.0",
 		"react-native-action-button": "^2.0.20",
 		"react-native-button": "^1.7.1",
+		"react-native-collapsible": "^0.8.0",
 		"react-native-datepicker": "^1.4.3",
 		"react-native-elements": "^0.10.0",
 		"react-native-fabric": "^0.4.1",

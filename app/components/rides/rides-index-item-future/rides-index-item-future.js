@@ -142,8 +142,8 @@ export class RidesIndexItemFuture extends Component {
                 </Image>
               </View>
               <View style={{flex: 1}}>
-                <Text style={styles(layout).location}>{ride.start_location.address}</Text>
-                <Text style={styles(layout).location}>{ride.destination_location.address}</Text>
+                <Text style={styles(layout).location}>{ride.start_location_address}</Text>
+                <Text style={styles(layout).location}>{ride.destination_location_address}</Text>
                 {this.renderPendingRequestsCount()}
               </View>
             </View>

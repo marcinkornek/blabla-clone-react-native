@@ -13,13 +13,13 @@
 		"moment": "^2.17.1",
 		"pluralize": "^3.1.0",
 		"ramda": "^0.23.0",
-		"react": "15.4.2",
-		"react-native": "^0.42.0",
+		"react": "16.0.0-alpha.6",
+		"react-native": "^0.43.0",
 		"react-native-action-button": "^2.0.20",
 		"react-native-button": "^1.7.1",
 		"react-native-collapsible": "^0.8.0",
 		"react-native-datepicker": "^1.4.3",
-		"react-native-elements": "^0.10.0",
+		"react-native-elements": "^0.11.0",
 		"react-native-fabric": "^0.4.1",
 		"react-native-fabric-crashlytics": "^0.1.8",
 		"react-native-facebook-login": "^1.4.0",
@@ -28,7 +28,7 @@
 		"react-native-maps": "^0.13.1",
 		"react-native-onesignal": "^3.0.3",
 		"react-native-vector-icons": "^4.0.0",
-		"react-navigation": "^1.0.0-beta.6",
+		"react-navigation": "git+https://github.com/react-community/react-navigation.git",
 		"react-redux": "^5.0.1",
 		"redux": "^3.6.0",
 		"redux-axios-middleware": "^4.0.0",
@@ -43,7 +43,7 @@
 		"babel-preset-react-native": "^1.9.1",
 		"babel-preset-react-native-stage-0": "^1.0.1",
 		"jest": "^19.0.0",
-		"react-test-renderer": "15.4.2"
+		"react-test-renderer": "^15.5.0"
 	},
 	"jest": {
 		"preset": "react-native"

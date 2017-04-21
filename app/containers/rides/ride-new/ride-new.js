@@ -33,11 +33,7 @@ export class RideNew extends Component {
   }
 
   static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: 'Add ride'
-      }
-    }
+    headerTitle: 'Add ride'
   }
 
   componentWillMount() {

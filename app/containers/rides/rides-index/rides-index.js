@@ -58,19 +58,19 @@ export class RidesIndex extends Component {
     layout: PropTypes.string.isRequired,
   }
 
-  static navigationOptions = {
-    tabBar: {
-      label: 'Rides',
-    },
-    header: (navigation, header) => ({
-      ...header,
-      title: 'Rides',
-      right: (
+  static navigationOptions = props => {
+    const { navigation } = props;
+    const { state, setParams } = navigation;
+    const { params } = state;
+
+    return {
+      tabBarLabel: 'Rides',
+      headerTitle: 'Rides',
+      headerRight:
         <View style={styles('base').filtersContainer}>
           <Icon.Button
             onPress={() => {
-              const state = navigation.state
-              const showSearch = state.params && state.params.showSearch ? !state.params.showSearch : true
+              const showSearch = params && params.showSearch ? !params.showSearch : true
               return (navigation.setParams({showSearch: showSearch}))
             }}
             name="md-search"
@@ -91,9 +91,8 @@ export class RidesIndex extends Component {
             size={30}
           />
         </View>
-      )
-    })
-  };
+    }
+  }
 
   componentWillMount() {
     const { refreshRides, setDefaultRidesPer, rides, pagination } = this.props;

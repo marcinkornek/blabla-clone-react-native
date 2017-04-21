@@ -30,18 +30,6 @@ import NotificationsIndex from './containers/notifications/notifications-index/n
 import requireAuth from './containers/shared/require-auth/require-auth'
 import HamburgerButton from './containers/shared/hamburger-button/hamburger-button'
 
-const headerWithHamburger = (
-  {
-    header: (navigation, header) => ({
-      left: (
-        <HamburgerButton
-          onClick={() => navigation.navigate('DrawerOpen')}
-        />
-      ),
-    })
-  }
-)
-
 // authenticated
 export const AuthenticatedRidesTabNavigator = TabNavigator({
   ridesIndex: { screen: RidesIndex },
@@ -56,7 +44,12 @@ export const AuthenticatedRidesTabNavigator = TabNavigator({
     scrollEnabled: true,
     tabStyle: { width: 150 }
   },
-  navigationOptions: headerWithHamburger,
+  navigationOptions: ({navigation}) => ({
+    headerLeft:
+      <HamburgerButton
+        onClick={() => navigation.navigate('DrawerOpen')}
+      />
+  }),
   headerMode: 'float',
 })
 
@@ -97,7 +90,12 @@ export const NotAuthenticatedRidesTabNavigator = TabNavigator({
     scrollEnabled: true,
     tabStyle: { width: 150 }
   },
-  navigationOptions: headerWithHamburger,
+  navigationOptions: ({navigation}) => ({
+    headerLeft:
+      <HamburgerButton
+        onClick={() => navigation.navigate('DrawerOpen')}
+      />
+  }),
   headerMode: 'float',
 })
 

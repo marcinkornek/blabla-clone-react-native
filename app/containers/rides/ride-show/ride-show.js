@@ -5,7 +5,6 @@ import { View, ScrollView, Text, StyleSheet, Dimensions, TouchableHighlight, Ale
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 import MapView from 'react-native-maps';
-import Collapsible from 'react-native-collapsible';
 import _ from 'lodash';
 
 // styles
@@ -80,20 +79,22 @@ export class RideShow extends Component {
     }
   }
 
-  static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: `${state.params.ride.start_location_address} - ${state.params.ride.destination_location_address}`,
-        right: (
-          <EditButton
-            layout={state.params.layout}
-            onClick={() => state.params.navigation.navigate('rideEdit', {id: state.params.id})}
-            showEdit={state.params.showEdit}
-          />
-        )
-      }
-    }
-  }
+  static navigationOptions = props => {
+    const { navigation } = props;
+    const { state, setParams } = navigation;
+    const { params } = state;
+
+    return {
+      headerTitle: `${params.ride.start_location_address} - ${params.ride.destination_location_address}`,
+      headerRight: (
+        <EditButton
+          layout={params.layout}
+          onClick={() => params.navigation.navigate('rideEdit', {id: params.id})}
+          showEdit={params.showEdit}
+        />
+      ),
+    };
+  };
 
   state = {
     markers: [],

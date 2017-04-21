@@ -10,6 +10,9 @@ import stylesColors from '../../../constants/colors';
 // actions
 import { fetchCurrentUser } from '../../../actions/current-user';
 
+// components
+import { EditButton } from '../../../components/shared/edit-button/edit-button'
+
 const styles = (layout) => StyleSheet.create({
   avatar: {
     width: 110,
@@ -62,14 +65,21 @@ export class UserShow extends Component {
     currentUser: {}
   }
 
-  static navigationOptions = {
-    tabBar: {
-      label: 'My profile',
-    },
-    header: (navigation, header) => ({
-      ...header,
-      title: 'My profile'
-    })
+  static navigationOptions = props => {
+    const { navigation } = props;
+    const { state, setParams } = navigation;
+    const { params } = state;
+
+    return {
+      tabBarLabel: 'My profile',
+      headerTitle: 'My profile',
+      headerRight:
+        <EditButton
+          layout={params.layout}
+          onClick={() => navigation.navigate('myProfileEdit')}
+          showEdit={true}
+        />
+    }
   }
 
   renderUserInfo() {

@@ -32,11 +32,7 @@ export class NotificationsIndex extends Component {
   }
 
   static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: 'Notifications'
-      }
-    }
+    headerTitle: 'Notifications'
   }
 
   componentWillMount() {

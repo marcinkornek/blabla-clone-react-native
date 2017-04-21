@@ -82,18 +82,19 @@ export class UserShow extends Component {
   }
 
 
-  static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: `${state.params.user.full_name} profile`,
-        right: (
-          <EditButton
-            layout={state.params.layout}
-            onClick={() => state.params.navigation.navigate('myProfileEdit')}
-            showEdit={state.params.showEdit}
-          />
-        )
-      }
+  static navigationOptions = props => {
+    const { navigation } = props;
+    const { state, setParams } = navigation;
+    const { params } = state;
+
+    return {
+      headerTitle: `${state.params.user.full_name} profile`,
+      headerRight:
+        <EditButton
+          layout={params.layout}
+          onClick={() => params.navigation.navigate('myProfileEdit')}
+          showEdit={params.showEdit}
+        />
     }
   }
 

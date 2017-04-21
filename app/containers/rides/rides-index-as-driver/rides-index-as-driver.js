@@ -52,18 +52,18 @@ export class RidesIndexAsDriver extends Component {
     layout: PropTypes.string.isRequired,
   }
 
-  static navigationOptions = {
-    tabBar: {
-      label: 'Rides as driver'
-    },
-    header: (navigation, header) => ({
-      ...header,
-      title: 'Rides as driver',
-      right: (
+  static navigationOptions = props => {
+    const { navigation } = props;
+    const { state, setParams } = navigation;
+    const { params } = state;
+
+    return {
+      tabBarLabel: 'Rides as driver',
+      headerTitle: 'Rides as driver',
+      headerRight:
         <View style={styles('base').filtersContainer}>
           <MaterialCommunityIcons.Button
             onPress={() => {
-              const state = navigation.state
               return (navigation.setParams({showFilters: true}))
             }}
             name="filter-variant"
@@ -73,8 +73,7 @@ export class RidesIndexAsDriver extends Component {
             size={30}
           />
         </View>
-      )
-    })
+    }
   }
 
   componentWillMount() {

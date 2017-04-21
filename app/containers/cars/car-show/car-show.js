@@ -54,18 +54,19 @@ class CarShow extends Component {
     car: {}
   }
 
-  static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: `${state.params.car.user.full_name} car`,
-        right: (
-          <EditButton
-            layout={state.params.layout}
-            onClick={() => state.params.navigation.navigate('carEdit', {id: state.params.id})}
-            showEdit={state.params.showEdit}
-          />
-        )
-      }
+  static navigationOptions = props => {
+    const { navigation } = props;
+    const { state, setParams } = navigation;
+    const { params } = state;
+
+    return {
+      headerTitle: `${state.params.car.user.full_name} car`,
+      headerRight:
+        <EditButton
+          layout={params.layout}
+          onClick={() => params.navigation.navigate('carEdit', {id: params.id})}
+          showEdit={params.showEdit}
+        />
     }
   }
 

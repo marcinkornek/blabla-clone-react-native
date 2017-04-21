@@ -32,13 +32,8 @@ class CarsIndex extends Component {
   }
 
   static navigationOptions = {
-    tabBar: {
-      label: 'My cars',
-    },
-    header: (navigation, header) => ({
-      ...header,
-      title: 'My cars'
-    })
+    tabBarLabel: 'My cars',
+    headerTitle: 'My cars'
   }
 
   static defaultProps = {

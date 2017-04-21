@@ -27,11 +27,7 @@ class UsersIndex extends Component {
   }
 
   static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: 'Users list'
-      }
-    }
+    headerTitle: 'Users list'
   }
 
   componentWillMount() {

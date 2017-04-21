@@ -27,11 +27,7 @@ class SettingsEdit extends Component {
   }
 
   static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: 'Settings'
-      }
-    }
+    headerTitle: 'Settings'
   }
 
   handleSubmit(data) {

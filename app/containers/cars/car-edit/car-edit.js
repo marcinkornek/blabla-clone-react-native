@@ -33,11 +33,7 @@ export class CarEdit extends Component {
   }
 
   static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: 'Edit car',
-      }
-    }
+    headerTitle: 'Edit car',
   }
 
   componentWillMount() {

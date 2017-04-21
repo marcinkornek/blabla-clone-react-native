@@ -29,10 +29,7 @@ export class CurrentUserEdit extends Component {
   }
 
   static navigationOptions = {
-    header: (navigation, header) => ({
-      ...header,
-      title: 'Edit my profile'
-    })
+    headerTitle: 'Edit my profile'
   }
 
   handleSubmit(data) {

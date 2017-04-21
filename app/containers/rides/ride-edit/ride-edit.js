@@ -34,11 +34,7 @@ export class RideEdit extends Component {
   }
 
   static navigationOptions = {
-    header: ({ state }) => {
-      return {
-        title: 'Edit ride'
-      }
-    }
+    headerTitle: 'Edit ride'
   }
 
   componentWillMount() {

@@ -28,7 +28,7 @@ export class RenderRideMap extends Component {
   }
 
   getCoordinates() {
-    const { start_location, destination_location } = this.props
+    const { start_location, destination_location, layout } = this.props
 
     return (
       [
@@ -37,12 +37,14 @@ export class RenderRideMap extends Component {
           longitude: parseFloat(start_location.longitude),
           title: 'Start location',
           description: start_location.address,
+          pinColor: stylesColors['base'].locationStart,
         },
         {
           latitude: parseFloat(destination_location.latitude),
           longitude: parseFloat(destination_location.longitude),
           title: 'Destination location',
           description: destination_location.address,
+          pinColor: stylesColors['base'].locationDestination,
         },
       ]
     )
@@ -67,7 +69,7 @@ export class RenderRideMap extends Component {
         <MapView
           ref={(ref) => { this.mapRef = ref }}
           style={styles(layout).map}
-          liteMode={true}
+          cacheEnabled={true}
           onLayout = {() => this.mapRef.fitToCoordinates(coordinates, { edgePadding: { top: 100, right: 100, bottom: 100, left: 100 }, animated: false })}
         >
           {coordinates.map((marker, i) => (
@@ -76,6 +78,7 @@ export class RenderRideMap extends Component {
               coordinate={marker}
               title={marker.title}
               description={marker.description}
+              pinColor={marker.pinColor}
             />
           ))}
         </MapView>

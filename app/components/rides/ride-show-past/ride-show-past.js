@@ -1,6 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { View, Text, Dimensions, StyleSheet } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import moment from 'moment';
 import _ from 'lodash';
 
@@ -20,11 +21,21 @@ const styles = (layout) => StyleSheet.create({
     alignItems: 'flex-start',
     flexDirection: 'column',
   },
-  rideDestination: {
+  rideLocation: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginLeft: -5,
+  },
+  rideLocationText: {
     color: stylesColors[layout].primaryText,
     fontSize: 18,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    marginLeft: -5,
   },
+  rideStartDate: {
+    fontSize: 16,
+    marginBottom: 5,
+  }
 });
 
 export class RideShowPast extends Component {
@@ -42,10 +53,27 @@ export class RideShowPast extends Component {
 
     return (
       <View style={styles(layout).rideDetails}>
-        <Text style={styles(layout).rideDestination}>
-          {ride.start_location_address} - {ride.destination_location_address}
-        </Text>
-        <Text>{moment(ride.start_date).format('DD.MM.YY H:MM')}</Text>
+        <View style={styles(layout).rideLocation}>
+          <Ionicons.Button
+            name="md-pin"
+            backgroundColor='transparent'
+            underlayColor='transparent'
+            color={stylesColors['base'].locationStart}
+            size={24}
+          />
+          <Text style={styles(layout).rideLocationText}>{ride.start_location_address}</Text>
+        </View>
+        <View style={styles(layout).rideLocation}>
+          <Ionicons.Button
+            name="md-pin"
+            backgroundColor='transparent'
+            underlayColor='transparent'
+            color={stylesColors['base'].locationDestination}
+            size={24}
+          />
+          <Text style={styles(layout).rideLocationText}>{ride.destination_location_address}</Text>
+        </View>
+        <Text style={styles(layout).rideStartDate}>{moment(ride.start_date).format('DD.MM.YY H:MM')}</Text>
       </View>
     )
   }

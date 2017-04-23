@@ -1,7 +1,7 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, ScrollView, Text, StyleSheet, Dimensions, TouchableHighlight, Alert } from 'react-native';
+import { ScrollView, Alert, StyleSheet, Dimensions } from 'react-native';
 import { Button } from 'react-native-elements';
 import moment from 'moment';
 import MapView from 'react-native-maps';
@@ -16,49 +16,22 @@ import { createRideRequest, changeRideRequest } from '../../../actions/ride-requ
 import { showModal } from '../../../actions/modals';
 
 // components
-import { AsyncContent } from '../../../components/shared/async-content/async-content'
-import { RideRequestsIndex } from '../../../components/rides/ride-requests-index/ride-requests-index'
-import { RenderUserProfile } from '../../../components/shared/render-user-profile/render-user-profile'
-import { RenderCarInfo } from '../../../components/shared/render-car-info/render-car-info'
-import { RenderRideOffer } from '../../../components/rides/render-ride-offer/render-ride-offer'
+import { RideShowFuture } from '../../../components/rides/ride-show-future/ride-show-future'
+import { RideShowPast } from '../../../components/rides/ride-show-past/ride-show-past'
 import { EditButton } from '../../../components/shared/edit-button/edit-button'
 
 const { width, height } = Dimensions.get('window')
 const styles = (layout) => StyleSheet.create({
-  container: {
-    height: 200,
-    marginRight: 10,
-    alignSelf: 'stretch',
-    justifyContent: 'flex-end',
-    alignItems: 'center',
-  },
-  rideDetails: {
-    flexWrap: 'wrap',
-    alignItems: 'flex-start',
-    flexDirection: 'column',
-  },
-  rideDestination: {
-    color: stylesColors[layout].primaryText,
-    fontSize: 18,
-    fontWeight: 'bold'
-  },
-  map: {
-    ...StyleSheet.absoluteFillObject,
-  },
   modalStyles: {
     marginTop: height - 300,
     backgroundColor: stylesColors[layout].secondaryBg,
   },
-  toggleMap: {
-    color: stylesColors[layout].primaryText,
-  },
   view: {
     backgroundColor: stylesColors[layout].primaryBg,
-    paddingTop: 10,
-    paddingLeft: 10,
+    padding: 10,
+    paddingRight: 0,
   },
 });
-const markerIDs = ['startCity', 'destinationCity'];
 
 export class RideShow extends Component {
   static propTypes = {
@@ -81,7 +54,7 @@ export class RideShow extends Component {
 
   static navigationOptions = props => {
     const { navigation } = props;
-    const { state, setParams } = navigation;
+    const { state } = navigation;
     const { params } = state;
 
     return {
@@ -95,11 +68,6 @@ export class RideShow extends Component {
       ),
     };
   };
-
-  state = {
-    markers: [],
-    hideMap: true,
-  }
 
   componentWillMount() {
     const { initializeRide, fetchRide, navigation } = this.props
@@ -115,9 +83,6 @@ export class RideShow extends Component {
     const { navigation } = this.props;
 
     navigation.setParams({
-      id: ride.id,
-      layout: layout,
-      navigation: navigation,
       showEdit: this.showEdit(ride)
     })
   }
@@ -126,32 +91,6 @@ export class RideShow extends Component {
     const { currentUser } = this.props;
 
     return ride.driver_id === currentUser.id
-  }
-
-  fitToCoordinates(coordinates) {
-    return (
-      this.map.fitToCoordinates(coordinates, {
-        edgePadding: { top: 100, right: 100, bottom: 100, left: 100 },
-        animated: false,
-      })
-    )
-  }
-
-  coordinatesAreValid() {
-    const { ride } = this.props
-
-    if (ride.start_location === undefined) return false
-    return (
-      !isNaN(ride.start_location.latitude) && !isNaN(ride.start_location.longitude) &&
-        !isNaN(ride.destination_location.latitude) && !isNaN(ride.destination_location.longitude)
-    )
-  }
-
-  createMarker(latitude, longitude) {
-    return {
-      latitude: parseFloat(latitude),
-      longitude: parseFloat(longitude)
-    };
   }
 
   createRideRequest(data) {
@@ -172,24 +111,7 @@ export class RideShow extends Component {
   }
 
   changeRideRequest(rideRequestId, status) {
-    const { changeRideRequest } = this.props
-
-    changeRideRequest(rideRequestId, status)
-  }
-
-  toggleMap() {
-    const { ride } = this.props;
-    const coordinates = [
-      this.createMarker(ride.start_location.latitude, ride.start_location.longitude),
-      this.createMarker(ride.destination_location.latitude, ride.destination_location.longitude)
-    ]
-
-    if (this.coordinatesAreValid()) {
-      this.setState({hideMap: !this.state.hideMap, markers: coordinates})
-      setTimeout(() => {
-        this.fitToCoordinates(coordinates);
-      }, 500);
-    }
+    this.props.changeRideRequest(rideRequestId, status)
   }
 
   showCarModal() {
@@ -208,137 +130,25 @@ export class RideShow extends Component {
     })
   }
 
-  renderRide() {
-    const { ride, layout } = this.props
-
-    return (
-      <View style={styles(layout).rideDetails}>
-        <Text style={styles(layout).rideDestination}>
-          {ride.start_location_address} - {ride.destination_location_address}
-        </Text>
-        <Text>{moment(ride.start_date).format('DD.MM.YY H:MM')}</Text>
-      </View>
-    )
-  }
-
-  renderMapToggle() {
-    const { layout } = this.props
-
-    return (
-      <View>
-        <TouchableHighlight
-          underlayColor={stylesColors[layout].primaryBg}
-          onPress={() => this.toggleMap()}
-        >
-          <Text style={styles(layout).toggleMap}>{this.state.hideMap ? 'Show map' : 'Hide map'}</Text>
-        </TouchableHighlight>
-        <Collapsible collapsed={this.state.hideMap}>
-          {this.renderMap()}
-        </Collapsible>
-      </View>
-    )
-  }
-
-  renderMap() {
-    const { ride, layout } = this.props
-
-    if (this.coordinatesAreValid()) {
-      return (
-        <View style={styles(layout).container}>
-          <MapView
-            ref={ref => { this.map = ref; }}
-            style={styles(layout).map}
-            initialRegion={{
-              latitude: parseFloat(ride.start_location.latitude),
-              longitude: parseFloat(ride.start_location.longitude),
-              latitudeDelta: 0.0922,
-              longitudeDelta: 0.0421,
-            }}
-          >
-            {this.state.markers.map((marker, i) => (
-              <MapView.Marker
-                key={i}
-                coordinate={marker}
-              />
-            ))}
-          </MapView>
-        </View>
-      )
-    }
-  }
-
-  renderDriver() {
-    const { ride, currentUser, layout, navigation } = this.props
-
-    if (ride.driver && !(ride.driver.id === currentUser.id)) {
-      return(
-        <RenderUserProfile
-          user={ride.driver}
-          layout={layout}
-          onSubmit={this.showUserModal.bind(this)}
-          navigation={navigation}
-        />
-      )
-    }
-  }
-
-  renderCar() {
-    const { ride, layout, navigation } = this.props
-
-    if (ride.car) {
-      return(
-        <RenderCarInfo
-          car={ride.car}
-          layout={layout}
-          onSubmit={this.showCarModal.bind(this)}
-          navigation={navigation}
-        />
-      )
-    }
-  }
-
-  renderOffer() {
-    const { ride, currentUser, layout } = this.props
-
-    if (ride.driver) {
-      return(
-        <RenderRideOffer
-          ride={ride}
-          currentUser={currentUser}
-          layout={layout}
-          handleSubmit={this.createRideRequest.bind(this)}
-        />
-      )
-    }
-  }
-
-  renderRideRequests() {
-    const { ride, currentUser, layout } = this.props
-
-    if (ride.driver && (ride.driver.id === currentUser.id) && !_.isEmpty(ride.ride_requests)) {
-      return(
-        <RideRequestsIndex
-          ride={ride}
-          currentUser={currentUser}
-          layout={layout}
-          handleSubmit={this.changeRideRequest.bind(this)}
-        />
-      )
-    }
+  isRidePast() {
+    return moment().diff(moment(this.props.ride.start_date)) < 0
   }
 
   render() {
     const { layout } = this.props;
+    const SpecificComponent = this.isRidePast() ? RideShowFuture : RideShowPast
 
     return (
       <ScrollView style={styles(layout).view}>
-        {this.renderRide()}
-        {this.renderDriver()}
-        {this.renderCar()}
-        {this.renderOffer()}
-        {this.renderRideRequests()}
+        <SpecificComponent
+          showCarModal={this.showCarModal.bind(this)}
+          showUserModal={this.showUserModal.bind(this)}
+          changeRideRequest={this.changeRideRequest.bind(this)}
+          createRideRequest={this.createRideRequest.bind(this)}
+          {...this.props}
+        />
       </ScrollView>
-    );
+    )
   }
 }
 

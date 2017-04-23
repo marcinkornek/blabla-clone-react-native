@@ -32,8 +32,18 @@ export class RenderRideMap extends Component {
 
     return (
       [
-        { latitude: parseFloat(start_location.latitude), longitude: parseFloat(start_location.longitude) },
-        { latitude: parseFloat(destination_location.latitude), longitude: parseFloat(destination_location.longitude) },
+        {
+          latitude: parseFloat(start_location.latitude),
+          longitude: parseFloat(start_location.longitude),
+          title: 'Start location',
+          description: start_location.address,
+        },
+        {
+          latitude: parseFloat(destination_location.latitude),
+          longitude: parseFloat(destination_location.longitude),
+          title: 'Destination location',
+          description: destination_location.address,
+        },
       ]
     )
   }
@@ -57,12 +67,15 @@ export class RenderRideMap extends Component {
         <MapView
           ref={(ref) => { this.mapRef = ref }}
           style={styles(layout).map}
+          liteMode={true}
           onLayout = {() => this.mapRef.fitToCoordinates(coordinates, { edgePadding: { top: 100, right: 100, bottom: 100, left: 100 }, animated: false })}
         >
           {coordinates.map((marker, i) => (
             <MapView.Marker
               key={i}
               coordinate={marker}
+              title={marker.title}
+              description={marker.description}
             />
           ))}
         </MapView>

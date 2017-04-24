@@ -63,15 +63,15 @@ export class CarEdit extends Component {
   }
 
   renderCarForm() {
-    const { carOptions, car, isSaving, layout } = this.props
+    const { car, carOptions, isSaving, layout } = this.props
 
     return(
       <CarForm
         car={car}
+        carOptions={carOptions}
         isSaving={isSaving}
         layout={layout}
         onSubmit={this.handleSubmit.bind(this)}
-        carOptions={carOptions}
       />
     )
   }

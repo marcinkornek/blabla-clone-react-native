@@ -1,8 +1,8 @@
 // utils
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
-import { View, StyleSheet, Text, Dimensions } from 'react-native';
-import Icon from 'react-native-vector-icons/Ionicons';
+import { View, StyleSheet, Dimensions } from 'react-native';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import { max } from 'ramda'
 
@@ -31,7 +31,7 @@ const styles = (layout) => StyleSheet.create({
     flexDirection: 'row',
     marginTop: -5,
   },
-  modalStyles: {
+  modalFiltersStyles: {
     margin: 20,
     flex: 0,
     height: 370,
@@ -68,7 +68,7 @@ export class RidesIndex extends Component {
       headerTitle: 'Rides',
       headerRight:
         <View style={styles('base').filtersContainer}>
-          <Icon.Button
+          <Ionicons.Button
             onPress={() => {
               const showSearch = params && params.showSearch ? !params.showSearch : true
               return (navigation.setParams({showSearch: showSearch}))
@@ -106,10 +106,10 @@ export class RidesIndex extends Component {
     const state = navigation.state
 
     if (state.params && state.params.showFilters && oldProps.modalType === undefined) {
-      showModal('RIDES_FILTERS', { title: 'Set filters', modalStyles: styles(layout).modalStyles })
+      showModal('RIDES_FILTERS', { title: 'Set filters', modalStyles: styles(layout).modalFiltersStyles })
     }
 
-  if (oldProps.modalType === 'RIDES_FILTERS') {
+    if (oldProps.modalType === 'RIDES_FILTERS') {
       navigation.setParams({showFilters: false})
     }
 
@@ -158,6 +158,20 @@ export class RidesIndex extends Component {
     this.props.hideModal()
   }
 
+  searchRides(data) {
+    const { refreshRides, updateRidesSearch } = this.props;
+
+    updateRidesSearch(data)
+    refreshRides(per)
+  }
+
+  clearSearch() {
+    const { refreshRides, clearRidesSearch } = this.props;
+
+    clearRidesSearch()
+    refreshRides(per)
+  }
+
   renderRide(ride) {
     const { navigation, layout, hideModal } = this.props;
 
@@ -166,11 +180,27 @@ export class RidesIndex extends Component {
         ride={ride}
         layout={layout}
         navigation={navigation}
+        key={`ride${ride.id}`}
         showUserModal={this.showUserModal.bind(this)}
         hideModal={this.hideModal.bind(this)}
-        key={`ride${ride.id}`}
       />
     )
+  }
+
+  renderRidesSearch() {
+    const { search, layout, navigation } = this.props;
+    const state = navigation.state
+
+    if (state.params && state.params.showSearch) {
+      return (
+        <RenderRidesSearch
+          search={search}
+          layout={layout}
+          searchRides={this.searchRides.bind(this)}
+          clearSearch={this.clearSearch.bind(this)}
+        />
+      )
+    }
   }
 
   renderRidesList() {
@@ -193,36 +223,6 @@ export class RidesIndex extends Component {
         emptyListText='No rides'
       />
     )
-  }
-
-  renderRidesSearch() {
-    const { search, layout, navigation } = this.props;
-    const state = navigation.state
-
-    if (state.params && state.params.showSearch) {
-      return (
-        <RenderRidesSearch
-          search={search}
-          layout={layout}
-          onSubmit={this.searchRides.bind(this)}
-          clearSearch={this.clearSearch.bind(this)}
-        />
-      )
-    }
-  }
-
-  searchRides(data) {
-    const { refreshRides, updateRidesSearch } = this.props;
-
-    updateRidesSearch(data)
-    refreshRides(per)
-  }
-
-  clearSearch() {
-    const { refreshRides, clearRidesSearch } = this.props;
-
-    clearRidesSearch()
-    refreshRides(per)
   }
 
   render() {

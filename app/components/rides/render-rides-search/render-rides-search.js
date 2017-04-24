@@ -41,7 +41,8 @@ const styles = (layout) => StyleSheet.create({
 export class RenderRidesSearch extends Component {
   static propTypes = {
     search: PropTypes.object.isRequired,
-    handleSubmit: PropTypes.func.isRequired,
+    searchRides: PropTypes.func.isRequired,
+    clearSearch: PropTypes.func.isRequired,
     layout: PropTypes.string.isRequired,
   }
 
@@ -62,7 +63,7 @@ export class RenderRidesSearch extends Component {
   }
 
   render() {
-    const { ride, handleSubmit, layout } = this.props;
+    const { ride, searchRides, layout } = this.props;
 
     return (
       <View style={styles(layout).view}>
@@ -88,7 +89,7 @@ export class RenderRidesSearch extends Component {
             buttonStyle={styles(layout).submitButton}
             title={'Search'}
             backgroundColor={stylesColors[layout].buttonSubmit}
-            onPress={handleSubmit}
+            onPress={searchRides}
           />
           {this.renderClearButton()}
         </View>

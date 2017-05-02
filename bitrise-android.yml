@@ -228,9 +228,9 @@ workflows:
           inputs:
             - platform: android
             - entry_file: index.android.js
-      - yarn:
-          inputs:
-            - command: lint
+      # - yarn:
+      #     inputs:
+      #       - command: lint
       - yarn:
           inputs:
             - command: test

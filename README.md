@@ -7,7 +7,7 @@ Code quality
 Bitrise Android
 [![Build Status](https://www.bitrise.io/app/09243049aae0e48a.svg?token=E5skTcpFhLWkS5Smfozgbg&branch=master)](https://www.bitrise.io/app/09243049aae0e48a)
 
-[![codebeat badge](https://david-dm.org/marcinkornek/blabla-clone-react-native.svg)](https://david-dm.org/marcinkornek/blabla-clone-react-native)
+[![David-DM](https://david-dm.org/marcinkornek/blabla-clone-react-native.svg)](https://david-dm.org/marcinkornek/blabla-clone-react-native)
 
 Mobile for Blablacar clone application using React-native + Redux + [*Rails API*](https://github.com/marcinkornek/blabla-clone-api)
 

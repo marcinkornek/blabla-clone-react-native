@@ -1,0 +1,291 @@
+#
+# bitrise.yml
+# Copyright © 2017 Netguru Sp. z o.o. All rights reserved.
+#
+# This `bitrise.yml` variant contains the default Android configuration to be
+# used in a React Native app repository. You can strip the comments in your
+# `bitrise.yml`, if you want.
+#
+# Scripts in the following `bitrise.yml` file makes use of the following
+# environment variables that should be set up as secret:
+#
+# - `HOCKEYAPP_APP_ID_STAGING`, `HOCKEYAPP_APP_ID_PRODUCTION`: App IDs of
+#   staging and production HockeyApp apps.
+#
+# - `HOCKEYAPP_API_TOKEN_STAGING`, `HOCKEYAPP_API_TOKEN_PRODUCTION`: API tokens
+#   used to upload and release builds to HockeyApp app.
+#
+# - `SLACK_WEBHOOK_URL`: A generic webhook integration URL used to post
+#   notifications to Slack.
+#
+# - `SLACK_CHANNEL` (optional): A target Slack channel to post notifications to.
+#   If not present, the default channel of the integration is used.
+#
+# - `JIRA_DOMAIN` (optional): A domain URL to the JIRA installation, typically a
+#   subdomain on `atlassian.net`. If not present, information about JIRA task
+#   will not be included in a Slack notification.
+#
+# - `JIRA_PROJECT_KEY` (optional): A JIRA project key assocciated with the
+#   repository. If not present, information about JIRA task will not be included
+#   in a Slack notification.
+#
+# Also, those scripts use the following environment variables that are declared
+# publicly in the following file:
+#
+# - `GRADLE_BUILD_PATH`: A path to `gradle.build` file to use.
+#
+# - `GRADLE_W_PATH`: A path to `gradlew` file to use.
+#
+# - `GRADLE_TASK`: A task to be performed by `gradle` commands.
+#
+
+# CLI metadata.
+#
+# This metadata is required to always be in `bitrise.yml`. The `format_version`
+# setting will be occasionally bumped.
+
+format_version: 1.3.1
+default_step_lib_source: https://github.com/bitrise-io/bitrise-steplib.git
+
+# Workflow trigger map.
+#
+# The following trigger map triggers a build only for pull requests against
+# `develop` and `master` branches (from forks as well) and pushes to `develop`
+# and `master` branches.
+#
+# More on trigger maps: http://devcenter.bitrise.io/webhooks/trigger-map
+
+trigger_map:
+
+  - push_branch: develop
+    workflow: build-staging
+
+  - push_branch: master
+    workflow: build-release-candidate
+
+  - pull_request_target_branch: develop
+    workflow: build-pull-request
+
+  - pull_request_target_branch: master
+    workflow: build-pull-request
+
+# Environment configuration.
+#
+# This list contains the default environment variables shared between workflows.
+
+app:
+  envs:
+    - GRADLE_BUILD_PATH: ./android/build.gradle
+    - GRADLE_W_PATH: ./android/gradlew
+    - GRADLE_TASK: ''
+
+# Workflow declarations.
+#
+# This list contains workflows used in the above trigger map.
+
+workflows:
+
+  # Build, test and deploy a staging app.
+  #
+  # This workflow pulls dependencies, builds and tests an app with staging
+  # scheme and finally pushes the archived build to HockeyApp.
+
+  build-staging:
+    envs:
+      - GRADLE_TASK: assembleRelease
+      - HOCKEYAPP_API_TOKEN: $HOCKEYAPP_API_TOKEN_STAGING
+      - HOCKEYAPP_APP_ID: $HOCKEYAPP_APP_ID_STAGING
+    before_run:
+      - cache-pull
+      - bootstrap-dotenv
+      - bootstrap-android-sdk
+      - bootstrap-react-native
+      - test-react-native
+      # uncomment this after merging https://github.com/geektimecoil/react-native-onesignal/pull/242
+      # - test-gradle
+      - archive-gradle
+    after_run:
+      - cache-push
+      - deploy-hockeyapp
+      - deploy-bitriseio
+      - notify-slack
+
+  # Build, test and deploy a release candidate app.
+  #
+  # This workflow pulls dependencies, builds and tests an app with production
+  # scheme and finally pushes the archived build to HockeyApp.
+
+  build-release-candidate:
+    envs:
+      - GRADLE_TASK: assembleRelease
+      - HOCKEYAPP_API_TOKEN: $HOCKEYAPP_API_TOKEN_PRODUCTION
+      - HOCKEYAPP_APP_ID: $HOCKEYAPP_APP_ID_PRODUCTION
+    before_run:
+      - cache-pull
+      - bootstrap-dotenv
+      - bootstrap-android-sdk
+      - bootstrap-react-native
+      - test-react-native
+      # uncomment this after merging https://github.com/geektimecoil/react-native-onesignal/pull/242
+      # - test-gradle
+      - archive-gradle
+    after_run:
+      - cache-push
+      - deploy-hockeyapp
+      - deploy-bitriseio
+      - notify-slack
+
+  # Build and test a staging app.
+  #
+  # This workflow pulls dependencies and then builds and tests an app with
+  # staging scheme.
+
+  build-pull-request:
+    envs:
+      - GRADLE_TASK: assembleDebug
+    before_run:
+      - cache-pull
+      - bootstrap-dotenv
+      - bootstrap-android-sdk
+      - bootstrap-react-native
+      - test-react-native
+      # uncomment this after merging https://github.com/geektimecoil/react-native-onesignal/pull/242
+      # - test-gradle
+    after_run:
+      - cache-push
+      - deploy-bitriseio
+      - notify-slack
+
+  # Pull previously cached directories.
+
+  cache-pull:
+    steps:
+      - cache-pull: {}
+
+  # Push cached directories.
+  #
+  # By default, this pushes `./gradle`, `~/.gradle` and `./node_modules`
+  # directories.
+
+  cache-push:
+    steps:
+      - cache-push:
+          inputs:
+            - cache_paths: |-
+                $HOME/.gradle
+                ./.gradle
+                ./node_modules
+            - ignore_check_on_paths: |-
+                $HOME/.gradle/caches/*.lock
+                ./.gradle/*.lock
+                ./.gradle/*.bin
+  # Bootstrap `.env` file by cloning `.env.bitrise` file and then assigning the
+  # appropriate values from environment variables set up in this `bitrise.yml`
+  # and in Bitrise UI.
+
+  bootstrap-dotenv:
+    steps:
+      - ruby-script:
+          inputs:
+            - ruby_content: |-
+                template = ENV['DOTENV_TEMPLATE_FILE'] || '.env.bitrise'
+                output_file = ENV['DOTENV_OUTPUT_FILE'] || '.env'
+                File.open(output_file, 'w') do |output|
+                  File.open(template).each do |line|
+                    output.write(line.sub(/\$[A-Z0-9_]+/) { |match| ENV[match.sub('$', '')] })
+                  end
+                end
+  # Install additional Android packages.
+
+  bootstrap-android-sdk:
+    steps:
+      - script:
+          title: update-android-sdk
+          inputs:
+            - content: |-
+                set -ex
+                echo y | android update sdk --no-ui --all --filter build-tools-23.0.1 | grep 'package installed'
+                echo y | android update sdk --no-ui --all --filter platform-tools | grep 'package installed'
+                echo y | android update sdk --no-ui --all --filter extra-android-m2repository | grep 'package installed'
+                echo y | android update sdk --no-ui --all --filter extra-google-m2repository | grep 'package installed'
+                echo y | android update sdk --no-ui --all --filter extra-google-google_play_services | grep 'package installed'
+  # Bootstrap React Native dependencies using NVM and Yarn package managers.
+
+  bootstrap-react-native:
+    steps:
+      - nvm: {}
+      - yarn: {}
+      - install-react-native: {}
+
+  # Bootstrap code signing by installing certificates and provisioning profiles.
+
+  bootstrap-code-signing:
+    steps:
+      - certificate-and-profile-installer: {}
+
+  # Bundle and test an app using `react-native` and `npm` commands.
+
+  test-react-native:
+    steps:
+      - react-native-bundle:
+          inputs:
+            - platform: android
+            - entry_file: index.android.js
+      # - yarn:
+      #     inputs:
+      #       - command: lint
+      - yarn:
+          inputs:
+            - command: test
+
+  # Test and assemble an app using `gradle` command.
+
+  test-gradle:
+    steps:
+      - gradle-unit-test:
+          inputs:
+            - gradle_file: $GRADLE_BUILD_PATH
+            - gradlew_file_path: $GRADLE_W_PATH
+
+  # Assemble and code sign an app using `gradle` command.
+
+  archive-gradle:
+    steps:
+      - gradle-runner:
+          inputs:
+            - gradle_file: $GRADLE_BUILD_PATH
+            - gradlew_path: $GRADLE_W_PATH
+            - gradle_task: $GRADLE_TASK
+      - sign-apk: {}
+
+  # Deploy a built app to HockeyApp.
+
+  deploy-hockeyapp:
+    steps:
+      - hockeyapp-deploy-android:
+          inputs:
+            - api_token: $HOCKEYAPP_API_TOKEN
+            - app_id: $HOCKEYAPP_APP_ID
+            - apk_path: $BITRISE_SIGNED_APK_PATH
+            - notify: 0
+
+  # Deploy build artifacts to bitrise.io.
+
+  deploy-bitriseio:
+    steps:
+      - deploy-to-bitrise-io:
+          inputs:
+            - notify_user_groups: none
+            - is_enable_public_page: false
+
+  # Notify about build on Slack.
+  #
+  # If you don't use Slack integration, you can remove this workflow.
+
+  notify-slack:
+    steps:
+      - git::https://github.com/netguru/bitrise-step-slack.git@master:
+          title: slack
+          inputs:
+            - webhook_url: $SLACK_WEBHOOK_URL
+            - channel: $SLACK_CHANNEL

@@ -129,14 +129,6 @@ android {
         manifestPlaceholders = [onesignal_app_id: "fe30dbe7-d459-4dc1-94b4-398a415568b1",
                                 onesignal_google_project_number: "REMOTE"]
     }
-    signingConfigs {
-        release {
-            storeFile file(MYAPP_RELEASE_STORE_FILE)
-            storePassword MYAPP_RELEASE_STORE_PASSWORD
-            keyAlias MYAPP_RELEASE_KEY_ALIAS
-            keyPassword MYAPP_RELEASE_KEY_PASSWORD
-        }
-    }
     splits {
         abi {
             reset()
@@ -149,7 +141,6 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
-            signingConfig signingConfigs.release
         }
     }
     lintOptions {

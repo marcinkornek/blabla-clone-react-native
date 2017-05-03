@@ -149,7 +149,8 @@ workflows:
       - bootstrap-android-sdk
       - bootstrap-react-native
       - test-react-native
-      - test-gradle
+      # uncomment this after merging https://github.com/geektimecoil/react-native-onesignal/pull/242
+      # - test-gradle
     after_run:
       - cache-push
       - deploy-bitriseio
